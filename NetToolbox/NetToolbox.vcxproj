@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="LTL|Win32">
+      <Configuration>LTL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="LTL|x64">
+      <Configuration>LTL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{3327CB5C-CFAF-4DE9-8BAD-C6F15E09EE26}</ProjectGuid>
+    <RootNamespace>NetToolbox</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <VcpkgEnabled>true</VcpkgEnabled>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <VcpkgTriplet>x86-windows-static</VcpkgTriplet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <VcpkgTriplet>x86-windows-static</VcpkgTriplet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <VcpkgTriplet>x86-windows-static</VcpkgTriplet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <VcpkgTriplet>x64-windows-static</VcpkgTriplet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <VcpkgTriplet>x64-windows-static</VcpkgTriplet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LTL|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <VcpkgTriplet>x64-windows-static</VcpkgTriplet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="VC-LTL helper for Visual Studio.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='LTL|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="VC-LTL helper for Visual Studio.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)_x64\</OutDir>
+    <IntDir>$(Configuration)_x64\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)_x64\</OutDir>
+    <IntDir>$(Configuration)_x64\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LTL|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)_x64\</OutDir>
+    <IntDir>$(Configuration)_x64\</IntDir>
+    <IncludePath>D:\GitHub\json\single_include;D:\Software\Program\lib\boost_1_68_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Software\Program\lib\boost_1_68_0\stage\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'">
+    <IncludePath>D:\GitHub\json\single_include;D:\Software\Program\lib\boost_1_68_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Software\Program\lib\boost_1_68_0\stage\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UILIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Manifest>
+      <AdditionalManifestFiles>".\res\xml.manifest" %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UILIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Manifest>
+      <AdditionalManifestFiles>".\res\xml.manifest" %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+    <Link>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UILIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Manifest>
+      <AdditionalManifestFiles>".\res\xml.manifest" %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+    <PreBuildEvent>
+      <Command>del "$(SolutionDir)$(ProjectName)\res\res.zip" /q
+7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>upx -9 $(SolutionDir)$(IntDir)$(TargetFileName)
+$(SolutionDir)NetToolbox_publish32.exe
+del $(SolutionDir)$(IntDir)NetToolbox.7z /q
+7z u -t7z $(SolutionDir)$(IntDir)NetToolbox.7z $(SolutionDir)$(IntDir)LICENSE_* $(SolutionDir)$(IntDir)*.exe</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UILIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Manifest>
+      <AdditionalManifestFiles>".\res\xml.manifest" %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+    <PreBuildEvent>
+      <Command>del "$(SolutionDir)$(ProjectName)\res\res.zip" /q
+7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>upx -9 $(SolutionDir)$(IntDir)$(TargetFileName)
+$(SolutionDir)NetToolbox_publish32.exe
+del $(SolutionDir)$(IntDir)NetToolbox.7z /q
+7z u -t7z $(SolutionDir)$(IntDir)NetToolbox.7z $(SolutionDir)$(IntDir)LICENSE_* $(SolutionDir)$(IntDir)*.exe</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UILIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+    </Link>
+    <Manifest>
+      <AdditionalManifestFiles>".\res\xml.manifest" %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+    <PreBuildEvent>
+      <Command>del "$(SolutionDir)$(ProjectName)\res\res.zip" /q
+7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>upx -9 $(SolutionDir)$(IntDir)$(TargetFileName)
+$(SolutionDir)NetToolbox_publish.exe
+del $(SolutionDir)$(IntDir)NetToolbox.7z /q
+7z u -t7z $(SolutionDir)$(IntDir)NetToolbox.7z $(SolutionDir)$(IntDir)LICENSE_* $(SolutionDir)$(IntDir)*.exe</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='LTL|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UILIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+    </Link>
+    <Manifest>
+      <AdditionalManifestFiles>".\res\xml.manifest" %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+    <PreBuildEvent>
+      <Command>del "$(SolutionDir)$(ProjectName)\res\res.zip" /q
+7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>upx -9 $(SolutionDir)$(IntDir)$(TargetFileName)
+$(SolutionDir)NetToolbox_publish.exe
+del $(SolutionDir)$(IntDir)NetToolbox.7z /q
+7z u -t7z $(SolutionDir)$(IntDir)NetToolbox.7z $(SolutionDir)$(IntDir)LICENSE_* $(SolutionDir)$(IntDir)*.exe</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="3rdparty\serial\serial.h" />
+    <ClInclude Include="3rdparty\serial\v8stdint.h" />
+    <ClInclude Include="3rdparty\serial\win.h" />
+    <ClInclude Include="3rdparty\Simple-Web-Server\client_http.hpp" />
+    <ClInclude Include="3rdparty\Simple-Web-Server\client_https.hpp" />
+    <ClInclude Include="3rdparty\Simple-Web-Server\crypto.hpp" />
+    <ClInclude Include="3rdparty\Simple-Web-Server\server_http.hpp" />
+    <ClInclude Include="3rdparty\Simple-Web-Server\server_https.hpp" />
+    <ClInclude Include="3rdparty\Simple-Web-Server\status_code.hpp" />
+    <ClInclude Include="3rdparty\Simple-Web-Server\utility.hpp" />
+    <ClInclude Include="db\db_Sqlite.hpp" />
+    <ClInclude Include="HanAnim.hpp" />
+    <ClInclude Include="NetToolboxWnd.h" />
+    <ClInclude Include="pages\page_Record.hpp" />
+    <ClInclude Include="pages\page_base.hpp" />
+    <ClInclude Include="pages\page_EncDec.hpp" />
+    <ClInclude Include="pages\page_Example.hpp" />
+    <ClInclude Include="pages\page_File.hpp" />
+    <ClInclude Include="pages\page_Gif.hpp" />
+    <ClInclude Include="pages\page_Http.hpp" />
+    <ClInclude Include="pages\page_IPScan.hpp" />
+    <ClInclude Include="pages\page_LocalConn.hpp" />
+    <ClInclude Include="pages\page_LocalNet.hpp" />
+    <ClInclude Include="pages\page_Qps.hpp" />
+    <ClInclude Include="pages\page_Regex.hpp" />
+    <ClInclude Include="pages\page_Rsa.hpp" />
+    <ClInclude Include="pages\page_SerialPort.hpp" />
+    <ClInclude Include="pages\page_SysInfo.hpp" />
+    <ClInclude Include="pages\page_Tracert.hpp" />
+    <ClInclude Include="pages\page_Window.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Settings.hpp" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="tools\tool_Base64.hpp" />
+    <ClInclude Include="tools\tool_DnsLookup.hpp" />
+    <ClInclude Include="tools\tool_Encoding.hpp" />
+    <ClInclude Include="tools\tool_Formatting.hpp" />
+    <ClInclude Include="tools\tool_Gdip.hpp" />
+    <ClInclude Include="tools\tool_Gzip.hpp" />
+    <ClInclude Include="tools\tool_MakeAvi.hpp" />
+    <ClInclude Include="tools\tool_Mutex.hpp" />
+    <ClInclude Include="tools\tool_NetInfo.hpp" />
+    <ClInclude Include="tools\tool_Path.hpp" />
+    <ClInclude Include="tools\tool_PE.hpp" />
+    <ClInclude Include="tools\tool_Priv.hpp" />
+    <ClInclude Include="tools\tool_Process.hpp" />
+    <ClInclude Include="tools\tool_Register.hpp" />
+    <ClInclude Include="tools\tool_Rsa.hpp" />
+    <ClInclude Include="tools\tool_SerialPort.hpp" />
+    <ClInclude Include="tools\tool_String.hpp" />
+    <ClInclude Include="tools\tool_SysInfo.hpp" />
+    <ClInclude Include="tools\tool_Tracert.hpp" />
+    <ClInclude Include="tools\tool_Utils.hpp" />
+    <ClInclude Include="tools\tool_VP9.hpp" />
+    <ClInclude Include="tools\tool_WebRequest.hpp" />
+    <ClInclude Include="tools\tool_WMI.hpp" />
+    <ClInclude Include="tools\tool_Zoomer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="3rdparty\serial\list_ports_win.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="3rdparty\serial\serial.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="3rdparty\serial\win.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="NetToolboxWnd.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="res\xml.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\res\main.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\arrow_main.cur" />
+    <None Include="res\find_color.cur" />
+    <None Include="res\find_pos.cur" />
+    <None Include="res\res.zip" />
+    <None Include="res\zoom_size.cur" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

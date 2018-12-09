@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\tools">
+      <UniqueIdentifier>{ec64c10e-a558-46d9-918d-6a682351c6c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\pages">
+      <UniqueIdentifier>{2007662a-86a0-4f84-87c3-98372bc5c222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty">
+      <UniqueIdentifier>{37d6437e-f29e-4879-84ac-91d262a28943}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\serial">
+      <UniqueIdentifier>{b8661dc5-170b-432e-9de8-b079bb7d1f8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\Simple-Web-Server">
+      <UniqueIdentifier>{06808546-92f6-42dc-a6ce-f9ad269ae1bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\db">
+      <UniqueIdentifier>{c04a2ce7-6e0c-4ac7-9df0-8a12cd8f3201}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StdAfx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NetToolboxWnd.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_SerialPort.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_SerialPort.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_base.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_String.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Base64.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Encoding.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\serial\v8stdint.h">
+      <Filter>3rdparty\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\serial\win.h">
+      <Filter>3rdparty\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\serial\serial.h">
+      <Filter>3rdparty\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Gdip.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_NetInfo.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_LocalNet.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Process.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_SysInfo.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Register.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_SysInfo.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Tracert.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_Tracert.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Formatting.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_DnsLookup.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_PE.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_File.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Utils.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\Simple-Web-Server\status_code.hpp">
+      <Filter>3rdparty\Simple-Web-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\Simple-Web-Server\utility.hpp">
+      <Filter>3rdparty\Simple-Web-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\Simple-Web-Server\client_http.hpp">
+      <Filter>3rdparty\Simple-Web-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\Simple-Web-Server\client_https.hpp">
+      <Filter>3rdparty\Simple-Web-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\Simple-Web-Server\crypto.hpp">
+      <Filter>3rdparty\Simple-Web-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\Simple-Web-Server\server_http.hpp">
+      <Filter>3rdparty\Simple-Web-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\Simple-Web-Server\server_https.hpp">
+      <Filter>3rdparty\Simple-Web-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_WebRequest.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_Regex.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_Qps.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Path.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Mutex.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_WMI.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Gzip.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_Window.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Rsa.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="HanAnim.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_Rsa.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="db\db_Sqlite.hpp">
+      <Filter>头文件\db</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_Http.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_LocalConn.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_Gif.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_MakeAvi.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_Example.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_VP9.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_EncDec.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Zoomer.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_IPScan.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_Priv.hpp">
+      <Filter>头文件\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pages\page_Record.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NetToolboxWnd.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\serial\win.cc">
+      <Filter>3rdparty\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\serial\list_ports_win.cc">
+      <Filter>3rdparty\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\serial\serial.cc">
+      <Filter>3rdparty\serial</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\logo.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="res\xml.manifest">
+      <Filter>资源文件</Filter>
+    </Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\res\main.xml">
+      <Filter>资源文件</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\arrow_main.cur">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\find_pos.cur">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\zoom_size.cur">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\find_color.cur">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\res.zip" />
+  </ItemGroup>
+</Project>
