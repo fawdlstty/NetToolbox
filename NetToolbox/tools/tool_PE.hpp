@@ -77,7 +77,7 @@ public:
 				std::string dll_name = (LPCSTR) ::ImageRvaToVa (pNtHeader, mod_base, pImportTable[i].Name, nullptr);
 				std::vector<std::tuple<int16_t, std::string>> dll_vimport;
 				PIMAGE_THUNK_DATA32 pThunk = (PIMAGE_THUNK_DATA32) ::ImageRvaToVa (pNtHeader, mod_base, pImportTable[i].OriginalFirstThunk, nullptr);
-				for (DWORD j = 0; memcmp (pThunk + j, &null_thunk, sizeof (null_thunk)) != 0; j++) {
+				for (DWORD j = 0; pThunk && memcmp (pThunk + j, &null_thunk, sizeof (null_thunk)) != 0; j++) {
 					if (pThunk[j].u1.AddressOfData & IMAGE_ORDINAL_FLAG32) {
 						dll_vimport.push_back ({ (uint16_t) (pThunk[j].u1.AddressOfData & 0xffff), "" });
 					} else {

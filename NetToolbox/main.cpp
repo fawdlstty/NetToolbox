@@ -130,7 +130,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 				std::string data = tool_WebRequest::get (url_base + "info.json");
 				Json o = Json::parse (data);
 				std::string ver_srv = o["version"];
-				if (_parse_ver (ver_srv) != ver_src) {
+				if (_parse_ver (ver_srv) > ver_src) {
 					tool_Mutex m (_T ("nettoolbox_checknew"));
 					if (!m.try_lock ())
 						return;
