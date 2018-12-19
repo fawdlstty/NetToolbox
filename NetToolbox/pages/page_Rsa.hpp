@@ -1,4 +1,4 @@
-#ifndef __PAGE_RSA_HPP__
+ï»¿#ifndef __PAGE_RSA_HPP__
 #define __PAGE_RSA_HPP__
 
 #include "page_base.hpp"
@@ -28,9 +28,9 @@ public:
 				(m_rsa_selrsa_pubkey->IsSelected () ? tool_Encoding::get_gb18030 (m_rsa_rsa_pubkey->GetText ()) : ""),
 				tool_Encoding::get_gb18030 (m_rsa_rsa_prvkey->GetText ()));
 			if (succ)
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _T ("RSA¹«Ë½Ô¿µ¼³ö³É¹¦£¡"));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _T ("RSAå…¬ç§é’¥å¯¼å‡ºæˆåŠŸï¼"));
 			else
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("RSA¹«Ë½Ô¿µ¼³öÊ§°Ü£¡"));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("RSAå…¬ç§é’¥å¯¼å‡ºå¤±è´¥ï¼"));
 			return true;
 		}
 		return false;

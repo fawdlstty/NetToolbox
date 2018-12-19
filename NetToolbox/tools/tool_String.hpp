@@ -1,4 +1,4 @@
-#ifndef __TOOL_STRING_HPP__
+ï»¿#ifndef __TOOL_STRING_HPP__
 #define __TOOL_STRING_HPP__
 
 #include <string>
@@ -30,35 +30,35 @@
 template<typename T>
 class tool_String {
 public:
-	//Çå³ı×Ö·û´®¿ªÊ¼²¿·Ö¿Õ¸ñ
+	//æ¸…é™¤å­—ç¬¦ä¸²å¼€å§‹éƒ¨åˆ†ç©ºæ ¼
 	static void trim_left (std::basic_string<T> &str) {
 		str.erase (0, str.find_first_not_of (' '));
 	}
 
-	//Çå³ı×Ö·û´®½áÊø²¿·Ö¿Õ¸ñ
+	//æ¸…é™¤å­—ç¬¦ä¸²ç»“æŸéƒ¨åˆ†ç©ºæ ¼
 	static void trimRight (std::basic_string<T> &str) {
 		str.erase (str.find_last_not_of (' ') + 1);
 	}
 
-	//Çå³şÁ½¶Ë¿Õ¸ñ
+	//æ¸…æ¥šä¸¤ç«¯ç©ºæ ¼
 	static void trim (std::basic_string<T> &str) {
 		str.erase (0, str.find_first_not_of (' '));
 		str.erase (str.find_last_not_of (' ') + 1);
 	}
 
-	//É¾³ı×Ö·û´®ÖĞÖ¸¶¨×Ö·û
+	//åˆ é™¤å­—ç¬¦ä¸²ä¸­æŒ‡å®šå­—ç¬¦
 	static void erase (std::basic_string<T> &str, const T &charactor) {
 		str.erase (remove_if (str.begin (), str.end (), bind2nd (std::equal_to<T> (), charactor)), str.end ());
 	}
 
-	// ¸ù¾İindexÉ¾³ı×Ö·û
+	// æ ¹æ®indexåˆ é™¤å­—ç¬¦
 	static void remove_at (std::basic_string<T> &str, const int index) {
 		if (str.length () <= index)
 			return;
 		str.erase (str.begin () + index);
 	}
 
-	//Ìæ»»×Ö·û´®ÖĞÖ¸¶¨×Ö·û´®
+	//æ›¿æ¢å­—ç¬¦ä¸²ä¸­æŒ‡å®šå­—ç¬¦ä¸²
 	static size_t replace (std::basic_string<T> &str, const std::basic_string<T> &strSrc, const std::basic_string<T> &strDest) {
 		size_t ret = 0, pos = str.find (strSrc);
 		while (pos != std::basic_string<T>::npos) {
@@ -69,7 +69,7 @@ public:
 		return ret;
 	}
 
-	//Ìæ»»×Ö·û´®ÖĞÖ¸¶¨×Ö·û´®
+	//æ›¿æ¢å­—ç¬¦ä¸²ä¸­æŒ‡å®šå­—ç¬¦ä¸²
 	static size_t replace (std::basic_string<T> &str, const T src, const T dest) {
 		size_t ret = 0, pos = str.find (src);
 		for (size_t i = 0; i < str.length (); ++i) {
@@ -81,7 +81,7 @@ public:
 		return ret;
 	}
 
-	//×Ö·û´®½Ø¶Ï
+	//å­—ç¬¦ä¸²æˆªæ–­
 	static void split (std::basic_string<T> s, std::vector<std::basic_string<T>> &v, T ch = _T (' ')) {
 		size_t start = 0, p, len = s.length ();
 		do {
@@ -113,7 +113,7 @@ public:
 		return v;
 	}
 
-	//×Ö·û´®¸ñÊ½»¯
+	//å­—ç¬¦ä¸²æ ¼å¼åŒ–
 	static std::basic_string<T> format (std::basic_string<T> fmt_str, ...) {
 		std::basic_string<T> str_result;
 		if (fmt_str.empty ())
@@ -121,7 +121,7 @@ public:
 		try {
 			va_list ap;
 #ifndef __GNUC__
-			//À´Ô´£ºhttp://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
+			//æ¥æºï¼šhttp://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
 			ptrdiff_t final_n, n = ((ptrdiff_t) fmt_str.size ()) * 2;
 			std::unique_ptr<T[]> formatted;
 			while (true) {
@@ -158,7 +158,7 @@ public:
 		return str_result;
 	}
 
-	// ×Ö½Ú×ªÊ®Áù½øÖÆ×Ö·û´®
+	// å­—èŠ‚è½¬åå…­è¿›åˆ¶å­—ç¬¦ä¸²
 	static std::basic_string<T> byte_to_str (uint8_t ch) {
 		T s[3] = { 0, 0, 0 };
 		uint8_t t = (ch >> 4) & 0xf;
@@ -168,7 +168,7 @@ public:
 		return std::basic_string<T> (s);
 	}
 
-	// url±àÂë
+	// urlç¼–ç 
 	static std::string url_encode (std::string str) {
 		std::string str_ret = "";
 		try {
@@ -190,7 +190,7 @@ public:
 		return str_ret;
 	}
 
-	// url½âÂë
+	// urlè§£ç 
 	static std::string url_decode (std::string str) {
 		std::string str_ret = "";
 		try {
@@ -222,7 +222,7 @@ public:
 		return str_ret;
 	}
 
-	// Éú³É³¤¶ÈÎªnµÄ¿Õ×Ö·û´®
+	// ç”Ÿæˆé•¿åº¦ä¸ºnçš„ç©ºå­—ç¬¦ä¸²
 	static std::string make_space (int n) {
 		std::string s;
 		if (n > 0)
@@ -230,7 +230,7 @@ public:
 		return s;
 	}
 
-	// ¸ñÊ½»¯ÈÕÆÚ
+	// æ ¼å¼åŒ–æ—¥æœŸ
 	static std::basic_string<T> format_date () {
 		T buf_time[32] = { 0 }, buf_time2[32] = { 0 };
 		auto time_now = std::chrono::system_clock::now ();
@@ -249,7 +249,7 @@ public:
 		return std::basic_string<T> (buf_time);
 	}
 
-	// ÕıÔòÆ¥Åä
+	// æ­£åˆ™åŒ¹é…
 	static std::tuple<std::string, std::vector<std::string>> match_regex (std::string str_reg, std::string source) {
 		std::string err = "";
 		std::vector<std::string> v;
@@ -264,12 +264,12 @@ public:
 		} catch (std::exception &e) {
 			err = e.what ();
 		} catch (...) {
-			err = "Î´Öª´íÎó¡£";
+			err = "æœªçŸ¥é”™è¯¯ã€‚";
 		}
 		return { err, v };
 	}
 
-	// ºöÂÔ´óĞ¡Ğ´±È½Ï
+	// å¿½ç•¥å¤§å°å†™æ¯”è¾ƒ
 	static bool is_equal_nocase (std::string_view a, std::string_view b) {
 		if (a.size () != b.size ())
 			return false;

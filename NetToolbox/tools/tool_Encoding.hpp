@@ -1,4 +1,4 @@
-#ifndef __TOOL_ENCODING_HPP__
+ï»¿#ifndef __TOOL_ENCODING_HPP__
 #define __TOOL_ENCODING_HPP__
 
 #include <string>
@@ -9,7 +9,7 @@
 
 class tool_Encoding {
 public:
-	// ±àÂë²Â²â
+	// ç¼–ç çŒœæµ‹
 	static std::string guess (unsigned char *data, int length) {
 		if (is_ascii (data, length)) {
 			return "ascii";
@@ -72,7 +72,7 @@ public:
 		return true;
 	}
 
-	// ±àÂë×ª»»
+	// ç¼–ç è½¬æ¢
 	static std::wstring gb18030_to_utf16 (std::string_view _old) { return _conv_to_wide (_old, CP_ACP); }
 	static std::string utf16_to_gb18030 (std::wstring_view _old) { return _conv_to_multi (_old, CP_ACP); }
 	static std::wstring utf8_to_utf16 (std::string_view _old) { return _conv_to_wide (_old, CP_UTF8); }
@@ -133,7 +133,7 @@ public:
 		}
 	}
 
-	// ¸ñÊ½²Â²â
+	// æ ¼å¼çŒœæµ‹
 	static bool is_percent_str (std::string_view data) {
 		bool ret = false;
 		for (size_t i = 0; i < data.size (); ++i) {
@@ -209,7 +209,7 @@ public:
 		return true;
 	}
 
-	// ¸ñÊ½×ª»»
+	// æ ¼å¼è½¬æ¢
 	static std::string percent_str_encode (std::string_view data) {
 		const static char *hex_char = "0123456789ABCDEF";
 		std::string ret = "";

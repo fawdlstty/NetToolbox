@@ -1,4 +1,4 @@
-#ifndef __UICHILDLAYOUT_H__
+﻿#ifndef __UICHILDLAYOUT_H__
 #define __UICHILDLAYOUT_H__
 
 #pragma once

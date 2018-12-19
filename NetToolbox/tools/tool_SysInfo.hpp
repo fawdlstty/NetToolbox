@@ -1,4 +1,4 @@
-#ifndef __TOOL_SYS_INFO_HPP__
+ï»¿#ifndef __TOOL_SYS_INFO_HPP__
 #define __TOOL_SYS_INFO_HPP__
 
 #include <iostream>
@@ -22,7 +22,7 @@
 
 class tool_SysInfo {
 public:
-	//»ñÈ¡µçÄÔÆ·ÅÆ
+	//è·å–ç”µè„‘å“ç‰Œ
 	static std::wstring get_trademark_name () {
 		std::wstring facturer, product;
 		tool_Register::get_key_value (L"HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS", L"SystemManufacturer", facturer);
@@ -30,7 +30,7 @@ public:
 		return tool_StringW::format (L"%s - %s", facturer.c_str (), product.c_str ());
 	}
 
-	//»ñÈ¡ÏµÍ³°æ±¾ĞÅÏ¢
+	//è·å–ç³»ç»Ÿç‰ˆæœ¬ä¿¡æ¯
 	static std::wstring get_system_info () {
 		std::wstring sysname = _T ("");
 		//OSVERSIONINFOEX osvi = { sizeof (OSVERSIONINFOEX) };
@@ -195,24 +195,24 @@ public:
 		return sysname;
 	}
 
-	//»ñÈ¡CPUĞÅÏ¢
+	//è·å–CPUä¿¡æ¯
 	static std::tuple<std::wstring, std::wstring> get_cpu_info () {
-		//»ñÈ¡CPUÏß³ÌÊı´úÂëÔÚ get_system_info() º¯ÊıÀïÃæ
+		//è·å–CPUçº¿ç¨‹æ•°ä»£ç åœ¨ get_system_info() å‡½æ•°é‡Œé¢
 		std::wstring s1, s2;
 		tool_Register::get_key_value (L"HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", L"ProcessorNameString", s1);
 		tool_Register::get_key_value (L"HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", L"Identifier", s2);
 		return { s1, s2 };
 	}
 
-	//»ñÈ¡ÄÚ´æĞÅÏ¢
+	//è·å–å†…å­˜ä¿¡æ¯
 	static string_t get_memory_info () {
 		MEMORYSTATUSEX ms = { sizeof (MEMORYSTATUSEX) };
 		if (!::GlobalMemoryStatusEx (&ms))
 			return { L"", L"" };
-		return tool_StringT::format (_T ("×Ü¹² %s / ¿ÉÓÃ %s"), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ());
+		return tool_StringT::format (_T ("æ€»å…± %s / å¯ç”¨ %s"), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ());
 		//return {
-		//	tool_StringT::format (_T ("×Ü¹² %s / ¿ÉÓÃ %s"), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ()),
-		//	tool_StringT::format (_T ("×Ü¹² %s / ¿ÉÓÃ %s"), tool_Utils::format_unit (ms.ullTotalVirtual).c_str (), tool_Utils::format_unit (ms.ullAvailVirtual).c_str ())
+		//	tool_StringT::format (_T ("æ€»å…± %s / å¯ç”¨ %s"), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ()),
+		//	tool_StringT::format (_T ("æ€»å…± %s / å¯ç”¨ %s"), tool_Utils::format_unit (ms.ullTotalVirtual).c_str (), tool_Utils::format_unit (ms.ullAvailVirtual).c_str ())
 		//};
 	}
 };

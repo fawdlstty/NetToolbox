@@ -1,4 +1,4 @@
-#ifndef __UIVERTICALLAYOUT_H__
+﻿#ifndef __UIVERTICALLAYOUT_H__
 #define __UIVERTICALLAYOUT_H__
 
 #pragma once

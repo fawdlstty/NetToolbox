@@ -1,4 +1,4 @@
-#ifndef __TOOL_PATH_HPP__
+﻿#ifndef __TOOL_PATH_HPP__
 #define __TOOL_PATH_HPP__
 
 #include <string>
@@ -55,7 +55,7 @@ public:
 		size_t i, block_count = (size_t) (file_length / sz_1M);
 		size_t last_size = (size_t) (file_length - (sz_1M * (int64_t) block_count));
 		//
-		// �ļ�Hash
+		// 文件Hash
 		//
 		MD5_CTX _md5;
 		::MD5_Init (&_md5);

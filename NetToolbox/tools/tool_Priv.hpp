@@ -1,4 +1,4 @@
-#ifndef __TOOL_PRIV_HPP__
+ï»¿#ifndef __TOOL_PRIV_HPP__
 #define __TOOL_PRIV_HPP__
 
 #include <Windows.h>
@@ -16,7 +16,7 @@ public:
 	}
 
 	static bool adjust_restart (size_t sel1, size_t sel2) {
-		if (IDOK != ::MessageBox (NULL, _T ("È¨ÏÞ²»×ã£¬ÊÇ·ñÒÔ¹ÜÀíÔ±È¨ÏÞÖØÐÂ´ò¿ª³ÌÐò£¿"), _T ("ÌáÊ¾"), MB_ICONQUESTION | MB_OKCANCEL))
+		if (IDOK != ::MessageBox (NULL, _T ("æƒé™ä¸è¶³ï¼Œæ˜¯å¦ä»¥ç®¡ç†å‘˜æƒé™é‡æ–°æ‰“å¼€ç¨‹åºï¼Ÿ"), _T ("æç¤º"), MB_ICONQUESTION | MB_OKCANCEL))
 			return false;
 		string_t str_param = tool_StringT::format (_T ("-jump %d,%d"), sel1, sel2);
 		return (size_t) ::ShellExecute (NULL, _T ("runas"), tool_Path::get_args ()[0].c_str (), str_param.c_str (), _T (""), SW_SHOWNORMAL) > 32;

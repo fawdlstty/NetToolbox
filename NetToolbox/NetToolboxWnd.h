@@ -1,4 +1,4 @@
-#ifndef __NET_TOOLBOX_WND_HPP__
+ï»¿#ifndef __NET_TOOLBOX_WND_HPP__
 #define __NET_TOOLBOX_WND_HPP__
 
 #include "resource.h"
@@ -28,7 +28,7 @@ public:
 	};
 	NetToolboxWnd (string_t caption): m_caption (caption) {}
 
-	// duilibËùĞèÒªµÄÖØÔØº¯Êı
+	// duilibæ‰€éœ€è¦çš„é‡è½½å‡½æ•°
 	string_view_t GetWindowClassName () const override { return _T ("NetToolbox"); }
 	string_view_t GetSkinFile () override { return _T ("main.xml"); }
 	void InitWindow () override;
@@ -48,7 +48,7 @@ public:
 	LRESULT HandleMessage (UINT uMsg, WPARAM wParam, LPARAM lParam) override;
 	CControlUI* CreateControl (string_view_t pstrClass) override;
 
-	// ´°¿ÚËùÌá¹©µÄ¹¦ÄÜº¯Êı
+	// çª—å£æ‰€æä¾›çš„åŠŸèƒ½å‡½æ•°
 	void show_status (StatusIcon _icon = StatusIcon::Info, string_view_t _info = _T (""));
 	void show_error_code (DWORD last_error);
 	LRESULT invoke (std::function<LRESULT ()> f) { return ::SendMessage (m_hWnd, WM_USER + 0x101, 1, (LPARAM) &f); }
@@ -63,7 +63,7 @@ public:
 
 	size_t									m_sel1 = 0, m_sel2 = 0;
 private:
-	// ¹¦ÄÜ´¦Àíº¯Êı
+	// åŠŸèƒ½å¤„ç†å‡½æ•°
 	void ui_update_data ();
 
 	string_t								m_caption;

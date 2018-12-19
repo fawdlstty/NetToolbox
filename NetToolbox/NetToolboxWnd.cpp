@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "NetToolboxWnd.h"
 
 #include <string>
@@ -41,10 +41,10 @@
 
 
 void NetToolboxWnd::InitWindow () {
-	//´°¿Ú³õÊ¼»¯ÊÂ¼ş
+	//çª—å£åˆå§‹åŒ–äº‹ä»¶
 	::SendMessage (m_hWnd, WM_SETICON, ICON_SMALL, (LPARAM) m_icon);
 
-	// ÉèÖÃ±êÌâ
+	// è®¾ç½®æ ‡é¢˜
 	m_text_caption->SetText (m_caption.c_str ());
 
 	m_pages = {
@@ -111,7 +111,7 @@ void NetToolboxWnd::OnHeaderClick (TNotifyUI& msg) {
 
 void NetToolboxWnd::OnSelectChanged (TNotifyUI& msg) {
 	CDuiString name = msg.pSender->GetName ();
-	//±êÇ©Ò³ÇĞ»»ÊÂ¼ş
+	//æ ‡ç­¾é¡µåˆ‡æ¢äº‹ä»¶
 	if (name.Left (3) == _T ("tab")) {
 		//TCHAR s[16] = _T ("tab?");
 		//s[3] = name[3];
@@ -267,7 +267,7 @@ void NetToolboxWnd::show_status (StatusIcon _icon, string_view_t _info) {
 
 void NetToolboxWnd::show_error_code (DWORD err_no) {
 	if (err_no == 0) {
-		show_status (StatusIcon::Ok, _T ("³É¹¦¡£"));
+		show_status (StatusIcon::Ok, _T ("æˆåŠŸã€‚"));
 	} else {
 		show_status (StatusIcon::Ok, tool_Utils::get_error_info (err_no).c_str ());
 	}

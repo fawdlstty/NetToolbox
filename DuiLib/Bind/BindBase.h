@@ -1,4 +1,4 @@
-#ifndef __BIND_BASE_H__
+ï»¿#ifndef __BIND_BASE_H__
 #define __BIND_BASE_H__
 
 #pragma once
@@ -33,7 +33,7 @@ namespace DuiLib {
 	//	virtual ~BindVarBase () = default;
 	//	string_view_t GetVarType () const;
 
-	//	// ·ÃÎÊº¯Êı£¨Î´Íê³É£©
+	//	// è®¿é—®å‡½æ•°ï¼ˆæœªå®Œæˆï¼‰
 	//	//void operator= (T &o);
 	//	//T &operator() ();
 

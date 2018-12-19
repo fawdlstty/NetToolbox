@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <ExDisp.h>
 #include <ExDispid.h>
 #include <mshtmhst.h>
@@ -26,9 +26,9 @@ namespace DuiLib {
 			/* [in] */ IUnknown __RPC_FAR *pcmdtReserved,
 			/* [in] */ IDispatch __RPC_FAR *pdispReserved) {
 			//return E_NOTIMPL;
-			//·µ»Ø E_NOTIMPL Õı³£µ¯³öÏµÍ³ÓÒ¼ü²Ëµ¥
+			//è¿”å› E_NOTIMPL æ­£å¸¸å¼¹å‡ºç³»ç»Ÿå³é”®èœå•
 			return S_OK;
-			//·µ»ØS_OK Ôò¿ÉÆÁ±ÎÏµÍ³ÓÒ¼ü²Ëµ¥
+			//è¿”å›S_OK åˆ™å¯å±è”½ç³»ç»Ÿå³é”®èœå•
 		}
 
 		virtual HRESULT STDMETHODCALLTYPE GetHostInfo (CWebBrowserUI* pWeb,

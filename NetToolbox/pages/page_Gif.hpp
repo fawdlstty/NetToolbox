@@ -1,4 +1,4 @@
-#ifndef __PAGE_GIF_HPP__
+ï»¿#ifndef __PAGE_GIF_HPP__
 #define __PAGE_GIF_HPP__
 
 #include <vector>
@@ -117,7 +117,7 @@ private:
 		}
 		auto tp = std::chrono::system_clock::now ();
 		while (m_run) {
-			// ÆÁÄ»½ØÍ¼
+			// å±å¹•æˆªå›¾
 			RECT rect = { 0 };
 			GetWindowRect (GetHWND (), &rect);
 			rect.left += 12;
@@ -135,7 +135,7 @@ private:
 			tool_Zoomer::unzoom (&bmp);
 			Gdiplus::Graphics g (bmp);
 
-			// »æÖÆÊó±êÖ¸Õë
+			// ç»˜åˆ¶é¼ æ ‡æŒ‡é’ˆ
 			CURSORINFO ci { sizeof (CURSORINFO) };
 			::GetCursorInfo (&ci);
 			tool_Zoomer::zoom (ci.ptScreenPos);
@@ -147,7 +147,7 @@ private:
 			g.DrawImage (bmp_cur, Gdiplus::Rect (_rect.left, _rect.top, _rect.right, _rect.bottom), 0, 0, sz_cur.cx, sz_cur.cy, Gdiplus::UnitPixel);
 			delete bmp_cur;
 
-			// ÏÂÒ»ÂÖÑ­»·
+			// ä¸‹ä¸€è½®å¾ªç¯
 			m_vgif.push_back (bmp);
 			tp += std::chrono::milliseconds (m_delay);
 			std::this_thread::sleep_until (tp);
@@ -186,7 +186,7 @@ public:
 			m_run = false;
 			m_parent->ShowWindow (false);
 			page_GifWnd wnd_child { &m_vgif, &m_delay };
-			wnd_child.Create (m_parent->GetHWND (), _T ("GIFÂ¼ÖÆ"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+			wnd_child.Create (m_parent->GetHWND (), _T ("GIFå½•åˆ¶"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
 			wnd_child.CenterWindow ();
 			wnd_child.ShowModal ();
 			m_parent->ShowWindow (true);
@@ -203,14 +203,14 @@ public:
 		} else if (name == _T ("gif_save")) {
 			string_t file = m_gif_path->GetText ();
 			if (tool_Path::file_exist (file)) {
-				string_t info = tool_StringT::format (_T ("ÒÔÏÂÎÄ¼şÒÑ´æÔÚ£¬ÊÇ·ñ¸²¸Ç£¿\n%s"), file.c_str ());
-				if (IDOK != ::MessageBox (NULL, info.c_str (), _T ("ÌáÊ¾"), MB_ICONQUESTION | MB_OKCANCEL))
+				string_t info = tool_StringT::format (_T ("ä»¥ä¸‹æ–‡ä»¶å·²å­˜åœ¨ï¼Œæ˜¯å¦è¦†ç›–ï¼Ÿ\n%s"), file.c_str ());
+				if (IDOK != ::MessageBox (NULL, info.c_str (), _T ("æç¤º"), MB_ICONQUESTION | MB_OKCANCEL))
 					return true;
 			}
 			if (tool_Gdip::gdip_save_animation (m_vgif, file.c_str (), m_delay))
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _T ("GIFÍ¼µ¼³ö³É¹¦£¡"));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _T ("GIFå›¾å¯¼å‡ºæˆåŠŸï¼"));
 			else
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("GIFÍ¼µ¼³öÊ§°Ü£¡"));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("GIFå›¾å¯¼å‡ºå¤±è´¥ï¼"));
 			return true;
 		}
 		return false;

@@ -1,4 +1,4 @@
-#ifndef __PAGE_ENCDEC_HPP__
+ï»¿#ifndef __PAGE_ENCDEC_HPP__
 #define __PAGE_ENCDEC_HPP__
 
 #include "../tools/tool_Encoding.hpp"
@@ -34,25 +34,25 @@ public:
 			if (tool_Encoding::is_percent_str (data)) {
 				t_data = tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_decode (data));
 			} else {
-				t_data = _T ("(½âÂëÊ§°Ü)");
+				t_data = _T ("(è§£ç å¤±è´¥)");
 			}
 			m_encdec_percent->SetText (t_data);
 			if (tool_Encoding::is_escape_x_str (data)) {
 				t_data = tool_Encoding::get_T_from_utf8 (tool_Encoding::escape_x_str_decode (data));
 			} else {
-				t_data = _T ("(½âÂëÊ§°Ü)");
+				t_data = _T ("(è§£ç å¤±è´¥)");
 			}
 			m_encdec_escape_x->SetText (t_data);
 			if (tool_Encoding::is_escape_u_str (data)) {
 				t_data = tool_Encoding::get_T (tool_Encoding::escape_u_str_decode (data));
 			} else {
-				t_data = _T ("(½âÂëÊ§°Ü)");
+				t_data = _T ("(è§£ç å¤±è´¥)");
 			}
 			m_encdec_escape_u->SetText (t_data);
 			if (tool_Base64::is_base64 ((const unsigned char*) data.c_str (), data.size ())) {
 				t_data = tool_Encoding::get_T (tool_Base64::base64_decode (data));
 			} else {
-				t_data = _T ("(½âÂëÊ§°Ü)");
+				t_data = _T ("(è§£ç å¤±è´¥)");
 			}
 			m_encdec_base64->SetText (t_data);
 			return true;

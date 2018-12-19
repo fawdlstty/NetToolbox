@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <map>
 namespace DuiLib {
 	typedef CControlUI* (*CreateClass)();

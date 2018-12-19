@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Window size="1000,618" sizebox="2,2,5,5" mininfo="1000,618" caption="0,0,0,-1"> <!--roundcorner="5,5" showshadow="true" shadowcolor="#000000" shadowdarkness="10" shadowsize="3" shadowposition="10,10"-->
 	<Font id="0" name="微软雅黑" size="16" bold="true" />
 	<Font id="1" name="宋体" size="12" default="true" />

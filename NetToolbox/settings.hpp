@@ -1,4 +1,4 @@
-#ifndef __SETTINGS_HPP__
+ï»¿#ifndef __SETTINGS_HPP__
 #define __SETTINGS_HPP__
 
 #include <iostream>
@@ -16,11 +16,11 @@ class Settings {
 	Settings () = delete;
 
 public:
-	// ³õÊ¼»¯
+	// åˆå§‹åŒ–
 	static void init () {
 		m_file = tool_Path::get_exe_path () + _T ("Settings.json");
 		m_fileA = tool_Encoding::get_gb18030 (m_file);
-		// ÔËĞĞ¼ÆÊı
+		// è¿è¡Œè®¡æ•°
 		bool bInit = !tool_Path::file_exist (m_file);
 #ifndef _DEBUG
 		std::thread ([bInit] () {

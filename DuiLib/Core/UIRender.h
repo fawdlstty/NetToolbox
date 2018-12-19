@@ -1,4 +1,4 @@
-#ifndef __UIRENDER_H__
+ï»¿#ifndef __UIRENDER_H__
 #define __UIRENDER_H__
 
 #pragma once
@@ -60,7 +60,7 @@ namespace DuiLib {
 		static void DrawColor (HDC hDC, const RECT& rc, DWORD color);
 		static void DrawGradient (HDC hDC, const RECT& rc, DWORD dwFirst, DWORD dwSecond, bool bVertical, int nSteps);
 
-		// ÒÔÏÂº¯ÊıÖĞµÄÑÕÉ«²ÎÊıalphaÖµÎŞĞ§
+		// ä»¥ä¸‹å‡½æ•°ä¸­çš„é¢œè‰²å‚æ•°alphaå€¼æ— æ•ˆ
 		static void DrawLine (HDC hDC, const RECT& rc, int nSize, DWORD dwPenColor, int nStyle = PS_SOLID);
 		static void DrawRect (HDC hDC, const RECT& rc, int nSize, DWORD dwPenColor, int nStyle = PS_SOLID);
 		static void DrawRoundRect (HDC hDC, const RECT& rc, int width, int height, int nSize, DWORD dwPenColor, int nStyle = PS_SOLID);

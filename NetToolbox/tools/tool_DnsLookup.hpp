@@ -1,4 +1,4 @@
-#ifndef __TOOL_DNS_LOOKUP_HPP__
+ï»¿#ifndef __TOOL_DNS_LOOKUP_HPP__
 #define __TOOL_DNS_LOOKUP_HPP__
 
 #include <iostream>
@@ -9,7 +9,7 @@
 
 using boost::asio::ip::udp;
 
-//gethostbyname¡¢getaddrinfo
+//gethostbynameã€getaddrinfo
 
 #define DNS_TYPE_A          0x0001 //1 a host address
 #define DNS_TYPE_CNAME      0x0005 //5 the canonical name for an alias
@@ -37,22 +37,22 @@ public:
 		char send_packet[MAX_PATH];
 		memset (send_packet, 0, sizeof (send_packet));
 
-		//Ìî³äDNS²éÑ¯±¨ÎÄÍ·²¿
-		((uint16_t*) send_packet)[0] = htons (0x1234); // »á»°±êÊ¶
-		((uint16_t*) send_packet)[1] = htons (0x0100); // ±êÊ¶Î»
-		((uint16_t*) send_packet)[2] = htons (0x0001); // Question ¸öÊı
-		((uint16_t*) send_packet)[3] = htons (0x0000); // Answer ¸öÊı
-		((uint16_t*) send_packet)[4] = htons (0x0000); // Authority ¸öÊı
-		((uint16_t*) send_packet)[5] = htons (0x0000); // Additional ¸öÊı
+		//å¡«å……DNSæŸ¥è¯¢æŠ¥æ–‡å¤´éƒ¨
+		((uint16_t*) send_packet)[0] = htons (0x1234); // ä¼šè¯æ ‡è¯†
+		((uint16_t*) send_packet)[1] = htons (0x0100); // æ ‡è¯†ä½
+		((uint16_t*) send_packet)[2] = htons (0x0001); // Question ä¸ªæ•°
+		((uint16_t*) send_packet)[3] = htons (0x0000); // Answer ä¸ªæ•°
+		((uint16_t*) send_packet)[4] = htons (0x0000); // Authority ä¸ªæ•°
+		((uint16_t*) send_packet)[5] = htons (0x0000); // Additional ä¸ªæ•°
 
-		// Ìî³äQuestion
+		// å¡«å……Question
 		std::string query_url = build_query_url (dest_domain);
 		memcpy (&send_packet[12], &query_url[0], query_url.size ());
 		size_t packet_size = 12 + query_url.size () + 4;
 		((uint16_t*) &send_packet[packet_size])[-2] = htons (0x0001);
 		((uint16_t*) &send_packet[packet_size])[-1] = htons (0x0001);
 
-		//·¢ËÍDNS²éÑ¯±¨ÎÄ
+		//å‘é€DNSæŸ¥è¯¢æŠ¥æ–‡
 		boost::asio::io_service io_service;
 		boost::asio::ip::address addr = boost::asio::ip::address::from_string (dns_server);
 		udp::endpoint receiver_endpoint (addr, 53);

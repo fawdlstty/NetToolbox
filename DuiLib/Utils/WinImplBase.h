@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 
 #ifndef WIN_IMPL_BASE_HPP
 #define WIN_IMPL_BASE_HPP
@@ -14,9 +14,9 @@ namespace DuiLib {
 	public:
 		WindowImplBase () {};
 		virtual ~WindowImplBase () {};
-		// Ö»ĞèÖ÷´°¿ÚÖØĞ´£¨³õÊ¼»¯×ÊÔ´Óë¶àÓïÑÔ½Ó¿Ú£©
+		// åªéœ€ä¸»çª—å£é‡å†™ï¼ˆåˆå§‹åŒ–èµ„æºä¸å¤šè¯­è¨€æ¥å£ï¼‰
 		virtual void InitResource () {};
-		// Ã¿¸ö´°¿Ú¶¼¿ÉÒÔÖØĞ´
+		// æ¯ä¸ªçª—å£éƒ½å¯ä»¥é‡å†™
 		virtual void InitWindow () {};
 		virtual void OnFinalMessage (HWND hWnd);
 		virtual void Notify (TNotifyUI& msg);

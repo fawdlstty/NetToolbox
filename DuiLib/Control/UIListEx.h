@@ -1,4 +1,4 @@
-#ifndef __UILISTEX_H__
+ï»¿#ifndef __UILISTEX_H__
 #define __UILISTEX_H__
 
 #pragma once
@@ -134,13 +134,13 @@ namespace DuiLib {
 		CDuiString m_sSepImage;
 		CDuiString m_sSepImageModify;
 
-		//Ö§³Ö±à¼­
+		//æ”¯æŒç¼–è¾‘
 		BOOL m_bEditable;
 
-		//Ö§³Ö×éºÏ¿ò
+		//æ”¯æŒç»„åˆæ¡†
 		BOOL m_bComboable;
 
-		//Ö§³Ö¸´Ñ¡¿ò
+		//æ”¯æŒå¤é€‰æ¡†
 		BOOL m_bCheckBoxable;
 
 	public:
@@ -192,10 +192,10 @@ namespace DuiLib {
 
 		void GetCheckBoxRect (RECT &rc);
 
-		int GetCheckBoxWidth () const;       // Êµ¼Ê´óĞ¡Î»ÖÃÊ¹ÓÃGetPos»ñÈ¡£¬ÕâÀïµÃµ½µÄÊÇÔ¤ÉèµÄ²Î¿¼Öµ
-		void SetCheckBoxWidth (int cx);      // Ô¤ÉèµÄ²Î¿¼Öµ
-		int GetCheckBoxHeight () const;      // Êµ¼Ê´óĞ¡Î»ÖÃÊ¹ÓÃGetPos»ñÈ¡£¬ÕâÀïµÃµ½µÄÊÇÔ¤ÉèµÄ²Î¿¼Öµ
-		void SetCheckBoxHeight (int cy);     // Ô¤ÉèµÄ²Î¿¼Öµ
+		int GetCheckBoxWidth () const;       // å®é™…å¤§å°ä½ç½®ä½¿ç”¨GetPosè·å–ï¼Œè¿™é‡Œå¾—åˆ°çš„æ˜¯é¢„è®¾çš„å‚è€ƒå€¼
+		void SetCheckBoxWidth (int cx);      // é¢„è®¾çš„å‚è€ƒå€¼
+		int GetCheckBoxHeight () const;      // å®é™…å¤§å°ä½ç½®ä½¿ç”¨GetPosè·å–ï¼Œè¿™é‡Œå¾—åˆ°çš„æ˜¯é¢„è®¾çš„å‚è€ƒå€¼
+		void SetCheckBoxHeight (int cy);     // é¢„è®¾çš„å‚è€ƒå€¼
 
 
 	public:
@@ -282,10 +282,10 @@ namespace DuiLib {
 		void GetCheckBoxRect (int nIndex, RECT &rc);
 		void GetColumRect (int nColum, RECT &rc);
 
-		int GetCheckBoxWidth () const;       // Êµ¼Ê´óĞ¡Î»ÖÃÊ¹ÓÃGetPos»ñÈ¡£¬ÕâÀïµÃµ½µÄÊÇÔ¤ÉèµÄ²Î¿¼Öµ
-		void SetCheckBoxWidth (int cx);      // Ô¤ÉèµÄ²Î¿¼Öµ
-		int GetCheckBoxHeight () const;      // Êµ¼Ê´óĞ¡Î»ÖÃÊ¹ÓÃGetPos»ñÈ¡£¬ÕâÀïµÃµ½µÄÊÇÔ¤ÉèµÄ²Î¿¼Öµ
-		void SetCheckBoxHeight (int cy);     // Ô¤ÉèµÄ²Î¿¼Öµ
+		int GetCheckBoxWidth () const;       // å®é™…å¤§å°ä½ç½®ä½¿ç”¨GetPosè·å–ï¼Œè¿™é‡Œå¾—åˆ°çš„æ˜¯é¢„è®¾çš„å‚è€ƒå€¼
+		void SetCheckBoxWidth (int cx);      // é¢„è®¾çš„å‚è€ƒå€¼
+		int GetCheckBoxHeight () const;      // å®é™…å¤§å°ä½ç½®ä½¿ç”¨GetPosè·å–ï¼Œè¿™é‡Œå¾—åˆ°çš„æ˜¯é¢„è®¾çš„å‚è€ƒå€¼
+		void SetCheckBoxHeight (int cy);     // é¢„è®¾çš„å‚è€ƒå€¼
 
 		void SetCheck (BOOL bCheck);
 		BOOL GetCheck () const;

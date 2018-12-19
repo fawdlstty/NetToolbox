@@ -1,13 +1,13 @@
-#ifndef __UIIPADDRESSEX_H__
+ï»¿#ifndef __UIIPADDRESSEX_H__
 #define __UIIPADDRESSEX_H__
 
 #pragma once
 
-//¸ø¸Ã¿Ø¼şÌí¼ÓÒ»¸öÊôĞÔdtstyle
+//ç»™è¯¥æ§ä»¶æ·»åŠ ä¸€ä¸ªå±æ€§dtstyle
 
 namespace DuiLib {
 
-	/// IPÊäÈë¿Ø¼ş
+	/// IPè¾“å…¥æ§ä»¶
 	class UILIB_API CIPAddressExUI: public CEditUI {
 		DECLARE_DUICONTROL (CIPAddressExUI)
 	public:

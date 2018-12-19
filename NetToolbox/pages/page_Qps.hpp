@@ -1,4 +1,4 @@
-#ifndef __PAGE_QPS_HPP__
+ï»¿#ifndef __PAGE_QPS_HPP__
 #define __PAGE_QPS_HPP__
 
 #include <vector>
@@ -30,7 +30,7 @@ public:
 				fail_count += m_fail_counts[i];
 			}
 			size_t inc_succ_count = succ_count - m_last_succ_count, inc_fail_count = fail_count - m_last_fail_count;
-			m_desp += tool_StringT::format (_T ("·¢ËÍ %-6d£¬³É¹¦ %-6d£¬Ê§°Ü %d\n"), inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count);
+			m_desp += tool_StringT::format (_T ("å‘é€ %-6dï¼ŒæˆåŠŸ %-6dï¼Œå¤±è´¥ %d\n"), inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count);
 			m_qps_content->SetText (m_desp.c_str ());
 			m_last_succ_count += inc_succ_count;
 			m_last_fail_count += inc_fail_count;
@@ -46,10 +46,10 @@ public:
 				// start
 				size_t threnad_num = _ttoi (m_qps_thread_num->GetText ().c_str ());
 				if (threnad_num < 1) {
-					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("Ïß³ÌÊıÖÁÉÙÎª1¡£"));
+					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("çº¿ç¨‹æ•°è‡³å°‘ä¸º1ã€‚"));
 					return true;
 				} else if (threnad_num > 100) {
-					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("Ïß³ÌÊıÖÁ¶àÎª100¡£"));
+					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("çº¿ç¨‹æ•°è‡³å¤šä¸º100ã€‚"));
 					return true;
 				}
 				m_desp = _T ("");
@@ -102,8 +102,8 @@ public:
 		} else if (name == _T ("qps_postdata_ctrl_new")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
 			m_qps_postdata_list->Remove (container);
-			_add_item (_T (""), _T (""), _T ("É¾³ı"));
-			_add_item (_T (""), _T (""), _T ("ĞÂ½¨"));
+			_add_item (_T (""), _T (""), _T ("åˆ é™¤"));
+			_add_item (_T (""), _T (""), _T ("æ–°å»º"));
 			return true;
 		} else if (name == _T ("qps_postdata_ctrl_del")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
@@ -162,13 +162,13 @@ protected:
 		}
 	}
 
-	// ĞÂÔöÒ»ĞĞ
+	// æ–°å¢ä¸€è¡Œ
 	void _add_item (string_view_t key, string_view_t value, string_view_t btntext) {
 		static size_t n_sign = 0;
 		CListContainerElementUI *item = new CListContainerElementUI ();
 		item->SetFixedHeight (20);
 		string_t color = (m_qps_postdata_list->GetCount () % 2) ? _T ("#FFEEEEEE") : _T ("#FFFFFFFF");
-		bool is_new = (btntext == _T ("ĞÂ½¨"));
+		bool is_new = (btntext == _T ("æ–°å»º"));
 		if (is_new)
 			color = _T ("#FFDDDDDD");
 		item->SetAttribute (_T ("name"), tool_StringT::format (_T ("qps_postdata_item_%d"), ++n_sign));
@@ -204,7 +204,7 @@ protected:
 		ctnr = new CHorizontalLayoutUI ();
 		ctrl = new CButtonUI ();
 		ctrl->SetManager (m_parent->get_pm (), ctnr);
-		ctrl->SetText (_T ("¡ü"));
+		ctrl->SetText (_T ("â†‘"));
 		ctrl->SetAttribute (_T ("style"), _T ("x_button"));
 		ctrl->SetAttribute (_T ("name"), _T ("qps_postdata_ctrl_up"));
 		ctrl->SetAttribute (_T ("width"), _T ("20"));
@@ -213,7 +213,7 @@ protected:
 		ctnr->Add (ctrl);
 		ctrl = new CButtonUI ();
 		ctrl->SetManager (m_parent->get_pm (), ctnr);
-		ctrl->SetText (_T ("¡ı"));
+		ctrl->SetText (_T ("â†“"));
 		ctrl->SetAttribute (_T ("style"), _T ("x_button"));
 		ctrl->SetAttribute (_T ("name"), _T ("qps_postdata_ctrl_down"));
 		ctrl->SetAttribute (_T ("width"), _T ("20"));
@@ -231,7 +231,7 @@ protected:
 		m_qps_postdata_list->Add (item);
 	}
 
-	// ½»»»Á½ĞĞÄÚÈİ
+	// äº¤æ¢ä¸¤è¡Œå†…å®¹
 	void _swap_item (string_t name1, string_t name2) {
 		string_t name_key1 = name1 + _T ("_key");
 		BindEditUI edit_key1 { name_key1 };
@@ -250,7 +250,7 @@ protected:
 		edit_value2->SetText (name_tmp);
 	}
 
-	// ±í¸ñÊı¾İÓëÔ­Ê¼Êı¾İ»¥×ª
+	// è¡¨æ ¼æ•°æ®ä¸åŸå§‹æ•°æ®äº’è½¬
 	void _convert_data (bool list2src) {
 		if (list2src) {
 			string_t post_data = _T ("");
@@ -278,9 +278,9 @@ protected:
 					vkey_val.push_back (_T (""));
 				vkey_val[0] = tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_decode (tool_Encoding::get_utf8 (vkey_val[0])));
 				vkey_val[1] = tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_decode (tool_Encoding::get_utf8 (vkey_val[1])));
-				_add_item (vkey_val[0], vkey_val[1], _T ("É¾³ı"));
+				_add_item (vkey_val[0], vkey_val[1], _T ("åˆ é™¤"));
 			}
-			_add_item (_T (""), _T (""), _T ("ĞÂ½¨"));
+			_add_item (_T (""), _T (""), _T ("æ–°å»º"));
 		}
 	}
 

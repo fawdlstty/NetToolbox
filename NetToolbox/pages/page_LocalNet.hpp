@@ -1,4 +1,4 @@
-#ifndef __PAGE_LOCAL_NET_HPP__
+ï»¿#ifndef __PAGE_LOCAL_NET_HPP__
 #define __PAGE_LOCAL_NET_HPP__
 
 #include "page_base.hpp"
@@ -60,7 +60,7 @@ public:
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (is_dhcp ? _T ("ÒÑÆôÓÃ") : _T ("ÒÑ½ûÓÃ"));
+				ctrl->SetText (is_dhcp ? _T ("å·²å¯ç”¨") : _T ("å·²ç¦ç”¨"));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);

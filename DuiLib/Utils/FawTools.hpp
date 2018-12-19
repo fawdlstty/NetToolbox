@@ -1,4 +1,4 @@
-#ifndef __FAW_TOOLS_HPP__
+Ôªø#ifndef __FAW_TOOLS_HPP__
 #define __FAW_TOOLS_HPP__
 
 #include "../Core/UIManager.h"
@@ -106,7 +106,7 @@ namespace DuiLib {
 				return "";
 			try {
 				va_list ap;
-				//¿¥‘¥£∫http://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
+				//Êù•Ê∫êÔºöhttp://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
 				ptrdiff_t final_n, n = (str.length ()) * 2;
 				std::unique_ptr<char[]> formatted;
 				while (true) {
@@ -131,7 +131,7 @@ namespace DuiLib {
 				return L"";
 			try {
 				va_list ap;
-				//¿¥‘¥£∫http://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
+				//Êù•Ê∫êÔºöhttp://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
 				ptrdiff_t final_n, n = (str.length ()) * 2;
 				std::unique_ptr<wchar_t[]> formatted;
 				while (true) {
@@ -156,7 +156,7 @@ namespace DuiLib {
 				return _T ("");
 			try {
 				va_list ap;
-				//¿¥‘¥£∫http://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
+				//Êù•Ê∫êÔºöhttp://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
 				ptrdiff_t final_n, n = (str.length ()) * 2;
 				std::unique_ptr<TCHAR[]> formatted;
 				while (true) {
@@ -189,7 +189,7 @@ namespace DuiLib {
 
 
 		//
-		// ◊÷∑˚¥Æ¥¶¿Ì
+		// Â≠óÁ¨¶‰∏≤Â§ÑÁêÜ
 		//
 
 		static std::wstring gb18030_to_utf16 (std::string_view _old) { return _conv_to_wide (_old, CP_ACP); }

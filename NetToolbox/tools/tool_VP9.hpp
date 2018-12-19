@@ -1,4 +1,4 @@
-#ifndef __TOOL_VP9_HPP__
+﻿#ifndef __TOOL_VP9_HPP__
 #define __TOOL_VP9_HPP__
 
 #include <string>

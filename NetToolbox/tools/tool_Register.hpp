@@ -1,4 +1,4 @@
-#ifndef __TOOL_REGISTER_HPP__
+﻿#ifndef __TOOL_REGISTER_HPP__
 #define __TOOL_REGISTER_HPP__
 
 #include <string>

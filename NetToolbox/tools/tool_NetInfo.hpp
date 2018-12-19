@@ -1,4 +1,4 @@
-#ifndef __TOOL_NET_INFO_HPP__
+ï»¿#ifndef __TOOL_NET_INFO_HPP__
 #define __TOOL_NET_INFO_HPP__
 
 #include <string>
@@ -21,7 +21,7 @@
 
 class tool_NetInfo {
 public:
-	// »ñÈ¡±¾µØÍøÂçµÄ¡¾ÍøÂçÃèÊö¡¢±¾»úµØÖ·¡¢Íø¹ØµØÖ·¡¢DHCP¡¿ÁÐ±í
+	// èŽ·å–æœ¬åœ°ç½‘ç»œçš„ã€ç½‘ç»œæè¿°ã€æœ¬æœºåœ°å€ã€ç½‘å…³åœ°å€ã€DHCPã€‘åˆ—è¡¨
 	static std::vector<std::tuple<std::string, std::string, std::string, bool>> get_local_net () {
 		std::vector<std::tuple<std::string, std::string, std::string, bool>> ret;
 		ULONG size = 0;
@@ -37,7 +37,7 @@ public:
 		return ret;
 	}
 
-	// »ñÈ¡±¾µØÍø¶Î
+	// èŽ·å–æœ¬åœ°ç½‘æ®µ
 	static std::tuple<string_t, string_t> get_ip_segment () {
 		ULONG size = 0;
 		GetAdaptersInfo (NULL, &size);
@@ -57,21 +57,21 @@ public:
 		return { _T (""), _T ("") };
 	}
 
-	// »ñÈ¡ÍøÂçÁ¬½ÓÁÐ±í¡¾ÊÇ·ñÊÇipv4£¨²»ÏÔÊ¾£©£¬±¾µØµØÖ·£¬±¾µØ¶Ë¿Ú£¬Ô¶³ÌµØÖ·£¬Ô¶³Ì¶Ë¿Ú£¬µ±Ç°Á¬½Ó×´Ì¬£¬½ø³ÌPID£¬½ø³ÌÃû³Æ£¬½ø³ÌÂ·¾¶£¨²»ÏÔÊ¾£©¡¿
+	// èŽ·å–ç½‘ç»œè¿žæŽ¥åˆ—è¡¨ã€æ˜¯å¦æ˜¯ipv4ï¼ˆä¸æ˜¾ç¤ºï¼‰ï¼Œæœ¬åœ°åœ°å€ï¼Œæœ¬åœ°ç«¯å£ï¼Œè¿œç¨‹åœ°å€ï¼Œè¿œç¨‹ç«¯å£ï¼Œå½“å‰è¿žæŽ¥çŠ¶æ€ï¼Œè¿›ç¨‹PIDï¼Œè¿›ç¨‹åç§°ï¼Œè¿›ç¨‹è·¯å¾„ï¼ˆä¸æ˜¾ç¤ºï¼‰ã€‘
 	static std::vector<std::tuple<bool, string_t, uint16_t, string_t, uint16_t, string_t, DWORD, string_t>> get_connections () {
 		static std::map<DWORD, string_t> mtcp_conn_state {
-			//{ MIB_TCP_STATE_CLOSED,			_T ("TCPÒÑ¹Ø±Õ") },
-			{ MIB_TCP_STATE_LISTEN,			_T ("TCPÕýÔÚ¼àÌý") },
-			//{ MIB_TCP_STATE_SYN_SENT,		_T ("TCPÁ¬½ÓÖÐ") },
-			//{ MIB_TCP_STATE_SYN_RCVD,		_T ("TCPÁ¬½ÓÖÐ") },
-			{ MIB_TCP_STATE_ESTAB,			_T ("TCPÒÑÁ¬½Ó") },
-			//{ MIB_TCP_STATE_FIN_WAIT1,		_T ("TCP¶Ï¿ªÖÐ") },
-			//{ MIB_TCP_STATE_FIN_WAIT2,		_T ("TCP¶Ï¿ªÖÐ") },
-			//{ MIB_TCP_STATE_CLOSE_WAIT,		_T ("TCP¶Ï¿ªÖÐ") },
-			//{ MIB_TCP_STATE_CLOSING,		_T ("TCP¶Ï¿ªÖÐ") },
-			//{ MIB_TCP_STATE_LAST_ACK,		_T ("TCPÒÑ¶Ï¿ª") },
-			//{ MIB_TCP_STATE_TIME_WAIT,		_T ("TCPÒÑ¶Ï¿ª") },
-			//{ MIB_TCP_STATE_DELETE_TCB,		_T ("TCPÉ¾³ýTCB¼ÇÂ¼") },
+			//{ MIB_TCP_STATE_CLOSED,			_T ("TCPå·²å…³é—­") },
+			{ MIB_TCP_STATE_LISTEN,			_T ("TCPæ­£åœ¨ç›‘å¬") },
+			//{ MIB_TCP_STATE_SYN_SENT,		_T ("TCPè¿žæŽ¥ä¸­") },
+			//{ MIB_TCP_STATE_SYN_RCVD,		_T ("TCPè¿žæŽ¥ä¸­") },
+			{ MIB_TCP_STATE_ESTAB,			_T ("TCPå·²è¿žæŽ¥") },
+			//{ MIB_TCP_STATE_FIN_WAIT1,		_T ("TCPæ–­å¼€ä¸­") },
+			//{ MIB_TCP_STATE_FIN_WAIT2,		_T ("TCPæ–­å¼€ä¸­") },
+			//{ MIB_TCP_STATE_CLOSE_WAIT,		_T ("TCPæ–­å¼€ä¸­") },
+			//{ MIB_TCP_STATE_CLOSING,		_T ("TCPæ–­å¼€ä¸­") },
+			//{ MIB_TCP_STATE_LAST_ACK,		_T ("TCPå·²æ–­å¼€") },
+			//{ MIB_TCP_STATE_TIME_WAIT,		_T ("TCPå·²æ–­å¼€") },
+			//{ MIB_TCP_STATE_DELETE_TCB,		_T ("TCPåˆ é™¤TCBè®°å½•") },
 		};
 		std::map<DWORD, string_t> mprocesses = tool_Process::get_processes ();
 		auto size_max = [](size_t p1, size_t p2) {

@@ -1,4 +1,4 @@
-#ifndef __page_Record_HPP__
+﻿#ifndef __page_Record_HPP__
 #define __page_Record_HPP__
 
 #include <thread>

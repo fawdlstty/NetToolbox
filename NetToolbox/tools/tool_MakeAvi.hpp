@@ -1,4 +1,4 @@
-#ifndef __TOOL_MAKEAVI_HPP__
+﻿#ifndef __TOOL_MAKEAVI_HPP__
 #define __TOOL_MAKEAVI_HPP__
 
 //http://blog.sina.com.cn/s/blog_a2e5bcda01019bcw.html
@@ -105,7 +105,7 @@ private:
 	string_t			m_path = _T ("");
 	IAVIFile			*m_pfile = nullptr;
 	//WAVEFORMATEX		m_wfx { 0 };
-	int					m_period = 50;						// ֡ʱ����
+	int					m_period = 50;						// 帧时间间隔
 	IAVIStream			*m_astm = nullptr;
 	IAVIStream			*m_pstm = nullptr;
 	IAVIStream			*m_pstm_cprs = nullptr;

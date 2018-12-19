@@ -1,4 +1,4 @@
-#ifndef __UIRICHEDIT_H__
+ï»¿#ifndef __UIRICHEDIT_H__
 #define __UIRICHEDIT_H__
 
 #pragma once
@@ -122,8 +122,8 @@ namespace DuiLib {
 
 		void DoInit ();
 		bool SetDropAcceptFile (bool bAccept);
-		// ×¢Òâ£ºTxSendMessageºÍSendMessageÊÇÓĞÇø±ğµÄ£¬TxSendMessageÃ»ÓĞmultibyteºÍunicode×Ô¶¯×ª»»µÄ¹¦ÄÜ£¬
-		// ¶ørichedit2.0ÄÚ²¿ÊÇÒÔunicodeÊµÏÖµÄ£¬ÔÚmultibyte³ÌĞòÖĞ£¬±ØĞë×Ô¼º´¦Àíunicodeµ½multibyteµÄ×ª»»
+		// æ³¨æ„ï¼šTxSendMessageå’ŒSendMessageæ˜¯æœ‰åŒºåˆ«çš„ï¼ŒTxSendMessageæ²¡æœ‰multibyteå’Œunicodeè‡ªåŠ¨è½¬æ¢çš„åŠŸèƒ½ï¼Œ
+		// è€Œrichedit2.0å†…éƒ¨æ˜¯ä»¥unicodeå®ç°çš„ï¼Œåœ¨multibyteç¨‹åºä¸­ï¼Œå¿…é¡»è‡ªå·±å¤„ç†unicodeåˆ°multibyteçš„è½¬æ¢
 		virtual HRESULT TxSendMessage (UINT msg, WPARAM wparam, LPARAM lparam, LRESULT *plresult) const;
 		IDropTarget* GetTxDropTarget ();
 		virtual bool OnTxViewChanged ();

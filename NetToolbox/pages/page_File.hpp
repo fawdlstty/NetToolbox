@@ -1,4 +1,4 @@
-#ifndef __PAGE_FILE_HPP__
+ï»¿#ifndef __PAGE_FILE_HPP__
 #define __PAGE_FILE_HPP__
 
 #include <cstdint>
@@ -28,10 +28,10 @@ public:
 			CDuiString file = m_file_path->GetText ();
 			HANDLE hFile = ::CreateFile (file.c_str (), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 			if (hFile == INVALID_HANDLE_VALUE) {
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("Î´ÕÒµ½ÎÄ¼ş£¬ÎŞ·¨·ÖÎö¡£"));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("æœªæ‰¾åˆ°æ–‡ä»¶ï¼Œæ— æ³•åˆ†æã€‚"));
 				return true;
 			}
-			m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, _T ("ÕıÔÚ·ÖÎö¡£¡£¡£"));
+			m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, _T ("æ­£åœ¨åˆ†æã€‚ã€‚ã€‚"));
 			DWORD dwsz_high = 0;
 			DWORD dwsz = ::GetFileSize (hFile, &dwsz_high);
 			::SetFilePointer (hFile, 0, nullptr, FILE_BEGIN);
@@ -40,9 +40,9 @@ public:
 			int8_t *buf = new int8_t[sz_1M];
 			size_t i, j, block_count = (size_t) (file_length / sz_1M);
 			size_t last_size = (size_t) (file_length - (sz_1M * (int64_t) block_count));
-			string_t content = tool_StringT::format (_T ("ÎÄ¼şÂ·¾¶£º %s\nÎÄ¼ş´óĞ¡£º %ld ×Ö½Ú£¨%s£©\nÎÄ¼şHash£º\n"), file.c_str (), file_length, tool_Utils::format_unit (file_length).c_str ());
+			string_t content = tool_StringT::format (_T ("æ–‡ä»¶è·¯å¾„ï¼š %s\næ–‡ä»¶å¤§å°ï¼š %ld å­—èŠ‚ï¼ˆ%sï¼‰\næ–‡ä»¶Hashï¼š\n"), file.c_str (), file_length, tool_Utils::format_unit (file_length).c_str ());
 			//
-			// ÎÄ¼şHash
+			// æ–‡ä»¶Hash
 			//
 			boost::crc_32_type crc32;
 			MD4_CTX _md4;
@@ -123,17 +123,17 @@ public:
 			content += tool_StringT::format (_T ("SHA384:    %s\n"), str_sha384.c_str ());
 			content += tool_StringT::format (_T ("SHA512:    %s\n"), str_sha512.c_str ());
 			//
-			// PE·ÖÎö
+			// PEåˆ†æ
 			//
 			std::vector<std::string> vexport;
 			std::vector<std::tuple<std::string, std::vector<std::tuple<int16_t, std::string>>>> vimport;
 			if (tool_PE::read_import_export (file.c_str (), vexport, vimport)) {
-				content += _T ("\n\n\nPEĞÅÏ¢£º\nµ¼³öº¯Êı£º\n");
+				content += _T ("\n\n\nPEä¿¡æ¯ï¼š\nå¯¼å‡ºå‡½æ•°ï¼š\n");
 				for (size_t i = 0; i < vexport.size (); ++i) {
 					content += tool_Encoding::get_T (vexport[i]);
 					content += _T ('\n');
 				}
-				content += _T ("\nµ¼Èëº¯Êı£º\n");
+				content += _T ("\nå¯¼å…¥å‡½æ•°ï¼š\n");
 				for (i = 0; i < vimport.size (); ++i) {
 					auto[dll_name, dll_funcs] = vimport[i];
 					content += tool_Encoding::get_T (dll_name);
@@ -144,11 +144,11 @@ public:
 					}
 				}
 			} else {
-				content += _T ("\n\n\nÎÄ¼ş·ÇPEÎÄ¼ş£¬ÎŞPEÊı¾İ¡£\n");
+				content += _T ("\n\n\næ–‡ä»¶éPEæ–‡ä»¶ï¼Œæ— PEæ•°æ®ã€‚\n");
 			}
 			//
 			m_file_result->SetText (content.c_str ());
-			m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _T ("ÎÄ¼ş·ÖÎöÍê±Ï¡£"));
+			m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _T ("æ–‡ä»¶åˆ†æå®Œæ¯•ã€‚"));
 			return true;
 		}
 		return false;
@@ -165,12 +165,12 @@ public:
 		if (bExist) {
 			::FindClose (hFind);
 			if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("²»½ÓÊÜÎÄ¼ş¼ĞÀàĞÍ"));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("ä¸æ¥å—æ–‡ä»¶å¤¹ç±»å‹"));
 				return true;
 			}
 			m_file_path->SetText (path);
 		} else {
-			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("Î´ÕÒµ½ÎÄ¼ş"));
+			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("æœªæ‰¾åˆ°æ–‡ä»¶"));
 		}
 		return true;
 	}

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 
 namespace DuiLib {
 	IMPLEMENT_DUICONTROL (CControlUI)
@@ -85,7 +85,7 @@ namespace DuiLib {
 		if (m_sText == pstrText) return;
 
 		m_sText = pstrText;
-		// ½âÎöxml»»ÐÐ·û
+		// è§£æžxmlæ¢è¡Œç¬¦
 		m_sText.Replace (_T ("{\\n}"), _T ("\r\n"));
 		Invalidate ();
 	}
@@ -742,7 +742,7 @@ namespace DuiLib {
 	}
 
 	void CControlUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
-		// ÊÇ·ñÑùÊ½±í
+		// æ˜¯å¦æ ·å¼è¡¨
 		if (m_pManager) {
 			string_view_t pStyle = m_pManager->GetStyle (pstrValue);
 			if (!pStyle.empty ()) {
@@ -758,7 +758,7 @@ namespace DuiLib {
 			SetFixedHeight (rcPos.bottom - rcPos.top);
 		} else if (pstrName == _T ("float")) {
 			CDuiString nValue = pstrValue;
-			// ¶¯Ì¬¼ÆËãÏà¶Ô±ÈÀý
+			// åŠ¨æ€è®¡ç®—ç›¸å¯¹æ¯”ä¾‹
 			if (nValue.find (',') == string_t::npos) {
 				SetFloat (FawTools::parse_bool (pstrValue));
 			} else {
@@ -768,7 +768,7 @@ namespace DuiLib {
 			}
 		} else if (pstrName == _T ("floatalign")) {
 			UINT uAlign = GetFloatAlign ();
-			// ½âÎöÎÄ×ÖÊôÐÔ
+			// è§£æžæ–‡å­—å±žæ€§
 			while (!pstrValue.empty ()) {
 				CDuiString sValue;
 				while (pstrValue[0] == _T (',') || pstrValue[0] == _T (' ')) pstrValue = pstrValue.substr (1);
@@ -926,7 +926,7 @@ namespace DuiLib {
 	}
 
 	CControlUI* CControlUI::ApplyAttributeList (string_view_t pstrValue) {
-		// ½âÎöÑùÊ½±í
+		// è§£æžæ ·å¼è¡¨
 		if (m_pManager) {
 			string_view_t pStyle = m_pManager->GetStyle (pstrValue);
 			if (!pStyle.empty ()) {
@@ -958,7 +958,7 @@ namespace DuiLib {
 	}
 
 	bool CControlUI::DoPaint (HDC hDC, const RECT& rcPaint, CControlUI* pStopControl) {
-		// »æÖÆÑ­Ðò£º±³¾°ÑÕÉ«->±³¾°Í¼->×´Ì¬Í¼->ÎÄ±¾->±ß¿ò
+		// ç»˜åˆ¶å¾ªåºï¼šèƒŒæ™¯é¢œè‰²->èƒŒæ™¯å›¾->çŠ¶æ€å›¾->æ–‡æœ¬->è¾¹æ¡†
 		SIZE cxyBorderRound = { 0 };
 		RECT rcBorderSize = { 0 };
 		if (m_pManager) {
@@ -1048,7 +1048,7 @@ namespace DuiLib {
 		}
 
 		if (m_dwBorderColor != 0 || m_dwFocusBorderColor != 0) {
-			//»­Ô²½Ç±ß¿ò
+			//ç”»åœ†è§’è¾¹æ¡†
 			if (nBorderSize > 0 && (cxyBorderRound.cx > 0 || cxyBorderRound.cy > 0)) {
 				if (IsFocused () && m_dwFocusBorderColor != 0)
 					CRenderEngine::DrawRoundRect (hDC, m_rcItem, nBorderSize, cxyBorderRound.cx, cxyBorderRound.cy, GetAdjustColor (m_dwFocusBorderColor), m_nBorderStyle);

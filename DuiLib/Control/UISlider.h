@@ -1,4 +1,4 @@
-#ifndef __UISLIDER_H__
+﻿#ifndef __UISLIDER_H__
 #define __UISLIDER_H__
 
 #pragma once

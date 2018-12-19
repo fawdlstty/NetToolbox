@@ -1,4 +1,4 @@
-#ifndef __TOOL_WMI_HPP__
+ï»¿#ifndef __TOOL_WMI_HPP__
 #define __TOOL_WMI_HPP__
 
 #include <string>
@@ -8,44 +8,44 @@
 
 //#pragma comment (lib, "comsuppw.lib")
 
-// WMIÊ¹ÓÃµÄWin32Àà¿âÃû
+// WMIä½¿ç”¨çš„Win32ç±»åº“å
 // http://ilcy2000.blog.sohu.com/132487993.html
 
 
 
 class tool_WMI {
 public:
-	// »ñÈ¡Íø¿¨ĞòÁĞºÅ
+	// è·å–ç½‘å¡åºåˆ—å·
 	static std::wstring get_netcard_id () {
 		return _query_info (L"SELECT * FROM Win32_NetworkAdapter WHERE (MACAddress IS NOT NULL) AND (NOT (PNPDeviceID LIKE 'ROOT%'))", L"PNPDeviceID");
 	}
 
-	// »ñÈ¡Ó²ÅÌĞòÁĞºÅ
+	// è·å–ç¡¬ç›˜åºåˆ—å·
 	static std::wstring get_disk_id () {
 		return _query_info (L"SELECT * FROM Win32_DiskDrive WHERE (SerialNumber IS NOT NULL)", L"SerialNumber");
 	}
 
-	// »ñÈ¡Ö÷°åĞòÁĞºÅ
+	// è·å–ä¸»æ¿åºåˆ—å·
 	static std::wstring get_mainboard_id () {
 		return _query_info (L"SELECT * FROM Win32_BaseBoard WHERE (SerialNumber IS NOT NULL)", L"SerialNumber");
 	}
 
-	// »ñÈ¡´¦ÀíÆ÷ID
+	// è·å–å¤„ç†å™¨ID
 	static std::wstring get_cpu_id () {
 		return _query_info (L"SELECT * FROM Win32_Processor WHERE (ProcessorId IS NOT NULL)", L"ProcessorId");
 	}
 
-	// »ñÈ¡BIOSĞòÁĞºÅ
+	// è·å–BIOSåºåˆ—å·
 	static std::wstring get_bios_id () {
 		return _query_info (L"SELECT * FROM Win32_BIOS WHERE (SerialNumber IS NOT NULL)", L"SerialNumber");
 	}
 
-	// »ñÈ¡Ö÷°åĞÍºÅ
+	// è·å–ä¸»æ¿å‹å·
 	static std::wstring get_mainboard_type () {
 		return _query_info (L"SELECT * FROM Win32_BaseBoard WHERE (Product IS NOT NULL)", L"Product");
 	}
 
-	// »ñÈ¡Íø¿¨µ±Ç°MACµØÖ·
+	// è·å–ç½‘å¡å½“å‰MACåœ°å€
 	static std::wstring get_netcard_mac () {
 		return _query_info (L"SELECT * FROM Win32_NetworkAdapter WHERE (MACAddress IS NOT NULL) AND (NOT (PNPDeviceID LIKE 'ROOT%'))", L"MACAddress");
 	}

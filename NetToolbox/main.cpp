@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "NetToolboxWnd.h"
 
 #include <fstream>
@@ -40,7 +40,7 @@ using Json = nlohmann::json;
 
 // ref: tools/tool_SerialPort
 #pragma comment (lib, "SetupAPI.lib")
-// ref: tools/tool_NetInfo¡¢tools/tool_Tracert
+// ref: tools/tool_NetInfoã€tools/tool_Tracert
 #pragma comment(lib, "iphlpapi.lib")
 // ref: tools/tool_Tracert
 #pragma comment (lib, "ws2_32.lib")
@@ -62,16 +62,16 @@ public:
 	ProgramGuard () {
 		WSAData wd;
 		if (::WSAStartup (MAKEWORD (2, 2), &wd)) {
-			::MessageBox (NULL, _T ("WSAStartupÊ§°Ü£¬³ÌĞò½«ÍË³ö£¡"), _T ("ÌáÊ¾"), MB_ICONHAND);
+			::MessageBox (NULL, _T ("WSAStartupå¤±è´¥ï¼Œç¨‹åºå°†é€€å‡ºï¼"), _T ("æç¤º"), MB_ICONHAND);
 			return;
 		}
 		if (FAILED (::CoInitializeEx (NULL, COINIT_APARTMENTTHREADED))) {
-			::MessageBox (NULL, _T ("COM+³õÊ¼»¯Ê§°Ü£¬³ÌĞò½«ÍË³ö£¡"), _T ("ÌáÊ¾"), MB_ICONHAND);
+			::MessageBox (NULL, _T ("COM+åˆå§‹åŒ–å¤±è´¥ï¼Œç¨‹åºå°†é€€å‡ºï¼"), _T ("æç¤º"), MB_ICONHAND);
 			::WSACleanup ();
 			return;
 		}
 		if (FAILED (::CoInitializeSecurity (NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL))) {
-			::MessageBox (NULL, _T ("COM+°²È«ĞÅÏ¢ÉèÖÃÊ§°Ü£¬³ÌĞò½«ÍË³ö£¡"), _T ("ÌáÊ¾"), MB_ICONHAND);
+			::MessageBox (NULL, _T ("COM+å®‰å…¨ä¿¡æ¯è®¾ç½®å¤±è´¥ï¼Œç¨‹åºå°†é€€å‡ºï¼"), _T ("æç¤º"), MB_ICONHAND);
 			::CoUninitialize ();
 			::WSACleanup ();
 			return;
@@ -88,7 +88,7 @@ public:
 };
 
 int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
-	// ³õÊ¼»¯Èí¼ş»·¾³
+	// åˆå§‹åŒ–è½¯ä»¶ç¯å¢ƒ
 	ProgramGuard pg;
 	if (!pg.is_succeed)
 		return 0;
@@ -96,9 +96,9 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	string_t _src = path + _T ("NetToolbox.exe"), _srcd = path + _T ("res.dll");
 	auto ver_src = tool_PE::get_version (tool_Encoding::get_gb18030 (_src).c_str ());
 
-	// ÅĞ¶Ï°æ±¾ & ¸üĞÂ¿ØÖÆ
+	// åˆ¤æ–­ç‰ˆæœ¬ & æ›´æ–°æ§åˆ¶
 #ifndef _DEBUG
-	// ±È½Ï°æ±¾
+	// æ¯”è¾ƒç‰ˆæœ¬
 	auto _cmp_ver = [] (std::tuple<size_t, size_t, size_t, size_t> a, std::tuple<size_t, size_t, size_t, size_t> b) -> int {
 		auto[a1, a2, a3, a4] = a;
 		auto[b1, b2, b3, b4] = b;
@@ -109,7 +109,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 		return 0;
 	};
 
-	// ½âÎö°æ±¾
+	// è§£æç‰ˆæœ¬
 	auto _parse_ver = [] (std::string s) -> std::tuple<size_t, size_t, size_t, size_t> {
 		std::vector<std::string> v;
 		tool_StringA::split (s, v, '.');
@@ -118,12 +118,12 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 		return { stoi (v[0]), stoi (v[1]), stoi (v[2]), stoi (v[3]) };
 	};
 
-	// ¸üĞÂ¿ØÖÆ
+	// æ›´æ–°æ§åˆ¶
 	string_t _new = path + _T ("NetToolbox.new.exe"), _newd = path + _T ("res.new.dll"), _oldd = path + _T ("res.dll");
 	decltype (ver_src) ver_new = { 0, 0, 0, 0 };
 	bool exist_new = tool_Path::file_exist (_new.c_str ());
 	if (!exist_new) {
-		// ¼ì²éĞÂ°æ
+		// æ£€æŸ¥æ–°ç‰ˆ
 		std::thread ([=] () {
 			try {
 				std::string url_base = "https://nettoolbox.fawdlstty.com/";
@@ -150,7 +150,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 								for (size_t i = 0; i < sizeof (buf_md5); ++i)
 									str_md5 += tool_StringA::byte_to_str (buf_md5[i]);
 								if (tool_StringA::is_equal_nocase (str_md5, _md5)) {
-									// ĞŞ¸´releaseÏÂ¿ÉÄÜÖ±½Ó´´½¨ÎÄ¼şµÄÎÊÌâ
+									// ä¿®å¤releaseä¸‹å¯èƒ½ç›´æ¥åˆ›å»ºæ–‡ä»¶çš„é—®é¢˜
 									[_local_file, _data] () {
 										std::ofstream ofs (_local_file, std::ios::trunc | std::ios::binary);
 										ofs.write (_data.c_str (), _data.size ());
@@ -161,14 +161,14 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 										::DeleteFile (_new.c_str ());
 									if (tool_Path::file_exist (_newd))
 										::DeleteFile (_newd.c_str ());
-									if (IDOK == ::MessageBox (NULL, _T ("¸üĞÂÊ§°Ü£¬ÊÇ·ñ³¢ÊÔÊÖ¶¯¸üĞÂ£¿"), _T ("Ò×´óÊ¦ÍøÂç¹¤¾ßÏä"), MB_ICONQUESTION | MB_OKCANCEL))
+									if (IDOK == ::MessageBox (NULL, _T ("æ›´æ–°å¤±è´¥ï¼Œæ˜¯å¦å°è¯•æ‰‹åŠ¨æ›´æ–°ï¼Ÿ"), _T ("æ˜“å¤§å¸ˆç½‘ç»œå·¥å…·ç®±"), MB_ICONQUESTION | MB_OKCANCEL))
 										::ShellExecute (NULL, _T ("open"), _T ("https://nettoolbox.fawdlstty.com/NetToolbox.7z"), NULL, NULL, SW_SHOW);
 									return;
 								}
 							}
 						}
 					}
-					::MessageBox (NULL, _T ("¸üĞÂÒÑÍê³É£¬Èí¼ş½«ÔÚÏÂ´ÎÆô¶¯Ê±Íê³É¸üĞÂ¡£"), _T ("Ò×´óÊ¦ÍøÂç¹¤¾ßÏä"), MB_ICONINFORMATION);
+					::MessageBox (NULL, _T ("æ›´æ–°å·²å®Œæˆï¼Œè½¯ä»¶å°†åœ¨ä¸‹æ¬¡å¯åŠ¨æ—¶å®Œæˆæ›´æ–°ã€‚"), _T ("æ˜“å¤§å¸ˆç½‘ç»œå·¥å…·ç®±"), MB_ICONINFORMATION);
 				}
 			} catch (...) {
 			}
@@ -176,7 +176,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	} else {
 		ver_new = tool_PE::get_version (tool_Encoding::get_gb18030 (_new).c_str ());
 		if (tool_Path::get_exe_name () == _T ("NetToolbox.exe")) {
-			// ¼ì²é°æ±¾ºÅÊÇ·ñµÈÓÚĞÂÎÄ¼ş£¬Èç¹ûÏàµÈ£¬ÔòµÈ´ıĞÂ½ø³ÌÍË³ö²¢É¾³ıĞÂÎÄ¼ş£¬·ñÔò´´½¨ĞÂ½ø³Ì²¢½áÊø×ÔÉí
+			// æ£€æŸ¥ç‰ˆæœ¬å·æ˜¯å¦ç­‰äºæ–°æ–‡ä»¶ï¼Œå¦‚æœç›¸ç­‰ï¼Œåˆ™ç­‰å¾…æ–°è¿›ç¨‹é€€å‡ºå¹¶åˆ é™¤æ–°æ–‡ä»¶ï¼Œå¦åˆ™åˆ›å»ºæ–°è¿›ç¨‹å¹¶ç»“æŸè‡ªèº«
 			if (_cmp_ver (ver_src, ver_new) == 0) {
 				while (tool_Process::process_exist (_T ("NetToolbox.new.exe")))
 					std::this_thread::sleep_for (std::chrono::milliseconds (100));
@@ -191,7 +191,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 				return 0;
 			}
 		} else {
-			// ¼ì²é°æ±¾ºÅÊÇ·ñµÈÓÚÖ÷³ÌĞò£¬Èç¹ûÏàµÈ£¬ÔòÍË³ö×ÔÉí£¬·ñÔòµÈÖ÷³ÌĞòÍË³ö²¢½«×ÔÉí¸´ÖÆ¸øÖ÷³ÌĞò
+			// æ£€æŸ¥ç‰ˆæœ¬å·æ˜¯å¦ç­‰äºä¸»ç¨‹åºï¼Œå¦‚æœç›¸ç­‰ï¼Œåˆ™é€€å‡ºè‡ªèº«ï¼Œå¦åˆ™ç­‰ä¸»ç¨‹åºé€€å‡ºå¹¶å°†è‡ªèº«å¤åˆ¶ç»™ä¸»ç¨‹åº
 			if (_cmp_ver (ver_src, ver_new) != 0) {
 				while (tool_Process::process_exist (_T ("NetToolbox.exe")))
 					std::this_thread::sleep_for (std::chrono::milliseconds (100));
@@ -205,10 +205,10 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	}
 #endif
 
-	// ¼ÓÔØÅäÖÃÎÄ¼ş
+	// åŠ è½½é…ç½®æ–‡ä»¶
 	Settings::init ();
 
-	// ³õÊ¼»¯Â·¾¶
+	// åˆå§‹åŒ–è·¯å¾„
 	CPaintManagerUI::SetInstance (hInstance);
 #ifdef _DEBUG
 	path.erase (path.begin () + path.rfind (_T ('\\'), path.size () - 2) + 1, path.end ());
@@ -230,19 +230,19 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	}
 #endif
 
-	// ³õÊ¼»¯µ÷ÊÔÈ¨ÏŞ
+	// åˆå§‹åŒ–è°ƒè¯•æƒé™
 	tool_Priv::adjust_debug ();
 
-	// ¼ÆËã±àÒëÆ÷°æ±¾
+	// è®¡ç®—ç¼–è¯‘å™¨ç‰ˆæœ¬
 	auto[v1, v2, v3, v4] = ver_src;
 	std::vector<LPCTSTR> publish { _T ("Alpha"), _T ("Beta"), _T ("Gamma"), _T ("RC"), _T ("GA") };
 	string_t str_publish = _T ("Community");
 	//_T ("Community"), _T ("Personal"), _T ("Professional"), _T ("Enterprise"), _T ("Ultimate")
-	string_t _caption2 = tool_StringT::format (_T ("%04d.%02d.%02d¡¡%s"), v1, v2, v3, str_publish.c_str ());
+	string_t _caption2 = tool_StringT::format (_T ("%04d.%02d.%02dã€€%s"), v1, v2, v3, str_publish.c_str ());
 
-	// ´´½¨´°¿Ú
+	// åˆ›å»ºçª—å£
 	NetToolboxWnd wnd (_caption2);
-	wnd.Create (NULL, _T ("Ò×´óÊ¦ÍøÂç¹¤¾ßÏä"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+	wnd.Create (NULL, _T ("æ˜“å¤§å¸ˆç½‘ç»œå·¥å…·ç®±"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
 	wnd.CenterWindow ();
 	wnd.ShowModal ();
 	return 0;

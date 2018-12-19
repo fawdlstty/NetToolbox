@@ -1,4 +1,4 @@
-#ifndef __DB_SQLITE_HPP__
+ï»¿#ifndef __DB_SQLITE_HPP__
 #define __DB_SQLITE_HPP__
 
 #include <string>
@@ -39,7 +39,7 @@ public:
 	~db_Sqlite () { if (m_db) sqlite3_close (m_db); }
 
 	std::tuple<std::string, SqliteTable> execute (std::string_view sql) {
-		std::string info = "Ö´ÐÐÍê±Ï¡£";
+		std::string info = "æ‰§è¡Œå®Œæ¯•ã€‚";
 		char *err_msg = nullptr;
 		SqliteTable data;
 		std::function<void (int, char**, char**)> _proc_data = [&data] (int argc, char **argv, char **col_name) {

@@ -1,4 +1,4 @@
-#ifndef __TOOL_GDIP_HPP__
+﻿#ifndef __TOOL_GDIP_HPP__
 #define __TOOL_GDIP_HPP__
 
 #include <vector>
@@ -123,7 +123,7 @@ public:
 		return hBmp;
 	}
 
-	// ��ȡ���ָ��ͼƬתλͼ
+	// 获取鼠标指针图片转位图
 	static Gdiplus::Bitmap *cursor_to_bmp (HCURSOR hcur) {
 		//CURSORINFO cinfo { sizeof (CURSORINFO) };
 		//::GetCursorInfo (&cinfo);

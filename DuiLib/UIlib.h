@@ -1,4 +1,4 @@
-#ifdef UILIB_STATIC
+﻿#ifdef UILIB_STATIC
 #define UILIB_API 
 #else
 #if defined(UILIB_EXPORTS)

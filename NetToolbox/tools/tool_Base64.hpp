@@ -1,4 +1,4 @@
-#ifndef __TOOL_BASE64_HPP__
+ï»¿#ifndef __TOOL_BASE64_HPP__
 #define __TOOL_BASE64_HPP__
 
 #include <iostream>
@@ -9,7 +9,7 @@
 
 class tool_Base64 {
 public:
-	// ÅĞ¶ÏÄÚÈİÊÇ·ñÎªbase64±àÂë
+	// åˆ¤æ–­å†…å®¹æ˜¯å¦ä¸ºbase64ç¼–ç 
 	static bool is_base64 (const unsigned char *data, int length) {
 		if (length % 4) {
 			return false;
@@ -28,7 +28,7 @@ public:
 		return true;
 	}
 
-	// base64±àÂë
+	// base64ç¼–ç 
 	static std::string base64_encode (unsigned char const* bytes_to_encode, unsigned int in_len) {
 		std::string ret;
 		int i = 0, j = 0;
@@ -60,7 +60,7 @@ public:
 		return ret;
 	}
 
-	// base64½âÂë
+	// base64è§£ç 
 	static std::string base64_decode (std::string_view encoded_string) {
 		int in_len = encoded_string.size (), i = 0, j = 0, in_ = 0;
 		unsigned char char_4[4], char_3[3];

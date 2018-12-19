@@ -1,4 +1,4 @@
-#ifndef __PAGE_IPSCAN_HPP__
+ï»¿#ifndef __PAGE_IPSCAN_HPP__
 #define __PAGE_IPSCAN_HPP__
 
 #include <chrono>
@@ -29,9 +29,9 @@ public:
 			string_t sip1 = m_ipscan_ip1->GetText (), sip2 = m_ipscan_ip2->GetText ();
 			uint32_t ip1 = tool_Utils::from_ipv4_my (sip1), ip2 = tool_Utils::from_ipv4_my (sip2);
 			if (ip1 > ip2) {
-				::MessageBox (m_parent->GetHWND (), _T ("ÆðÊ¼IP²»ÄÜ´óÓÚÖÐÖ¹IP£¡"), _T ("´íÎó"), MB_ICONHAND);
+				::MessageBox (m_parent->GetHWND (), _T ("èµ·å§‹IPä¸èƒ½å¤§äºŽä¸­æ­¢IPï¼"), _T ("é”™è¯¯"), MB_ICONHAND);
 			} else if (ip2 - ip1 > 65536) {
-				::MessageBox (m_parent->GetHWND (), _T ("´Ë¹¦ÄÜ²»Ö§³Ö³¬´ó·¶Î§IPÉ¨Ãè£¡"), _T ("´íÎó"), MB_ICONHAND);
+				::MessageBox (m_parent->GetHWND (), _T ("æ­¤åŠŸèƒ½ä¸æ”¯æŒè¶…å¤§èŒƒå›´IPæ‰«æï¼"), _T ("é”™è¯¯"), MB_ICONHAND);
 			} else {
 				m_ipscan_start->SetEnabled (false);
 				m_ipscan_list->RemoveAll ();

@@ -1,4 +1,4 @@
-#ifndef __UIFADEBUTTON_H__
+﻿#ifndef __UIFADEBUTTON_H__
 #define __UIFADEBUTTON_H__
 
 #include "UIAnimation.h"

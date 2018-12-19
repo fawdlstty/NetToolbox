@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+Ôªø#include "StdAfx.h"
 #include "Utils.h"
 
 namespace DuiLib {
@@ -280,7 +280,7 @@ namespace DuiLib {
 		try {
 			va_list ap;
 #ifndef __GNUC__
-			//¿¥‘¥£∫http://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
+			//Êù•Ê∫êÔºöhttp://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
 			ptrdiff_t final_n, n = (pstrFormat.length ()) * 2;
 			std::unique_ptr<TCHAR[]> formatted;
 			while (true) {
@@ -394,7 +394,7 @@ namespace DuiLib {
 					pItem->pPrev = nullptr;
 					pItem->pNext = m_aT[slot];
 					pItem->pNext->pPrev = pItem;
-					//Ω´item“∆∂Ø÷¡¡¥ÃıÕ∑≤ø
+					//Â∞ÜitemÁßªÂä®Ëá≥ÈìæÊù°Â§¥ÈÉ®
 					m_aT[slot] = pItem;
 				}
 				return pItem->Data;
@@ -623,8 +623,8 @@ namespace DuiLib {
 	//	if (!pStrImage.empty ())
 	//		return;
 
-	//	// 1°¢aaa.jpg
-	//	// 2°¢file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0' 
+	//	// 1„ÄÅaaa.jpg
+	//	// 2„ÄÅfile='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0' 
 	//	// mask='#FF0000' fade='255' hole='false' xtiled='false' ytiled='false'
 	//	CDuiString sItem;
 	//	CDuiString sValue;

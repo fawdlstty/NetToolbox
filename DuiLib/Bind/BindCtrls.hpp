@@ -1,4 +1,4 @@
-#ifndef __BIND_CTRLS_HPP__
+﻿#ifndef __BIND_CTRLS_HPP__
 #define __BIND_CTRLS_HPP__
 
 #pragma once

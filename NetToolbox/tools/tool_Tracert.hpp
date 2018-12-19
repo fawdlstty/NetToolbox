@@ -1,4 +1,4 @@
-#ifndef __TOOL_TRACERT_HPP__
+ï»¿#ifndef __TOOL_TRACERT_HPP__
 #define __TOOL_TRACERT_HPP__
 
 #include <string>
@@ -51,11 +51,11 @@ public:
 			f (ttl, 4, route_ip);
 			if (dest_ip == route_ip) {
 				::IcmpCloseHandle (hIcmp);
-				return { true, _T ("Â·ÓÉ¸ú×ÙÍê³É¡£") };
+				return { true, _T ("è·¯ç”±è·Ÿè¸ªå®Œæˆã€‚") };
 			}
 		}
 		::IcmpCloseHandle (hIcmp);
-		return { true, _T ("Â·ÓÉ¸ú×Ù½áÊø£¬ÒÑ³¬¹ı¿É¸ú×ÙµÄ×î´óÔ¾µãÊı¡£") };
+		return { true, _T ("è·¯ç”±è·Ÿè¸ªç»“æŸï¼Œå·²è¶…è¿‡å¯è·Ÿè¸ªçš„æœ€å¤§è·ƒç‚¹æ•°ã€‚") };
 	}
 
 	static std::tuple<bool, string_t> start_ipv6 (std::string dest_ip, std::function<void (size_t, size_t, std::string)> f) {
@@ -96,11 +96,11 @@ public:
 			f (ttl, 4, route_ip);
 			if (dest_ip == route_ip) {
 				::IcmpCloseHandle (hIcmp);
-				return { true, _T ("Â·ÓÉ¸ú×ÙÍê³É¡£") };
+				return { true, _T ("è·¯ç”±è·Ÿè¸ªå®Œæˆã€‚") };
 			}
 		}
 		::IcmpCloseHandle (hIcmp);
-		return { true, _T ("Â·ÓÉ¸ú×Ù½áÊø£¬ÒÑ³¬¹ı¿É¸ú×ÙµÄ×î´óÔ¾µãÊı¡£") };
+		return { true, _T ("è·¯ç”±è·Ÿè¸ªç»“æŸï¼Œå·²è¶…è¿‡å¯è·Ÿè¸ªçš„æœ€å¤§è·ƒç‚¹æ•°ã€‚") };
 	}
 
 private:

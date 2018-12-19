@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "UIGroupBox.h"
 
 namespace DuiLib {
@@ -59,7 +59,7 @@ namespace DuiLib {
 		SIZE szAvailable = { rcText.right - rcText.left, rcText.bottom - rcText.top };
 		SIZE sz = CalcrectSize (szAvailable);
 
-		//¼ÆËãÎÄ×ÖÇøÓò
+		//è®¡ç®—æ–‡å­—åŒºåŸŸ
 		rcText.left = rcText.left + 15;
 		rcText.top = rcText.top - 5;
 		rcText.right = rcText.left + sz.cx;
@@ -87,7 +87,7 @@ namespace DuiLib {
 			//RECT rcItem = m_rcItem;
 			//rcItem.Deflate (5, 5);
 
-			//if (cxyBorderRound.cx > 0 || cxyBorderRound.cy > 0) {//»­Ô²½Ç±ß¿ò
+			//if (cxyBorderRound.cx > 0 || cxyBorderRound.cy > 0) {//ç”»åœ†è§’è¾¹æ¡†
 			//	if (IsFocused () && m_dwFocusBorderColor != 0)
 			//		CRenderEngine::DrawRoundRect (hDC, rcItem, nBorderSize, cxyBorderRound.cx, cxyBorderRound.cy, GetAdjustColor (m_dwFocusBorderColor));
 			//	else
@@ -114,7 +114,7 @@ namespace DuiLib {
 			}
 			gg.ReleaseHDC (gghdc);
 
-			// Çå³ıÎÄ×ÖÎ»ÖÃµÄ±ß¿ò
+			// æ¸…é™¤æ–‡å­—ä½ç½®çš„è¾¹æ¡†
 			SIZE szAvailable = { rcItem.right - rcItem.left, rcItem.bottom - rcItem.top };
 			SIZE sz = CalcrectSize (szAvailable);
 			rcItem.left = rcItem.left + 15;

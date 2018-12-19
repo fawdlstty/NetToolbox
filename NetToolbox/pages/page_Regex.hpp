@@ -1,4 +1,4 @@
-#ifndef __PAGE_REGEX_HPP__
+Ôªø#ifndef __PAGE_REGEX_HPP__
 #define __PAGE_REGEX_HPP__
 
 #include <string>
@@ -49,11 +49,11 @@ public:
 		CDuiString name = msg.pSender->GetName ();
 		if (name == _T ("regex_combo_net")) {
 			m_regex_statement->SetText (_query_regex (m_regex_combo_net->GetText ()));
-			m_regex_combo_net->SetText (_T ("Õ¯¬Á¿‡"));
+			m_regex_combo_net->SetText (_T ("ÁΩëÁªúÁ±ª"));
 			return true;
 		} else if (name == _T ("regex_combo_format")) {
 			m_regex_statement->SetText (_query_regex (m_regex_combo_format->GetText ()));
-			m_regex_combo_format->SetText (_T ("∏Ò Ω¿‡"));
+			m_regex_combo_format->SetText (_T ("Ê†ºÂºèÁ±ª"));
 		}
 		return false;
 	}

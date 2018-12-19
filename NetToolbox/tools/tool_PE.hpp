@@ -1,4 +1,4 @@
-#ifndef __TOOL_PE_HPP__
+﻿#ifndef __TOOL_PE_HPP__
 #define __TOOL_PE_HPP__
 
 #include <string>

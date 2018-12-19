@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 
 #include "UIMenu.h"
 
@@ -205,7 +205,7 @@ namespace DuiLib {
 		m_xml = xml;
 		m_dwAlignment = dwAlignment;
 
-		// Èç¹ûÊÇÒ»¼¶²Ëµ¥µÄ´´½¨
+		// å¦‚æžœæ˜¯ä¸€çº§èœå•çš„åˆ›å»º
 		if (!pOwner) {
 			ASSERT (pMainPaintManager);
 			CMenuWnd::GetGlobalContextMenuObserver ().SetManger (pMainPaintManager);
@@ -263,7 +263,7 @@ namespace DuiLib {
 			m_pOwner->m_uButtonState &= ~UISTATE_PUSHED;
 			m_pOwner->Invalidate ();
 
-			// ÄÚ²¿´´½¨µÄÄÚ²¿É¾³ý
+			// å†…éƒ¨åˆ›å»ºçš„å†…éƒ¨åˆ é™¤
 			delete this;
 		}
 	}
@@ -348,7 +348,7 @@ namespace DuiLib {
 		szAvailable = pRoot->EstimateSize (szAvailable);
 		m_pm.SetInitSize (szAvailable.cx, szAvailable.cy);
 
-		//±ØÐëÊÇMenu±êÇ©×÷ÎªxmlµÄ¸ù½Úµã
+		//å¿…é¡»æ˜¯Menuæ ‡ç­¾ä½œä¸ºxmlçš„æ ¹èŠ‚ç‚¹
 		CMenuUI *pMenuRoot = static_cast<CMenuUI*>(pRoot);
 		ASSERT (pMenuRoot);
 

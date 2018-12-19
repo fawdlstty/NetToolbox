@@ -1,4 +1,4 @@
-#ifndef __PAGE_EXAMPLE_HPP__
+﻿#ifndef __PAGE_EXAMPLE_HPP__
 #define __PAGE_EXAMPLE_HPP__
 
 #include "page_base.hpp"

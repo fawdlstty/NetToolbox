@@ -1,4 +1,4 @@
-#ifndef __TOOL_UTILS_HPP__
+ï»¿#ifndef __TOOL_UTILS_HPP__
 #define __TOOL_UTILS_HPP__
 
 #include <string>
@@ -25,9 +25,9 @@ public:
 
 	static string_t get_error_info (DWORD err_no) {
 		TCHAR tBuf[MAX_PATH] = { 0 };
-		int n = _stprintf_s (tBuf, MAX_PATH, _T ("´íÎó %d£º"), err_no);
+		int n = _stprintf_s (tBuf, MAX_PATH, _T ("é”™è¯¯ %dï¼š"), err_no);
 		if (::FormatMessageW (FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, err_no, MAKELANGID (LANG_NEUTRAL, SUBLANG_DEFAULT), &tBuf[n], MAX_PATH - n, nullptr) == 0)
-			lstrcat (tBuf, _T ("Î´Öª´íÎó¡£"));
+			lstrcat (tBuf, _T ("æœªçŸ¥é”™è¯¯ã€‚"));
 		for (; tBuf[n] != _T ('\0') && n < MAX_PATH - 1; ++n) {
 			if (tBuf[n] == _T ('\r') || tBuf[n] == _T ('\n')) {
 				lstrcpyW (&tBuf[n], &tBuf[n + 1]);

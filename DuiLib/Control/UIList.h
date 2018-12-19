@@ -1,4 +1,4 @@
-#ifndef __UILIST_H__
+ï»¿#ifndef __UILIST_H__
 #define __UILIST_H__
 
 namespace DuiLib {
@@ -112,7 +112,7 @@ namespace DuiLib {
 		int GetCurSel () const;
 		int GetCurSelActivate () const;
 		bool SelectItem (int iIndex, bool bTakeFocus = false);
-		bool SelectItemActivate (int iIndex);    // Ë«»÷Ñ¡ÖĞ
+		bool SelectItemActivate (int iIndex);    // åŒå‡»é€‰ä¸­
 
 		bool SelectMultiItem (int iIndex, bool bTakeFocus = false);
 		void SetMultiSelect (bool bMultiSel);
@@ -243,7 +243,7 @@ namespace DuiLib {
 		int					m_iCurSel			= -1;
 		bool				m_bMultiSel			= false;
 		CStdPtrArray		m_aSelItems;
-		int					m_iCurSelActivate	= 0;	// Ë«»÷µÄÁĞ
+		int					m_iCurSelActivate	= 0;	// åŒå‡»çš„åˆ—
 		int					m_iExpandedItem		= -1;
 		IListCallbackUI		*m_pCallback		= nullptr;
 		CListBodyUI			*m_pList;
@@ -392,7 +392,7 @@ namespace DuiLib {
 		bool IsExpanded () const;
 		bool Expand (bool bExpand = true);
 
-		void Invalidate (); // Ö±½ÓCControl::Invalidate»áµ¼ÖÂ¹ö¶¯ÌõË¢ĞÂ£¬ÖØĞ´¼õÉÙË¢ĞÂÇøÓò
+		void Invalidate (); // ç›´æ¥CControl::Invalidateä¼šå¯¼è‡´æ»šåŠ¨æ¡åˆ·æ–°ï¼Œé‡å†™å‡å°‘åˆ·æ–°åŒºåŸŸ
 		bool Activate ();
 
 		void DoEvent (TEventUI& event);
@@ -490,7 +490,7 @@ namespace DuiLib {
 		bool IsExpanded () const;
 		bool Expand (bool bExpand = true);
 
-		void Invalidate (); // Ö±½ÓCControl::Invalidate»áµ¼ÖÂ¹ö¶¯ÌõË¢ĞÂ£¬ÖØĞ´¼õÉÙË¢ĞÂÇøÓò
+		void Invalidate (); // ç›´æ¥CControl::Invalidateä¼šå¯¼è‡´æ»šåŠ¨æ¡åˆ·æ–°ï¼Œé‡å†™å‡å°‘åˆ·æ–°åŒºåŸŸ
 		bool Activate ();
 
 		void DoEvent (TEventUI& event);

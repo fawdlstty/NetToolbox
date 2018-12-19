@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "UIResourceManager.h"
 
 namespace DuiLib {
@@ -43,7 +43,7 @@ namespace DuiLib {
 
 		int nAttributes = 0;
 
-		//¼ÓÔØÍ¼Æ¬×ÊÔ´
+		//åŠ è½½å›¾ç‰‡èµ„æº
 		string_view_t pstrId = _T ("");
 		string_view_t pstrPath = _T ("");
 		for (CMarkupNode node = Root.GetChild (); node.IsValid (); node = node.GetSibling ()) {
@@ -51,7 +51,7 @@ namespace DuiLib {
 			CMarkupNode ChildNode = node.GetChild ();
 			if (ChildNode.IsValid ()) LoadResource (node);
 			else if (pstrClass == _T ("Image") && node.HasAttributes ()) {
-				//¼ÓÔØÍ¼Æ¬×ÊÔ´
+				//åŠ è½½å›¾ç‰‡èµ„æº
 				nAttributes = node.GetAttributeCount ();
 				for (int i = 0; i < nAttributes; i++) {
 					pstrName = node.GetAttributeName (i);
@@ -68,7 +68,7 @@ namespace DuiLib {
 				if (pstrFind) continue;
 				m_mImageHashMap.Insert (pstrId, (LPVOID)new CDuiString (pstrPath));
 			} else if (pstrClass == _T ("Xml") && node.HasAttributes ()) {
-				//¼ÓÔØXMLÅäÖÃÎÄ¼ş
+				//åŠ è½½XMLé…ç½®æ–‡ä»¶
 				nAttributes = node.GetAttributeCount ();
 				for (int i = 0; i < nAttributes; i++) {
 					pstrName = node.GetAttributeName (i);
@@ -132,13 +132,13 @@ namespace DuiLib {
 		string_view_t pstrName = _T ("");
 		string_view_t pstrValue = _T ("");
 
-		//¼ÓÔØÍ¼Æ¬×ÊÔ´
+		//åŠ è½½å›¾ç‰‡èµ„æº
 		string_view_t pstrId = _T ("");
 		string_view_t pstrText = _T ("");
 		for (CMarkupNode node = Root.GetChild (); node.IsValid (); node = node.GetSibling ()) {
 			pstrClass = node.GetName ();
 			if (pstrClass == _T ("Text") && node.HasAttributes ()) {
-				//¼ÓÔØÍ¼Æ¬×ÊÔ´
+				//åŠ è½½å›¾ç‰‡èµ„æº
 				nAttributes = node.GetAttributeCount ();
 				for (int i = 0; i < nAttributes; i++) {
 					pstrName = node.GetAttributeName (i);
@@ -177,7 +177,7 @@ namespace DuiLib {
 
 	void CResourceManager::ReloadText () {
 		if (!m_pQuerypInterface) return;
-		//ÖØÔØÎÄ×ÖÃèÊö
+		//é‡è½½æ–‡å­—æè¿°
 		for (int i = 0; i < m_mTextResourceHashMap.GetSize (); i++) {
 			string_view_t lpstrId = m_mTextResourceHashMap.GetAt (i)->Key;
 			if (lpstrId.empty ()) continue;

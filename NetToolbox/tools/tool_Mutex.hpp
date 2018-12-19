@@ -1,4 +1,4 @@
-#ifndef __TOOL_MUTEX_HPP__
+﻿#ifndef __TOOL_MUTEX_HPP__
 #define __TOOL_MUTEX_HPP__
 
 #include <Windows.h>

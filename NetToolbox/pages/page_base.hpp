@@ -1,4 +1,4 @@
-#ifndef __PAGE_BASE_HPP__
+﻿#ifndef __PAGE_BASE_HPP__
 #define __PAGE_BASE_HPP__
 
 #include <Windows.h>

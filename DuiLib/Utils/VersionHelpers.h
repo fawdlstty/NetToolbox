@@ -1,4 +1,4 @@
-#ifndef _VERSIONHELPERS_H_INCLUDED_
+﻿#ifndef _VERSIONHELPERS_H_INCLUDED_
 #define _VERSIONHELPERS_H_INCLUDED_
 #include <specstrings.h>
 

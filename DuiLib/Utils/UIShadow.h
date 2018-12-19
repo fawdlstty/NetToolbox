@@ -1,4 +1,4 @@
-#ifndef __UISHADOW_H__
+ï»¿#ifndef __UISHADOW_H__
 #define __UISHADOW_H__
 
 #pragma once
@@ -14,47 +14,47 @@ namespace DuiLib {
 		virtual ~CShadowUI (void);
 
 	public:
-		// bShowÎªÕæÊ±²Å»á´´½¨ÒõÓ°
+		// bShowä¸ºçœŸæ—¶æ‰ä¼šåˆ›å»ºé˜´å½±
 		void ShowShadow (bool bShow);
 		bool IsShowShadow () const;
 
 		void DisableShadow (bool bDisable);
 		bool IsDisableShadow () const;
 
-		// Ëã·¨ÒõÓ°µÄº¯Êı
+		// ç®—æ³•é˜´å½±çš„å‡½æ•°
 		bool SetSize (int NewSize = 0);
 		bool SetSharpness (unsigned int NewSharpness = 5);
 		bool SetDarkness (unsigned int NewDarkness = 200);
 		bool SetPosition (int NewXOffset = 5, int NewYOffset = 5);
 		bool SetColor (COLORREF NewColor = 0);
 
-		// Í¼Æ¬ÒõÓ°µÄº¯Êı
+		// å›¾ç‰‡é˜´å½±çš„å‡½æ•°
 		bool SetImage (string_view_t szImage);
-		bool SetShadowCorner (RECT rcCorner);	// ¾Å¹¬¸ñ·½Ê½ÃèÊöÒõÓ°
+		bool SetShadowCorner (RECT rcCorner);	// ä¹å®«æ ¼æ–¹å¼æè¿°é˜´å½±
 
-		// °Ñ×Ô¼ºµÄÒõÓ°ÑùÊ½¸´ÖÆµ½´«Èë²ÎÊı
+		// æŠŠè‡ªå·±çš„é˜´å½±æ ·å¼å¤åˆ¶åˆ°ä¼ å…¥å‚æ•°
 		bool CopyShadow (CShadowUI* pShadow);
 
-		//	´´½¨ÒõÓ°´°Ìå£¬ÓÉCPaintManagerUI×Ô¶¯µ÷ÓÃ,³ı·Ç×Ô¼ºÒªµ¥¶À´´½¨ÒõÓ°
+		//	åˆ›å»ºé˜´å½±çª—ä½“ï¼Œç”±CPaintManagerUIè‡ªåŠ¨è°ƒç”¨,é™¤éè‡ªå·±è¦å•ç‹¬åˆ›å»ºé˜´å½±
 		void Create (CPaintManagerUI* pPaintManager);
 	protected:
 
-		//	³õÊ¼»¯²¢×¢²áÒõÓ°Àà
+		//	åˆå§‹åŒ–å¹¶æ³¨å†Œé˜´å½±ç±»
 		static bool Initialize (HINSTANCE hInstance);
 
-		// ±£´æÒÑ¾­¸½¼ÓµÄ´°Ìå¾ä±úºÍÓëÆä¹ØÁªµÄÒõÓ°Àà,·½±ãÔÚParentProc()º¯ÊıÖĞÍ¨¹ı¾ä±úµÃµ½ÒõÓ°Àà
+		// ä¿å­˜å·²ç»é™„åŠ çš„çª—ä½“å¥æŸ„å’Œä¸å…¶å…³è”çš„é˜´å½±ç±»,æ–¹ä¾¿åœ¨ParentProc()å‡½æ•°ä¸­é€šè¿‡å¥æŸ„å¾—åˆ°é˜´å½±ç±»
 		static std::map<HWND, CShadowUI *>& GetShadowMap ();
 
-		//	×ÓÀà»¯¸¸´°Ìå
+		//	å­ç±»åŒ–çˆ¶çª—ä½“
 		static LRESULT CALLBACK ParentProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-		// ¸¸´°Ìå¸Ä±ä´óĞ¡£¬ÒÆ¶¯£¬»òÕßÖ÷¶¯ÖØ»æÒõÓ°Ê±µ÷ÓÃ
+		// çˆ¶çª—ä½“æ”¹å˜å¤§å°ï¼Œç§»åŠ¨ï¼Œæˆ–è€…ä¸»åŠ¨é‡ç»˜é˜´å½±æ—¶è°ƒç”¨
 		void Update (HWND hParent);
 
-		// Í¨¹ıËã·¨¼ÆËãÒõÓ°
+		// é€šè¿‡ç®—æ³•è®¡ç®—é˜´å½±
 		void MakeShadow (UINT32 *pShadBits, HWND hParent, RECT *rcParent);
 
-		// ¼ÆËãalphaÔ¤³ËÖµ
+		// è®¡ç®—alphaé¢„ä¹˜å€¼
 		inline DWORD PreMultiply (COLORREF cl, unsigned char nAlpha) {
 			return (GetRValue (cl) * (DWORD) nAlpha / 255) |
 				(GetGValue (cl) * (DWORD) nAlpha / 255) << 8 |
@@ -71,14 +71,14 @@ namespace DuiLib {
 
 		static bool		s_bHasInit;
 
-		CPaintManagerUI	*m_pManager;		// ¸¸´°ÌåµÄCPaintManagerUI£¬ÓÃÀ´»ñÈ¡ËØ²Ä×ÊÔ´ºÍ¸¸´°Ìå¾ä±ú
-		HWND			m_hWnd				= NULL;	// ÒõÓ°´°ÌåµÄ¾ä±ú
-		LONG_PTR		m_OriParentProc		= NULL;	// ×ÓÀà»¯¸¸´°Ìå
+		CPaintManagerUI	*m_pManager;		// çˆ¶çª—ä½“çš„CPaintManagerUIï¼Œç”¨æ¥è·å–ç´ æèµ„æºå’Œçˆ¶çª—ä½“å¥æŸ„
+		HWND			m_hWnd				= NULL;	// é˜´å½±çª—ä½“çš„å¥æŸ„
+		LONG_PTR		m_OriParentProc		= NULL;	// å­ç±»åŒ–çˆ¶çª—ä½“
 		BYTE			m_Status			= 0;
-		bool			m_bIsImageMode		= false;	// ÊÇ·ñÎªÍ¼Æ¬ÒõÓ°Ä£Ê½
-		bool			m_bIsShowShadow		= false;	// ÊÇ·ñÒªÏÔÊ¾ÒõÓ°
+		bool			m_bIsImageMode		= false;	// æ˜¯å¦ä¸ºå›¾ç‰‡é˜´å½±æ¨¡å¼
+		bool			m_bIsShowShadow		= false;	// æ˜¯å¦è¦æ˜¾ç¤ºé˜´å½±
 		bool			m_bIsDisableShadow	= false;
-		// Ëã·¨ÒõÓ°³ÉÔ±±äÁ¿
+		// ç®—æ³•é˜´å½±æˆå‘˜å˜é‡
 		unsigned char	m_nDarkness			= 150;	// Darkness, transparency of blurred area
 		unsigned char	m_nSharpness		= 5;	// Sharpness, width of blurred border of shadow window
 		signed char		m_nSize				= 0;	// Shadow window size, relative to parent window size
@@ -96,7 +96,7 @@ namespace DuiLib {
 
 		COLORREF		m_Color				= RGB (0, 0, 0);	// Color of shadow
 
-		// Í¼Æ¬ÒõÓ°³ÉÔ±±äÁ¿
+		// å›¾ç‰‡é˜´å½±æˆå‘˜å˜é‡
 		CDuiString		m_sShadowImage;
 		RECT			m_rcShadowCorner	= { 0 };
 	};

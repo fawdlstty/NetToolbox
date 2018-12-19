@@ -1,4 +1,4 @@
-#ifndef __PAGE_SYS_INFO_HPP__
+﻿#ifndef __PAGE_SYS_INFO_HPP__
 #define __PAGE_SYS_INFO_HPP__
 
 #include <thread>

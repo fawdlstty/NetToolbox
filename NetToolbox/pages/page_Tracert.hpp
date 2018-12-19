@@ -1,4 +1,4 @@
-#ifndef __PAGE_TRACERT_HPP__
+ï»¿#ifndef __PAGE_TRACERT_HPP__
 #define __PAGE_TRACERT_HPP__
 
 #include <thread>
@@ -39,11 +39,11 @@ public:
 			addr = tool_Encoding::get_T (s);
 			bool is_ipv4 = tool_Formatting::is_ipv4 (s), is_ipv6 = tool_Formatting::is_ipv6 (s);
 			if (!is_ipv4 && !is_ipv6) {
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("Î´ÖªµØÖ·»òÓòÃû"));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("æœªçŸ¥åœ°å€æˆ–åŸŸå"));
 				m_tracert_begin->SetEnabled (true);
 			} else {
 				m_tracert_list->RemoveAll ();
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, tool_StringT::format (_T ("ÕýÔÚÂ·ÓÉ¸ú×Ùµ½ %s"), addr.c_str ()));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, tool_StringT::format (_T ("æ­£åœ¨è·¯ç”±è·Ÿè¸ªåˆ° %s"), addr.c_str ()));
 				std::thread ([this, s, is_ipv4] () {
 					bool _state;
 					string_t _info;

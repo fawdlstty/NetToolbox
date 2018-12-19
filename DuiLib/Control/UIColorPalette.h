@@ -1,4 +1,4 @@
-#ifndef UI_PALLET_H
+ï»¿#ifndef UI_PALLET_H
 #define UI_PALLET_H
 #pragma once
 
@@ -11,7 +11,7 @@ namespace DuiLib {
 		CColorPaletteUI ();
 		virtual ~CColorPaletteUI ();
 
-		//»ñÈ¡×îÖÕ±»Ñ¡ÔñµÄÑÕÉ«£¬¿ÉÒÔÖ±½ÓÓÃÓÚÉèÖÃduilib±³¾°É«
+		//è·å–æœ€ç»ˆè¢«é€‰æ‹©çš„é¢œè‰²ï¼Œå¯ä»¥ç›´æ¥ç”¨äºè®¾ç½®duilibèƒŒæ™¯è‰²
 		DWORD GetSelectColor ();
 		void SetSelectColor (DWORD dwColor);
 
@@ -19,14 +19,14 @@ namespace DuiLib {
 		virtual LPVOID GetInterface (string_view_t pstrName);
 		virtual void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
 
-		//ÉèÖÃ/»ñÈ¡ Pallet£¨µ÷É«°åÖ÷½çÃæ£©µÄ¸ß¶È
+		//è®¾ç½®/è·å– Palletï¼ˆè°ƒè‰²æ¿ä¸»ç•Œé¢ï¼‰çš„é«˜åº¦
 		void SetPalletHeight (int nHeight);
 		int	GetPalletHeight () const;
 
-		//ÉèÖÃ/»ñÈ¡ ÏÂ·½Bar£¨ÁÁ¶ÈÑ¡ÔñÀ¸£©µÄ¸ß¶È
+		//è®¾ç½®/è·å– ä¸‹æ–¹Barï¼ˆäº®åº¦é€‰æ‹©æ ï¼‰çš„é«˜åº¦
 		void SetBarHeight (int nHeight);
 		int GetBarHeight () const;
-		//ÉèÖÃ/»ñÈ¡ Ñ¡ÔñÍ¼±êµÄÂ·¾¶
+		//è®¾ç½®/è·å– é€‰æ‹©å›¾æ ‡çš„è·¯å¾„
 		void SetThumbImage (string_view_t pszImage);
 		string_view_t GetThumbImage () const;
 
@@ -37,7 +37,7 @@ namespace DuiLib {
 		virtual void PaintPallet (HDC hDC);
 
 	protected:
-		//¸üĞÂÊı¾İ
+		//æ›´æ–°æ•°æ®
 		void UpdatePalletData ();
 		void UpdateBarData ();
 

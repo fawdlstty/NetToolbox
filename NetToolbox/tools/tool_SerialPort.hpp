@@ -1,4 +1,4 @@
-#ifndef __TOOL_SERIAL_PORT_HPP__
+ï»¿#ifndef __TOOL_SERIAL_PORT_HPP__
 #define __TOOL_SERIAL_PORT_HPP__
 
 #include <string>
@@ -104,7 +104,7 @@ protected:
 			}
 			std::this_thread::sleep_for (std::chrono::milliseconds (100));
 			//::Sleep (4000);
-			//m_on_receive ("À´×Ô´®¿ÚµÄÏûÏ¢¡£¡£¡£");
+			//m_on_receive ("æ¥è‡ªä¸²å£çš„æ¶ˆæ¯ã€‚ã€‚ã€‚");
 		}
 	}
 

@@ -1,4 +1,4 @@
-#ifndef __TOOL_GZIP_HPP__
+﻿#ifndef __TOOL_GZIP_HPP__
 #define __TOOL_GZIP_HPP__
 
 #include <zlib.h>

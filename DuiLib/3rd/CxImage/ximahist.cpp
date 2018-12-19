@@ -1,4 +1,4 @@
-// xImaHist.cpp : histogram functions
+﻿// xImaHist.cpp : histogram functions
 /* 28/01/2004 v1.00 - www.xdp.it
  * CxImage version 7.0.1 07/Jan/2011
  */

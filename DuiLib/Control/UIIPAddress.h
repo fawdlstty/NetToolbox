@@ -1,14 +1,14 @@
-#ifndef __UIIPADDRESS_H__
+ï»¿#ifndef __UIIPADDRESS_H__
 #define __UIIPADDRESS_H__
 
 #pragma once
 
-//¸ø¸Ã¿Ø¼þÌí¼ÓÒ»¸öÊôÐÔdtstyle
+//ç»™è¯¥æŽ§ä»¶æ·»åŠ ä¸€ä¸ªå±žæ€§dtstyle
 
 namespace DuiLib {
 	class CIPAddressWnd;
 
-	/// Ê±¼äÑ¡Ôñ¿Ø¼þ
+	/// æ—¶é—´é€‰æ‹©æŽ§ä»¶
 	class UILIB_API CIPAddressUI: public CLabelUI {
 		DECLARE_DUICONTROL (CIPAddressUI)
 

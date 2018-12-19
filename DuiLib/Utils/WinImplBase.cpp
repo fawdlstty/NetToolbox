@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include <algorithm>
 namespace DuiLib {
 	//////////////////////////////////////////////////////////////////////////
@@ -230,17 +230,17 @@ namespace DuiLib {
 	}
 
 	LRESULT WindowImplBase::OnCreate (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-		// µ÷Õû´°¿ÚÑùÊ½
+		// è°ƒæ•´çª—å£æ ·å¼
 		LONG styleValue = ::GetWindowLong (GetHWND (), GWL_STYLE);
 		styleValue &= ~WS_CAPTION;
 		::SetWindowLong (GetHWND (), GWL_STYLE, styleValue | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 
-		// ¹ØÁªUI¹ÜÀíÆ÷
+		// å…³è”UIç®¡ç†å™¨
 		m_pm.Init (m_hWnd, GetManagerName ());
-		// ×¢²áPreMessage»Øµ÷
+		// æ³¨å†ŒPreMessageå›è°ƒ
 		m_pm.AddPreMessageFilter (this);
 
-		// ´´½¨Ö÷´°¿Ú
+		// åˆ›å»ºä¸»çª—å£
 		CControlUI* pRoot = nullptr;
 		CDialogBuilder builder;
 		CDuiString sSkinType = GetSkinType ();
@@ -254,18 +254,18 @@ namespace DuiLib {
 		}
 
 		if (!pRoot) {
-			CDuiString sError = _T ("¼ÓÔØ×ÊÔ´ÎÄ¼şÊ§°Ü£º");
+			CDuiString sError = _T ("åŠ è½½èµ„æºæ–‡ä»¶å¤±è´¥ï¼š");
 			sError += GetSkinFile ();
 			MessageBox (nullptr, sError.c_str (), _T ("Duilib"), MB_OK | MB_ICONERROR);
 			ExitProcess (1);
 			return 0;
 		}
 		m_pm.AttachDialog (pRoot);
-		// Ìí¼ÓNotifyÊÂ¼ş½Ó¿Ú
+		// æ·»åŠ Notifyäº‹ä»¶æ¥å£
 		m_pm.AddNotifier (this);
-		// ¿ªÊ¼°ó¶¨¿Ø¼ş
+		// å¼€å§‹ç»‘å®šæ§ä»¶
 		//BindCtrlBase::init_binding (&m_pm);
-		// ´°¿Ú³õÊ¼»¯Íê±Ï
+		// çª—å£åˆå§‹åŒ–å®Œæ¯•
 		InitWindow ();
 		return 0;
 	}

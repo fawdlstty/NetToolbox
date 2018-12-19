@@ -1,4 +1,4 @@
-#ifndef __UIWEBBROWSER_H__
+ï»¿#ifndef __UIWEBBROWSER_H__
 #define __UIWEBBROWSER_H__
 
 #pragma once
@@ -18,7 +18,7 @@ namespace DuiLib {
 		, public IInternetSecurityManager {
 		DECLARE_DUICONTROL (CWebBrowserUI)
 	public:
-		/// ¹¹Ôìº¯Êı
+		/// æ„é€ å‡½æ•°
 		CWebBrowserUI ();
 		virtual ~CWebBrowserUI ();
 
@@ -45,16 +45,16 @@ namespace DuiLib {
 		static HRESULT SetProperty (IDispatch *pObj, LPOLESTR pName, VARIANT *pValue);
 
 	protected:
-		IWebBrowser2			*m_pWebBrowser2	= nullptr; //ä¯ÀÀÆ÷Ö¸Õë
+		IWebBrowser2			*m_pWebBrowser2	= nullptr; //æµè§ˆå™¨æŒ‡é’ˆ
 		IHTMLWindow2			*_pHtmlWnd2		= nullptr;
 		LONG					m_dwRef			= 0;
 		DWORD					m_dwCookie		= 0;
 		virtual void ReleaseControl ();
 		HRESULT RegisterEventHandler (BOOL inAdvise);
 		virtual void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
-		CDuiString				m_sHomePage;	// Ä¬ÈÏÒ³Ãæ
-		bool					m_bAutoNavi					= false;	// ÊÇ·ñÆô¶¯Ê±´ò¿ªÄ¬ÈÏÒ³Ãæ
-		CWebBrowserEventHandler	*m_pWebBrowserEventHandler	= nullptr;	//ä¯ÀÀÆ÷ÊÂ¼ş´¦Àí
+		CDuiString				m_sHomePage;	// é»˜è®¤é¡µé¢
+		bool					m_bAutoNavi					= false;	// æ˜¯å¦å¯åŠ¨æ—¶æ‰“å¼€é»˜è®¤é¡µé¢
+		CWebBrowserEventHandler	*m_pWebBrowserEventHandler	= nullptr;	//æµè§ˆå™¨äº‹ä»¶å¤„ç†
 
 		// DWebBrowserEvents2
 		void BeforeNavigate2 (IDispatch *pDisp, VARIANT *&url, VARIANT *&Flags, VARIANT *&TargetFrameName, VARIANT *&PostData, VARIANT *&Headers, VARIANT_BOOL *&Cancel);
@@ -91,7 +91,7 @@ namespace DuiLib {
 		STDMETHOD (OnDocWindowActivate)(BOOL fActivate);
 		STDMETHOD (OnFrameWindowActivate)(BOOL fActivate);
 		STDMETHOD (ResizeBorder)(LPCRECT prcBorder, IOleInPlaceUIWindow* pUIWindow, BOOL fFrameWindow);
-		STDMETHOD (TranslateAccelerator)(LPMSG lpMsg, const GUID* pguidCmdGroup, DWORD nCmdID);	//ä¯ÀÀÆ÷ÏûÏ¢¹ıÂË
+		STDMETHOD (TranslateAccelerator)(LPMSG lpMsg, const GUID* pguidCmdGroup, DWORD nCmdID);	//æµè§ˆå™¨æ¶ˆæ¯è¿‡æ»¤
 		STDMETHOD (GetOptionKeyPath)(LPOLESTR* pchKey, DWORD dwReserved);
 		STDMETHOD (GetDropTarget)(IDropTarget* pDropTarget, IDropTarget** ppDropTarget);
 		STDMETHOD (GetExternal)(IDispatch** ppDispatch);
@@ -178,7 +178,7 @@ namespace DuiLib {
 			return S_OK;
 		}
 		// ITranslateAccelerator
-		// DuilibÏûÏ¢·Ö·¢¸øWebBrowser
+		// Duilibæ¶ˆæ¯åˆ†å‘ç»™WebBrowser
 		virtual LRESULT TranslateAccelerator (MSG *pMsg);
 	};
 } // namespace DuiLib

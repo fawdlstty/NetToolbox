@@ -1,4 +1,4 @@
-#ifndef __TOOL_PROCESS_HPP__
+Ôªø#ifndef __TOOL_PROCESS_HPP__
 #define __TOOL_PROCESS_HPP__
 
 #include <map>
@@ -58,8 +58,8 @@ public:
 			CloseHandle (pi.hThread);
 			CloseHandle (pi.hProcess);
 		} else {
-			string_t err_info = tool_StringT::format (_T ("¥¥Ω®Ω¯≥Ã ß∞‹£¨%s"), tool_Utils::get_error_info (::GetLastError ()).c_str ());
-			::MessageBox (NULL, err_info.c_str (), _T ("Ã· æ"), MB_ICONHAND);
+			string_t err_info = tool_StringT::format (_T ("ÂàõÂª∫ËøõÁ®ãÂ§±Ë¥•Ôºå%s"), tool_Utils::get_error_info (::GetLastError ()).c_str ());
+			::MessageBox (NULL, err_info.c_str (), _T ("ÊèêÁ§∫"), MB_ICONHAND);
 		}
 		return bRet;
 	}

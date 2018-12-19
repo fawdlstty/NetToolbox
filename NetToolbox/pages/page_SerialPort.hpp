@@ -1,4 +1,4 @@
-#ifndef __PAGE_SERIAL_PORT_HPP__
+ï»¿#ifndef __PAGE_SERIAL_PORT_HPP__
 #define __PAGE_SERIAL_PORT_HPP__
 
 #include <vector>
@@ -107,7 +107,7 @@ public:
 
 	void on_close () {
 		enable_combos (true);
-		append_data (SerialDataTypeInfo, tool_StringA::format ("´®¿ÚÒÑÖ÷¶¯¶Ï¿ª£º<c #7f0000>%s</c>", m_tmp_port_name.c_str ()));
+		append_data (SerialDataTypeInfo, tool_StringA::format ("ä¸²å£å·²ä¸»åŠ¨æ–­å¼€ï¼š<c #7f0000>%s</c>", m_tmp_port_name.c_str ()));
 		m_tmp_port_name = "";
 	}
 
@@ -121,8 +121,8 @@ public:
 					std::string _stopbits = tool_Encoding::get_gb18030 (m_serial_stopbits->GetText ());
 					if (m_tmp_port_name == "") {
 						m_parent->invoke ([this] () -> LRESULT {
-							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("´ò¿ª´®¿ÚÊ§°Ü£ºÎ´Ñ¡Ôñ¿ÉÓÃµÄ´®¿Ú"));
-							append_data (SerialDataTypeInfo, "´ò¿ª´®¿ÚÊ§°Ü£ºÎ´Ñ¡Ôñ¿ÉÓÃµÄ´®¿Ú");
+							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("æ‰“å¼€ä¸²å£å¤±è´¥ï¼šæœªé€‰æ‹©å¯ç”¨çš„ä¸²å£"));
+							append_data (SerialDataTypeInfo, "æ‰“å¼€ä¸²å£å¤±è´¥ï¼šæœªé€‰æ‹©å¯ç”¨çš„ä¸²å£");
 							return 0;
 						});
 						return true;
@@ -132,7 +132,7 @@ public:
 					m_serial.open (_serial_name (m_tmp_port_name), _baud_rate, _byte_size, _parity, _stopbits);
 					if (m_serial.is_open ()) {
 						enable_combos (false);
-						append_data (SerialDataTypeInfo, tool_StringA::format ("ÒÑ´ò¿ª´®¿Ú£º<c #00007f>%s</c>", m_tmp_port_name.c_str ()));
+						append_data (SerialDataTypeInfo, tool_StringA::format ("å·²æ‰“å¼€ä¸²å£ï¼š<c #00007f>%s</c>", m_tmp_port_name.c_str ()));
 					}
 				}
 				return true;
@@ -140,7 +140,7 @@ public:
 				if (m_serial.is_open ()) {
 					m_serial.close ();
 					enable_combos (true);
-					append_data (SerialDataTypeInfo, tool_StringA::format ("ÒÑ¹Ø±Õ´®¿Ú£º<c #7f0000>%s</c>", m_tmp_port_name.c_str ()));
+					append_data (SerialDataTypeInfo, tool_StringA::format ("å·²å…³é—­ä¸²å£ï¼š<c #7f0000>%s</c>", m_tmp_port_name.c_str ()));
 					m_tmp_port_name = "";
 				}
 				return true;

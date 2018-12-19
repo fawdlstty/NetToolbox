@@ -1,11 +1,11 @@
-#ifndef __UICOMBOBOX_H__
+ï»¿#ifndef __UICOMBOBOX_H__
 #define __UICOMBOBOX_H__
 
 #pragma once
 
 namespace DuiLib {
-	/// À©Õ¹ÏÂÀ­ÁĞ±í¿ò
-	/// Ôö¼ÓarrowimageÊôĞÔ,Ò»ÕÅÍ¼Æ¬Æ½¾ù·Ö³É5·İ,Normal/Hot/Pushed/Focused/Disabled(±ØĞëÓĞsourceÊôĞÔ)
+	/// æ‰©å±•ä¸‹æ‹‰åˆ—è¡¨æ¡†
+	/// å¢åŠ arrowimageå±æ€§,ä¸€å¼ å›¾ç‰‡å¹³å‡åˆ†æˆ5ä»½,Normal/Hot/Pushed/Focused/Disabled(å¿…é¡»æœ‰sourceå±æ€§)
 	/// <Default name="ComboBox" value="arrowimage=&quot;file='sys_combo_btn.png' source='0,0,16,16'&quot; "/>
 	class UILIB_API CComboBoxUI: public CComboUI {
 		DECLARE_DUICONTROL (CComboBoxUI)

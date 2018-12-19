@@ -1,4 +1,4 @@
-#ifndef __PAGE_LOCAL_CONNECTION_HPP__
+ï»¿#ifndef __PAGE_LOCAL_CONNECTION_HPP__
 #define __PAGE_LOCAL_CONNECTION_HPP__
 
 #include <algorithm>
@@ -80,17 +80,17 @@ public:
 
 	bool OnMenuClick (MenuCmd *mc) override {
 		if (mc->szName == _T ("menu_localnet_kill")) {
-			string_t tip_info = tool_StringT::format (_T ("È·¶¨Òª½áÊø½ø³Ì %s (pid:%d) Âğ£¿"), m_sel_pname.c_str (), m_sel_pid);
-			if (IDOK == ::MessageBox (m_parent->GetHWND (), tip_info.c_str (), _T ("ÌáÊ¾"), MB_ICONQUESTION | MB_OKCANCEL)) {
+			string_t tip_info = tool_StringT::format (_T ("ç¡®å®šè¦ç»“æŸè¿›ç¨‹ %s (pid:%d) å—ï¼Ÿ"), m_sel_pname.c_str (), m_sel_pid);
+			if (IDOK == ::MessageBox (m_parent->GetHWND (), tip_info.c_str (), _T ("æç¤º"), MB_ICONQUESTION | MB_OKCANCEL)) {
 				if (tool_Process::kill ((DWORD) m_sel_pid)) {
 					ui_update_data ();
 				} else {
-					// ½ø³ÌÎŞ·¨½áÊø
+					// è¿›ç¨‹æ— æ³•ç»“æŸ
 					if (tool_Priv::is_admin ()) {
-						// AdminÈ¨ÏŞ£ºÌáÊ¾Ê§°Ü
-						::MessageBox (m_parent->GetHWND (), _T ("½ø³ÌÎŞ·¨½áÊø£¡"), _T ("ÌáÊ¾"), MB_ICONWARNING);
+						// Adminæƒé™ï¼šæç¤ºå¤±è´¥
+						::MessageBox (m_parent->GetHWND (), _T ("è¿›ç¨‹æ— æ³•ç»“æŸï¼"), _T ("æç¤º"), MB_ICONWARNING);
 					} else if (tool_Priv::adjust_restart (m_parent->m_sel1, m_parent->m_sel2)) {
-						// ·ÇAdminÈ¨ÏŞ£ºÌáÈ¨²¢ÍË³ö
+						// éAdminæƒé™ï¼šææƒå¹¶é€€å‡º
 						m_parent->Close ();
 					}
 				}
@@ -99,13 +99,13 @@ public:
 		} else if (mc->szName == _T ("menu_localnet_show")) {
 			auto[err, path] = tool_Process::get_path ((DWORD) m_sel_pid);
 			if (path.empty ()) {
-				// Â·¾¶ÎŞ·¨ÏÔÊ¾
+				// è·¯å¾„æ— æ³•æ˜¾ç¤º
 				if (tool_Priv::is_admin ()) {
-					// AdminÈ¨ÏŞ£ºÌáÊ¾Ê§°Ü
+					// Adminæƒé™ï¼šæç¤ºå¤±è´¥
 					string_t err_str = tool_Utils::get_error_info (err);
-					::MessageBox (m_parent->GetHWND (), err_str.c_str (), _T ("ÌáÊ¾"), MB_ICONWARNING);
+					::MessageBox (m_parent->GetHWND (), err_str.c_str (), _T ("æç¤º"), MB_ICONWARNING);
 				} else if (tool_Priv::adjust_restart (m_parent->m_sel1, m_parent->m_sel2)) {
-					// ·ÇAdminÈ¨ÏŞ£ºÌáÈ¨²¢ÍË³ö
+					// éAdminæƒé™ï¼šææƒå¹¶é€€å‡º
 					m_parent->Close ();
 				}
 				return true;
@@ -143,43 +143,43 @@ protected:
 			if (bUpdateData) {
 				vconns.swap (_vconns);
 				std::sort (vconns.begin (), vconns.end (), [this] (const conn_item_t &_v1, const conn_item_t &_v2) -> bool {
-					if (m_sort_str == _T ("±¾µØµØÖ·")) {
+					if (m_sort_str == _T ("æœ¬åœ°åœ°å€")) {
 						string_t _val1 = std::get<1> (_v1);
 						string_t _val2 = std::get<1> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("±¾µØ¶Ë¿Ú")) {
+					} else if (m_sort_str == _T ("æœ¬åœ°ç«¯å£")) {
 						uint16_t _val1 = std::get<2> (_v1);
 						uint16_t _val2 = std::get<2> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("Ô¶³ÌµØÖ·")) {
+					} else if (m_sort_str == _T ("è¿œç¨‹åœ°å€")) {
 						string_t _val1 = std::get<3> (_v1);
 						string_t _val2 = std::get<3> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("Ô¶³Ì¶Ë¿Ú")) {
+					} else if (m_sort_str == _T ("è¿œç¨‹ç«¯å£")) {
 						uint16_t _val1 = std::get<4> (_v1);
 						uint16_t _val2 = std::get<4> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("Á¬½Ó×´Ì¬")) {
+					} else if (m_sort_str == _T ("è¿æ¥çŠ¶æ€")) {
 						string_t _val1 = std::get<5> (_v1);
 						string_t _val2 = std::get<5> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("½ø³ÌPID")) {
+					} else if (m_sort_str == _T ("è¿›ç¨‹PID")) {
 						DWORD _val1 = std::get<6> (_v1);
 						DWORD _val2 = std::get<6> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("½ø³ÌÃû³Æ")) {
+					} else if (m_sort_str == _T ("è¿›ç¨‹åç§°")) {
 						string_t _val1 = std::get<7> (_v1);
 						string_t _val2 = std::get<7> (_v2);
 						if (_val1 == _val2)
@@ -209,7 +209,7 @@ protected:
 
 			m_localnet_connection->RemoveAll ();
 			for (i = 0; i < type_vconns.size (); ++i) {
-				//ÊÇ·ñÊÇipv4£¨²»ÏÔÊ¾£©£¬±¾µØµØÖ·£¬±¾µØ¶Ë¿Ú£¬Ô¶³ÌµØÖ·£¬Ô¶³Ì¶Ë¿Ú£¬µ±Ç°Á¬½Ó×´Ì¬£¬½ø³ÌPID£¬½ø³ÌÃû³Æ£¬½ø³ÌÂ·¾¶£¨²»ÏÔÊ¾£©
+				//æ˜¯å¦æ˜¯ipv4ï¼ˆä¸æ˜¾ç¤ºï¼‰ï¼Œæœ¬åœ°åœ°å€ï¼Œæœ¬åœ°ç«¯å£ï¼Œè¿œç¨‹åœ°å€ï¼Œè¿œç¨‹ç«¯å£ï¼Œå½“å‰è¿æ¥çŠ¶æ€ï¼Œè¿›ç¨‹PIDï¼Œè¿›ç¨‹åç§°ï¼Œè¿›ç¨‹è·¯å¾„ï¼ˆä¸æ˜¾ç¤ºï¼‰
 				auto[is_ipv4/**/, local_addr, local_port, remote_addr, remote_port, conn_state/**/, pid, pname] = type_vconns[i];
 				CListContainerElementUI *item = new CListContainerElementUI ();
 				item->AddCustomAttribute (_T ("pid"), tool_StringT::format (_T ("%d"), pid));
@@ -271,8 +271,8 @@ protected:
 
 protected:
 	BindListUI			m_localnet_connection { _T ("localnet_connection") };
-	CDuiString			m_sort_str = _T ("±¾µØ¶Ë¿Ú");
-	string_t			m_show_type = _T ("TCPÕıÔÚ¼àÌı");
+	CDuiString			m_sort_str = _T ("æœ¬åœ°ç«¯å£");
+	string_t			m_show_type = _T ("TCPæ­£åœ¨ç›‘å¬");
 	bool				m_is_increment = true;
 
 	CStdStringPtrMap	m_MenuInfos;

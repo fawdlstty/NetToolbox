@@ -1,4 +1,4 @@
-#ifndef __TOOL_ZOOMER_HPP__
+﻿#ifndef __TOOL_ZOOMER_HPP__
 #define __TOOL_ZOOMER_HPP__
 
 #include <cmath>

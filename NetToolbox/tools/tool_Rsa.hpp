@@ -1,4 +1,4 @@
-#ifndef __TOOL_RSA_HPP__
+ï»¿#ifndef __TOOL_RSA_HPP__
 #define __TOOL_RSA_HPP__
 
 #include <string>
@@ -13,7 +13,7 @@ class tool_Rsa {
 public:
 	static bool generate (int bits, std::string file_pubkey, std::string file_rsapubkey, std::string file_rsaprvkey) {
 		bool bExist = false;
-		std::string info = "ÒÔÏÂÎÄ¼şÒÑ´æÔÚ£¬ÊÇ·ñ¸²¸Ç£¿";
+		std::string info = "ä»¥ä¸‹æ–‡ä»¶å·²å­˜åœ¨ï¼Œæ˜¯å¦è¦†ç›–ï¼Ÿ";
 		if (tool_Path::file_existA (file_pubkey)) {
 			bExist = true;
 			info += "\n";
@@ -30,7 +30,7 @@ public:
 			info += file_rsaprvkey;
 		}
 		if (bExist) {
-			if (IDOK != ::MessageBoxA (NULL, info.c_str (), "ÌáÊ¾", MB_ICONQUESTION | MB_OKCANCEL))
+			if (IDOK != ::MessageBoxA (NULL, info.c_str (), "æç¤º", MB_ICONQUESTION | MB_OKCANCEL))
 				return false;
 		}
 

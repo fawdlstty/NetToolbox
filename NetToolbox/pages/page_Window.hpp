@@ -1,4 +1,4 @@
-#ifndef __PAGE_WINDOW_HPP__
+ï»¿#ifndef __PAGE_WINDOW_HPP__
 #define __PAGE_WINDOW_HPP__
 
 #include <chrono>
@@ -41,7 +41,7 @@ public:
 				return;
 			tool_Zoomer::zoom (pt);
 
-			// ÅÐ¶ÏÊý¾ÝÓÐÐ§Ê±³õÊ¼»¯Í¼Æ¬
+			// åˆ¤æ–­æ•°æ®æœ‰æ•ˆæ—¶åˆå§‹åŒ–å›¾ç‰‡
 			if (!m_bmp_cover) {
 				BITMAPINFO bi { { sizeof (BITMAPINFOHEADER), (LONG) width, (LONG) height, 1, 24, BI_RGB, (DWORD) width * height * 3, 5000, 5000, 0, 0 }, { 0 } };
 				void *ptr = nullptr;
@@ -52,7 +52,7 @@ public:
 				m_find_image->SetBkImage (_T ("cur_findcolor"));
 			}
 
-			// »æÖÆÍ¼Æ¬
+			// ç»˜åˆ¶å›¾ç‰‡
 			int level = 4;
 			int dest_width = width / level;
 			int dest_height = height / level;
@@ -103,7 +103,7 @@ public:
 		m_bkimg_findcolor = m_window_findcolor->GetBkImage ();
 		m_cur_findcolor = ::LoadCursor (m_parent->get_instance (), MAKEINTRESOURCE (IDC_CURSOR_FINDCOLOR));
 		m_find_wnd = new page_FindWnd ();
-		m_find_wnd->Create (m_parent->GetHWND (), _T ("ÑÕÉ«ÝÍÈ¡"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+		m_find_wnd->Create (m_parent->GetHWND (), _T ("é¢œè‰²èƒå–"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
 		m_find_wnd->ShowWindow (false);
 
 		m_bkimg_detector = m_window_detector->GetBkImage ();
@@ -224,40 +224,40 @@ public:
 
 			//POINT pt { 0 };
 			::GetCursorPos (&pt);
-			// »ñÈ¡ÑÕÉ«
+			// èŽ·å–é¢œè‰²
 			Gdiplus::Color _color;
 			m_bmp_screen->GetPixel (pt.x, pt.y, &_color);
 			m_window_color->SetBkColor (_color.GetValue () | 0xFF000000);
 			string_t str = tool_StringT::format (_T ("#%06X (%d, %d, %d)"), _color.GetValue (), _color.GetR (), _color.GetG (), _color.GetB ());
 			m_window_txt_color->SetText (str.c_str ());
-			// »ñÈ¡´°¿Ú¾ä±ú
+			// èŽ·å–çª—å£å¥æŸ„
 			HWND hDestWnd = ::WindowFromPoint (pt);
 			str = tool_StringT::format (_T ("%X"), hDestWnd);
 			m_window_txt_handle->SetText (str.c_str ());
-			// »ñÈ¡´°¿ÚÎ»ÖÃ
+			// èŽ·å–çª—å£ä½ç½®
 			RECT rcDest { 0 };
 			::GetWindowRect (hDestWnd, &rcDest);
 			str = tool_StringT::format (_T ("pos (%d, %d), size (%d, %d)"), rcDest.left, rcDest.top, rcDest.right - rcDest.left, rcDest.bottom - rcDest.top);
 			m_window_txt_pos->SetText (str.c_str ());
-			// »ñÈ¡´°¿Ú±êÌâ
+			// èŽ·å–çª—å£æ ‡é¢˜
 			TCHAR wnd_text[MAX_PATH] = { 0 };
 			::GetWindowText (hDestWnd, wnd_text, MAX_PATH);
 			m_window_txt_title->SetText (wnd_text);
-			// ´°¿ÚÁ´
+			// çª—å£é“¾
 			//HWND hPrevWnd = ::GetNextWindow (hDestWnd, GW_HWNDPREV);
 			//HWND hNextWnd = ::GetNextWindow (hDestWnd, GW_HWNDNEXT);
 			//HWND hChildWnd = ::GetNextWindow (hDestWnd, GW_CHILD);
 			HWND hParentWnd = ::GetNextWindow (hDestWnd, GW_OWNER);
 			str = tool_StringT::format (_T ("%X"), hParentWnd);
 			m_window_txt_parent->SetText (str.c_str ());
-			// ´°¿ÚÑùÊ½
+			// çª—å£æ ·å¼
 			LONG style = ::GetWindowLong (hDestWnd, GWL_STYLE);
 			str = tool_StringT::format (_T ("0x%08X"), style);
 			m_window_txt_style->SetText (str.c_str ());
 			LONG exstyle = ::GetWindowLong (hDestWnd, GWL_EXSTYLE);
 			str = tool_StringT::format (_T ("0x%08X"), exstyle);
 			m_window_txt_exstyle->SetText (str.c_str ());
-			// »ñÈ¡´°¿ÚÀà
+			// èŽ·å–çª—å£ç±»
 			TCHAR class_text[MAX_PATH] = { 0 };
 			::GetClassName (hDestWnd, class_text, MAX_PATH);
 			m_window_txt_wndclass->SetText (class_text);
@@ -290,7 +290,7 @@ public:
 			//POINT pt { 0 };
 			::GetCursorPos (&pt);
 			tool_Zoomer::zoom (pt);
-			// »ñÈ¡ÑÕÉ«
+			// èŽ·å–é¢œè‰²
 			Gdiplus::Color _color;
 			m_bmp_screen->GetPixel (pt.x, pt.y, &_color);
 			m_window_color->SetBkColor (_color.GetValue () | 0xFF000000);

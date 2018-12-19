@@ -1,4 +1,4 @@
-#ifndef __TOOL_WEB_REQUEST_HPP__
+﻿#ifndef __TOOL_WEB_REQUEST_HPP__
 #define __TOOL_WEB_REQUEST_HPP__
 
 #include <string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Res>
 	<Xml id="XML_MAIN" path="main.xml"/>
 	<Xml id="XML_FINDCOLOR" path="cur_findcolor.xml"/>

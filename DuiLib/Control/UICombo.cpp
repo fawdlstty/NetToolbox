@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 
 namespace DuiLib {
 
@@ -34,7 +34,7 @@ namespace DuiLib {
 		if (msg.sType == _T ("windowinit")) {
 			EnsureVisible (m_iOldSel);
 		} else if (msg.sType == _T ("click")) {
-			// ²âÊÔ´úÂë
+			// æµ‹è¯•ä»£ç 
 			CDuiString sName = msg.pSender->GetName ();
 			CControlUI* pCtrl = msg.pSender;
 			while (pCtrl) {
@@ -58,9 +58,9 @@ namespace DuiLib {
 		SIZE szDrop = m_pOwner->GetDropBoxSize ();
 		RECT rcOwner = pOwner->GetPos ();
 		RECT rc = rcOwner;
-		rc.top = rc.bottom;		// ¸¸´°¿Úleft¡¢bottomÎ»ÖÃ×÷Îªµ¯³ö´°¿ÚÆğµã
-		rc.bottom = rc.top + szDrop.cy;	// ¼ÆËãµ¯³ö´°¿Ú¸ß¶È
-		if (szDrop.cx > 0) rc.right = rc.left + szDrop.cx;	// ¼ÆËãµ¯³ö´°¿Ú¿í¶È
+		rc.top = rc.bottom;		// çˆ¶çª—å£leftã€bottomä½ç½®ä½œä¸ºå¼¹å‡ºçª—å£èµ·ç‚¹
+		rc.bottom = rc.top + szDrop.cy;	// è®¡ç®—å¼¹å‡ºçª—å£é«˜åº¦
+		if (szDrop.cx > 0) rc.right = rc.left + szDrop.cx;	// è®¡ç®—å¼¹å‡ºçª—å£å®½åº¦
 
 		SIZE szAvailable = { rc.right - rc.left, rc.bottom - rc.top };
 		int cyFixed = 0;
@@ -839,12 +839,12 @@ namespace DuiLib {
 
 	void CComboUI::SetPos (RECT rc, bool bNeedInvalidate) {
 		if (!::EqualRect (&rc, &m_rcItem)) {
-			// Òş²ØÏÂÀ­´°¿Ú
+			// éšè—ä¸‹æ‹‰çª—å£
 			if (m_pWindow && ::IsWindow (m_pWindow->GetHWND ())) m_pWindow->Close ();
-			// ËùÓĞÔªËØ´óĞ¡ÖÃÎª0
+			// æ‰€æœ‰å…ƒç´ å¤§å°ç½®ä¸º0
 			RECT rcnullptr = { 0 };
 			for (int i = 0; i < m_items.GetSize (); i++) static_cast<CControlUI*>(m_items[i])->SetPos (rcnullptr);
-			// µ÷ÕûÎ»ÖÃ
+			// è°ƒæ•´ä½ç½®
 			CControlUI::SetPos (rc, bNeedInvalidate);
 		}
 	}

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include "UIRollText.h"
 
 namespace DuiLib {
@@ -47,12 +47,12 @@ namespace DuiLib {
 
 	void CRollTextUI::SetPos (RECT rc) {
 		CLabelUI::SetPos (rc);
-		m_nText_W_H = 0;			//≤ºæ÷±‰ªØ÷ÿ–¬º∆À„
+		m_nText_W_H = 0;			//Â∏ÉÂ±ÄÂèòÂåñÈáçÊñ∞ËÆ°ÁÆó
 	}
 
 	void CRollTextUI::SetText (string_view_t pstrText) {
 		CLabelUI::SetText (pstrText);
-		m_nText_W_H = 0;			//Œƒ±æ±‰ªØ÷ÿ–¬º∆À„
+		m_nText_W_H = 0;			//ÊñáÊú¨ÂèòÂåñÈáçÊñ∞ËÆ°ÁÆó
 	}
 
 	void CRollTextUI::DoEvent (TEventUI& event) {
@@ -83,14 +83,14 @@ namespace DuiLib {
 		if (m_nText_W_H > 0) {
 			int nScrollRange = 0;
 
-			if (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) {	//◊Û√Ê“∆∂Ø
+			if (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) {	//Â∑¶Èù¢ÁßªÂä®
 				nScrollRange = m_nText_W_H + rcClient.right - rcClient.left;
 				LONG off_cx = (m_nRollDirection == ROLLTEXT_LEFT ? rcClient.right - rcClient.left : rcClient.left - rcClient.right);
 				::OffsetRect (&rcClient, off_cx, 0);
 				off_cx = (m_nRollDirection == ROLLTEXT_LEFT ? -m_nScrollPos : m_nScrollPos);
 				::OffsetRect (&rcClient, off_cx, 0);
 				rcClient.right += (m_nText_W_H - (rcClient.right - rcClient.left));
-			} else {																		//…œœ¬“∆∂Ø
+			} else {																		//‰∏ä‰∏ãÁßªÂä®
 				nScrollRange = m_nText_W_H + rcClient.bottom - rcClient.top;
 				LONG off_cy = (m_nRollDirection == ROLLTEXT_UP ? rcClient.bottom - rcClient.top : rcClient.top - rcClient.bottom);
 				::OffsetRect (&rcClient, 0, off_cy);
@@ -110,10 +110,10 @@ namespace DuiLib {
 		UINT uTextStyle = DT_WORDBREAK | DT_EDITCONTROL;
 
 		if (m_nText_W_H == 0) {
-			uTextStyle |= DT_CALCRECT;				//µ⁄“ª¥Œº∆À„Œƒ±æøÌ∂»ªÚ∏ﬂ∂»
-			if (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) {	//◊Û√Ê“∆∂Ø
+			uTextStyle |= DT_CALCRECT;				//Á¨¨‰∏ÄÊ¨°ËÆ°ÁÆóÊñáÊú¨ÂÆΩÂ∫¶ÊàñÈ´òÂ∫¶
+			if (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) {	//Â∑¶Èù¢ÁßªÂä®
 				rc.right += 10000;
-			} else {																		//…œœ¬“∆∂Ø
+			} else {																		//‰∏ä‰∏ãÁßªÂä®
 				rc.bottom += 10000;
 			}
 		}
@@ -126,7 +126,7 @@ namespace DuiLib {
 		}
 
 		if (m_nText_W_H == 0) {
-			m_nText_W_H = (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) ? (rc.right - rc.left) : (rc.bottom - rc.top);		//º∆À„Œƒ±æøÌ∂»ªÚ∏ﬂ∂»
+			m_nText_W_H = (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) ? (rc.right - rc.left) : (rc.bottom - rc.top);		//ËÆ°ÁÆóÊñáÊú¨ÂÆΩÂ∫¶ÊàñÈ´òÂ∫¶
 		}
 	}
 }

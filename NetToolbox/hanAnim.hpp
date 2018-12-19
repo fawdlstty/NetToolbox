@@ -1,12 +1,12 @@
-////////////////////////////////////////////////////////////////////////////////
+ï»¿////////////////////////////////////////////////////////////////////////////////
 //
 //  CHanAnimUI
-//      ×Ô¶¨Òå¿Ø¼ş£¬ÓÃÓÚÊµÏÖ¶¯Ì¬Ğ§¹û¹¦ÄÜ
+//      è‡ªå®šä¹‰æ§ä»¶ï¼Œç”¨äºå®ç°åŠ¨æ€æ•ˆæœåŠŸèƒ½
 //
-//  ÓÃ·¨Ê¾Àı£¨Ä£ÄâContainer£©£º
+//  ç”¨æ³•ç¤ºä¾‹ï¼ˆæ¨¡æ‹ŸContainerï¼‰ï¼š
 //      <hanAnim name="img_status" width="16" height="16" bkimage="file='status_small.png' source='0,0,16,16'" />
 //
-//  Ö÷´°¿Ú¼Ì³Ğ×ÔIDialogBuilderCallback£¬È»ºóÊµÏÖº¯Êı£º
+//  ä¸»çª—å£ç»§æ‰¿è‡ªIDialogBuilderCallbackï¼Œç„¶åå®ç°å‡½æ•°ï¼š
 //      CControlUI* CreateControl (LPCTSTR pstrClass) override {
 //          if (_tcsicmp (pstrClass, _T ("hanAnim")) == 0) return CHanAnimUI::CreateControl ();
 //          return WindowImplBase::CreateControl (pstrClass);

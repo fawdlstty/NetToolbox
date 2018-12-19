@@ -1,9 +1,9 @@
-#ifndef __UIRESOURCEMANAGER_H__
+ï»¿#ifndef __UIRESOURCEMANAGER_H__
 #define __UIRESOURCEMANAGER_H__
 #pragma once
 
 namespace DuiLib {
-	// ¿Ø¼şÎÄ×Ö²éÑ¯½Ó¿Ú
+	// æ§ä»¶æ–‡å­—æŸ¥è¯¢æ¥å£
 	class UILIB_API IQueryControlText {
 	public:
 		virtual string_view_t QueryControlText (string_view_t lpstrId, string_view_t lpstrType) = 0;

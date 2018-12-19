@@ -1,4 +1,4 @@
-#ifndef __UISCROLLBAR_H__
+﻿#ifndef __UISCROLLBAR_H__
 #define __UISCROLLBAR_H__
 
 #pragma once

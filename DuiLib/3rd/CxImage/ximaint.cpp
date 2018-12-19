@@ -1,4 +1,4 @@
-// xImaInt.cpp : interpolation functions
+ï»¿// xImaInt.cpp : interpolation functions
 /* 02/2004 - Branko Brevensek 
  * CxImage version 7.0.1 07/Jan/2011 - Davide Pizzolato - www.xdp.it
  */
@@ -678,7 +678,7 @@ float CxImage::KernelBSpline(const float x)
 
 	return (0.16666666666666666667f * (a - (4.0f * b) + (6.0f * c) - (4.0f * d)));
 
-	/* equivalent <Vladimír Kloucek>
+	/* equivalent <VladiméŸ— Kloucek>
 	if (x < -2.0)
 		return(0.0f);
 	if (x < -1.0)
@@ -711,7 +711,7 @@ float CxImage::KernelLinear(const float t)
 //  if (-1<=t && t<0) return 1+t;
 //  return 0;
 	
-	//<Vladimír Kloucek>
+	//<VladiméŸ— Kloucek>
 	if (t < -1.0f)
 		return 0.0f;
 	if (t < 0.0f)
