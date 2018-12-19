@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_RSA_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_Rsa
+// Description: RSA工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_RSA_HPP__
 #define __TOOL_RSA_HPP__
 
 #include <string>
@@ -11,6 +23,7 @@
 
 class tool_Rsa {
 public:
+	// 生成公钥私钥对
 	static bool generate (int bits, std::string file_pubkey, std::string file_rsapubkey, std::string file_rsaprvkey) {
 		bool bExist = false;
 		std::string info = "以下文件已存在，是否覆盖？";

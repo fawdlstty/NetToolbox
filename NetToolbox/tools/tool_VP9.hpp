@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_VP9_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_VP9
+// Description: VP9工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_VP9_HPP__
 #define __TOOL_VP9_HPP__
 
 #include <string>

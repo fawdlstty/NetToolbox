@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_PE_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_PE
+// Description: PE工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_PE_HPP__
 #define __TOOL_PE_HPP__
 
 #include <string>
@@ -14,6 +26,7 @@
 
 class tool_PE {
 public:
+	// 读取PE文件导入表导出表
 	static bool read_import_export (LPCTSTR file_name, std::vector<std::string> &vexport, std::vector<std::tuple<std::string, std::vector<std::tuple<int16_t, std::string>>>> &vimport) {
 		vexport.clear ();
 		vimport.clear ();
@@ -95,6 +108,7 @@ public:
 		return true;
 	}
 
+	// 释放PE文件所有资源
 	static string_t extract_all_resource (LPCTSTR file) {
 		HMODULE hModule = ::LoadLibrary (file);
 		if (hModule) {
@@ -107,6 +121,7 @@ public:
 		return _T ("");
 	}
 
+	// 获取PE文件版本号
 	static std::tuple<size_t, size_t, size_t, size_t> get_version (LPCSTR file) {
 		DWORD dw_handle = 0;
 		DWORD size = ::GetFileVersionInfoSizeA (file, &dw_handle);
@@ -122,6 +137,7 @@ public:
 	}
 
 protected:
+	// 枚举所有资源名称，供 enum_res_type_proc 函数调用
 	static BOOL CALLBACK enum_res_name_proc (HMODULE hModule, LPCTSTR lpType, LPTSTR lpName, LONG_PTR lParam) {
 		static auto get_file_name = [] (LPCTSTR lpType, LPTSTR lpName) -> string_t {
 			static std::map<LPCTSTR, LPCTSTR> mtype = { { RT_CURSOR, _T ("RT_CURSOR") }, { RT_BITMAP, _T ("RT_BITMAP") }, { RT_ICON, _T ("RT_ICON") }, { RT_MENU, _T ("RT_MENU") }, { RT_DIALOG, _T ("RT_DIALOG") }, { RT_STRING, _T ("RT_STRING") }, { RT_FONTDIR, _T ("RT_FONTDIR") }, { RT_FONT, _T ("RT_FONT") }, { RT_ACCELERATOR, _T ("RT_ACCELERATOR") }, { RT_RCDATA, _T ("RT_RCDATA") }, { RT_MESSAGETABLE, _T ("RT_MESSAGETABLE") }, { RT_GROUP_CURSOR, _T ("RT_GROUP_CURSOR") }, { RT_GROUP_ICON, _T ("RT_GROUP_ICON") }, { RT_VERSION, _T ("RT_VERSION") }, { RT_DLGINCLUDE, _T ("RT_DLGINCLUDE") }, { RT_PLUGPLAY, _T ("RT_PLUGPLAY") }, { RT_VXD, _T ("RT_VXD") }, { RT_ANICURSOR, _T ("RT_ANICURSOR") }, { RT_ANIICON, _T ("RT_ANIICON") }, { RT_HTML, _T ("RT_HTML") }, { RT_MANIFEST, _T ("RT_MANIFEST") } };
@@ -165,6 +181,7 @@ protected:
 		return TRUE;
 	}
 
+	// 枚举所有资源类型，供 read_import_export 函数调用
 	static BOOL CALLBACK enum_res_type_proc (HMODULE hModule, LPTSTR lpType, LONG_PTR lParam) {
 		::EnumResourceNames (hModule, lpType, enum_res_name_proc, lParam/*, RESOURCE_ENUM_MUI | RESOURCE_ENUM_LN, NULL*/);
 		return TRUE;

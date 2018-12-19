@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_ZOOMER_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_Zoomer
+// Description: 屏幕缩放工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_ZOOMER_HPP__
 #define __TOOL_ZOOMER_HPP__
 
 #include <cmath>
@@ -10,38 +22,54 @@
 
 class tool_Zoomer {
 public:
+	// 获取显示器x轴像素宽度
 	static int get_desp_x () { return get_zoomer ().m_desp_x; }
+	// 获取显示器y轴像素宽度
 	static int get_desp_y () { return get_zoomer ().m_desp_y; }
+	// 获取实际x轴像素宽度
 	static int get_real_x () { return get_zoomer ().m_real_x; }
+	// 获取实际y轴像素宽度
 	static int get_real_y () { return get_zoomer ().m_real_y; }
+
+	// 缩放x轴
 	static size_t zoom_x (size_t x) {
 		tool_Zoomer &zoomer = get_zoomer ();
 		if (!zoomer.m_is_scale) return x;
 		return (size_t) (x * zoomer.m_scale_x + 0.5);
 	}
+
+	// 缩放y轴
 	static size_t zoom_y (size_t y) {
 		tool_Zoomer &zoomer = get_zoomer ();
 		if (!zoomer.m_is_scale) return y;
 		return (size_t) (y * zoomer.m_scale_y + 0.5);
 	}
+
+	// 缩放POINT
 	static void zoom (POINT &o) {
 		tool_Zoomer &zoomer = get_zoomer ();
 		if (!zoomer.m_is_scale) return;
 		o.x = (decltype (o.x)) (o.x * zoomer.m_scale_x + 0.5);
 		o.y = (decltype (o.y)) (o.y * zoomer.m_scale_y + 0.5);
 	}
+
+	// 缩放SIZE
 	static void zoom (SIZE &o) {
 		tool_Zoomer &zoomer = get_zoomer ();
 		if (!zoomer.m_is_scale) return;
 		o.cx = (decltype (o.cx)) (o.cx * zoomer.m_scale_x + 0.5);
 		o.cy = (decltype (o.cy)) (o.cy * zoomer.m_scale_y + 0.5);
 	}
+
+	// 反缩放SIZE
 	static void unzoom (SIZE &o) {
 		tool_Zoomer &zoomer = get_zoomer ();
 		if (!zoomer.m_is_scale) return;
 		o.cx = (decltype (o.cx)) (o.cx / zoomer.m_scale_x + 0.5);
 		o.cy = (decltype (o.cy)) (o.cy / zoomer.m_scale_y + 0.5);
 	}
+
+	// 缩放RECT
 	static void zoom (RECT &o) {
 		tool_Zoomer &zoomer = get_zoomer ();
 		if (!zoomer.m_is_scale) return;
@@ -50,6 +78,8 @@ public:
 		o.right = (decltype (o.right)) (o.right * zoomer.m_scale_x + 0.5);
 		o.bottom = (decltype (o.bottom)) (o.bottom * zoomer.m_scale_y + 0.5);
 	}
+
+	// 反缩放RECT
 	static void unzoom (RECT &o) {
 		tool_Zoomer &zoomer = get_zoomer ();
 		if (!zoomer.m_is_scale) return;
@@ -58,6 +88,8 @@ public:
 		o.right = (decltype (o.right)) (o.right / zoomer.m_scale_x + 0.5);
 		o.bottom = (decltype (o.bottom)) (o.bottom / zoomer.m_scale_y + 0.5);
 	}
+
+	// 反缩放Bitmap
 	static void unzoom (Gdiplus::Bitmap **pbmp) {
 		tool_Zoomer &zoomer = get_zoomer ();
 		if (!zoomer.m_is_scale) return;

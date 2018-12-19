@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_GDIP_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_Gdip
+// Description: Gdip图片工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_GDIP_HPP__
 #define __TOOL_GDIP_HPP__
 
 #include <vector>
@@ -8,6 +20,7 @@
 
 
 class tool_Gdip {
+	// 获取指定文件格式的clsid
 	static bool gdip_get_encoder_clsid (LPCWSTR format, CLSID* pClsid) {
 		UINT num = 0, size = 0;
 		Gdiplus::GetImageEncodersSize (&num, &size);
@@ -27,6 +40,7 @@ class tool_Gdip {
 	}
 
 public:
+	// gdi+保存图片
 	static bool gdip_save (Gdiplus::Image *img, LPCWSTR lpFile) {
 		std::wstring sFile = lpFile;
 		size_t p = sFile.rfind (L'.');
@@ -46,6 +60,7 @@ public:
 		return (Gdiplus::Status::Ok == img->Save (lpFile, &clsid));
 	}
 
+	// gdi+保存gif动态图
 	static bool gdip_save_animation (std::vector<Gdiplus::Image*> &vimg, LPCWSTR lpFile, size_t delay = 50) {
 		size_t szImg = vimg.size (), i;
 		if (0 == szImg)
@@ -92,6 +107,7 @@ public:
 		return true;
 	}
 
+	// gdi+截屏
 	static Gdiplus::Bitmap* capture_screen () {
 		HDC hDC = ::GetDC (NULL);
 		int cx = ::GetDeviceCaps (hDC, DESKTOPHORZRES);
@@ -107,6 +123,7 @@ public:
 		return bmp;
 	}
 
+	// gdi截屏
 	static HBITMAP capture_screen_gdi () {
 		HDC hDeskDC = ::GetDC (NULL);// ::GetWindowDC (NULL);
 		HDC hMemDc = ::CreateCompatibleDC (hDeskDC);

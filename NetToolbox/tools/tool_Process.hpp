@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_PROCESS_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_Process
+// Description: 进程工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_PROCESS_HPP__
 #define __TOOL_PROCESS_HPP__
 
 #include <map>
@@ -14,6 +26,7 @@
 
 class tool_Process {
 public:
+	// 获取进程列表
 	static std::map<DWORD, string_t> get_processes () {
 		HANDLE hSnapShot = ::CreateToolhelp32Snapshot (TH32CS_SNAPPROCESS, 0);
 		PROCESSENTRY32 pe32 { sizeof (PROCESSENTRY32) };
@@ -27,10 +40,12 @@ public:
 		return m;
 	}
 
+	// 打开notepad之类的命令或者传入http://xxx打开一个网页
 	static void shell_exec (string_t url) {
 		::ShellExecute (NULL, _T ("open"), url.c_str (), nullptr, nullptr, SW_SHOW);
 	}
 
+	// 判断进程是否存在
 	static bool process_exist (string_t file) {
 		HANDLE hSnapShot = ::CreateToolhelp32Snapshot (TH32CS_SNAPPROCESS, 0);
 		PROCESSENTRY32 pe32 { sizeof (PROCESSENTRY32) };
@@ -50,6 +65,7 @@ public:
 		return false;
 	}
 
+	// 创建进程，进程名必须包括路径的全称
 	static bool create_process (string_view_t file) {
 		STARTUPINFO si = { sizeof (STARTUPINFO) };
 		PROCESS_INFORMATION pi = { 0 };
@@ -64,6 +80,7 @@ public:
 		return bRet;
 	}
 
+	// 杀掉某进程
 	static bool kill (DWORD pid) {
 		HANDLE hProcess = ::OpenProcess (PROCESS_TERMINATE, FALSE, pid);
 		if (!hProcess)
@@ -73,6 +90,7 @@ public:
 		return bRet;
 	}
 
+	// 获取某个进程的所在文件夹
 	static std::tuple<DWORD, string_t> get_path (DWORD pid) {
 		HANDLE hProcess = ::OpenProcess (PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
 		if (!hProcess) {

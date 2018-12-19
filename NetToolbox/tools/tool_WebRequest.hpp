@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_WEB_REQUEST_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_WebRequest
+// Description: 网络请求工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_WEB_REQUEST_HPP__
 #define __TOOL_WEB_REQUEST_HPP__
 
 #include <string>
@@ -14,6 +26,7 @@
 
 class tool_WebRequest {
 public:
+	// 发起get请求
 	static std::string get (std::string_view url) {
 		try {
 			auto[schema, host, path] = parse_url (url);
@@ -31,6 +44,7 @@ public:
 		return "";
 	}
 
+	// 发起post请求
 	static std::string post (std::string_view url, std::string_view data) {
 		try {
 			auto[schema, host, path] = parse_url (url);
@@ -50,6 +64,7 @@ public:
 	}
 
 protected:
+	// 解析url
 	static std::tuple<std::string, std::string, std::string> parse_url (std::string_view url) {
 		size_t p = url.find ("//");
 		std::string schema = "http://";

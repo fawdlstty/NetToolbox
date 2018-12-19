@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_UTILS_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_Utils
+// Description: 单位工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_UTILS_HPP__
 #define __TOOL_UTILS_HPP__
 
 #include <string>
@@ -13,6 +25,7 @@
 
 class tool_Utils {
 public:
+	// 格式化计量单位
 	static string_t format_unit (double byte_num) {
 		LPCTSTR units[] = { _T ("Byte"), _T ("KB"), _T ("MB"), _T ("GB"), _T ("TB"), _T ("PB"), _T ("EB"), _T ("ZB"), _T ("YB"), _T ("NB"), _T ("DB"), _T ("CB") };
 		for (size_t i = 0; i < sizeof (units) / sizeof (units[0]); ++i, byte_num /= 1024) {
@@ -23,6 +36,7 @@ public:
 		return _T ("");
 	}
 
+	// 根据GetLastError的值获取错误信息
 	static string_t get_error_info (DWORD err_no) {
 		TCHAR tBuf[MAX_PATH] = { 0 };
 		int n = _stprintf_s (tBuf, MAX_PATH, _T ("错误 %d："), err_no);
@@ -37,14 +51,17 @@ public:
 		return tBuf;
 	}
 
+	// 格式化IPv4
 	static string_t format_ipv4 (IPAddr ip) {
 		return tool_StringT::format (_T ("%d.%d.%d.%d"), ip & 0xFF, (ip >> 8) & 0xFF, (ip >> 16) & 0xFF, (ip >> 24) & 0xFF);
 	}
 
+	// 格式化IPv4（主机序）
 	static string_t format_ipv4_my (uint32_t ip) {
 		return tool_StringT::format (_T ("%d.%d.%d.%d"), (ip >> 24) & 0xFF, (ip >> 16) & 0xFF, (ip >> 8) & 0xFF, ip & 0xFF);
 	}
 
+	// 反格式化IPv4（主机序）
 	static uint32_t from_ipv4_my (string_t sip) {
 		std::vector<string_t> v;
 		tool_StringT::split (sip, v, _T ('.'));

@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_FORMATTING_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_Formatting
+// Description: 格式化工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_FORMATTING_HPP__
 #define __TOOL_FORMATTING_HPP__
 
 #include <string>
@@ -8,6 +20,7 @@
 
 class tool_Formatting {
 public:
+	// 查询名称所对应的正则表达式
 	static std::string query_regex (std::string desp) {
 		static std::map<std::string, std::string> m_regex_items {
 			{ "IPv4", "^(((25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))$" },
@@ -26,21 +39,25 @@ public:
 		return m_regex_items[desp];
 	}
 
+	// 判断目标字符串是否为ipv4
 	static bool is_ipv4 (std::string s) {
 		std::regex r (query_regex ("IPv4"));
 		return std::regex_match (s, r);
 	}
 
+	// 判断目标字符串是否为ipv6
 	static bool is_ipv6 (std::string s) {
 		std::regex r (query_regex ("IPv6"));
 		return std::regex_match (s, r);
 	}
 
+	// 判断目标字符串是否为域名
 	static bool is_domain (std::string s) {
 		std::regex r (query_regex ("域名"));
 		return std::regex_match (s, r);
 	}
 
+	// 判断目标字符串是否为网址
 	static bool is_url (std::string s) {
 		std::regex r (query_regex ("URL"));
 		return std::regex_match (s, r);

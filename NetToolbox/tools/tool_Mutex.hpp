@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_MUTEX_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_Mutex
+// Description: 互斥量工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_MUTEX_HPP__
 #define __TOOL_MUTEX_HPP__
 
 #include <Windows.h>
@@ -8,14 +20,29 @@
 
 class tool_Mutex {
 public:
+	// 互斥量构造
 	tool_Mutex (LPCTSTR lpName) {
 		m_hMutex = ::CreateMutex (nullptr, FALSE, lpName);
 	}
+
+	// 互斥量析构
+	~tool_Mutex () {
+		if (m_hMutex) {
+			if (m_locked)
+				unlock ();
+			::CloseHandle (m_hMutex);
+			m_hMutex = NULL;
+		}
+	}
+
+	// 加锁
 	void lock () {
 		if (m_hMutex)
 			::WaitForSingleObject (m_hMutex, INFINITE);
 		m_locked = true;
 	}
+
+	// 尝试加锁
 	bool try_lock () {
 		if (!m_hMutex)
 			return false;
@@ -24,18 +51,12 @@ public:
 		m_locked = true;
 		return true;
 	}
+
+	// 解锁
 	void unlock () {
 		if (m_hMutex)
 			::ReleaseMutex (m_hMutex);
 		m_locked = false;
-	}
-	~tool_Mutex () {
-		if (m_hMutex) {
-			if (m_locked)
-				unlock ();
-			::CloseHandle (m_hMutex);
-			m_hMutex = NULL;
-		}
 	}
 
 private:

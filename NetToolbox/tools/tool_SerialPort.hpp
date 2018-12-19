@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_SERIAL_PORT_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_SerialPort
+// Description: 串口工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_SERIAL_PORT_HPP__
 #define __TOOL_SERIAL_PORT_HPP__
 
 #include <string>
@@ -20,6 +32,7 @@
 
 class tool_SerialPort {
 public:
+	// 获取串口名称列表
 	static std::vector<std::string> get_list () {
 		std::vector<std::string> v;
 		HDEVINFO hDevInfo = ::SetupDiGetClassDevsA (&GUID_DEVCLASS_PORTS, NULL, NULL, 0);
@@ -48,6 +61,7 @@ public:
 		close ();
 	}
 
+	// 打开串口
 	bool open (std::string name, uint32_t baud_rate = 9600, uint8_t byte_size = 8, std::string parity = "none", std::string stopbits = "1") {
 		static std::map<std::string, serial::parity_t> map_parity = { { "none", serial::parity_none }, { "odd", serial::parity_odd }, { "even", serial::parity_even }, { "mark", serial::parity_mark }, { "space", serial::parity_space } };
 		static std::map<std::string, serial::stopbits_t> map_stopbits = { { "1", serial::stopbits_one }, { "1.5", serial::stopbits_one_point_five }, { "2", serial::stopbits_two } };
@@ -63,25 +77,35 @@ public:
 		m_serial.open ();
 		return (m_is_open = m_serial.isOpen ());
 	}
+
+	// 关闭串口
 	void close () {
 		if (m_serial.isOpen ())
 			m_serial.close ();
 		m_is_open = false;
 	}
+
+	// 向串口写数据
 	size_t write (std::string data) {
 		if (!m_serial.isOpen ())
 			return 0;
 		return m_serial.write (data);
 	}
 
+	// 设置读到数据及关闭串口时触发的事件
 	void set_on_event (std::function<void (std::string)> on_receive, std::function<void ()> on_close) {
 		m_on_receive = on_receive;
 		m_on_close = on_close;
 	}
+
+	// 判断串口是否打开
 	bool is_open () { return m_serial.isOpen (); }
+
+	// 获取串口名称
 	std::string get_name () { return m_serial.getPort (); }
 
 protected:
+	// 串口内部工作线程
 	void thread_func () {
 		while (!m_exit) {
 			if (m_serial.isOpen ()) {

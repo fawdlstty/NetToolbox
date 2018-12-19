@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_MAKEAVI_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_MakeAvi
+// Description: AVI工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_MAKEAVI_HPP__
 #define __TOOL_MAKEAVI_HPP__
 
 //http://blog.sina.com.cn/s/blog_a2e5bcda01019bcw.html

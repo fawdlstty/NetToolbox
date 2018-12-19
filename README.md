@@ -83,7 +83,13 @@
 
 
 ## 许可证
-GPL-3.0
+DuiLib_Faw项目根据项目自身许可协议进行许可
+
+第三方库 serial 与 Simple-Web-Server 按原项目许可协议进行许可
+
+NetToolbox/tools 目录下工具类为MIT开源许可协议单独许可
+
+其他未明确标注的均为 GPL-3.0 许可协议进行许可
 
 
 

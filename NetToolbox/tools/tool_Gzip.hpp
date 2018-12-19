@@ -1,4 +1,16 @@
-﻿#ifndef __TOOL_GZIP_HPP__
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// Class Name:  tool_Gzip
+// Description: Gzip压缩工具类
+// Class URI:   https://github.com/fawdlstty/NetToolbox
+// Author:      Fawdlstty
+// Author URI:  https://www.fawdlstty.com/
+// License:     此文件单独授权 以MIT方式开源共享
+// Last Update: Dec 19, 2018
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __TOOL_GZIP_HPP__
 #define __TOOL_GZIP_HPP__
 
 #include <zlib.h>
@@ -13,6 +25,7 @@
 
 class tool_Gzip {
 public:
+	// gzip压缩数据
 	static std::string compress (std::string_view data, int level = 9) {
 		std::string ret = "";
 		unsigned char out[CHUNK];
@@ -37,6 +50,7 @@ public:
 		return ret;
 	}
 
+	// gzip解压数据
 	static std::string decompress (std::string_view data) {
 		std::string ret = "";
 		z_stream strm;
