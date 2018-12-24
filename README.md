@@ -6,6 +6,8 @@
 ## 描述
 易大师网络工具箱是一个开源小工具集合，集成了网络方面众多小功能，可以极大提高您的工作效率
 
+源码结构讲解：[【易大师网络工具箱】项目解析](https://www.fawdlstty.com/archives/608.html)
+
 所用界面库（MIT开源）：[DuiLib_Faw](https://github.com/fawdlstty/DuiLib_Faw)
 
 > 本地网络
