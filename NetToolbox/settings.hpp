@@ -19,7 +19,7 @@ public:
 	// 初始化
 	static void init () {
 		m_file = tool_Path::get_exe_path () + _T ("Settings.json");
-		m_fileA = tool_Encoding::get_gb18030 (m_file);
+		m_fileA = tool_Encoding::T_to_gb18030 (m_file);
 		// 运行计数
 		bool bInit = !tool_Path::file_exist (m_file);
 #ifndef _DEBUG
@@ -32,7 +32,7 @@ public:
 		}).detach ();
 #endif
 		if (bInit) {
-			tool_Encoding::get_gb18030 (m_file);
+			tool_Encoding::T_to_gb18030 (m_file);
 			std::ofstream ofs (m_fileA, std::ios::binary);
 			ofs << "{}";
 			ofs.close ();

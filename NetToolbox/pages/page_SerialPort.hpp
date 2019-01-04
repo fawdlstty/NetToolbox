@@ -81,7 +81,7 @@ public:
 		s_vSp = _vSp;
 		m_serial_name->RemoveAll ();
 		for (auto name : s_vSp) {
-			m_serial_name->Add (new CListLabelElementUI (tool_Encoding::get_T (name).c_str (), 20));
+			m_serial_name->Add (new CListLabelElementUI (tool_Encoding::gb18030_to_T (name).c_str (), 20));
 		}
 		if (s_vSp.size () > 0)
 			m_serial_name->SelectItem (0);
@@ -92,7 +92,7 @@ public:
 		if (m_tmp_port_name == "")
 			return false;
 		CDuiString data = m_serial_senddata->GetText ();
-		std::string _data = tool_Encoding::get_gb18030 (data);
+		std::string _data = tool_Encoding::T_to_gb18030 (data);
 		if (!append_data (SerialDataTypeSend, _data, !m_serial_hex->IsSelected ()))
 			return false;
 		if (m_serial_newline->IsSelected ())
@@ -116,9 +116,9 @@ public:
 			CDuiString name = msg.pSender->GetName ();
 			if (name == _T ("serial_btnopen")) {
 				if (!m_serial.is_open () && m_tmp_port_name == "") {
-					m_tmp_port_name = tool_Encoding::get_gb18030 (m_serial_name->GetText ());
-					std::string _parity = tool_Encoding::get_gb18030 (m_serial_parity->GetText ());
-					std::string _stopbits = tool_Encoding::get_gb18030 (m_serial_stopbits->GetText ());
+					m_tmp_port_name = tool_Encoding::T_to_gb18030 (m_serial_name->GetText ());
+					std::string _parity = tool_Encoding::T_to_gb18030 (m_serial_parity->GetText ());
+					std::string _stopbits = tool_Encoding::T_to_gb18030 (m_serial_stopbits->GetText ());
 					if (m_tmp_port_name == "") {
 						m_parent->invoke ([this] () -> LRESULT {
 							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("打开串口失败：未选择可用的串口"));
@@ -156,7 +156,7 @@ public:
 			}
 			return false;
 		} catch (std::exception &e) {
-			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, tool_Encoding::get_T (e.what ()).c_str ());
+			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, tool_Encoding::gb18030_to_T (e.what ()).c_str ());
 			return true;
 		}
 	}
@@ -220,8 +220,8 @@ protected:
 				data += c;
 			}
 		}
-		string_t _data = tool_Encoding::get_T (data).c_str ();
-		string_t _hex_data = tool_Encoding::get_T (hex_data).c_str ();
+		string_t _data = tool_Encoding::gb18030_to_T (data).c_str ();
+		string_t _hex_data = tool_Encoding::gb18030_to_T (hex_data).c_str ();
 		m_data.push_back ({ type, _data, _hex_data });
 		auto ctrl = new CTextUI ();
 		ctrl->SetName (tool_StringT::format (_T ("serial_cnt_%d"), m_data.size () - 1).c_str ());

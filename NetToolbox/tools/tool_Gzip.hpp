@@ -6,7 +6,7 @@
 // Author:      Fawdlstty
 // Author URI:  https://www.fawdlstty.com/
 // License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Dec 19, 2018
+// Last Update: Jan 05, 2019
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -15,7 +15,7 @@
 
 #include <zlib.h>
 #include <string>
-#include <string_view>
+#include "tool_Encoding.hpp"
 
 #define CHUNK 16384
 #define windowBits 15

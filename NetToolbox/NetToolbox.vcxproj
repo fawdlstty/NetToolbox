@@ -327,7 +327,6 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="resource.h" />
     <ClInclude Include="Settings.hpp" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="tools\tool_Base64.hpp" />
     <ClInclude Include="tools\tool_DnsLookup.hpp" />
     <ClInclude Include="tools\tool_Encoding.hpp" />
     <ClInclude Include="tools\tool_Formatting.hpp" />

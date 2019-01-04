@@ -57,26 +57,25 @@ using Json = nlohmann::json;
 
 
 
+// 应用程序初始化类
 class ProgramGuard {
 public:
 	ProgramGuard () {
 		WSAData wd;
 		if (::WSAStartup (MAKEWORD (2, 2), &wd)) {
 			::MessageBox (NULL, _T ("WSAStartup失败，程序将退出！"), _T ("提示"), MB_ICONHAND);
-			return;
-		}
-		if (FAILED (::CoInitializeEx (NULL, COINIT_APARTMENTTHREADED))) {
+		} else if (FAILED (::CoInitializeEx (NULL, COINIT_APARTMENTTHREADED))) {
 			::MessageBox (NULL, _T ("COM+初始化失败，程序将退出！"), _T ("提示"), MB_ICONHAND);
 			::WSACleanup ();
-			return;
-		}
-		if (FAILED (::CoInitializeSecurity (NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL))) {
+		} else if (FAILED (::CoInitializeSecurity (NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL))) {
 			::MessageBox (NULL, _T ("COM+安全信息设置失败，程序将退出！"), _T ("提示"), MB_ICONHAND);
 			::CoUninitialize ();
 			::WSACleanup ();
-			return;
+		} else {
+			tool_Priv::adjust_debug ();
+
+			is_succeed = true;
 		}
-		is_succeed = true;
 	}
 	~ProgramGuard () {
 		if (is_succeed) {
@@ -94,7 +93,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 		return 0;
 	string_t path = tool_Path::get_exe_path ();
 	string_t _src = path + _T ("NetToolbox.exe"), _srcd = path + _T ("res.dll");
-	auto ver_src = tool_PE::get_version (tool_Encoding::get_gb18030 (_src).c_str ());
+	auto ver_src = tool_PE::get_version (tool_Encoding::T_to_gb18030 (_src).c_str ());
 
 	// 判断版本 & 更新控制
 #ifndef _DEBUG
@@ -137,8 +136,8 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 					for (auto &item : o["files"]) {
 						std::string _file = item["name"];
 						std::string _md5 = item["md5"];
-						std::string _local_file = tool_Encoding::get_gb18030 (path) + (_file == "NetToolbox.exe" ? "NetToolbox.new.exe" : _file);
-						if (tool_Path::get_file_md5 (tool_Encoding::get_T (_local_file).c_str ()) != _md5) {
+						std::string _local_file = tool_Encoding::T_to_gb18030 (path) + (_file == "NetToolbox.exe" ? "NetToolbox.new.exe" : _file);
+						if (tool_Path::get_file_md5 (tool_Encoding::gb18030_to_T (_local_file).c_str ()) != _md5) {
 							std::string _data = tool_WebRequest::get (url_base + _file);
 							if (!_data.empty ()) {
 								MD5_CTX ctx_md5;
@@ -174,7 +173,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 			}
 		}).detach ();
 	} else {
-		ver_new = tool_PE::get_version (tool_Encoding::get_gb18030 (_new).c_str ());
+		ver_new = tool_PE::get_version (tool_Encoding::T_to_gb18030 (_new).c_str ());
 		if (tool_Path::get_exe_name () == _T ("NetToolbox.exe")) {
 			// 检查版本号是否等于新文件，如果相等，则等待新进程退出并删除新文件，否则创建新进程并结束自身
 			if (_cmp_ver (ver_src, ver_new) == 0) {
@@ -229,9 +228,6 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 		::FreeResource (hResource);
 	}
 #endif
-
-	// 初始化调试权限
-	tool_Priv::adjust_debug ();
 
 	// 计算编译器版本
 	auto[v1, v2, v3, v4] = ver_src;

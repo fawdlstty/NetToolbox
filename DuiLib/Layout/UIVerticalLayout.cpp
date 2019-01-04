@@ -3,9 +3,7 @@
 
 namespace DuiLib {
 	IMPLEMENT_DUICONTROL (CVerticalLayoutUI)
-	CVerticalLayoutUI::CVerticalLayoutUI () {
-		::ZeroMemory (&m_rcNewPos, sizeof (m_rcNewPos));
-	}
+	CVerticalLayoutUI::CVerticalLayoutUI () {}
 
 	string_view_t CVerticalLayoutUI::GetClass () const {
 		return _T ("VerticalLayoutUI");
@@ -206,9 +204,18 @@ namespace DuiLib {
 		return m_bImmMode;
 	}
 
+	void CVerticalLayoutUI::SetAutoCalcHeight (bool autoCalcHeight) {
+		m_autoCalcHeight = autoCalcHeight;
+	}
+
+	bool CVerticalLayoutUI::IsAutoCalcHeight () const {
+		return m_autoCalcHeight;
+	}
+
 	void CVerticalLayoutUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
 		if (pstrName == _T ("sepheight")) SetSepHeight (FawTools::parse_dec (pstrValue));
 		else if (pstrName == _T ("sepimm")) SetSepImmMode (FawTools::parse_bool (pstrValue));
+		else if (pstrName == _T ("autocalcheight")) SetAutoCalcHeight (FawTools::parse_bool (pstrValue));
 		else CContainerUI::SetAttribute (pstrName, pstrValue);
 	}
 
@@ -296,6 +303,20 @@ namespace DuiLib {
 			}
 		}
 		CContainerUI::DoEvent (event);
+	}
+
+	SIZE CVerticalLayoutUI::EstimateSize (SIZE szAvailable) {
+		SIZE sz = __super::EstimateSize (szAvailable);
+		if (!IsAutoCalcHeight ())
+			return sz;
+		int height = 0;
+		for (int i = 0; i < GetCount (); ++i) {
+			auto ctrl = GetItemAt (i);
+			if (!ctrl->IsFloat ())
+				height += ctrl->GetFixedHeight ();
+		}
+		sz.cy = height;
+		return sz;
 	}
 
 	bool CVerticalLayoutUI::IsDynamic (POINT &pt) const {

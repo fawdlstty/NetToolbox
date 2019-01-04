@@ -21,13 +21,13 @@ public:
 	bool OnClick (TNotifyUI& msg) override {
 		CDuiString name = msg.pSender->GetName ();
 		if (name == _T ("http_begin")) {
-			std::string type = tool_Encoding::get_utf8 (m_http_type->GetText ());
-			std::string url = tool_Encoding::get_utf8 (m_http_url->GetText ());
+			std::string type = tool_Encoding::T_to_utf8 (m_http_type->GetText ());
+			std::string url = tool_Encoding::T_to_utf8 (m_http_url->GetText ());
 			if (url.empty ())
-				url = tool_Encoding::get_utf8 (m_http_url->GetTipValue ());
+				url = tool_Encoding::T_to_utf8 (m_http_url->GetTipValue ());
 			if (m_http_postdata_tab->GetCurSel () == 0)
 				_convert_data (true);
-			std::string post_data = (type == "POST" ? tool_Encoding::get_utf8 (m_http_postdata_src->GetText ()) : "");
+			std::string post_data = (type == "POST" ? tool_Encoding::T_to_utf8 (m_http_postdata_src->GetText ()) : "");
 			try {
 				std::string ret;
 				if (type == "POST") {
@@ -35,9 +35,9 @@ public:
 				} else {
 					ret = tool_WebRequest::get (url);
 				}
-				m_http_content->SetText (tool_Encoding::get_T_from_utf8 (ret));
+				m_http_content->SetText (tool_Encoding::utf8_to_T (ret));
 			} catch (std::exception &e) {
-				m_http_content->SetText (tool_Encoding::get_T (e.what ()));
+				m_http_content->SetText (tool_Encoding::gb18030_to_T (e.what ()));
 			} catch (...) {
 				m_http_content->SetText (_T ("请求发起失败：未知错误。"));
 			}
@@ -213,9 +213,9 @@ protected:
 				BindEditUI edit_value { name_value };
 				if (!post_data.empty ())
 					post_data += _T ("&");
-				post_data += tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_encode (tool_Encoding::get_utf8 (edit_key->GetText ())));
+				post_data += tool_Encoding::utf8_to_T (tool_Encoding::percent_str_encode (tool_Encoding::T_to_utf8 (edit_key->GetText ())));
 				post_data += _T ("=");
-				post_data += tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_encode (tool_Encoding::get_utf8 (edit_value->GetText ())));
+				post_data += tool_Encoding::utf8_to_T (tool_Encoding::percent_str_encode (tool_Encoding::T_to_utf8 (edit_value->GetText ())));
 			}
 			m_http_postdata_src->SetText (post_data);
 		} else {
@@ -226,8 +226,8 @@ protected:
 				std::vector<string_t> vkey_val = tool_StringT::split (vitems[i], _T ('='), _T (""), false);
 				while (vkey_val.size () < 2)
 					vkey_val.push_back (_T (""));
-				vkey_val[0] = tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_decode (tool_Encoding::get_utf8 (vkey_val[0])));
-				vkey_val[1] = tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_decode (tool_Encoding::get_utf8 (vkey_val[1])));
+				vkey_val[0] = tool_Encoding::utf8_to_T (tool_Encoding::percent_str_decode (tool_Encoding::T_to_utf8 (vkey_val[0])));
+				vkey_val[1] = tool_Encoding::utf8_to_T (tool_Encoding::percent_str_decode (tool_Encoding::T_to_utf8 (vkey_val[1])));
 				_add_item (vkey_val[0], vkey_val[1], _T ("删除"));
 			}
 			_add_item (_T (""), _T (""), _T ("新建"));

@@ -32,11 +32,11 @@ public:
 				addr = addr.substr (0, p);
 			if ((p = addr.find (_T (":"))) != string_t::npos)
 				addr = addr.substr (0, p);
-			std::string s = tool_Encoding::get_gb18030 (addr);
+			std::string s = tool_Encoding::T_to_gb18030 (addr);
 			if (tool_Formatting::is_domain (s)) {
 				s = tool_DnsLookup::query_ip (s.c_str ());
 			}
-			addr = tool_Encoding::get_T (s);
+			addr = tool_Encoding::gb18030_to_T (s);
 			bool is_ipv4 = tool_Formatting::is_ipv4 (s), is_ipv6 = tool_Formatting::is_ipv6 (s);
 			if (!is_ipv4 && !is_ipv6) {
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("未知地址或域名"));
@@ -67,7 +67,7 @@ public:
 
 protected:
 	void on_show_info (size_t row, size_t col, std::string data) {
-		string_t _data = tool_Encoding::get_T (data);
+		string_t _data = tool_Encoding::gb18030_to_T (data);
 		m_parent->invoke ([&] () -> LRESULT {
 			CListContainerElementUI *item = nullptr;
 			if ((size_t) m_tracert_list->GetCount () <= row - 1) {

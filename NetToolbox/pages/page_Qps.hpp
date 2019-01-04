@@ -56,13 +56,13 @@ public:
 				m_succ_counts.resize (threnad_num);
 				m_fail_counts.resize (threnad_num);
 				m_last_succ_count = m_last_fail_count = 0;
-				std::string type = tool_Encoding::get_gb18030 (m_qps_type->GetText ());
-				std::string url = tool_Encoding::get_gb18030 (m_qps_url->GetText ());
+				std::string type = tool_Encoding::T_to_gb18030 (m_qps_type->GetText ());
+				std::string url = tool_Encoding::T_to_gb18030 (m_qps_url->GetText ());
 				if (url.empty ())
-					url = tool_Encoding::get_utf8 (m_qps_url->GetTipValue ());
+					url = tool_Encoding::T_to_utf8 (m_qps_url->GetTipValue ());
 				if (m_qps_postdata_tab->GetCurSel () == 0)
 					_convert_data (true);
-				std::string post_data = (type == "POST" ? tool_Encoding::get_utf8 (m_qps_postdata_src->GetText ()) : "");
+				std::string post_data = (type == "POST" ? tool_Encoding::T_to_utf8 (m_qps_postdata_src->GetText ()) : "");
 				std::tuple<std::string, std::string, std::string> params = { type, url, post_data };
 				m_is_run = !m_is_run;
 				for (size_t i = 0; i < threnad_num; ++i) {
@@ -263,9 +263,9 @@ protected:
 				BindEditUI edit_value { name_value };
 				if (!post_data.empty ())
 					post_data += _T ("&");
-				post_data += tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_encode (tool_Encoding::get_utf8 (edit_key->GetText ())));
+				post_data += tool_Encoding::utf8_to_T (tool_Encoding::percent_str_encode (tool_Encoding::T_to_utf8 (edit_key->GetText ())));
 				post_data += _T ("=");
-				post_data += tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_encode (tool_Encoding::get_utf8 (edit_value->GetText ())));
+				post_data += tool_Encoding::utf8_to_T (tool_Encoding::percent_str_encode (tool_Encoding::T_to_utf8 (edit_value->GetText ())));
 			}
 			m_qps_postdata_src->SetText (post_data);
 		} else {
@@ -276,8 +276,8 @@ protected:
 				std::vector<string_t> vkey_val = tool_StringT::split (vitems[i], _T ('='), _T (""), false);
 				while (vkey_val.size () < 2)
 					vkey_val.push_back (_T (""));
-				vkey_val[0] = tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_decode (tool_Encoding::get_utf8 (vkey_val[0])));
-				vkey_val[1] = tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_decode (tool_Encoding::get_utf8 (vkey_val[1])));
+				vkey_val[0] = tool_Encoding::utf8_to_T (tool_Encoding::percent_str_decode (tool_Encoding::T_to_utf8 (vkey_val[0])));
+				vkey_val[1] = tool_Encoding::utf8_to_T (tool_Encoding::percent_str_decode (tool_Encoding::T_to_utf8 (vkey_val[1])));
 				_add_item (vkey_val[0], vkey_val[1], _T ("删除"));
 			}
 			_add_item (_T (""), _T (""), _T ("新建"));

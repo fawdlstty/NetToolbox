@@ -300,7 +300,7 @@ namespace DuiLib {
 					HZIP hz = nullptr;
 					if (CPaintManagerUI::IsCachedResourceZip ()) hz = (HZIP) CPaintManagerUI::GetResourceZipHandle ();
 					else {
-						std::string_view pwd = FawTools::get_gb18030 (sFilePwd);
+						std::string pwd = FawTools::T_to_gb18030 (sFilePwd);
 						hz = OpenZip (sFile.c_str (), pwd.data ());
 					}
 					if (!hz) break;
@@ -583,7 +583,7 @@ namespace DuiLib {
 				if (CPaintManagerUI::IsCachedResourceZip ()) hz = (HZIP) CPaintManagerUI::GetResourceZipHandle ();
 				else {
 					CDuiString sFilePwd = CPaintManagerUI::GetResourceZipPwd ();
-					std::string pwd = FawTools::get_gb18030 (sFilePwd);
+					std::string pwd = FawTools::T_to_gb18030 (sFilePwd);
 					hz = OpenZip (sFile.c_str (), pwd.c_str ());
 				}
 				if (!hz) break;
@@ -1469,7 +1469,7 @@ namespace DuiLib {
 			} else {
 				stringFormat.SetLineAlignment (Gdiplus::StringAlignmentNear);
 			}
-			std::wstring pcwszDest = FawTools::get_utf16 (pstrText);
+			std::wstring pcwszDest = FawTools::T_to_utf16 (pstrText);
 			if ((uStyle & DT_CALCRECT) != 0) {
 				Gdiplus::RectF bounds;
 				graphics.MeasureString (pcwszDest.data (), -1, &font, rectF, &stringFormat, &bounds);

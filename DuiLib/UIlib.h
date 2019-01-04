@@ -57,12 +57,29 @@
 
 //#define USE_XIMAGE_EFFECT
 
-#ifdef _UNICODE
+#ifndef _FAW_STRING_TYPE
+#define _FAW_STRING_TYPE
+#ifdef UNICODE
 typedef std::wstring string_t;
-typedef std::wstring_view string_view_t;
 #else
 typedef std::string string_t;
+#endif
+
+#define _USE_STRING_VIEW
+#ifdef _USE_STRING_VIEW
+#include <string_view>
+#ifdef UNICODE
+typedef std::wstring_view string_view_t;
+#else
 typedef std::string_view string_view_t;
+#endif
+#else //_USE_STRING_VIEW
+namespace std {
+	typedef string string_view;
+	typedef wstring wstring_view;
+}
+typedef string_t string_view_t;
+#endif //_USE_STRING_VIEW
 #endif
 
 #include "Utils/Utils.h"

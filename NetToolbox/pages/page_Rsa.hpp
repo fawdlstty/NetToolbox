@@ -24,9 +24,9 @@ public:
 		if (msg.pSender->GetName () == _T ("rsa_generate")) {
 			bool succ = tool_Rsa::generate (
 				_ttoi (m_rsa_gensize->GetText ().c_str ()),
-				(m_rsa_selevp_pubkey->IsSelected () ? tool_Encoding::get_gb18030 (m_rsa_evp_pubkey->GetText ()) : ""),
-				(m_rsa_selrsa_pubkey->IsSelected () ? tool_Encoding::get_gb18030 (m_rsa_rsa_pubkey->GetText ()) : ""),
-				tool_Encoding::get_gb18030 (m_rsa_rsa_prvkey->GetText ()));
+				(m_rsa_selevp_pubkey->IsSelected () ? tool_Encoding::T_to_gb18030 (m_rsa_evp_pubkey->GetText ()) : ""),
+				(m_rsa_selrsa_pubkey->IsSelected () ? tool_Encoding::T_to_gb18030 (m_rsa_rsa_pubkey->GetText ()) : ""),
+				tool_Encoding::T_to_gb18030 (m_rsa_rsa_prvkey->GetText ()));
 			if (succ)
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _T ("RSA公私钥导出成功！"));
 			else

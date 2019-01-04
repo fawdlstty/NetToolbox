@@ -54,9 +54,6 @@
     <ClInclude Include="tools\tool_String.hpp">
       <Filter>头文件\tools</Filter>
     </ClInclude>
-    <ClInclude Include="tools\tool_Base64.hpp">
-      <Filter>头文件\tools</Filter>
-    </ClInclude>
     <ClInclude Include="tools\tool_Encoding.hpp">
       <Filter>头文件\tools</Filter>
     </ClInclude>

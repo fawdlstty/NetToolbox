@@ -6,7 +6,7 @@
 // Author:      Fawdlstty
 // Author URI:  https://www.fawdlstty.com/
 // License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Dec 19, 2018
+// Last Update: Jan 05, 2019
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -15,6 +15,7 @@
 
 #include <string>
 #include <regex>
+#include <map>
 
 
 
@@ -60,6 +61,18 @@ public:
 	// 判断目标字符串是否为网址
 	static bool is_url (std::string s) {
 		std::regex r (query_regex ("URL"));
+		return std::regex_match (s, r);
+	}
+
+	// 判断目标字符串是否为手机
+	static bool is_phone (std::string s) {
+		std::regex r (query_regex ("手机"));
+		return std::regex_match (s, r);
+	}
+
+	// 判断目标字符串是否为电子邮箱
+	static bool is_email (std::string s) {
+		std::regex r (query_regex ("电子邮箱"));
 		return std::regex_match (s, r);
 	}
 };

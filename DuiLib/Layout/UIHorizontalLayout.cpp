@@ -3,9 +3,7 @@
 
 namespace DuiLib {
 	IMPLEMENT_DUICONTROL (CHorizontalLayoutUI)
-	CHorizontalLayoutUI::CHorizontalLayoutUI () {
-		::ZeroMemory (&m_rcNewPos, sizeof (m_rcNewPos));
-	}
+	CHorizontalLayoutUI::CHorizontalLayoutUI () {}
 
 	string_view_t CHorizontalLayoutUI::GetClass () const {
 		return _T ("HorizontalLayoutUI");
@@ -205,9 +203,18 @@ namespace DuiLib {
 		return m_bImmMode;
 	}
 
+	void CHorizontalLayoutUI::SetAutoCalcWidth (bool autoCalcWidth) {
+		m_autoCalcWidth = autoCalcWidth;
+	}
+
+	bool CHorizontalLayoutUI::IsAutoCalcWidth () const {
+		return m_autoCalcWidth;
+	}
+
 	void CHorizontalLayoutUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
 		if (pstrName == _T ("sepwidth")) SetSepWidth (FawTools::parse_dec (pstrValue));
 		else if (pstrName == _T ("sepimm")) SetSepImmMode (FawTools::parse_bool (pstrValue));
+		else if (pstrName == _T ("autocalcwidth")) SetAutoCalcWidth (FawTools::parse_bool (pstrValue));
 		else CContainerUI::SetAttribute (pstrName, pstrValue);
 	}
 
@@ -295,6 +302,20 @@ namespace DuiLib {
 			}
 		}
 		CContainerUI::DoEvent (event);
+	}
+
+	SIZE CHorizontalLayoutUI::EstimateSize (SIZE szAvailable) {
+		SIZE sz = __super::EstimateSize (szAvailable);
+		if (!IsAutoCalcWidth ())
+			return sz;
+		int width = 0;
+		for (int i = 0; i < GetCount (); ++i) {
+			auto ctrl = GetItemAt (i);
+			if (!ctrl->IsFloat ())
+				width += ctrl->GetFixedWidth ();
+		}
+		sz.cx = width;
+		return sz;
 	}
 
 	bool CHorizontalLayoutUI::IsDynamic (POINT &pt) const {

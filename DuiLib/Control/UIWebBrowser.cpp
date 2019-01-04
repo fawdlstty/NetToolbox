@@ -150,7 +150,7 @@ namespace DuiLib {
 		if (m_pWebBrowser2) {
 			CDuiVariant url;
 			url.vt = VT_BSTR;
-			url.bstrVal = _bstr_t (FawTools::get_utf16 (lpszUrl).c_str ());
+			url.bstrVal = _bstr_t (FawTools::T_to_utf16 (lpszUrl).c_str ());
 			HRESULT hr = m_pWebBrowser2->Navigate2 (&url, nullptr, nullptr, nullptr, nullptr);
 		}
 	}
@@ -408,7 +408,7 @@ namespace DuiLib {
 
 	void CWebBrowserUI::NavigateUrl (string_view_t lpszUrl) {
 		if (m_pWebBrowser2 && !lpszUrl.empty ()) {
-			m_pWebBrowser2->Navigate ((BSTR) SysAllocString (_bstr_t (FawTools::get_utf16 (lpszUrl).c_str ())), nullptr, nullptr, nullptr, nullptr);
+			m_pWebBrowser2->Navigate ((BSTR) SysAllocString (_bstr_t (FawTools::T_to_utf16 (lpszUrl).c_str ())), nullptr, nullptr, nullptr, nullptr);
 		}
 	}
 

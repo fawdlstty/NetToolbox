@@ -6,7 +6,7 @@
 // Author:      Fawdlstty
 // Author URI:  https://www.fawdlstty.com/
 // License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Dec 19, 2018
+// Last Update: Jan 05, 2019
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -35,7 +35,7 @@ public:
 	static void show_path (string_t path) {
 		tool_StringT::replace (path, _T ('/'), _T ('\\'));
 		string_t cmd = tool_StringT::format (_T ("/select,\"%s\""), path.c_str ());
-		//system (tool_Encoding::get_gb18030 (cmd).c_str ());
+		//system (tool_Encoding::T_to_gb18030 (cmd).c_str ());
 		::ShellExecute (NULL, _T ("open"), _T ("explorer.exe"), cmd.c_str (), nullptr, SW_SHOW);
 	}
 
@@ -48,10 +48,10 @@ public:
 		return bExist;
 	}
 	static bool file_existA (std::string_view file) {
-		return file_exist (tool_Encoding::get_T (file));
+		return file_exist (tool_Encoding::gb18030_to_T (file));
 	}
 	static bool file_existW (std::wstring_view file) {
-		return file_exist (tool_Encoding::get_T (file));
+		return file_exist (tool_Encoding::utf16_to_T (file));
 	}
 
 	static std::string get_file_md5 (LPCTSTR path) {
@@ -100,7 +100,7 @@ protected:
 		int _argc = 0;
 		LPWSTR *_argv = ::CommandLineToArgvW (cmd_line, &_argc);
 		for (int i = 0; i < _argc; ++i)
-			m_args.push_back (tool_Encoding::get_T (_argv[i]));
+			m_args.push_back (tool_Encoding::utf16_to_T (_argv[i]));
 		tool_StringT::replace (m_args[0], _T ('/'), _T ('\\'));
 		size_t p = m_args[0].rfind (_T ('\\')) + 1;
 		m_exe_path = m_args[0].substr (0, p);

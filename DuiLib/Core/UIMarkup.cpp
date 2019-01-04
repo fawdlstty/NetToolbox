@@ -173,10 +173,10 @@ namespace DuiLib {
 				pByte += 3; dwSize -= 3;
 			}
 			std::string_view data ((const char*) pByte, (size_t) dwSize);
-			m_pstrXML = FawTools::get_T_from_utf8 (data);
+			m_pstrXML = FawTools::utf8_to_T (data);
 		} else if (encoding == XMLFILE_ENCODING_ASNI) {
 			std::string_view data ((const char*) pByte, (size_t) dwSize);
-			m_pstrXML = FawTools::get_T (data);
+			m_pstrXML = FawTools::gb18030_to_T (data);
 		} else {
 			if (dwSize >= 2 && ((pByte[0] == 0xFE && pByte[1] == 0xFF) || (pByte[0] == 0xFF && pByte[1] == 0xFE))) {
 				dwSize = dwSize / 2 - 1;
@@ -191,7 +191,7 @@ namespace DuiLib {
 					pByte += 2;
 				}
 				std::wstring_view data ((const wchar_t*) pByte, (size_t) dwSize);
-				m_pstrXML = FawTools::get_T (data);
+				m_pstrXML = FawTools::gb18030_to_T (data);
 				pByte -= 2;
 			}
 		}
@@ -234,7 +234,7 @@ namespace DuiLib {
 			if (CPaintManagerUI::IsCachedResourceZip ()) hz = (HZIP) CPaintManagerUI::GetResourceZipHandle ();
 			else {
 				CDuiString sFilePwd = CPaintManagerUI::GetResourceZipPwd ();
-				std::string pwd = FawTools::get_gb18030 (sFilePwd);
+				std::string pwd = FawTools::T_to_gb18030 (sFilePwd);
 				hz = OpenZip (sFile.c_str (), pwd.c_str ());
 			}
 			if (!hz) return _Failed (_T ("Error opening zip file"));

@@ -80,7 +80,7 @@ private:
 		//on_receive (boost::system::error_code (), 0);
 		//
 		while (ip1 <= ip2) {
-			std::string sip = tool_Encoding::get_gb18030 (tool_Utils::format_ipv4_my (ip1));
+			std::string sip = tool_Encoding::T_to_gb18030 (tool_Utils::format_ipv4_my (ip1));
 			boost::asio::ip::udp::endpoint ep { boost::asio::ip::address::from_string (sip), 137 };
 			sock.send_to (send_buf, ep);
 			++ip1;

@@ -6,7 +6,7 @@
 // Author:      Fawdlstty
 // Author URI:  https://www.fawdlstty.com/
 // License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Dec 19, 2018
+// Last Update: Jan 05, 2019
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -16,6 +16,31 @@
 #include <string>
 #include <vector>
 #include <Windows.h>
+
+#ifndef _FAW_STRING_TYPE
+#define _FAW_STRING_TYPE
+#ifdef UNICODE
+typedef std::wstring string_t;
+#else
+typedef std::string string_t;
+#endif
+
+#define _USE_STRING_VIEW
+#ifdef _USE_STRING_VIEW
+#include <string_view>
+#ifdef UNICODE
+typedef std::wstring_view string_view_t;
+#else
+typedef std::string_view string_view_t;
+#endif
+#else //_USE_STRING_VIEW
+namespace std {
+	typedef string string_view;
+	typedef wstring wstring_view;
+}
+typedef string_t string_view_t;
+#endif //_USE_STRING_VIEW
+#endif
 
 
 
@@ -83,6 +108,23 @@ public:
 		}
 		return true;
 	}
+	static bool is_base64 (const unsigned char *data, int length) {
+		if (length % 4) {
+			return false;
+		} else if (length == 0) {
+			return true;
+		}
+		if (data[length - 1] == '=')
+			--length;
+		if (data[length - 1] == '=')
+			--length;
+		for (int i = 0; i < length; ++i) {
+			char ch = data[i];
+			if (!(isalnum (ch) || (ch == '+') || (ch == '/')))
+				return false;
+		}
+		return true;
+	}
 
 	// 编码转换
 	static std::wstring gb18030_to_utf16 (std::string_view _old) { return _conv_to_wide (_old, CP_ACP); }
@@ -92,19 +134,19 @@ public:
 	static std::string gb18030_to_utf8 (std::string_view _old) { return utf16_to_utf8 (gb18030_to_utf16 (_old)); }
 	static std::string utf8_to_gb18030 (std::string_view _old) { return utf16_to_gb18030 (utf8_to_utf16 (_old)); }
 #ifdef UNICODE
-	static std::string get_gb18030 (string_view_t _old) { return utf16_to_gb18030 (_old); }
-	static std::string get_utf8 (string_view_t _old) { return utf16_to_utf8 (_old); }
-	static std::wstring get_utf16 (string_view_t _old) { return std::wstring (_old); }
-	static string_t get_T (std::string_view _old) { return gb18030_to_utf16 (_old); }
-	static string_t get_T_from_utf8 (std::string_view _old) { return utf8_to_utf16 (_old); }
-	static string_t get_T (std::wstring_view _old) { return std::wstring (_old); }
+	static std::string T_to_gb18030 (string_view_t _old) { return utf16_to_gb18030 (_old); }
+	static std::string T_to_utf8 (string_view_t _old) { return utf16_to_utf8 (_old); }
+	static std::wstring T_to_utf16 (string_view_t _old) { return std::wstring (_old); }
+	static string_t gb18030_to_T (std::string_view _old) { return gb18030_to_utf16 (_old); }
+	static string_t utf8_to_T (std::string_view _old) { return utf8_to_utf16 (_old); }
+	static string_t utf16_to_T (std::wstring_view _old) { return string_t (_old); }
 #else
-	static std::string get_gb18030 (string_view_t _old) { return std::string (_old); }
-	static std::string get_utf8 (string_view_t _old) { return gb18030_to_utf8 (_old); }
-	static std::wstring get_utf16 (string_view_t _old) { return gb18030_to_utf16 (_old); }
-	static string_t get_T (std::string_view _old) { return std::string (_old); }
-	static string_t get_T_from_utf8 (std::string_view _old) { return utf8_to_gb18030 (_old); }
-	static string_t get_T (std::wstring_view _old) { return utf16_to_gb18030 (_old); }
+	static std::string T_to_gb18030 (string_view_t _old) { return std::string (_old); }
+	static std::string T_to_utf8 (string_view_t _old) { return gb18030_to_utf8 (_old); }
+	static std::wstring T_to_utf16 (string_view_t _old) { return gb18030_to_utf16 (_old); }
+	static string_t gb18030_to_T (std::string_view _old) { return string_t (_old); }
+	static string_t utf8_to_T (std::string_view _old) { return utf8_to_gb18030 (_old); }
+	static string_t utf16_to_T (std::wstring_view _old) { return utf16_to_gb18030 (_old); }
 #endif
 private:
 	static std::string _conv_to_multi (std::wstring_view _old, UINT ToType) {
@@ -125,6 +167,7 @@ private:
 			return L"";
 		return s.c_str ();
 	}
+	static const std::string base64_chars;
 
 public:
 	static bool is_hex_char (char ch) {
@@ -324,6 +367,68 @@ public:
 		}
 		return ret;
 	}
+	static std::string base64_encode (std::string_view data) {
+		std::string ret;
+		int i = 0, j = 0;
+		unsigned char char_3[3], char_4[4];
+		unsigned int in_len = data.size ();
+		unsigned char* bytes_to_encode = (unsigned char*) &data[0];
+		while (in_len--) {
+			char_3[i++] = *(bytes_to_encode++);
+			if (i == 3) {
+				char_4[0] = (char_3[0] & 0xfc) >> 2;
+				char_4[1] = ((char_3[0] & 0x03) << 4) + ((char_3[1] & 0xf0) >> 4);
+				char_4[2] = ((char_3[1] & 0x0f) << 2) + ((char_3[2] & 0xc0) >> 6);
+				char_4[3] = char_3[2] & 0x3f;
+
+				for (i = 0; i < 4; i++)
+					ret += base64_chars[char_4[i]];
+				i = 0;
+			}
+		}
+		if (i) {
+			for (j = i; j < 3; j++)
+				char_3[j] = '\0';
+			char_4[0] = (char_3[0] & 0xfc) >> 2;
+			char_4[1] = ((char_3[0] & 0x03) << 4) + ((char_3[1] & 0xf0) >> 4);
+			char_4[2] = ((char_3[1] & 0x0f) << 2) + ((char_3[2] & 0xc0) >> 6);
+			for (j = 0; j < i + 1; j++)
+				ret += base64_chars[char_4[j]];
+			while ((i++ < 3))
+				ret += '=';
+		}
+		return ret;
+	}
+	static std::string base64_decode (std::string_view data) {
+		int in_len = data.size (), i = 0, j = 0, in_ = 0;
+		unsigned char char_4[4], char_3[3];
+		std::string ret;
+		auto is_base64 = [] (unsigned char c) { return (isalnum (c) || (c == '+') || (c == '/')); };
+		while (in_len-- && (data[in_] != '=') && is_base64 (data[in_])) {
+			char_4[i++] = data[in_]; in_++;
+			if (i == 4) {
+				for (i = 0; i < 4; i++)
+					char_4[i] = (unsigned char) base64_chars.find (char_4[i]);
+				char_3[0] = (char_4[0] << 2) + ((char_4[1] & 0x30) >> 4);
+				char_3[1] = ((char_4[1] & 0xf) << 4) + ((char_4[2] & 0x3c) >> 2);
+				char_3[2] = ((char_4[2] & 0x3) << 6) + char_4[3];
+
+				for (i = 0; i < 3; i++)
+					ret += char_3[i];
+				i = 0;
+			}
+		}
+		if (i) {
+			for (j = 0; j < i; j++)
+				char_4[j] = (unsigned char) base64_chars.find (char_4[j]);
+			char_3[0] = (char_4[0] << 2) + ((char_4[1] & 0x30) >> 4);
+			char_3[1] = ((char_4[1] & 0xf) << 4) + ((char_4[2] & 0x3c) >> 2);
+			for (j = 0; j < i - 1; j++) ret += char_3[j];
+		}
+		return ret;
+	}
 };
+
+__declspec (selectany) const std::string tool_Encoding::base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 #endif //__TOOL_ENCODING_HPP__

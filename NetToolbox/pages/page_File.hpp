@@ -130,17 +130,17 @@ public:
 			if (tool_PE::read_import_export (file.c_str (), vexport, vimport)) {
 				content += _T ("\n\n\nPE信息：\n导出函数：\n");
 				for (size_t i = 0; i < vexport.size (); ++i) {
-					content += tool_Encoding::get_T (vexport[i]);
+					content += tool_Encoding::gb18030_to_T (vexport[i]);
 					content += _T ('\n');
 				}
 				content += _T ("\n导入函数：\n");
 				for (i = 0; i < vimport.size (); ++i) {
 					auto[dll_name, dll_funcs] = vimport[i];
-					content += tool_Encoding::get_T (dll_name);
+					content += tool_Encoding::gb18030_to_T (dll_name);
 					content += _T ('\n');
 					for (j = 0; j < dll_funcs.size (); ++j) {
 						auto[func_id, func_name] = dll_funcs[j];
-						content += tool_StringT::format (_T ("\t%d\t%s\n"), func_id, tool_Encoding::get_T (func_name).c_str ());
+						content += tool_StringT::format (_T ("\t%d\t%s\n"), func_id, tool_Encoding::gb18030_to_T (func_name).c_str ());
 					}
 				}
 			} else {

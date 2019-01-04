@@ -336,7 +336,7 @@ namespace DuiLib {
 
 		// Set window text
 		if (pcs && pcs->lpszName) {
-			std::wstring _text = FawTools::get_utf16 (pcs->lpszName);
+			std::wstring _text = FawTools::T_to_utf16 (pcs->lpszName);
 			if (FAILED (pserv->TxSetText (_text.c_str ())))
 				return FALSE;
 		}

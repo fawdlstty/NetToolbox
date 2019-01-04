@@ -21,21 +21,21 @@ public:
 	bool OnClick (TNotifyUI& msg) override {
 		CDuiString name = msg.pSender->GetName ();
 		if (name == _T ("regex_match")) {
-			std::string _statement = tool_Encoding::get_gb18030 (m_regex_statement->GetText ());
+			std::string _statement = tool_Encoding::T_to_gb18030 (m_regex_statement->GetText ());
 			tool_StringA::replace (_statement, "\r\n", "\n");
 			tool_StringA::replace (_statement, "\r", "\n");
-			std::string _content = tool_Encoding::get_gb18030 (m_regex_content->GetText ());
+			std::string _content = tool_Encoding::T_to_gb18030 (m_regex_content->GetText ());
 			tool_StringA::replace (_content, "\r\n", "\n");
 			tool_StringA::replace (_content, "\r", "\n");
 			auto[_err, _vresult] = tool_StringT::match_regex (_statement, _content);
 			if (!_err.empty ())
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Warning, tool_Encoding::get_T (_err));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Warning, tool_Encoding::gb18030_to_T (_err));
 			std::string _result = "";
 			for (auto &_item : _vresult) {
 				_result += _item;
 				_result += '\n';
 			}
-			string_t t_result = tool_Encoding::get_T (_result);
+			string_t t_result = tool_Encoding::gb18030_to_T (_result);
 			m_regex_result->SetText (t_result.c_str ());
 			return true;
 		}
@@ -44,7 +44,7 @@ public:
 
 	bool OnItemSelect (TNotifyUI& msg) override {
 		static std::function<string_t (string_t)> _query_regex = [] (string_t desp) {
-			return tool_Encoding::get_T (tool_Formatting::query_regex (tool_Encoding::get_gb18030 (desp)));
+			return tool_Encoding::gb18030_to_T (tool_Formatting::query_regex (tool_Encoding::T_to_gb18030 (desp)));
 		};
 		CDuiString name = msg.pSender->GetName ();
 		if (name == _T ("regex_combo_net")) {

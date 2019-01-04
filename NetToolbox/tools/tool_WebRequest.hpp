@@ -6,7 +6,7 @@
 // Author:      Fawdlstty
 // Author URI:  https://www.fawdlstty.com/
 // License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Dec 19, 2018
+// Last Update: Jan 05, 2019
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -14,53 +14,90 @@
 #define __TOOL_WEB_REQUEST_HPP__
 
 #include <string>
-#include <string_view>
 #include <tuple>
 #include <initializer_list>
 
 #include "tool_String.hpp"
 
-#include "../3rdparty/Simple-Web-Server/client_https.hpp"
+//#define _TOOL_WEBREQUEST_USE_CURL
+#ifdef _TOOL_WEBREQUEST_USE_CURL
+#	include <curl/curl.h>
+#	ifdef _DEBUG
+#		pragma comment (lib, "libcurl-d_imp.lib")
+#	else
+#		pragma comment (lib, "libcurl_imp.lib")
+#	endif
+#else
+#	include "../3rdparty/Simple-Web-Server/client_https.hpp"
+#endif
 
 
 
 class tool_WebRequest {
 public:
 	// 发起get请求
-	static std::string get (std::string_view url) {
+	static std::string get (std::string_view _url) {
+		std::string _ret = "";
+#ifdef _TOOL_WEBREQUEST_USE_CURL
+		CURL *_curl = curl_easy_init ();
+		curl_easy_setopt (_curl, CURLOPT_URL, _url.c_str ());
+		curl_easy_setopt (_curl, CURLOPT_WRITEFUNCTION, _write_data);
+		curl_easy_setopt (_curl, CURLOPT_WRITEDATA, &_ret);
+		/*CURLcode code =*/ curl_easy_perform (_curl);
+		curl_easy_cleanup (_curl);
+#else
 		try {
-			auto[schema, host, path] = parse_url (url);
-			if (schema == "http://") {
-				SimpleWeb::Client<SimpleWeb::HTTP> client (host);
-				auto req = client.request ("GET", path);
-				return req->content.string ();
-			} else if (schema == "https://") {
-				SimpleWeb::Client<SimpleWeb::HTTPS> client (host, false);
-				auto req = client.request ("GET", path);
-				return req->content.string ();
+			std::string _schema = "", _host = "", _path = "";
+			std::tie (_schema, _host, _path) = parse_url (_url);
+			if (_schema == "http://") {
+				SimpleWeb::Client<SimpleWeb::HTTP> client (_host);
+				auto req = client.request ("GET", _path);
+				_ret = req->content.string ();
+			} else if (_schema == "https://") {
+				SimpleWeb::Client<SimpleWeb::HTTPS> client (_host, false);
+				auto req = client.request ("GET", _path);
+				_ret = req->content.string ();
 			}
 		} catch (...) {
 		}
-		return "";
+#endif
+		return _ret;
 	}
 
 	// 发起post请求
-	static std::string post (std::string_view url, std::string_view data) {
+	static std::string post (std::string _url, std::string _data) {
+		std::string _ret = "";
+#ifdef _TOOL_WEBREQUEST_USE_CURL
+		CURL *_curl = curl_easy_init ();
+		curl_easy_setopt (_curl, CURLOPT_URL, _url.c_str ());
+		curl_easy_setopt (_curl, CURLOPT_WRITEFUNCTION, _write_data);
+		curl_easy_setopt (_curl, CURLOPT_WRITEDATA, &_ret);
+		curl_slist *_headers = curl_slist_append (nullptr, "Content-Type: application/json");//x-www-form-urlencoded
+		_headers = curl_slist_append (_headers, "User-Agent: NetToolbox");
+		curl_easy_setopt (_curl, CURLOPT_HTTPHEADER, _headers);
+		curl_easy_setopt (_curl, CURLOPT_POSTFIELDS, _data.c_str ());
+		curl_easy_setopt (_curl, CURLOPT_POSTFIELDSIZE, _data.size ());
+		/*CURLcode code =*/ curl_easy_perform (_curl);
+		curl_slist_free_all (_headers);
+		curl_easy_cleanup (_curl);
+#else
 		try {
-			auto[schema, host, path] = parse_url (url);
+			std::string _schema = "", _host = "", _path = "";
+			std::tie (_schema, _host, _path) = parse_url (_url);
 			SimpleWeb::CaseInsensitiveMultimap header { { "Content-Type", "application/x-www-form-urlencoded" }, { "User-Agent", "NetToolbox" } };
-			if (schema == "http://") {
-				SimpleWeb::Client<SimpleWeb::HTTP> client (host);
-				auto req = client.request ("POST", path, data, header);
-				return req->content.string ();
-			} else if (schema == "https://") {
-				SimpleWeb::Client<SimpleWeb::HTTPS> client (host, false);
-				auto req = client.request ("POST", path, data, header);
-				return req->content.string ();
+			if (_schema == "http://") {
+				SimpleWeb::Client<SimpleWeb::HTTP> client (_host);
+				auto req = client.request ("POST", _path, _data, header);
+				_ret = req->content.string ();
+			} else if (_schema == "https://") {
+				SimpleWeb::Client<SimpleWeb::HTTPS> client (_host, false);
+				auto req = client.request ("POST", _path, _data, header);
+				_ret = req->content.string ();
 			}
 		} catch (...) {
 		}
-		return "";
+#endif
+		return _ret;
 	}
 
 protected:

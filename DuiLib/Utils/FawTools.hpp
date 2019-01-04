@@ -199,19 +199,19 @@ namespace DuiLib {
 		static std::string gb18030_to_utf8 (std::string_view _old) { return utf16_to_utf8 (gb18030_to_utf16 (_old)); }
 		static std::string utf8_to_gb18030 (std::string_view _old) { return utf16_to_gb18030 (utf8_to_utf16 (_old)); }
 #ifdef UNICODE
-		static std::string get_gb18030 (string_view_t _old) { return utf16_to_gb18030 (_old); }
-		static std::string get_utf8 (string_view_t _old) { return utf16_to_utf8 (_old); }
-		static std::wstring get_utf16 (string_view_t _old) { return std::wstring (_old); }
-		static string_t get_T (std::string_view _old) { return gb18030_to_utf16 (_old); }
-		static string_t get_T_from_utf8 (std::string_view _old) { return utf8_to_utf16 (_old); }
-		static string_t get_T (std::wstring_view _old) { return std::wstring (_old); }
+		static std::string T_to_gb18030 (string_view_t _old) { return utf16_to_gb18030 (_old); }
+		static std::string T_to_utf8 (string_view_t _old) { return utf16_to_utf8 (_old); }
+		static std::wstring T_to_utf16 (string_view_t _old) { return std::wstring (_old); }
+		static string_t gb18030_to_T (std::string_view _old) { return gb18030_to_utf16 (_old); }
+		static string_t utf8_to_T (std::string_view _old) { return utf8_to_utf16 (_old); }
+		static string_t gb18030_to_T (std::wstring_view _old) { return std::wstring (_old); }
 #else
-		static std::string get_gb18030 (string_view_t _old) { return std::string (_old); }
-		static std::string get_utf8 (string_view_t _old) { return gb18030_to_utf8 (_old); }
-		static std::wstring get_utf16 (string_view_t _old) { return gb18030_to_utf16 (_old); }
-		static string_t get_T (std::string_view _old) { return std::string (_old); }
-		static string_t get_T_from_utf8 (std::string_view _old) { return utf8_to_gb18030 (_old); }
-		static string_t get_T (std::wstring_view _old) { return utf16_to_gb18030 (_old); }
+		static std::string T_to_gb18030 (string_view_t _old) { return std::string (_old); }
+		static std::string T_to_utf8 (string_view_t _old) { return gb18030_to_utf8 (_old); }
+		static std::wstring T_to_utf16 (string_view_t _old) { return gb18030_to_utf16 (_old); }
+		static string_t gb18030_to_T (std::string_view _old) { return std::string (_old); }
+		static string_t utf8_to_T (std::string_view _old) { return utf8_to_gb18030 (_old); }
+		static string_t gb18030_to_T (std::wstring_view _old) { return utf16_to_gb18030 (_old); }
 #endif
 
 	private:

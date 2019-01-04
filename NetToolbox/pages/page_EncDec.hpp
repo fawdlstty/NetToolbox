@@ -2,7 +2,6 @@
 #define __PAGE_ENCDEC_HPP__
 
 #include "../tools/tool_Encoding.hpp"
-#include "../tools/tool_Base64.hpp"
 
 #include "page_base.hpp"
 
@@ -17,40 +16,40 @@ public:
 		CDuiString name = msg.pSender->GetName ();
 		if (name == _T ("encdec_enc")) {
 			string_t _src = m_encdec_data->GetText (), t_data;
-			std::string data_gb18030 = tool_Encoding::get_gb18030 (_src);
-			std::string data_utf8 = tool_Encoding::get_utf8 (_src);
-			t_data = tool_Encoding::get_T (tool_Encoding::percent_str_encode (data_utf8));
+			std::string data_gb18030 = tool_Encoding::T_to_gb18030 (_src);
+			std::string data_utf8 = tool_Encoding::T_to_utf8 (_src);
+			t_data = tool_Encoding::gb18030_to_T (tool_Encoding::percent_str_encode (data_utf8));
 			m_encdec_percent->SetText (t_data);
-			t_data = tool_Encoding::get_T (tool_Encoding::escape_x_str_encode (data_utf8));
+			t_data = tool_Encoding::gb18030_to_T (tool_Encoding::escape_x_str_encode (data_utf8));
 			m_encdec_escape_x->SetText (t_data);
-			t_data = tool_Encoding::get_T (tool_Encoding::escape_u_str_encode (data_gb18030));
+			t_data = tool_Encoding::gb18030_to_T (tool_Encoding::escape_u_str_encode (data_gb18030));
 			m_encdec_escape_u->SetText (t_data);
-			t_data = tool_Encoding::get_T (tool_Base64::base64_encode ((const unsigned char*) data_utf8.c_str (), data_utf8.size ()));
+			t_data = tool_Encoding::gb18030_to_T (tool_Encoding::base64_encode (data_utf8));
 			m_encdec_base64->SetText (t_data);
 			return true;
 		} else if (name == _T ("encdec_dec")) {
-			std::string data = tool_Encoding::get_gb18030 (m_encdec_data->GetText ());
+			std::string data = tool_Encoding::T_to_gb18030 (m_encdec_data->GetText ());
 			string_t t_data;
 			if (tool_Encoding::is_percent_str (data)) {
-				t_data = tool_Encoding::get_T_from_utf8 (tool_Encoding::percent_str_decode (data));
+				t_data = tool_Encoding::utf8_to_T (tool_Encoding::percent_str_decode (data));
 			} else {
 				t_data = _T ("(解码失败)");
 			}
 			m_encdec_percent->SetText (t_data);
 			if (tool_Encoding::is_escape_x_str (data)) {
-				t_data = tool_Encoding::get_T_from_utf8 (tool_Encoding::escape_x_str_decode (data));
+				t_data = tool_Encoding::utf8_to_T (tool_Encoding::escape_x_str_decode (data));
 			} else {
 				t_data = _T ("(解码失败)");
 			}
 			m_encdec_escape_x->SetText (t_data);
 			if (tool_Encoding::is_escape_u_str (data)) {
-				t_data = tool_Encoding::get_T (tool_Encoding::escape_u_str_decode (data));
+				t_data = tool_Encoding::gb18030_to_T (tool_Encoding::escape_u_str_decode (data));
 			} else {
 				t_data = _T ("(解码失败)");
 			}
 			m_encdec_escape_u->SetText (t_data);
-			if (tool_Base64::is_base64 ((const unsigned char*) data.c_str (), data.size ())) {
-				t_data = tool_Encoding::get_T (tool_Base64::base64_decode (data));
+			if (tool_Encoding::is_base64 ((const unsigned char*) data.c_str (), data.size ())) {
+				t_data = tool_Encoding::gb18030_to_T (tool_Encoding::base64_decode (data));
 			} else {
 				t_data = _T ("(解码失败)");
 			}
