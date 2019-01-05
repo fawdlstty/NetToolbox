@@ -25,9 +25,6 @@
     <Filter Include="3rdparty\serial">
       <UniqueIdentifier>{b8661dc5-170b-432e-9de8-b079bb7d1f8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3rdparty\Simple-Web-Server">
-      <UniqueIdentifier>{06808546-92f6-42dc-a6ce-f9ad269ae1bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\db">
       <UniqueIdentifier>{c04a2ce7-6e0c-4ac7-9df0-8a12cd8f3201}</UniqueIdentifier>
     </Filter>
@@ -107,27 +104,6 @@
     </ClInclude>
     <ClInclude Include="tools\tool_Utils.hpp">
       <Filter>头文件\tools</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\Simple-Web-Server\status_code.hpp">
-      <Filter>3rdparty\Simple-Web-Server</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\Simple-Web-Server\utility.hpp">
-      <Filter>3rdparty\Simple-Web-Server</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\Simple-Web-Server\client_http.hpp">
-      <Filter>3rdparty\Simple-Web-Server</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\Simple-Web-Server\client_https.hpp">
-      <Filter>3rdparty\Simple-Web-Server</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\Simple-Web-Server\crypto.hpp">
-      <Filter>3rdparty\Simple-Web-Server</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\Simple-Web-Server\server_http.hpp">
-      <Filter>3rdparty\Simple-Web-Server</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\Simple-Web-Server\server_https.hpp">
-      <Filter>3rdparty\Simple-Web-Server</Filter>
     </ClInclude>
     <ClInclude Include="tools\tool_WebRequest.hpp">
       <Filter>头文件\tools</Filter>

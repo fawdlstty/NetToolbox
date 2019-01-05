@@ -40,7 +40,7 @@
 
 ## 编译步骤
 1. 安装VS2017、vcpkg、7-zip与upx并设置环境变量，直到这几个命令能在命令行里直接使用
-2. 执行命令：vcpkg install boost:x86-windows boost:x86-windows-static openssl:x86-windows openssl:x86-windows-static nlohmann-json:x86-windows nlohmann-json:x86-windows-static
+2. 执行命令：vcpkg install boost:x86-windows boost:x86-windows-static openssl:x86-windows openssl:x86-windows-static nlohmann-json:x86-windows nlohmann-json:x86-windows-static curl:x86-windows curl:x86-windows-static
 3. 编译
 
 
@@ -85,9 +85,7 @@
 
 
 ## 许可证
-DuiLib_Faw项目根据项目自身许可协议进行许可
-
-第三方库 serial 与 Simple-Web-Server 按原项目许可协议进行许可
+第三方库 DuiLib_Faw 与 serial 按原项目许可协议进行许可
 
 NetToolbox/tools 目录下工具类为MIT开源许可协议单独许可
 

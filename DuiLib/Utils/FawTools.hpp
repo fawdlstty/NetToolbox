@@ -204,14 +204,14 @@ namespace DuiLib {
 		static std::wstring T_to_utf16 (string_view_t _old) { return std::wstring (_old); }
 		static string_t gb18030_to_T (std::string_view _old) { return gb18030_to_utf16 (_old); }
 		static string_t utf8_to_T (std::string_view _old) { return utf8_to_utf16 (_old); }
-		static string_t gb18030_to_T (std::wstring_view _old) { return std::wstring (_old); }
+		static string_t utf16_to_T (std::wstring_view _old) { return std::wstring (_old); }
 #else
 		static std::string T_to_gb18030 (string_view_t _old) { return std::string (_old); }
 		static std::string T_to_utf8 (string_view_t _old) { return gb18030_to_utf8 (_old); }
 		static std::wstring T_to_utf16 (string_view_t _old) { return gb18030_to_utf16 (_old); }
 		static string_t gb18030_to_T (std::string_view _old) { return std::string (_old); }
 		static string_t utf8_to_T (std::string_view _old) { return utf8_to_gb18030 (_old); }
-		static string_t gb18030_to_T (std::wstring_view _old) { return utf16_to_gb18030 (_old); }
+		static string_t utf16_to_T (std::wstring_view _old) { return utf16_to_gb18030 (_old); }
 #endif
 
 	private:

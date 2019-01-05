@@ -24,6 +24,9 @@
 #include "tool_String.hpp"
 #include "tool_Utils.hpp"
 
+#pragma comment (lib, "ws2_32.lib")
+#pragma comment(lib, "iphlpapi.lib")
+
 
 
 class tool_Tracert {

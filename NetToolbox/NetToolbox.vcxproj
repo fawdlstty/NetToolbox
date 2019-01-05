@@ -297,13 +297,6 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="3rdparty\serial\serial.h" />
     <ClInclude Include="3rdparty\serial\v8stdint.h" />
     <ClInclude Include="3rdparty\serial\win.h" />
-    <ClInclude Include="3rdparty\Simple-Web-Server\client_http.hpp" />
-    <ClInclude Include="3rdparty\Simple-Web-Server\client_https.hpp" />
-    <ClInclude Include="3rdparty\Simple-Web-Server\crypto.hpp" />
-    <ClInclude Include="3rdparty\Simple-Web-Server\server_http.hpp" />
-    <ClInclude Include="3rdparty\Simple-Web-Server\server_https.hpp" />
-    <ClInclude Include="3rdparty\Simple-Web-Server\status_code.hpp" />
-    <ClInclude Include="3rdparty\Simple-Web-Server\utility.hpp" />
     <ClInclude Include="db\db_Sqlite.hpp" />
     <ClInclude Include="HanAnim.hpp" />
     <ClInclude Include="NetToolboxWnd.h" />

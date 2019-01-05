@@ -22,6 +22,8 @@
 #include "tool_String.hpp"
 #include "tool_Utils.hpp"
 
+#pragma comment (lib, "psapi.lib")
+
 
 
 class tool_Process {

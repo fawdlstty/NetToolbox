@@ -38,23 +38,6 @@ using Json = nlohmann::json;
 #	pragma comment (lib, "../lib/DuiLibA_s.lib")
 #endif
 
-// ref: tools/tool_SerialPort
-#pragma comment (lib, "SetupAPI.lib")
-// ref: tools/tool_NetInfo、tools/tool_Tracert
-#pragma comment(lib, "iphlpapi.lib")
-// ref: tools/tool_Tracert
-#pragma comment (lib, "ws2_32.lib")
-// ref: tools/tool_PE
-#pragma comment (lib, "Dbghelp.lib")
-// ref: tools/tool_PE
-#pragma comment (lib, "Version.lib")
-// ref: tools/tool_MakeAvi
-#pragma comment (lib, "Vfw32.lib")
-// ref: tools/tool_Process
-#pragma comment (lib, "psapi.lib")
-// ref: tools/tool_WMI
-#pragma comment (lib, "wbemuuid.lib")
-
 
 
 // 应用程序初始化类

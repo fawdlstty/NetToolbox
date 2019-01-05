@@ -15,20 +15,11 @@
 
 //http://blog.sina.com.cn/s/blog_a2e5bcda01019bcw.html
 
-#include <string>
-#include <string_view>
-#ifndef UNICODE
-using string_t = std::string;
-using string_view_t = std::string_view;
-#else
-using string_t = std::wstring;
-using string_view_t = std::wstring_view;
-#endif
-
-#include <Windows.h>
-#include <tchar.h>
-
 #include <Vfw.h>
+#pragma comment (lib, "Vfw32.lib")
+
+#include "tool_Encoding.hpp"
+
 
 
 

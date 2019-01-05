@@ -18,6 +18,7 @@
 #include <comutil.h>
 #include <WbemIdl.h>
 
+#pragma comment (lib, "wbemuuid.lib")
 //#pragma comment (lib, "comsuppw.lib")
 
 // WMI使用的Win32类库名

@@ -191,7 +191,7 @@ namespace DuiLib {
 					pByte += 2;
 				}
 				std::wstring_view data ((const wchar_t*) pByte, (size_t) dwSize);
-				m_pstrXML = FawTools::gb18030_to_T (data);
+				m_pstrXML = FawTools::utf16_to_T (data);
 				pByte -= 2;
 			}
 		}

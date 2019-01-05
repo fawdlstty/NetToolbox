@@ -29,6 +29,8 @@
 #include "tool_Process.hpp"
 #include "tool_Utils.hpp"
 
+#pragma comment(lib, "iphlpapi.lib")
+
 
 
 class tool_NetInfo {

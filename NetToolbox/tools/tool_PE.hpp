@@ -22,6 +22,9 @@
 
 #include "tool_String.hpp"
 
+#pragma comment (lib, "Dbghelp.lib")
+#pragma comment (lib, "Version.lib")
+
 
 
 class tool_PE {

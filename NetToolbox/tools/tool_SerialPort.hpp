@@ -28,6 +28,8 @@
 
 #include "../3rdparty/serial/serial.h"
 
+#pragma comment (lib, "SetupAPI.lib")
+
 
 
 class tool_SerialPort {
