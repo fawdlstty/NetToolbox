@@ -15,6 +15,7 @@ using Json = nlohmann::json;
 #include "tools/tool_PE.hpp"
 #include "tools/tool_Mutex.hpp"
 #include "tools/tool_Priv.hpp"
+#include "tools/tool_WebRequest.hpp"
 #include "tools/tool_WMI.hpp"
 
 #include "Settings.hpp"
@@ -55,6 +56,7 @@ public:
 			::CoUninitialize ();
 			::WSACleanup ();
 		} else {
+			::curl_global_init (NULL);
 			tool_Priv::adjust_debug ();
 
 			is_succeed = true;
@@ -62,6 +64,7 @@ public:
 	}
 	~ProgramGuard () {
 		if (is_succeed) {
+			::curl_global_cleanup ();
 			::CoUninitialize ();
 			::WSACleanup ();
 		}
