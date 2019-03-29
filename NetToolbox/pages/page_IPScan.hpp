@@ -8,7 +8,6 @@
 
 #include "../tools/tool_NetInfo.hpp"
 #include "../tools/tool_Utils.hpp"
-#include "../tools/tool_Encoding.hpp"
 
 #include "page_base.hpp"
 
@@ -24,9 +23,9 @@ public:
 	virtual ~page_IPScan () = default;
 
 	bool OnClick (TNotifyUI& msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		 faw::String name = msg.pSender->GetName ();
 		if (name == _T ("ipscan_start")) {
-			string_t sip1 = m_ipscan_ip1->GetText (), sip2 = m_ipscan_ip2->GetText ();
+			faw::String sip1 = m_ipscan_ip1->GetText (), sip2 = m_ipscan_ip2->GetText ();
 			uint32_t ip1 = tool_Utils::from_ipv4_my (sip1), ip2 = tool_Utils::from_ipv4_my (sip2);
 			if (ip1 > ip2) {
 				::MessageBox (m_parent->GetHWND (), _T ("起始IP不能大于中止IP！"), _T ("错误"), MB_ICONHAND);
@@ -80,7 +79,7 @@ private:
 		//on_receive (boost::system::error_code (), 0);
 		//
 		while (ip1 <= ip2) {
-			std::string sip = tool_Encoding::T_to_gb18030 (tool_Utils::format_ipv4_my (ip1));
+			std::string sip = tool_Utils::format_ipv4_my (ip1).stra ();
 			boost::asio::ip::udp::endpoint ep { boost::asio::ip::address::from_string (sip), 137 };
 			sock.send_to (send_buf, ep);
 			++ip1;

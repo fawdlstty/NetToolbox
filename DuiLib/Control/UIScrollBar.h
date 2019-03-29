@@ -9,8 +9,8 @@ namespace DuiLib {
 	public:
 		CScrollBarUI ();
 
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 
 		CContainerUI* GetOwner () const;
 		void SetOwner (CContainerUI* pOwner);
@@ -30,56 +30,56 @@ namespace DuiLib {
 
 		bool GetShowButton1 ();
 		void SetShowButton1 (bool bShow);
-		string_view_t GetButton1NormalImage ();
-		void SetButton1NormalImage (string_view_t pStrImage);
-		string_view_t GetButton1HotImage ();
-		void SetButton1HotImage (string_view_t pStrImage);
-		string_view_t GetButton1PushedImage ();
-		void SetButton1PushedImage (string_view_t pStrImage);
-		string_view_t GetButton1DisabledImage ();
-		void SetButton1DisabledImage (string_view_t pStrImage);
+		faw::string_view_t GetButton1NormalImage ();
+		void SetButton1NormalImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetButton1HotImage ();
+		void SetButton1HotImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetButton1PushedImage ();
+		void SetButton1PushedImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetButton1DisabledImage ();
+		void SetButton1DisabledImage (faw::string_view_t pStrImage);
 
 		bool GetShowButton2 ();
 		void SetShowButton2 (bool bShow);
-		string_view_t GetButton2NormalImage ();
-		void SetButton2NormalImage (string_view_t pStrImage);
-		string_view_t GetButton2HotImage ();
-		void SetButton2HotImage (string_view_t pStrImage);
-		string_view_t GetButton2PushedImage ();
-		void SetButton2PushedImage (string_view_t pStrImage);
-		string_view_t GetButton2DisabledImage ();
-		void SetButton2DisabledImage (string_view_t pStrImage);
+		faw::string_view_t GetButton2NormalImage ();
+		void SetButton2NormalImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetButton2HotImage ();
+		void SetButton2HotImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetButton2PushedImage ();
+		void SetButton2PushedImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetButton2DisabledImage ();
+		void SetButton2DisabledImage (faw::string_view_t pStrImage);
 
-		string_view_t GetThumbNormalImage ();
-		void SetThumbNormalImage (string_view_t pStrImage);
-		string_view_t GetThumbHotImage ();
-		void SetThumbHotImage (string_view_t pStrImage);
-		string_view_t GetThumbPushedImage ();
-		void SetThumbPushedImage (string_view_t pStrImage);
-		string_view_t GetThumbDisabledImage ();
-		void SetThumbDisabledImage (string_view_t pStrImage);
+		faw::string_view_t GetThumbNormalImage ();
+		void SetThumbNormalImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetThumbHotImage ();
+		void SetThumbHotImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetThumbPushedImage ();
+		void SetThumbPushedImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetThumbDisabledImage ();
+		void SetThumbDisabledImage (faw::string_view_t pStrImage);
 
-		string_view_t GetRailNormalImage ();
-		void SetRailNormalImage (string_view_t pStrImage);
-		string_view_t GetRailHotImage ();
-		void SetRailHotImage (string_view_t pStrImage);
-		string_view_t GetRailPushedImage ();
-		void SetRailPushedImage (string_view_t pStrImage);
-		string_view_t GetRailDisabledImage ();
-		void SetRailDisabledImage (string_view_t pStrImage);
+		faw::string_view_t GetRailNormalImage ();
+		void SetRailNormalImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetRailHotImage ();
+		void SetRailHotImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetRailPushedImage ();
+		void SetRailPushedImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetRailDisabledImage ();
+		void SetRailDisabledImage (faw::string_view_t pStrImage);
 
-		string_view_t GetBkNormalImage ();
-		void SetBkNormalImage (string_view_t pStrImage);
-		string_view_t GetBkHotImage ();
-		void SetBkHotImage (string_view_t pStrImage);
-		string_view_t GetBkPushedImage ();
-		void SetBkPushedImage (string_view_t pStrImage);
-		string_view_t GetBkDisabledImage ();
-		void SetBkDisabledImage (string_view_t pStrImage);
+		faw::string_view_t GetBkNormalImage ();
+		void SetBkNormalImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetBkHotImage ();
+		void SetBkHotImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetBkPushedImage ();
+		void SetBkPushedImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetBkDisabledImage ();
+		void SetBkDisabledImage (faw::string_view_t pStrImage);
 
 		void SetPos (RECT rc, bool bNeedInvalidate = true);
 		void DoEvent (TEventUI& event);
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 
 		bool DoPaint (HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 
@@ -106,40 +106,40 @@ namespace DuiLib {
 		int				m_nLastScrollOffset		= 0;
 		int				m_nScrollRepeatDelay	= 0;
 
-		CDuiString		m_sBkNormalImage;
-		CDuiString		m_sBkHotImage;
-		CDuiString		m_sBkPushedImage;
-		CDuiString		m_sBkDisabledImage;
+		faw::String		m_sBkNormalImage;
+		faw::String		m_sBkHotImage;
+		faw::String		m_sBkPushedImage;
+		faw::String		m_sBkDisabledImage;
 
 		bool			m_bShowButton1			= true;
 		RECT			m_rcButton1				= { 0 };
 		UINT			m_uButton1State			= 0;
-		CDuiString		m_sButton1NormalImage;
-		CDuiString		m_sButton1HotImage;
-		CDuiString		m_sButton1PushedImage;
-		CDuiString		m_sButton1DisabledImage;
+		faw::String		m_sButton1NormalImage;
+		faw::String		m_sButton1HotImage;
+		faw::String		m_sButton1PushedImage;
+		faw::String		m_sButton1DisabledImage;
 
 		bool			m_bShowButton2			= true;
 		RECT			m_rcButton2				= { 0 };
 		UINT			m_uButton2State			= 0;
-		CDuiString		m_sButton2NormalImage;
-		CDuiString		m_sButton2HotImage;
-		CDuiString		m_sButton2PushedImage;
-		CDuiString		m_sButton2DisabledImage;
+		faw::String		m_sButton2NormalImage;
+		faw::String		m_sButton2HotImage;
+		faw::String		m_sButton2PushedImage;
+		faw::String		m_sButton2DisabledImage;
 
 		RECT			m_rcThumb				= { 0 };
 		UINT			m_uThumbState			= 0;
-		CDuiString		m_sThumbNormalImage;
-		CDuiString		m_sThumbHotImage;
-		CDuiString		m_sThumbPushedImage;
-		CDuiString		m_sThumbDisabledImage;
+		faw::String		m_sThumbNormalImage;
+		faw::String		m_sThumbHotImage;
+		faw::String		m_sThumbPushedImage;
+		faw::String		m_sThumbDisabledImage;
 
-		CDuiString		m_sRailNormalImage;
-		CDuiString		m_sRailHotImage;
-		CDuiString		m_sRailPushedImage;
-		CDuiString		m_sRailDisabledImage;
+		faw::String		m_sRailNormalImage;
+		faw::String		m_sRailHotImage;
+		faw::String		m_sRailPushedImage;
+		faw::String		m_sRailDisabledImage;
 
-		CDuiString		m_sImageModify;
+		faw::String		m_sImageModify;
 	};
 }
 

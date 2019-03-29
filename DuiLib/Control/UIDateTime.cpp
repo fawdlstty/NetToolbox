@@ -15,8 +15,8 @@ namespace DuiLib {
 		void Init (CDateTimeUI* pOwner);
 		RECT CalPos ();
 
-		string_view_t GetWindowClassName () const;
-		string_view_t GetSuperClassName () const;
+		faw::string_view_t GetWindowClassName () const;
+		faw::string_view_t GetSuperClassName () const;
 		void OnFinalMessage (HWND hWnd);
 
 		LRESULT HandleMessage (UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -72,11 +72,11 @@ namespace DuiLib {
 		return rcPos;
 	}
 
-	string_view_t CDateTimeWnd::GetWindowClassName () const {
+	faw::string_view_t CDateTimeWnd::GetWindowClassName () const {
 		return _T ("DateTimeWnd");
 	}
 
-	string_view_t CDateTimeWnd::GetSuperClassName () const {
+	faw::string_view_t CDateTimeWnd::GetSuperClassName () const {
 		return DATETIMEPICK_CLASS;
 	}
 
@@ -146,11 +146,11 @@ namespace DuiLib {
 		m_nDTUpdateFlag = DT_NONE;
 	}
 
-	string_view_t CDateTimeUI::GetClass () const {
+	faw::string_view_t CDateTimeUI::GetClass () const {
 		return _T ("DateTimeUI");
 	}
 
-	LPVOID CDateTimeUI::GetInterface (string_view_t pstrName) {
+	LPVOID CDateTimeUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_DATETIME) return static_cast<CDateTimeUI*>(this);
 		return CLabelUI::GetInterface (pstrName);
 	}
@@ -180,8 +180,7 @@ namespace DuiLib {
 		if (m_nDTUpdateFlag == DT_DELETE) {
 			SetText (_T (""));
 		} else if (m_nDTUpdateFlag == DT_UPDATE) {
-			CDuiString sText;
-			sText.Format (_T ("%4d-%02d-%02d"), m_sysTime.wYear, m_sysTime.wMonth, m_sysTime.wDay, m_sysTime.wHour, m_sysTime.wMinute);
+			faw::String sText = faw::String::format (_T ("%4d-%02d-%02d"), m_sysTime.wYear, m_sysTime.wMonth, m_sysTime.wDay, m_sysTime.wHour, m_sysTime.wMinute);
 			SetText (sText);
 		}
 	}

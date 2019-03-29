@@ -17,8 +17,6 @@
 #include <Windows.h>
 #include <openssl/pem.h>
 
-#include "tool_Path.hpp"
-
 
 
 class tool_Rsa {
@@ -27,17 +25,17 @@ public:
 	static bool generate (int bits, std::string file_pubkey, std::string file_rsapubkey, std::string file_rsaprvkey) {
 		bool bExist = false;
 		std::string info = "以下文件已存在，是否覆盖？";
-		if (tool_Path::file_existA (file_pubkey)) {
+		if (faw::Directory::exist (file_pubkey)) {
 			bExist = true;
 			info += "\n";
 			info += file_pubkey;
 		}
-		if (tool_Path::file_existA (file_rsapubkey)) {
+		if (faw::Directory::exist (file_rsapubkey)) {
 			bExist = true;
 			info += "\n";
 			info += file_rsapubkey;
 		}
-		if (tool_Path::file_existA (file_rsaprvkey)) {
+		if (faw::Directory::exist (file_rsaprvkey)) {
 			bExist = true;
 			info += "\n";
 			info += file_rsaprvkey;

@@ -8,11 +8,11 @@ namespace DuiLib {
 		m_uTextStyle = DT_SINGLELINE | DT_VCENTER | DT_CENTER;
 	}
 
-	string_view_t CButtonUI::GetClass () const {
+	faw::string_view_t CButtonUI::GetClass () const {
 		return _T ("ButtonUI");
 	}
 
-	LPVOID CButtonUI::GetInterface (string_view_t pstrName) {
+	LPVOID CButtonUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_BUTTON) return static_cast<CButtonUI*>(this);
 		return CLabelUI::GetInterface (pstrName.data ());
 	}
@@ -90,6 +90,8 @@ namespace DuiLib {
 	void CButtonUI::SetEnabled (bool bEnable) {
 		CControlUI::SetEnabled (bEnable);
 		if (!IsEnabled ()) {
+			m_uButtonState = UISTATE_DISABLED;
+		} else {
 			m_uButtonState = 0;
 		}
 	}
@@ -173,56 +175,56 @@ namespace DuiLib {
 		return m_dwFocusedTextColor;
 	}
 
-	string_view_t CButtonUI::GetNormalImage () {
-		return m_sNormalImage;
+	faw::string_view_t CButtonUI::GetNormalImage () {
+		return m_sNormalImage.str_view ();
 	}
 
-	void CButtonUI::SetNormalImage (string_view_t pStrImage) {
+	void CButtonUI::SetNormalImage (faw::string_view_t pStrImage) {
 		m_sNormalImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CButtonUI::GetHotImage () {
-		return m_sHotImage;
+	faw::string_view_t CButtonUI::GetHotImage () {
+		return m_sHotImage.str_view ();
 	}
 
-	void CButtonUI::SetHotImage (string_view_t pStrImage) {
+	void CButtonUI::SetHotImage (faw::string_view_t pStrImage) {
 		m_sHotImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CButtonUI::GetPushedImage () {
-		return m_sPushedImage;
+	faw::string_view_t CButtonUI::GetPushedImage () {
+		return m_sPushedImage.str_view ();
 	}
 
-	void CButtonUI::SetPushedImage (string_view_t pStrImage) {
+	void CButtonUI::SetPushedImage (faw::string_view_t pStrImage) {
 		m_sPushedImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CButtonUI::GetFocusedImage () {
-		return m_sFocusedImage;
+	faw::string_view_t CButtonUI::GetFocusedImage () {
+		return m_sFocusedImage.str_view ();
 	}
 
-	void CButtonUI::SetFocusedImage (string_view_t pStrImage) {
+	void CButtonUI::SetFocusedImage (faw::string_view_t pStrImage) {
 		m_sFocusedImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CButtonUI::GetDisabledImage () {
-		return m_sDisabledImage;
+	faw::string_view_t CButtonUI::GetDisabledImage () {
+		return m_sDisabledImage.str_view ();
 	}
 
-	void CButtonUI::SetDisabledImage (string_view_t pStrImage) {
+	void CButtonUI::SetDisabledImage (faw::string_view_t pStrImage) {
 		m_sDisabledImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CButtonUI::GetHotForeImage () {
-		return m_sHotForeImage;
+	faw::string_view_t CButtonUI::GetHotForeImage () {
+		return m_sHotForeImage.str_view ();
 	}
 
-	void CButtonUI::SetHotForeImage (string_view_t pStrImage) {
+	void CButtonUI::SetHotForeImage (faw::string_view_t pStrImage) {
 		m_sHotForeImage = pStrImage;
 		Invalidate ();
 	}
@@ -236,11 +238,11 @@ namespace DuiLib {
 		return m_nStateCount;
 	}
 
-	string_view_t CButtonUI::GetStateImage () {
-		return m_sStateImage;
+	faw::string_view_t CButtonUI::GetStateImage () {
+		return m_sStateImage.str_view ();
 	}
 
-	void CButtonUI::SetStateImage (string_view_t pStrImage) {
+	void CButtonUI::SetStateImage (faw::string_view_t pStrImage) {
 		m_sNormalImage.clear ();
 		m_sStateImage = pStrImage;
 		Invalidate ();
@@ -251,13 +253,13 @@ namespace DuiLib {
 			m_iBindTabIndex = _BindTabIndex;
 	}
 
-	void CButtonUI::BindTabLayoutName (string_view_t _TabLayoutName) {
+	void CButtonUI::BindTabLayoutName (faw::string_view_t _TabLayoutName) {
 		if (!_TabLayoutName.empty ())
 			m_sBindTabLayoutName = _TabLayoutName;
 	}
 
 	void CButtonUI::BindTriggerTabSel (int _SetSelectIndex /*= -1*/) {
-		string_view_t pstrName = GetBindTabLayoutName ();
+		faw::string_view_t pstrName = GetBindTabLayoutName ();
 		if (pstrName.empty () || (GetBindTabLayoutIndex () < 0 && _SetSelectIndex < 0))
 			return;
 
@@ -275,11 +277,11 @@ namespace DuiLib {
 		return m_iBindTabIndex;
 	}
 
-	string_view_t CButtonUI::GetBindTabLayoutName () {
-		return m_sBindTabLayoutName;
+	faw::string_view_t CButtonUI::GetBindTabLayoutName () {
+		return m_sBindTabLayoutName.str_view ();
 	}
 
-	void CButtonUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CButtonUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("normalimage")) SetNormalImage (pstrValue);
 		else if (pstrName == _T ("hotimage")) SetHotImage (pstrValue);
 		else if (pstrName == _T ("pushedimage")) SetPushedImage (pstrValue);
@@ -318,7 +320,7 @@ namespace DuiLib {
 		if (m_dwTextColor == 0) m_dwTextColor = m_pManager->GetDefaultFontColor ();
 		if (m_dwDisabledTextColor == 0) m_dwDisabledTextColor = m_pManager->GetDefaultDisabledColor ();
 
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 		if (sText.empty ()) return;
 
 		RECT _rcTextPadding = CButtonUI::m_rcTextPadding;
@@ -348,9 +350,9 @@ namespace DuiLib {
 			iFont = GetFocusedFont ();
 
 		if (m_bShowHtml)
-			CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText, clrColor, nullptr, nullptr, nLinks, iFont, m_uTextStyle);
+			CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText.str_view (), clrColor, nullptr, nullptr, nLinks, iFont, m_uTextStyle);
 		else
-			CRenderEngine::DrawText (hDC, m_pManager, rc, sText, clrColor, iFont, m_uTextStyle);
+			CRenderEngine::DrawText (hDC, m_pManager, rc, sText.str_view (), clrColor, iFont, m_uTextStyle);
 	}
 
 	void CButtonUI::PaintBkColor (HDC hDC) {
@@ -377,8 +379,8 @@ namespace DuiLib {
 	void CButtonUI::PaintStatusImage (HDC hDC) {
 		if (!m_sStateImage.empty () && m_nStateCount > 0) {
 			TDrawInfo info;
-			info.Parse (m_sStateImage, _T (""), m_pManager);
-			const TImageInfo* pImage = m_pManager->GetImageEx (info.sImageName, info.sResType, info.dwMask, info.bHSL);
+			info.Parse (m_sStateImage.str_view (), _T (""), m_pManager);
+			const TImageInfo* pImage = m_pManager->GetImageEx (info.sImageName.str_view (), info.sResType.str_view (), info.dwMask, info.bHSL);
 			if (m_sNormalImage.empty () && pImage) {
 				SIZE szImage = { pImage->nX, pImage->nY };
 				SIZE szStatus = { pImage->nX / m_nStateCount, pImage->nY };
@@ -389,29 +391,29 @@ namespace DuiLib {
 						int iRight = iLeft + szStatus.cx;
 						int iTop = rcSrc.top;
 						int iBottom = iTop + szStatus.cy;
-						m_sNormalImage.Format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
+						m_sNormalImage = faw::String::format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
 					}
 					if (m_nStateCount > 1) {
 						int iLeft = rcSrc.left + 1 * szStatus.cx;
 						int iRight = iLeft + szStatus.cx;
 						int iTop = rcSrc.top;
 						int iBottom = iTop + szStatus.cy;
-						m_sHotImage.Format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
-						m_sPushedImage.Format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
+						m_sHotImage = faw::String::format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
+						m_sPushedImage = faw::String::format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
 					}
 					if (m_nStateCount > 2) {
 						int iLeft = rcSrc.left + 2 * szStatus.cx;
 						int iRight = iLeft + szStatus.cx;
 						int iTop = rcSrc.top;
 						int iBottom = iTop + szStatus.cy;
-						m_sPushedImage.Format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
+						m_sPushedImage = faw::String::format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
 					}
 					if (m_nStateCount > 3) {
 						int iLeft = rcSrc.left + 3 * szStatus.cx;
 						int iRight = iLeft + szStatus.cx;
 						int iTop = rcSrc.top;
 						int iBottom = iTop + szStatus.cy;
-						m_sDisabledImage.Format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
+						m_sDisabledImage = faw::String::format (_T ("res='%s' restype='%s' dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), info.sImageName.c_str (), info.sResType.c_str (), info.rcDest.left, info.rcDest.top, info.rcDest.right, info.rcDest.bottom, iLeft, iTop, iRight, iBottom);
 					}
 				}
 			}
@@ -426,28 +428,28 @@ namespace DuiLib {
 		}
 		if ((m_uButtonState & UISTATE_DISABLED) != 0) {
 			if (!m_sDisabledImage.empty ()) {
-				if (!DrawImage (hDC, m_sDisabledImage)) {
+				if (!DrawImage (hDC, m_sDisabledImage.str_view ())) {
 				} else return;
 			}
 		} else if ((m_uButtonState & UISTATE_PUSHED) != 0) {
 			if (!m_sPushedImage.empty ()) {
-				if (!DrawImage (hDC, m_sPushedImage)) {
+				if (!DrawImage (hDC, m_sPushedImage.str_view ())) {
 				} else return;
 			}
 		} else if ((m_uButtonState & UISTATE_HOT) != 0) {
 			if (!m_sHotImage.empty ()) {
-				if (!DrawImage (hDC, m_sHotImage)) {
+				if (!DrawImage (hDC, m_sHotImage.str_view ())) {
 				} else return;
 			}
 		} else if ((m_uButtonState & UISTATE_FOCUSED) != 0) {
 			if (!m_sFocusedImage.empty ()) {
-				if (!DrawImage (hDC, m_sFocusedImage)) {
+				if (!DrawImage (hDC, m_sFocusedImage.str_view ())) {
 				} else return;
 			}
 		}
 
 		if (!m_sNormalImage.empty ()) {
-			if (!DrawImage (hDC, m_sNormalImage)) {
+			if (!DrawImage (hDC, m_sNormalImage.str_view ())) {
 			}
 		}
 	}
@@ -455,17 +457,17 @@ namespace DuiLib {
 	void CButtonUI::PaintForeImage (HDC hDC) {
 		if ((m_uButtonState & UISTATE_PUSHED) != 0) {
 			if (!m_sPushedForeImage.empty ()) {
-				if (!DrawImage (hDC, m_sPushedForeImage)) {
+				if (!DrawImage (hDC, m_sPushedForeImage.str_view ())) {
 				} else return;
 			}
 		} else if ((m_uButtonState & UISTATE_HOT) != 0) {
 			if (!m_sHotForeImage.empty ()) {
-				if (!DrawImage (hDC, m_sHotForeImage)) {
+				if (!DrawImage (hDC, m_sHotForeImage.str_view ())) {
 				} else return;
 			}
 		}
 		if (!m_sForeImage.empty ()) {
-			if (!DrawImage (hDC, m_sForeImage)) {
+			if (!DrawImage (hDC, m_sForeImage.str_view ())) {
 			}
 		}
 	}

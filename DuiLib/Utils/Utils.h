@@ -58,49 +58,11 @@ namespace DuiLib {
 		int m_nAllocated;
 	};
 
-
-	/////////////////////////////////////////////////////////////////////////////////////
-	//
-
-	class UILIB_API CDuiString : public string_t {
-	public:
-		CDuiString ();
-		CDuiString (const TCHAR ch);
-		CDuiString (LPCTSTR str);
-		CDuiString (const string_t& src);
-		CDuiString (string_view_t lpsz, int nLen = -1);
-
-		inline int Compare (string_view_t pstr) const { return _tcscmp (c_str (), pstr.data ()); }
-		inline int CompareNoCase (string_view_t pstr) const { return _tcsicmp (c_str (), pstr.data ()); }
-
-		inline void MakeUpper () { _tcsupr (&this->operator[] (0)); }
-		inline void MakeLower () { _tcslwr (&this->operator[] (0)); }
-
-		inline CDuiString Left (size_t nLength) const { return substr (0, nLength); }
-		inline CDuiString Mid (size_t iPos, size_t nLength = string_t::npos) const { return substr (iPos, nLength); }
-		inline CDuiString Right (size_t nLength) const { return substr (length () - nLength); }
-
-		int Replace (string_view_t pstrFrom, string_view_t pstrTo);
-		int Format (string_view_t pstrFormat, ...);
-	};
-
-	static std::vector<CDuiString> StrSplit (CDuiString text, CDuiString sp) {
-		std::vector<CDuiString> vResults;
-		size_t pos = text.find (sp);
-		while (pos != string_t::npos) {
-			CDuiString t = text.Left (pos);
-			vResults.push_back (t);
-			text = text.Right (text.length () - pos - sp.length ());
-			pos = text.find (sp);
-		}
-		vResults.push_back (text);
-		return vResults;
-	}
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
 	struct TITEM {
-		CDuiString Key;
+		faw::String Key;
 		LPVOID Data;
 		struct TITEM* pPrev;
 		struct TITEM* pNext;
@@ -112,10 +74,10 @@ namespace DuiLib {
 		virtual ~CStdStringPtrMap ();
 
 		void Resize (int nSize = 83);
-		LPVOID Find (string_view_t key, bool optimize = true) const;
-		bool Insert (string_view_t key, LPVOID pData);
-		LPVOID Set (string_view_t key, LPVOID pData);
-		bool Remove (string_view_t key);
+		LPVOID Find (faw::string_view_t key, bool optimize = true) const;
+		bool Insert (faw::string_view_t key, LPVOID pData);
+		LPVOID Set (faw::string_view_t key, LPVOID pData);
+		bool Remove (faw::string_view_t key);
 		void RemoveAll ();
 		int GetSize () const;
 		TITEM *GetAt (int iIndex) const;
@@ -185,9 +147,9 @@ namespace DuiLib {
 	//	const CImageString& operator=(const CImageString&);
 	//	virtual ~CImageString();
 
-	//	const CDuiString& GetAttributeString() const;
-	//	void SetAttributeString(string_view_t pStrImageAttri);
-	//	void ModifyAttribute(string_view_t pStrModify);
+	//	const faw::String& GetAttributeString() const;
+	//	void SetAttributeString(faw::string_view_t pStrImageAttri);
+	//	void ModifyAttribute(faw::string_view_t pStrModify);
 	//	bool LoadImage(CPaintManagerUI* pManager);
 	//	bool IsLoadSuccess();
 
@@ -198,14 +160,14 @@ namespace DuiLib {
 	//private:
 	//	void Clone(const CImageString&);
 	//	void Clear();
-	//	void ParseAttribute(string_view_t pStrImageAttri);
+	//	void ParseAttribute(faw::string_view_t pStrImageAttri);
 
 	//protected:
 	//	friend class CRenderEngine;
-	//	CDuiString	m_sImageAttribute;
+	//	faw::String	m_sImageAttribute;
 
-	//	CDuiString	m_sImage;
-	//	CDuiString	m_sResType;
+	//	faw::String	m_sImage;
+	//	faw::String	m_sResType;
 	//	TImageInfo	*m_imageInfo;
 	//	bool		m_bLoadSuccess;
 

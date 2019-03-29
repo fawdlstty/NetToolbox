@@ -10,8 +10,8 @@ namespace DuiLib {
 		CLabelUI ();
 		virtual ~CLabelUI ();
 
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 		UINT GetControlFlags () const;
 
 		void SetTextStyle (UINT uStyle);
@@ -29,7 +29,7 @@ namespace DuiLib {
 
 		SIZE EstimateSize (SIZE szAvailable);
 		void DoEvent (TEventUI& event);
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 
 		void PaintText (HDC hDC);
 
@@ -37,7 +37,7 @@ namespace DuiLib {
 		virtual void SetAutoCalcWidth (bool bAutoCalcWidth);
 		virtual bool GetAutoCalcHeight () const;
 		virtual void SetAutoCalcHeight (bool bAutoCalcHeight);
-		virtual void SetText (string_view_t pstrText);
+		virtual void SetText (faw::String pstrText);
 
 	protected:
 		DWORD	m_dwTextColor			= 0;

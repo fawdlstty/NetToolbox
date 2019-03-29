@@ -9,8 +9,8 @@ namespace DuiLib {
 	public:
 		CHorizontalLayoutUI ();
 
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 		UINT GetControlFlags () const;
 
 		void SetSepWidth (int iWidth);
@@ -19,7 +19,7 @@ namespace DuiLib {
 		bool IsSepImmMode () const;
 		void SetAutoCalcWidth (bool autoCalcWidth);
 		bool IsAutoCalcWidth () const;
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 		void DoEvent (TEventUI& event);
 
 		SIZE EstimateSize (SIZE szAvailable) override;

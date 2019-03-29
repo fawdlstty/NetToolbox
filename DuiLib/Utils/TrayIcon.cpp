@@ -8,7 +8,7 @@ namespace DuiLib {
 		DeleteTrayIcon ();
 	}
 
-	void CTrayIcon::CreateTrayIcon (HWND _RecvHwnd, UINT _IconIDResource, string_view_t _ToolTipText, UINT _Message) {
+	void CTrayIcon::CreateTrayIcon (HWND _RecvHwnd, UINT _IconIDResource, faw::string_view_t _ToolTipText, UINT _Message) {
 		if (!_RecvHwnd || _IconIDResource <= 0) {
 			return;
 		}
@@ -33,7 +33,7 @@ namespace DuiLib {
 		m_uMessage = UIMSG_TRAYICON;
 	}
 
-	bool CTrayIcon::SetTooltipText (string_view_t _ToolTipText) {
+	bool CTrayIcon::SetTooltipText (faw::string_view_t _ToolTipText) {
 		if (!_ToolTipText.empty ()) _tcscpy (m_trayData.szTip, _ToolTipText.data ());
 		if (!m_bEnabled) return FALSE;
 		m_trayData.uFlags = NIF_TIP;
@@ -46,7 +46,7 @@ namespace DuiLib {
 		return SetTooltipText (mbuf);
 	}
 
-	CDuiString CTrayIcon::GetTooltipText () const {
+	faw::String CTrayIcon::GetTooltipText () const {
 		return m_trayData.szTip;
 	}
 
@@ -61,7 +61,7 @@ namespace DuiLib {
 		return false;
 	}
 
-	bool CTrayIcon::SetIcon (string_view_t _IconFile) {
+	bool CTrayIcon::SetIcon (faw::string_view_t _IconFile) {
 		HICON hIcon = LoadIcon (CPaintManagerUI::GetInstance (), _IconFile.data ());
 		return SetIcon (hIcon);
 	}

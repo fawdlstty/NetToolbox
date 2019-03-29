@@ -20,7 +20,7 @@
 #include <Windows.h>
 #include <DbgHelp.h>
 
-#include "tool_String.hpp"
+#include "tools/tool_String.hpp"
 
 #pragma comment (lib, "Dbghelp.lib")
 #pragma comment (lib, "Version.lib")
@@ -112,10 +112,10 @@ public:
 	}
 
 	// 释放PE文件所有资源
-	static string_t extract_all_resource (LPCTSTR file) {
+	static faw::String extract_all_resource (LPCTSTR file) {
 		HMODULE hModule = ::LoadLibrary (file);
 		if (hModule) {
-			string_t folder = tool_StringT::format (_T ("%s_files"), file);
+			faw::String folder = faw::String::format (_T ("%s_files"), file);
 			::CreateDirectory (folder.c_str (), NULL);
 			::EnumResourceTypes (hModule, enum_res_type_proc, (LONG_PTR) folder.c_str ()/*, RESOURCE_ENUM_MUI | RESOURCE_ENUM_LN, NULL*/);
 			::FreeLibrary (hModule);
@@ -142,23 +142,23 @@ public:
 protected:
 	// 枚举所有资源名称，供 enum_res_type_proc 函数调用
 	static BOOL CALLBACK enum_res_name_proc (HMODULE hModule, LPCTSTR lpType, LPTSTR lpName, LONG_PTR lParam) {
-		static auto get_file_name = [] (LPCTSTR lpType, LPTSTR lpName) -> string_t {
+		static auto get_file_name = [] (LPCTSTR lpType, LPTSTR lpName) -> faw::String {
 			static std::map<LPCTSTR, LPCTSTR> mtype = { { RT_CURSOR, _T ("RT_CURSOR") }, { RT_BITMAP, _T ("RT_BITMAP") }, { RT_ICON, _T ("RT_ICON") }, { RT_MENU, _T ("RT_MENU") }, { RT_DIALOG, _T ("RT_DIALOG") }, { RT_STRING, _T ("RT_STRING") }, { RT_FONTDIR, _T ("RT_FONTDIR") }, { RT_FONT, _T ("RT_FONT") }, { RT_ACCELERATOR, _T ("RT_ACCELERATOR") }, { RT_RCDATA, _T ("RT_RCDATA") }, { RT_MESSAGETABLE, _T ("RT_MESSAGETABLE") }, { RT_GROUP_CURSOR, _T ("RT_GROUP_CURSOR") }, { RT_GROUP_ICON, _T ("RT_GROUP_ICON") }, { RT_VERSION, _T ("RT_VERSION") }, { RT_DLGINCLUDE, _T ("RT_DLGINCLUDE") }, { RT_PLUGPLAY, _T ("RT_PLUGPLAY") }, { RT_VXD, _T ("RT_VXD") }, { RT_ANICURSOR, _T ("RT_ANICURSOR") }, { RT_ANIICON, _T ("RT_ANIICON") }, { RT_HTML, _T ("RT_HTML") }, { RT_MANIFEST, _T ("RT_MANIFEST") } };
 			static std::map<LPCTSTR, LPCTSTR> mext = { { RT_CURSOR, _T ("cur") }, { RT_BITMAP, _T ("bmp") }, { RT_ICON, _T ("ico") }, { RT_MENU, _T ("bin") }, { RT_DIALOG, _T ("bin") }, { RT_STRING, _T ("bin") }, { RT_FONTDIR, _T ("bin") }, { RT_FONT, _T ("font") }, { RT_ACCELERATOR, _T ("bin") }, { RT_RCDATA, _T ("bin") }, { RT_MESSAGETABLE, _T ("bin") }, { RT_GROUP_CURSOR, _T ("cur") }, { RT_GROUP_ICON, _T ("ico") }, { RT_VERSION, _T ("bin") }, { RT_DLGINCLUDE, _T ("bin") }, { RT_PLUGPLAY, _T ("bin") }, { RT_VXD, _T ("vxd") }, { RT_ANICURSOR, _T ("cur") }, { RT_ANIICON, _T ("ico") }, { RT_HTML, _T ("html") }, { RT_MANIFEST, _T ("xml") } };
-			string_t type, ext = _T ("bin");
+			faw::String type, ext = _T ("bin");
 			DWORD res_id = (DWORD) lpName;
 			if (mtype.find (lpType) != mtype.end ()) {
 				type = mtype[lpType];
 				ext = mext[lpType];
 			} else if ((DWORD) lpType < 100) {
-				type = tool_StringT::format (_T ("%d"), (DWORD) lpType);
+				type = faw::String::format (_T ("%d"), (DWORD) lpType);
 			} else {
 				type = lpType;
 				ext = _T ("");
 				for (TCHAR c : type)
-					ext += (c >= 'A' && c <= 'Z' ? c - 'A' + 'a' : c);
+					ext += (TCHAR) (c >= _T ('A') && c <= _T ('Z') ? c - _T ('A') + _T ('a') : c);
 			}
-			return tool_StringT::format (_T ("%s_%d.%s"), type.c_str (), res_id, ext.c_str ());
+			return faw::String::format (_T ("%s_%d.%s"), type.c_str (), res_id, ext.c_str ());
 		};
 
 		//std::cout << "    " << (size_t) lpName << '\n';
@@ -170,7 +170,7 @@ protected:
 				LPVOID ptr = ::LockResource (hGlobal);
 				if (ptr) {
 					LPCTSTR path = (LPCTSTR) lParam;
-					string_t file = tool_StringT::format (_T ("%s\\%s"), path, get_file_name (lpType, lpName).c_str ());
+					faw::String file = faw::String::format (_T ("%s\\%s"), path, get_file_name (lpType, lpName).c_str ());
 					HANDLE hFile = ::CreateFile (file.c_str (), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 					if (hFile != INVALID_HANDLE_VALUE) {
 						::WriteFile (hFile, ptr, dwsz, &written, NULL);

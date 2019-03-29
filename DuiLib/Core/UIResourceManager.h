@@ -6,7 +6,7 @@ namespace DuiLib {
 	// 控件文字查询接口
 	class UILIB_API IQueryControlText {
 	public:
-		virtual string_view_t QueryControlText (string_view_t lpstrId, string_view_t lpstrType) = 0;
+		virtual faw::string_view_t QueryControlText (faw::string_view_t lpstrId, faw::string_view_t lpstrType) = 0;
 	};
 
 	class UILIB_API CResourceManager {
@@ -24,22 +24,22 @@ namespace DuiLib {
 		}
 
 	public:
-		BOOL LoadResource (std::variant<UINT, string_t> xml, string_view_t type = _T (""));
+		BOOL LoadResource (std::variant<UINT, faw::String> xml, faw::string_view_t type = _T (""));
 		BOOL LoadResource (CMarkupNode Root);
 		void ResetResourceMap ();
-		string_view_t GetImagePath (string_view_t lpstrId);
-		string_view_t GetXmlPath (string_view_t lpstrId);
+		faw::string_view_t GetImagePath (faw::string_view_t lpstrId);
+		faw::string_view_t GetXmlPath (faw::string_view_t lpstrId);
 
 	public:
-		void SetLanguage (string_view_t pstrLanguage) { m_sLauguage = pstrLanguage; }
-		string_view_t GetLanguage () { return m_sLauguage; }
-		BOOL LoadLanguage (string_view_t pstrXml);
+		void SetLanguage (faw::string_view_t pstrLanguage) { m_sLauguage = pstrLanguage; }
+		faw::string_view_t GetLanguage () { return m_sLauguage.str_view (); }
+		BOOL LoadLanguage (faw::string_view_t pstrXml);
 
 	public:
 		void SetTextQueryInterface (IQueryControlText* pInterface) {
 			m_pQuerypInterface = pInterface;
 		}
-		CDuiString GetText (string_view_t lpstrId, string_view_t lpstrType = _T (""));
+		faw::String GetText (faw::string_view_t lpstrId, faw::string_view_t lpstrType = _T (""));
 		void ReloadText ();
 		void ResetTextMap ();
 
@@ -49,7 +49,7 @@ namespace DuiLib {
 		CStdStringPtrMap m_mImageHashMap;
 		CStdStringPtrMap m_mXmlHashMap;
 		CMarkup m_xml;
-		CDuiString m_sLauguage;
+		faw::String m_sLauguage;
 		CStdStringPtrMap m_mTextHashMap;
 	};
 

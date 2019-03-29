@@ -32,22 +32,22 @@ namespace DuiLib {
 		static DWORD AdjustColor (DWORD dwColor, short H, short S, short L);
 		static HBITMAP CreateARGB32Bitmap (HDC hDC, int cx, int cy, BYTE** pBits);
 		static void AdjustImage (bool bUseHSL, TImageInfo* imageInfo, short H, short S, short L);
-		static TImageInfo* LoadImage (std::variant<UINT, string_t> bitmap, string_view_t type = _T (""), DWORD mask = 0, HINSTANCE instance = NULL);
+		static TImageInfo* LoadImage (std::variant<UINT, faw::String> bitmap, faw::string_view_t type = _T (""), DWORD mask = 0, HINSTANCE instance = NULL);
 #ifdef USE_XIMAGE_EFFECT
-		static CxImage *LoadGifImageX (std::variant<UINT, string_t> bitmap, string_view_t type = _T (""), DWORD mask = 0);
+		static CxImage *LoadGifImageX (std::variant<UINT, faw::String> bitmap, faw::string_view_t type = _T (""), DWORD mask = 0);
 #endif
 		static void FreeImage (TImageInfo* bitmap, bool bDelete = true);
-		static TImageInfo* LoadImage (string_view_t pStrImage, string_view_t type = _T (""), DWORD mask = 0, HINSTANCE instance = NULL);
-		static TImageInfo* LoadImage (UINT nID, string_view_t type = _T (""), DWORD mask = 0, HINSTANCE instance = NULL);
+		static TImageInfo* LoadImage (faw::string_view_t pStrImage, faw::string_view_t type = _T (""), DWORD mask = 0, HINSTANCE instance = NULL);
+		static TImageInfo* LoadImage (UINT nID, faw::string_view_t type = _T (""), DWORD mask = 0, HINSTANCE instance = NULL);
 
-		static Gdiplus::Image	*GdiplusLoadImage (string_view_t pstrPath);
+		static Gdiplus::Image	*GdiplusLoadImage (faw::string_view_t pstrPath);
 		static Gdiplus::Image* GdiplusLoadImage (LPVOID pBuf, size_t dwSize);
 
 		static bool DrawIconImageString (HDC hDC, CPaintManagerUI* pManager, const RECT& rcItem, const RECT& rcPaint, \
-			string_view_t pStrImage, string_view_t pStrModify = _T (""));
-		static bool MakeFitIconDest (const RECT& rcControl, const SIZE& szIcon, const CDuiString& sAlign, RECT& rcDest);
+			faw::string_view_t pStrImage, faw::string_view_t pStrModify = _T (""));
+		static bool MakeFitIconDest (const RECT& rcControl, const SIZE& szIcon, const faw::String& sAlign, RECT& rcDest);
 
-		static void DrawText (HDC hDC, CPaintManagerUI* pManager, RECT& rc, string_view_t pstrText, DWORD dwTextColor, \
+		static void DrawText (HDC hDC, CPaintManagerUI* pManager, RECT& rc, faw::string_view_t pstrText, DWORD dwTextColor, \
 			int iFont, UINT uStyle, DWORD dwTextBKColor);
 
 		static void DrawImage (HDC hDC, HBITMAP hBitmap, const RECT& rc, const RECT& rcPaint, \
@@ -55,7 +55,7 @@ namespace DuiLib {
 			bool hole = false, bool xtiled = false, bool ytiled = false);
 
 		static bool DrawImageInfo (HDC hDC, CPaintManagerUI* pManager, const RECT& rcItem, const RECT& rcPaint, const TDrawInfo* pDrawInfo, HINSTANCE instance = NULL);
-		static bool DrawImageString (HDC hDC, CPaintManagerUI* pManager, const RECT& rcItem, const RECT& rcPaint, string_view_t pStrImage, string_view_t pStrModify = _T (""), HINSTANCE instance = NULL);
+		static bool DrawImageString (HDC hDC, CPaintManagerUI* pManager, const RECT& rcItem, const RECT& rcPaint, faw::string_view_t pStrImage, faw::string_view_t pStrModify = _T (""), HINSTANCE instance = NULL);
 
 		static void DrawColor (HDC hDC, const RECT& rc, DWORD color);
 		static void DrawGradient (HDC hDC, const RECT& rc, DWORD dwFirst, DWORD dwSecond, bool bVertical, int nSteps);
@@ -64,13 +64,13 @@ namespace DuiLib {
 		static void DrawLine (HDC hDC, const RECT& rc, int nSize, DWORD dwPenColor, int nStyle = PS_SOLID);
 		static void DrawRect (HDC hDC, const RECT& rc, int nSize, DWORD dwPenColor, int nStyle = PS_SOLID);
 		static void DrawRoundRect (HDC hDC, const RECT& rc, int width, int height, int nSize, DWORD dwPenColor, int nStyle = PS_SOLID);
-		static void DrawText (HDC hDC, CPaintManagerUI* pManager, RECT& rc, string_view_t pstrText, \
+		static void DrawText (HDC hDC, CPaintManagerUI* pManager, RECT& rc, faw::string_view_t pstrText, \
 			DWORD dwTextColor, int iFont, UINT uStyle);
-		static void DrawHtmlText (HDC hDC, CPaintManagerUI* pManager, RECT& rc, string_view_t pstrText,
-			DWORD dwTextColor, RECT* pLinks, CDuiString* sLinks, int& nLinkRects, int iFont, UINT uStyle);
+		static void DrawHtmlText (HDC hDC, CPaintManagerUI* pManager, RECT& rc, faw::string_view_t pstrText,
+			DWORD dwTextColor, RECT* pLinks, faw::String* sLinks, int& nLinkRects, int iFont, UINT uStyle);
 		static HBITMAP GenerateBitmap (CPaintManagerUI* pManager, RECT rc, CControlUI* pStopControl = nullptr, DWORD dwFilterColor = 0);
 		static HBITMAP GenerateBitmap (CPaintManagerUI* pManager, CControlUI* pControl, RECT rc, DWORD dwFilterColor = 0);
-		static SIZE GetTextSize (HDC hDC, CPaintManagerUI* pManager, string_view_t pstrText, int iFont, UINT uStyle);
+		static SIZE GetTextSize (HDC hDC, CPaintManagerUI* pManager, faw::string_view_t pstrText, int iFont, UINT uStyle);
 
 		//alpha utilities
 		static void CheckAlphaColor (DWORD& dwColor);

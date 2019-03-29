@@ -13,15 +13,15 @@ namespace DuiLib {
 		CGifAnimUI (void);
 		virtual ~CGifAnimUI (void);
 
-		string_view_t	GetClass () const;
-		LPVOID	GetInterface (string_view_t pstrName);
+		faw::string_view_t	GetClass () const;
+		LPVOID	GetInterface (faw::string_view_t pstrName);
 		void	DoInit () override;
 		bool	DoPaint (HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 		void	DoEvent (TEventUI& event);
 		void	SetVisible (bool bVisible = true);
-		void	SetAttribute (string_view_t pstrName, string_view_t pstrValue);
-		void	SetBkImage (string_view_t pStrImage);
-		string_view_t GetBkImage ();
+		void	SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
+		void	SetBkImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetBkImage ();
 
 		void	SetAutoPlay (bool bIsAuto = true);
 		bool	IsAutoPlay () const;
@@ -36,7 +36,7 @@ namespace DuiLib {
 		void	DeleteGif ();
 		void    OnTimer (UINT_PTR idEvent);
 		void	DrawFrame (HDC hDC);		// 绘制GIF每帧
-		Gdiplus::Image*	LoadGifFromFile (string_view_t pstrGifPath);
+		Gdiplus::Image*	LoadGifFromFile (faw::string_view_t pstrGifPath);
 		Gdiplus::Image* LoadGifFromMemory (LPVOID pBuf, size_t dwSize);
 	private:
 		Gdiplus::Image			*m_pGifImage		= nullptr;
@@ -44,7 +44,7 @@ namespace DuiLib {
 		UINT					m_nFramePosition	= 0;		// 当前放到第几帧
 		Gdiplus::PropertyItem	*m_pPropertyItem	= nullptr;	// 帧与帧之间间隔时间
 
-		CDuiString				m_sBkImage;
+		faw::String				m_sBkImage;
 		bool					m_bIsAutoPlay		= true;		// 是否自动播放gif
 		bool					m_bIsAutoSize		= false;	// 是否自动根据图片设置大小
 		bool					m_bIsPlaying		= false;

@@ -22,14 +22,14 @@ namespace DuiLib {
 		virtual ~CRollTextUI (void);
 
 	public:
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 
 	public:
 		virtual void PaintText (HDC hDC);
 		virtual void DoEvent (TEventUI& event);
 		virtual void SetPos (RECT rc);
-		virtual void SetText (string_view_t pstrText);
+		virtual void SetText (faw::String pstrText);
 
 	public:
 		void BeginRoll (int nDirect = ROLLTEXT_RIGHT, LONG lTimeSpan = ROLLTEXT_TIMERID_SPAN, LONG lMaxTimeLimited = 60);

@@ -5,11 +5,11 @@ namespace DuiLib {
 	IMPLEMENT_DUICONTROL (CTileLayoutUI)
 		CTileLayoutUI::CTileLayoutUI () {}
 
-	string_view_t CTileLayoutUI::GetClass () const {
+	faw::string_view_t CTileLayoutUI::GetClass () const {
 		return _T ("TileLayoutUI");
 	}
 
-	LPVOID CTileLayoutUI::GetInterface (string_view_t pstrName) {
+	LPVOID CTileLayoutUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_TILELAYOUT) return static_cast<CTileLayoutUI*>(this);
 		return CContainerUI::GetInterface (pstrName);
 	}
@@ -35,7 +35,7 @@ namespace DuiLib {
 		NeedUpdate ();
 	}
 
-	void CTileLayoutUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CTileLayoutUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("itemsize")) {
 			SIZE szItem = FawTools::parse_size (pstrValue);
 			SetItemSize (szItem);

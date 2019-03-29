@@ -153,19 +153,19 @@ public:
 
 	static bool delete_path (std::wstring path) {
 		HKEY main_key = parse_path (path);
-		return (ERROR_SUCCESS == ::RegDeleteKey (main_key, path.c_str ()));
+		return (ERROR_SUCCESS == ::RegDeleteKeyW (main_key, path.c_str ()));
 	}
 	static bool delete_key (std::wstring path, std::wstring key_name) {
 		HKEY main_key = parse_path (path), sub_key = NULL;
-		if (ERROR_SUCCESS != ::RegOpenKeyEx (main_key, path.c_str (), 0, KEY_ALL_ACCESS, &sub_key)) return false;
-		bool bRet = (ERROR_SUCCESS == ::RegDeleteKey (sub_key, path.c_str ()));
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_ALL_ACCESS, &sub_key)) return false;
+		bool bRet = (ERROR_SUCCESS == ::RegDeleteKeyW (sub_key, path.c_str ()));
 		::RegCloseKey (sub_key);
 		return bRet;
 	}
 
 	static bool path_exist (std::wstring path) {
 		HKEY main_key = parse_path (path), sub_key = NULL;
-		if (ERROR_SUCCESS != ::RegOpenKeyEx (main_key, path.c_str (), 0, KEY_QUERY_VALUE, &sub_key)) return false;
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_QUERY_VALUE, &sub_key)) return false;
 		::RegCloseKey (sub_key);
 		return TRUE;
 	}

@@ -1,7 +1,6 @@
 ﻿#ifndef __PAGE_ENCDEC_HPP__
 #define __PAGE_ENCDEC_HPP__
 
-#include "../tools/tool_Encoding.hpp"
 
 #include "page_base.hpp"
 
@@ -13,47 +12,47 @@ public:
 	virtual ~page_EncDec () = default;
 
 	bool OnClick (TNotifyUI& msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		 faw::String name = msg.pSender->GetName ();
 		if (name == _T ("encdec_enc")) {
-			string_t _src = m_encdec_data->GetText (), t_data;
-			std::string data_gb18030 = tool_Encoding::T_to_gb18030 (_src);
-			std::string data_utf8 = tool_Encoding::T_to_utf8 (_src);
-			t_data = tool_Encoding::gb18030_to_T (tool_Encoding::percent_str_encode (data_utf8));
-			m_encdec_percent->SetText (t_data);
-			t_data = tool_Encoding::gb18030_to_T (tool_Encoding::escape_x_str_encode (data_utf8));
-			m_encdec_escape_x->SetText (t_data);
-			t_data = tool_Encoding::gb18030_to_T (tool_Encoding::escape_u_str_encode (data_gb18030));
-			m_encdec_escape_u->SetText (t_data);
-			t_data = tool_Encoding::gb18030_to_T (tool_Encoding::base64_encode (data_utf8));
-			m_encdec_base64->SetText (t_data);
+			faw::String _src = m_encdec_data->GetText (), t_data;
+			std::string data_gb18030 = _src.stra ();
+			std::string data_utf8 = faw::Encoding::T_to_utf8 (_src.str_view ());
+			t_data = faw::Encoding::gb18030_to_T (faw::Encoding::percent_str_encode (data_utf8));
+			m_encdec_percent->SetText (t_data.str_view ());
+			t_data = faw::Encoding::gb18030_to_T (faw::Encoding::escape_x_str_encode (data_utf8));
+			m_encdec_escape_x->SetText (t_data.str_view ());
+			t_data = faw::Encoding::gb18030_to_T (faw::Encoding::escape_u_str_encode (data_gb18030));
+			m_encdec_escape_u->SetText (t_data.str_view ());
+			t_data = faw::Encoding::gb18030_to_T (faw::Encoding::base64_encode (data_utf8));
+			m_encdec_base64->SetText (t_data.str_view ());
 			return true;
 		} else if (name == _T ("encdec_dec")) {
-			std::string data = tool_Encoding::T_to_gb18030 (m_encdec_data->GetText ());
-			string_t t_data;
-			if (tool_Encoding::is_percent_str (data)) {
-				t_data = tool_Encoding::utf8_to_T (tool_Encoding::percent_str_decode (data));
+			std::string data = faw::Encoding::T_to_gb18030 (m_encdec_data->GetText ().str_view ());
+			faw::String t_data;
+			if (faw::Encoding::is_percent_str (data)) {
+				t_data = faw::Encoding::utf8_to_T (faw::Encoding::percent_str_decode (data));
 			} else {
 				t_data = _T ("(解码失败)");
 			}
-			m_encdec_percent->SetText (t_data);
-			if (tool_Encoding::is_escape_x_str (data)) {
-				t_data = tool_Encoding::utf8_to_T (tool_Encoding::escape_x_str_decode (data));
+			m_encdec_percent->SetText (t_data.str_view ());
+			if (faw::Encoding::is_escape_x_str (data)) {
+				t_data = faw::Encoding::utf8_to_T (faw::Encoding::escape_x_str_decode (data));
 			} else {
 				t_data = _T ("(解码失败)");
 			}
-			m_encdec_escape_x->SetText (t_data);
-			if (tool_Encoding::is_escape_u_str (data)) {
-				t_data = tool_Encoding::gb18030_to_T (tool_Encoding::escape_u_str_decode (data));
+			m_encdec_escape_x->SetText (t_data.str_view ());
+			if (faw::Encoding::is_escape_u_str (data)) {
+				t_data = faw::Encoding::gb18030_to_T (faw::Encoding::escape_u_str_decode (data));
 			} else {
 				t_data = _T ("(解码失败)");
 			}
-			m_encdec_escape_u->SetText (t_data);
-			if (tool_Encoding::is_base64 ((const unsigned char*) data.c_str (), data.size ())) {
-				t_data = tool_Encoding::gb18030_to_T (tool_Encoding::base64_decode (data));
+			m_encdec_escape_u->SetText (t_data.str_view ());
+			if (faw::Encoding::is_base64_str (data)) {
+				t_data = faw::Encoding::gb18030_to_T (faw::Encoding::base64_decode (data));
 			} else {
 				t_data = _T ("(解码失败)");
 			}
-			m_encdec_base64->SetText (t_data);
+			m_encdec_base64->SetText (t_data.str_view ());
 			return true;
 		}
 		return false;

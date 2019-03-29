@@ -13,8 +13,8 @@ namespace DuiLib {
 		CRichEditUI ();
 		virtual ~CRichEditUI ();
 
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 		UINT GetControlFlags () const;
 
 		bool IsMultiLine ();
@@ -35,7 +35,7 @@ namespace DuiLib {
 		void SetWordWrap (bool bWordWrap = true);
 		int GetFont ();
 		void SetFont (int index);
-		void SetFont (string_view_t pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic);
+		void SetFont (faw::string_view_t pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic);
 		LONG GetWinStyle ();
 		void SetWinStyle (LONG lStyle);
 		DWORD GetTextColor ();
@@ -43,17 +43,17 @@ namespace DuiLib {
 		int GetLimitText ();
 		void SetLimitText (int iChars);
 		long GetTextLength (DWORD dwFlags = GTL_DEFAULT) const;
-		CDuiString GetText () const;
-		void SetText (string_view_t pstrText);
+		faw::String GetText () const;
+		void SetText (faw::string_view_t pstrText);
 		bool IsModify () const;
 		void SetModify (bool bModified = true) const;
 		void GetSel (CHARRANGE &cr) const;
 		void GetSel (long& nStartChar, long& nEndChar) const;
 		int SetSel (CHARRANGE &cr);
 		int SetSel (long nStartChar, long nEndChar);
-		void ReplaceSel (string_view_t lpszNewText, bool bCanUndo);
+		void ReplaceSel (faw::string_view_t lpszNewText, bool bCanUndo);
 		void ReplaceSelW (LPCWSTR lpszNewText, bool bCanUndo = false);
-		CDuiString GetSelText () const;
+		faw::String GetSelText () const;
 		int SetSelAll ();
 		int SetSelNone ();
 		WORD GetSelectionType () const;
@@ -64,11 +64,11 @@ namespace DuiLib {
 		bool SetAutoURLDetect (bool bAutoDetect = true);
 		DWORD GetEventMask () const;
 		DWORD SetEventMask (DWORD dwEventMask);
-		CDuiString GetTextRange (long nStartChar, long nEndChar) const;
+		faw::String GetTextRange (long nStartChar, long nEndChar) const;
 		void HideSelection (bool bHide = true, bool bChangeStyle = false);
 		void ScrollCaret ();
-		int InsertText (long nInsertAfterChar, string_view_t lpstrText, bool bCanUndo = false);
-		int AppendText (string_view_t lpstrText, bool bCanUndo = false);
+		int InsertText (long nInsertAfterChar, faw::string_view_t lpstrText, bool bCanUndo = false);
+		int AppendText (faw::string_view_t lpstrText, bool bCanUndo = false);
 		DWORD GetDefaultCharFormat (CHARFORMAT2 &cf) const;
 		bool SetDefaultCharFormat (CHARFORMAT2 &cf);
 		DWORD GetSelectionCharFormat (CHARFORMAT2 &cf) const;
@@ -86,7 +86,7 @@ namespace DuiLib {
 		void Cut ();
 		void Paste ();
 		int GetLineCount () const;
-		CDuiString GetLine (int nIndex, int nMaxLength) const;
+		faw::String GetLine (int nIndex, int nMaxLength) const;
 		int LineIndex (int nLine = -1) const;
 		int LineLength (int nLine = -1) const;
 		bool LineScroll (int nLines, int nChars = 0);
@@ -103,19 +103,19 @@ namespace DuiLib {
 
 		RECT GetTextPadding () const;
 		void SetTextPadding (RECT rc);
-		string_view_t GetNormalImage ();
-		void SetNormalImage (string_view_t pStrImage);
-		string_view_t GetHotImage ();
-		void SetHotImage (string_view_t pStrImage);
-		string_view_t GetFocusedImage ();
-		void SetFocusedImage (string_view_t pStrImage);
-		string_view_t GetDisabledImage ();
-		void SetDisabledImage (string_view_t pStrImage);
+		faw::string_view_t GetNormalImage ();
+		void SetNormalImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetHotImage ();
+		void SetHotImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetFocusedImage ();
+		void SetFocusedImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetDisabledImage ();
+		void SetDisabledImage (faw::string_view_t pStrImage);
 		void PaintStatusImage (HDC hDC);
 
-		void SetTipValue (string_view_t pStrTipValue);
-		string_view_t GetTipValue ();
-		void SetTipValueColor (string_view_t pStrColor);
+		void SetTipValue (faw::string_view_t pStrTipValue);
+		faw::string_view_t GetTipValue ();
+		void SetTipValueColor (faw::string_view_t pStrColor);
 		DWORD GetTipValueColor ();
 		void SetTipValueAlign (UINT uAlign);
 		UINT GetTipValueAlign ();
@@ -149,7 +149,7 @@ namespace DuiLib {
 		void DoEvent (TEventUI& event);
 		bool DoPaint (HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 
 		LRESULT MessageHandler (UINT uMsg, WPARAM wParam, LPARAM lParam, bool& bHandled);
 
@@ -180,11 +180,11 @@ namespace DuiLib {
 
 		RECT		m_rcTextPadding;
 		UINT		m_uButtonState		= 0;
-		CDuiString	m_sNormalImage;
-		CDuiString	m_sHotImage;
-		CDuiString	m_sFocusedImage;
-		CDuiString	m_sDisabledImage;
-		CDuiString	m_sTipValue;
+		faw::String	m_sNormalImage;
+		faw::String	m_sHotImage;
+		faw::String	m_sFocusedImage;
+		faw::String	m_sDisabledImage;
+		faw::String	m_sTipValue;
 		DWORD		m_dwTipValueColor	= 0xFFBAC0C5;
 		UINT		m_uTipValueAlign	= DT_SINGLELINE | DT_LEFT;
 	};

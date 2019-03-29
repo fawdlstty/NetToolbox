@@ -26,9 +26,9 @@
 #include <Psapi.h>
 //#include <VersionHelpers.h>
 
-#include "tool_String.hpp"
-#include "tool_Register.hpp"
-#include "tool_Utils.hpp"
+#include "tools/tool_String.hpp"
+#include "tools/tool_Register.hpp"
+#include "tools/tool_Utils.hpp"
 
 #pragma warning (disable: 4996)
 
@@ -217,14 +217,14 @@ public:
 	}
 
 	//获取内存信息
-	static string_t get_memory_info () {
+	static faw::String get_memory_info () {
 		MEMORYSTATUSEX ms = { sizeof (MEMORYSTATUSEX) };
 		if (!::GlobalMemoryStatusEx (&ms))
-			return { L"", L"" };
-		return tool_StringT::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ());
+			return _T ("");
+		return faw::String::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ());
 		//return {
-		//	tool_StringT::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ()),
-		//	tool_StringT::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalVirtual).c_str (), tool_Utils::format_unit (ms.ullAvailVirtual).c_str ())
+		//	faw::String::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ()),
+		//	faw::String::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalVirtual).c_str (), tool_Utils::format_unit (ms.ullAvailVirtual).c_str ())
 		//};
 	}
 };

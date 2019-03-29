@@ -95,8 +95,8 @@ namespace DuiLib {
 		DUI_END_MESSAGE_MAP ()
 
 		static const DUI_MSGMAP_ENTRY* DuiFindMessageEntry (const DUI_MSGMAP_ENTRY* lpEntry, TNotifyUI& msg) {
-		CDuiString sMsgType = msg.sType;
-		CDuiString sCtrlName = msg.pSender->GetName ();
+		faw::String sMsgType = msg.sType;
+		faw::String sCtrlName = msg.pSender->GetName ();
 		const DUI_MSGMAP_ENTRY* pMsgTypeEntry = nullptr;
 		while (lpEntry->nSig != DuiSig_end) {
 			if (lpEntry->sMsgType == sMsgType) {
@@ -113,7 +113,7 @@ namespace DuiLib {
 		return pMsgTypeEntry;
 	}
 
-	bool CNotifyPump::AddVirtualWnd (string_view_t strName, CNotifyPump* pObject) {
+	bool CNotifyPump::AddVirtualWnd (faw::string_view_t strName, CNotifyPump* pObject) {
 		if (!m_VirtualWndMap.Find (strName)) {
 			m_VirtualWndMap.Insert (strName, (LPVOID) pObject);
 			return true;
@@ -121,7 +121,7 @@ namespace DuiLib {
 		return false;
 	}
 
-	bool CNotifyPump::RemoveVirtualWnd (string_view_t strName) {
+	bool CNotifyPump::RemoveVirtualWnd (faw::string_view_t strName) {
 		if (m_VirtualWndMap.Find (strName)) {
 			m_VirtualWndMap.Remove (strName);
 			return true;
@@ -177,9 +177,9 @@ namespace DuiLib {
 		///遍历虚拟窗口
 		if (!msg.sVirtualWnd.empty ()) {
 			for (int i = 0; i < m_VirtualWndMap.GetSize (); i++) {
-				string_view_t key = m_VirtualWndMap.GetAt (i)->Key;
+				faw::String key = m_VirtualWndMap.GetAt (i)->Key;
 				if (!key.empty () && key == msg.sVirtualWnd) {
-					CNotifyPump* pObject = static_cast<CNotifyPump*>(m_VirtualWndMap.Find (key, false));
+					CNotifyPump* pObject = static_cast<CNotifyPump*>(m_VirtualWndMap.Find (key.str_view (), false));
 					if (pObject && pObject->LoopDispatch (msg))
 						return;
 				}
@@ -195,15 +195,15 @@ namespace DuiLib {
 	///
 	CWindowWnd::CWindowWnd (): m_hWnd (nullptr), m_OldWndProc (::DefWindowProc), m_bSubclassed (false) {}
 
-	HWND CWindowWnd::CreateDuiWindow (HWND hwndParent, string_view_t pstrWindowName, DWORD dwStyle /*=0*/, DWORD dwExStyle /*=0*/) {
+	HWND CWindowWnd::CreateDuiWindow (HWND hwndParent, faw::string_view_t pstrWindowName, DWORD dwStyle /*=0*/, DWORD dwExStyle /*=0*/) {
 		return Create (hwndParent, pstrWindowName, dwStyle, dwExStyle, 0, 0, 0, 0, nullptr);
 	}
 
-	HWND CWindowWnd::Create (HWND hwndParent, string_view_t pstrName, DWORD dwStyle, DWORD dwExStyle, const RECT rc, HMENU hMenu) {
+	HWND CWindowWnd::Create (HWND hwndParent, faw::string_view_t pstrName, DWORD dwStyle, DWORD dwExStyle, const RECT rc, HMENU hMenu) {
 		return Create (hwndParent, pstrName, dwStyle, dwExStyle, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, hMenu);
 	}
 
-	HWND CWindowWnd::Create (HWND hwndParent, string_view_t pstrName, DWORD dwStyle, DWORD dwExStyle, int x, int y, int cx, int cy, HMENU hMenu) {
+	HWND CWindowWnd::Create (HWND hwndParent, faw::string_view_t pstrName, DWORD dwStyle, DWORD dwExStyle, int x, int y, int cx, int cy, HMENU hMenu) {
 		if (!GetSuperClassName ().empty () && !RegisterSuperclass ()) return nullptr;
 		if (GetSuperClassName ().empty () && !RegisterWindowClass ()) return nullptr;
 		m_hWnd = ::CreateWindowEx (dwExStyle, GetWindowClassName ().data (), pstrName.data (), dwStyle, x, y, cx, cy, hwndParent, hMenu, CPaintManagerUI::GetInstance (), this);

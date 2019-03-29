@@ -17,10 +17,10 @@ namespace DuiLib {
 		virtual ~CControlUI ();
 
 	public:
-		virtual string_view_t GetName () const;
-		virtual void SetName (string_view_t pstrName);
-		virtual string_view_t GetClass () const;
-		virtual LPVOID GetInterface (string_view_t pstrName);
+		virtual faw::string_view_t GetName () const;
+		virtual void SetName (faw::string_view_t pstrName);
+		virtual faw::string_view_t GetClass () const;
+		virtual LPVOID GetInterface (faw::string_view_t pstrName);
 		virtual UINT GetControlFlags () const;
 
 		virtual bool Activate ();
@@ -34,8 +34,8 @@ namespace DuiLib {
 		void KillTimer (UINT nTimerID);
 
 		// 文本相关
-		virtual CDuiString GetText () const;
-		virtual void SetText (string_view_t pstrText);
+		virtual faw::String GetText () const;
+		virtual void SetText (faw::String pstrText);
 
 		virtual bool IsResourceText () const;
 		virtual void SetResourceText (bool bResource);
@@ -47,8 +47,8 @@ namespace DuiLib {
 		virtual void SetDropEnable (bool bDrop);
 
 		// 图形相关
-		string_view_t GetGradient ();
-		void SetGradient (string_view_t pStrImage);
+		faw::string_view_t GetGradient ();
+		void SetGradient (faw::string_view_t pStrImage);
 		DWORD GetBkColor () const;
 		void SetBkColor (DWORD dwBackColor);
 		DWORD GetBkColor2 () const;
@@ -57,10 +57,10 @@ namespace DuiLib {
 		void SetBkColor3 (DWORD dwBackColor);
 		DWORD GetForeColor () const;
 		void SetForeColor (DWORD dwForeColor);
-		string_view_t GetBkImage ();
-		void SetBkImage (string_view_t pStrImage);
-		string_view_t GetForeImage () const;
-		void SetForeImage (string_view_t pStrImage);
+		faw::string_view_t GetBkImage ();
+		void SetBkImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetForeImage () const;
+		void SetForeImage (faw::string_view_t pStrImage);
 
 		DWORD GetFocusBorderColor () const;
 		void SetFocusBorderColor (DWORD dwBorderColor);
@@ -68,7 +68,7 @@ namespace DuiLib {
 		void SetColorHSL (bool bColorHSL);
 		SIZE GetBorderRound () const;
 		void SetBorderRound (SIZE cxyRound);
-		bool DrawImage (HDC hDC, string_view_t pStrImage, string_view_t pStrModify = _T (""));
+		bool DrawImage (HDC hDC, faw::string_view_t pStrImage, faw::string_view_t pStrModify = _T (""));
 
 		//边框相关
 		int GetBorderSize () const;
@@ -118,8 +118,8 @@ namespace DuiLib {
 		virtual void SetFloatAlign (UINT uAlign);
 		virtual UINT GetFloatAlign () const;
 		// 鼠标提示
-		virtual CDuiString GetToolTip () const;
-		virtual void SetToolTip (string_view_t pstrText);
+		virtual faw::String GetToolTip () const;
+		virtual void SetToolTip (faw::string_view_t pstrText);
 		virtual void SetToolTipWidth (int nWidth);
 		virtual int GetToolTipWidth (void);	// 多行ToolTip单行最长宽度
 
@@ -136,8 +136,8 @@ namespace DuiLib {
 		virtual void SetContextMenuUsed (bool bMenuUsed);
 
 		// 用户属性
-		virtual const CDuiString& GetUserData (); // 辅助函数，供用户使用
-		virtual void SetUserData (string_view_t pstrText); // 辅助函数，供用户使用
+		virtual const faw::String& GetUserData (); // 辅助函数，供用户使用
+		virtual void SetUserData (faw::string_view_t pstrText); // 辅助函数，供用户使用
 		virtual UINT_PTR GetTag () const; // 辅助函数，供用户使用
 		virtual void SetTag (UINT_PTR pTag); // 辅助函数，供用户使用
 
@@ -173,13 +173,13 @@ namespace DuiLib {
 		virtual void DoEvent (TEventUI& event);
 
 		// 自定义(未处理的)属性
-		void AddCustomAttribute (string_view_t pstrName, string_view_t pstrAttr);
-		string_view_t GetCustomAttribute (string_view_t pstrName);
-		bool RemoveCustomAttribute (string_view_t pstrName);
+		void AddCustomAttribute (faw::string_view_t pstrName, faw::string_view_t pstrAttr);
+		faw::string_view_t GetCustomAttribute (faw::string_view_t pstrName);
+		bool RemoveCustomAttribute (faw::string_view_t pstrName);
 		void RemoveAllCustomAttribute ();
 
-		virtual void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
-		CControlUI* ApplyAttributeList (string_view_t pstrList);
+		virtual void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
+		CControlUI* ApplyAttributeList (faw::string_view_t pstrList);
 
 		virtual SIZE EstimateSize (SIZE szAvailable);
 		virtual bool Paint (HDC hDC, const RECT& rcPaint, CControlUI* pStopControl = nullptr); // 返回要不要继续绘制
@@ -195,8 +195,8 @@ namespace DuiLib {
 		virtual void DoPostPaint (HDC hDC, const RECT& rcPaint);
 
 		//虚拟窗口参数
-		void SetVirtualWnd (string_view_t pstrValue);
-		CDuiString GetVirtualWnd () const;
+		void SetVirtualWnd (faw::string_view_t pstrValue);
+		faw::String GetVirtualWnd () const;
 
 	public:
 		CEventSource		OnInit;
@@ -208,8 +208,8 @@ namespace DuiLib {
 	protected:
 		CPaintManagerUI		*m_pManager				= nullptr;
 		CControlUI			*m_pParent				= nullptr;
-		CDuiString			m_sVirtualWnd;
-		CDuiString			m_sName;
+		faw::String			m_sVirtualWnd;
+		faw::String			m_sName;
 		bool				m_bUpdateNeeded			= true;
 		bool				m_bMenuUsed				= false;
 		RECT				m_rcItem;
@@ -233,19 +233,19 @@ namespace DuiLib {
 		bool				m_bDropEnabled			= false;
 
 		bool				m_bResourceText			= false;
-		CDuiString			m_sText;
-		CDuiString			m_sToolTip;
+		faw::String			m_sText;
+		faw::String			m_sToolTip;
 		TCHAR				m_chShortcut			= _T ('\0');
-		CDuiString			m_sUserData;
+		faw::String			m_sUserData;
 		UINT_PTR			m_pTag					= NULL;
 
-		CDuiString			m_sGradient;
+		faw::String			m_sGradient;
 		DWORD				m_dwBackColor			= 0;
 		DWORD				m_dwBackColor2			= 0;
 		DWORD				m_dwBackColor3			= 0;
 		DWORD				m_dwForeColor			= 0;
-		CDuiString			m_sBkImage;
-		CDuiString			m_sForeImage;
+		faw::String			m_sBkImage;
+		faw::String			m_sForeImage;
 		DWORD				m_dwBorderColor			= 0;
 		DWORD				m_dwFocusBorderColor	= 0;
 		bool				m_bColorHSL				= false;
@@ -259,7 +259,7 @@ namespace DuiLib {
 		bool				m_isDynamic				= false;
 		HINSTANCE			m_instance				= NULL;
 
-		std::map<string_t, string_t>	m_mCustomAttrs;
+		std::map<faw::String, faw::String>	m_mCustomAttrs;
 	};
 
 } // namespace DuiLib

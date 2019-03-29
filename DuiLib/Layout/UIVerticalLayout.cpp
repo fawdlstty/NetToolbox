@@ -5,11 +5,11 @@ namespace DuiLib {
 	IMPLEMENT_DUICONTROL (CVerticalLayoutUI)
 	CVerticalLayoutUI::CVerticalLayoutUI () {}
 
-	string_view_t CVerticalLayoutUI::GetClass () const {
+	faw::string_view_t CVerticalLayoutUI::GetClass () const {
 		return _T ("VerticalLayoutUI");
 	}
 
-	LPVOID CVerticalLayoutUI::GetInterface (string_view_t pstrName) {
+	LPVOID CVerticalLayoutUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_VERTICALLAYOUT) return static_cast<CVerticalLayoutUI*>(this);
 		return CContainerUI::GetInterface (pstrName);
 	}
@@ -212,7 +212,7 @@ namespace DuiLib {
 		return m_autoCalcHeight;
 	}
 
-	void CVerticalLayoutUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CVerticalLayoutUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("sepheight")) SetSepHeight (FawTools::parse_dec (pstrValue));
 		else if (pstrName == _T ("sepimm")) SetSepImmMode (FawTools::parse_bool (pstrValue));
 		else if (pstrName == _T ("autocalcheight")) SetAutoCalcHeight (FawTools::parse_bool (pstrValue));

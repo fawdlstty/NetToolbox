@@ -12,11 +12,11 @@ namespace DuiLib {
 
 	CGroupBoxUI::~CGroupBoxUI () {}
 
-	string_view_t CGroupBoxUI::GetClass () const {
+	faw::string_view_t CGroupBoxUI::GetClass () const {
 		return _T ("GroupBoxUI");
 	}
 
-	LPVOID CGroupBoxUI::GetInterface (string_view_t pstrName) {
+	LPVOID CGroupBoxUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == _T ("GroupBox")) return static_cast<CGroupBoxUI*>(this);
 		return CVerticalLayoutUI::GetInterface (pstrName);
 	}
@@ -45,7 +45,7 @@ namespace DuiLib {
 		return m_iFont;
 	}
 	void CGroupBoxUI::PaintText (HDC hDC) {
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 		if (sText.empty ()) {
 			return;
 		}
@@ -67,7 +67,7 @@ namespace DuiLib {
 
 		DWORD dwTextColor = m_dwTextColor;
 		if (!IsEnabled ()) dwTextColor = m_dwDisabledTextColor;
-		CRenderEngine::DrawText (hDC, m_pManager, rcText, sText, dwTextColor, m_iFont, m_uTextStyle, GetAdjustColor (m_dwBackColor));
+		CRenderEngine::DrawText (hDC, m_pManager, rcText, sText.str_view (), dwTextColor, m_iFont, m_uTextStyle, GetAdjustColor (m_dwBackColor));
 	}
 	void CGroupBoxUI::PaintBorder (HDC hDC) {
 		int nBorderSize;
@@ -136,13 +136,13 @@ namespace DuiLib {
 		SIZE cxyFixed = GetFixedXY ();
 		RECT rcText = { 0, 0, MAX (szAvailable.cx, cxyFixed.cx), 20 };
 
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 
-		CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, m_dwTextColor, m_iFont, DT_CALCRECT | m_uTextStyle);
+		CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), m_dwTextColor, m_iFont, DT_CALCRECT | m_uTextStyle);
 		SIZE cXY = { rcText.right - rcText.left, rcText.bottom - rcText.top };
 		return cXY;
 	}
-	void CGroupBoxUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CGroupBoxUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("textcolor")) {
 			SetTextColor ((DWORD) FawTools::parse_hex (pstrValue));
 		} else if (pstrName == _T ("disabledtextcolor")) {

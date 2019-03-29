@@ -22,11 +22,11 @@ namespace DuiLib {
 		}
 	}
 
-	string_view_t CContainerUI::GetClass () const {
+	faw::string_view_t CContainerUI::GetClass () const {
 		return _T ("ContainerUI");
 	}
 
-	LPVOID CContainerUI::GetInterface (string_view_t pstrName) {
+	LPVOID CContainerUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == _T ("IContainer")) return static_cast<IContainerUI*>(this);
 		else if (pstrName == DUI_CTRL_CONTAINER) return static_cast<CContainerUI*>(this);
 		return CControlUI::GetInterface (pstrName);
@@ -480,7 +480,7 @@ namespace DuiLib {
 			m_pVerticalScrollBar->SetOwner (this);
 			m_pVerticalScrollBar->SetManager (m_pManager, nullptr, false);
 			if (m_pManager) {
-				string_view_t pDefaultAttributes = m_pManager->GetDefaultAttributeList (_T ("VScrollBar"));
+				faw::string_view_t pDefaultAttributes = m_pManager->GetDefaultAttributeList (_T ("VScrollBar"));
 				if (!pDefaultAttributes.empty ()) {
 					m_pVerticalScrollBar->ApplyAttributeList (pDefaultAttributes);
 				}
@@ -497,7 +497,7 @@ namespace DuiLib {
 			m_pHorizontalScrollBar->SetManager (m_pManager, nullptr, false);
 
 			if (m_pManager) {
-				string_view_t pDefaultAttributes = m_pManager->GetDefaultAttributeList (_T ("HScrollBar"));
+				faw::string_view_t pDefaultAttributes = m_pManager->GetDefaultAttributeList (_T ("HScrollBar"));
 				if (!pDefaultAttributes.empty ()) {
 					m_pHorizontalScrollBar->ApplyAttributeList (pDefaultAttributes);
 				}
@@ -612,7 +612,7 @@ namespace DuiLib {
 		}
 	}
 
-	void CContainerUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CContainerUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("inset")) {
 			RECT rcInset = FawTools::parse_rect (pstrValue);
 			SetInset (rcInset);
@@ -623,7 +623,7 @@ namespace DuiLib {
 			m_sVerticalScrollBarStyle = pstrValue;
 			EnableScrollBar (TRUE, GetHorizontalScrollBar ());
 			if (GetVerticalScrollBar ()) {
-				string_view_t pStyle = m_pManager->GetStyle (m_sVerticalScrollBarStyle);
+				faw::string_view_t pStyle = m_pManager->GetStyle (m_sVerticalScrollBarStyle.str_view ());
 				if (!pStyle.empty ()) {
 					GetVerticalScrollBar ()->ApplyAttributeList (pStyle);
 				} else {
@@ -636,7 +636,7 @@ namespace DuiLib {
 			m_sHorizontalScrollBarStyle = pstrValue;
 			EnableScrollBar (TRUE, GetHorizontalScrollBar ());
 			if (GetHorizontalScrollBar ()) {
-				string_view_t pStyle = m_pManager->GetStyle (m_sHorizontalScrollBarStyle);
+				faw::string_view_t pStyle = m_pManager->GetStyle (m_sHorizontalScrollBarStyle.str_view ());
 				if (!pStyle.empty ()) {
 					GetHorizontalScrollBar ()->ApplyAttributeList (pStyle);
 				} else {
@@ -910,7 +910,7 @@ namespace DuiLib {
 		}
 	}
 
-	bool CContainerUI::SetSubControlText (string_view_t pstrSubControlName, string_view_t pstrText) {
+	bool CContainerUI::SetSubControlText (faw::string_view_t pstrSubControlName, faw::string_view_t pstrText) {
 		CControlUI* pSubControl = nullptr;
 		pSubControl = this->FindSubControl (pstrSubControlName);
 		if (pSubControl) {
@@ -920,7 +920,7 @@ namespace DuiLib {
 			return FALSE;
 	}
 
-	bool CContainerUI::SetSubControlFixedHeight (string_view_t pstrSubControlName, int cy) {
+	bool CContainerUI::SetSubControlFixedHeight (faw::string_view_t pstrSubControlName, int cy) {
 		CControlUI* pSubControl = nullptr;
 		pSubControl = this->FindSubControl (pstrSubControlName);
 		if (pSubControl) {
@@ -930,7 +930,7 @@ namespace DuiLib {
 			return FALSE;
 	}
 
-	bool CContainerUI::SetSubControlFixedWdith (string_view_t pstrSubControlName, int cx) {
+	bool CContainerUI::SetSubControlFixedWdith (faw::string_view_t pstrSubControlName, int cx) {
 		CControlUI* pSubControl = nullptr;
 		pSubControl = this->FindSubControl (pstrSubControlName);
 		if (pSubControl) {
@@ -940,7 +940,7 @@ namespace DuiLib {
 			return FALSE;
 	}
 
-	bool CContainerUI::SetSubControlUserData (string_view_t pstrSubControlName, string_view_t pstrText) {
+	bool CContainerUI::SetSubControlUserData (faw::string_view_t pstrSubControlName, faw::string_view_t pstrText) {
 		CControlUI* pSubControl = nullptr;
 		pSubControl = this->FindSubControl (pstrSubControlName);
 		if (pSubControl) {
@@ -950,7 +950,7 @@ namespace DuiLib {
 			return FALSE;
 	}
 
-	CDuiString CContainerUI::GetSubControlText (string_view_t pstrSubControlName) {
+	faw::String CContainerUI::GetSubControlText (faw::string_view_t pstrSubControlName) {
 		CControlUI* pSubControl = nullptr;
 		pSubControl = this->FindSubControl (pstrSubControlName);
 		if (!pSubControl)
@@ -959,7 +959,7 @@ namespace DuiLib {
 			return pSubControl->GetText ();
 	}
 
-	int CContainerUI::GetSubControlFixedHeight (string_view_t pstrSubControlName) {
+	int CContainerUI::GetSubControlFixedHeight (faw::string_view_t pstrSubControlName) {
 		CControlUI* pSubControl = nullptr;
 		pSubControl = this->FindSubControl (pstrSubControlName);
 		if (!pSubControl)
@@ -968,7 +968,7 @@ namespace DuiLib {
 			return pSubControl->GetFixedHeight ();
 	}
 
-	int CContainerUI::GetSubControlFixedWdith (string_view_t pstrSubControlName) {
+	int CContainerUI::GetSubControlFixedWdith (faw::string_view_t pstrSubControlName) {
 		CControlUI* pSubControl = nullptr;
 		pSubControl = this->FindSubControl (pstrSubControlName);
 		if (!pSubControl)
@@ -977,7 +977,7 @@ namespace DuiLib {
 			return pSubControl->GetFixedWidth ();
 	}
 
-	const CDuiString CContainerUI::GetSubControlUserData (string_view_t pstrSubControlName) {
+	const faw::String CContainerUI::GetSubControlUserData (faw::string_view_t pstrSubControlName) {
 		CControlUI* pSubControl = nullptr;
 		pSubControl = this->FindSubControl (pstrSubControlName);
 		if (!pSubControl)
@@ -986,7 +986,7 @@ namespace DuiLib {
 			return pSubControl->GetUserData ();
 	}
 
-	CControlUI* CContainerUI::FindSubControl (string_view_t pstrSubControlName) {
+	CControlUI* CContainerUI::FindSubControl (faw::string_view_t pstrSubControlName) {
 		return static_cast<CControlUI*>(GetManager ()->FindSubControlByName (this, pstrSubControlName));
 	}
 

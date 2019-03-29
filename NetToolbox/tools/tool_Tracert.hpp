@@ -21,8 +21,8 @@
 #include <iphlpapi.h>
 #include <ip2string.h>
 
-#include "tool_String.hpp"
-#include "tool_Utils.hpp"
+#include "tools/tool_String.hpp"
+#include "tools/tool_Utils.hpp"
 
 #pragma comment (lib, "ws2_32.lib")
 #pragma comment(lib, "iphlpapi.lib")
@@ -32,11 +32,11 @@
 class tool_Tracert {
 public:
 	// 开始ipv4路由跟踪
-	static std::tuple<bool, string_t> start_ipv4 (std::string dest_ip, std::function<void (size_t, size_t, std::string)> f) {
+	static std::tuple<bool, faw::String> start_ipv4 (std::string dest_ip, std::function<void (size_t, size_t, std::string)> f) {
 		IPAddr ul_dest_ip = ::inet_addr (&dest_ip[0]);
 		HANDLE hIcmp = ::IcmpCreateFile ();
 		if (hIcmp == INVALID_HANDLE_VALUE)
-			return { false, tool_StringT::format (_T ("IcmpCreateFile %s"), tool_Utils::get_error_info (::GetLastError ()).c_str ()) };
+			return { false, faw::String::format (_T ("IcmpCreateFile %s"), tool_Utils::get_error_info (::GetLastError ()).c_str ()) };
 		constexpr DWORD reply_size = sizeof (ICMP_ECHO_REPLY) + sizeof (m_send);
 		BYTE b_reply[reply_size];
 		PICMP_ECHO_REPLY reply = (PICMP_ECHO_REPLY) b_reply;
@@ -75,12 +75,12 @@ public:
 	}
 
 	// 开始ipv6路由跟踪
-	static std::tuple<bool, string_t> start_ipv6 (std::string dest_ip, std::function<void (size_t, size_t, std::string)> f) {
+	static std::tuple<bool, faw::String> start_ipv6 (std::string dest_ip, std::function<void (size_t, size_t, std::string)> f) {
 		in_addr6 ul_dest_ip = { 0 };
 		::inet_pton (AF_INET6, dest_ip.c_str (), &ul_dest_ip);
 		HANDLE hIcmp = ::Icmp6CreateFile ();
 		if (hIcmp == INVALID_HANDLE_VALUE)
-			return { false, tool_StringT::format (_T ("Icmp6CreateFile %s"), tool_Utils::get_error_info (::GetLastError ()).c_str ()) };
+			return { false, faw::String::format (_T ("Icmp6CreateFile %s"), tool_Utils::get_error_info (::GetLastError ()).c_str ()) };
 		constexpr DWORD reply_size = sizeof (ICMPV6_ECHO_REPLY) + sizeof (m_send);
 		BYTE b_reply[reply_size];
 		PICMPV6_ECHO_REPLY reply = (PICMPV6_ECHO_REPLY) b_reply;

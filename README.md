@@ -1,9 +1,11 @@
 ﻿# NetToolbox
+
 易大师网络工具箱
 
 ![capture.jpg](capture.jpg)
 
 ## 描述
+
 易大师网络工具箱是一个开源小工具集合，集成了网络方面众多小功能，可以极大提高您的工作效率
 
 源码结构讲解：[【易大师网络工具箱】项目解析](https://www.fawdlstty.com/archives/608.html)
@@ -36,16 +38,16 @@
 4. 文件工具：用于计算文件哈希值
 5. 步骤记录器：打开Windows自带的步骤记录器
 
-
-
 ## 编译步骤
+
 1. 安装VS2017、vcpkg、7-zip与upx并设置环境变量，直到这几个命令能在命令行里直接使用
 2. 执行命令：vcpkg install boost:x86-windows boost:x86-windows-static openssl:x86-windows openssl:x86-windows-static nlohmann-json:x86-windows nlohmann-json:x86-windows-static curl:x86-windows curl:x86-windows-static
 3. 编译
 
-
-
 ## 修改日志
+
+2019.03.29 Community 替换DuiLib_Faw实现
+
 2018.12.18 Community 修复Combo控件显示不正常的bug；修复分析文件时偶发性崩溃
 
 2018.12.09 Community 开源；修改描述信息
@@ -82,21 +84,16 @@
 
 2018.11.02 beta 修复RichEdit无法复制bug;网络连接新增排序功能；关于页优化
 
-
-
 ## 许可证
-第三方库 DuiLib_Faw 与 serial 按原项目许可协议进行许可
 
-NetToolbox/tools 目录下工具类为MIT开源许可协议单独许可
+第三方库 DuiLib_Faw 与 serial 按原项目许可协议进行许可
 
 其他未明确标注的均为 GPL-3.0 许可协议进行许可
 
-
-
 ## 赞助
+
 ![poor.jpg](poor.jpg)
 
-
-
 ## 其他
+
 技术交流：[点击链接加入群【网络工具箱交流群 943497747】](https://jq.qq.com/?_wv=1027&k=5vG1SGq)

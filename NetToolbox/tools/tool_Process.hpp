@@ -19,8 +19,8 @@
 #include <shellapi.h>
 #include <Psapi.h>
 
-#include "tool_String.hpp"
-#include "tool_Utils.hpp"
+#include "tools/tool_String.hpp"
+#include "tools/tool_Utils.hpp"
 
 #pragma comment (lib, "psapi.lib")
 
@@ -29,10 +29,10 @@
 class tool_Process {
 public:
 	// 获取进程列表
-	static std::map<DWORD, string_t> get_processes () {
+	static std::map<DWORD, faw::String> get_processes () {
 		HANDLE hSnapShot = ::CreateToolhelp32Snapshot (TH32CS_SNAPPROCESS, 0);
 		PROCESSENTRY32 pe32 { sizeof (PROCESSENTRY32) };
-		std::map<DWORD, string_t> m;
+		std::map<DWORD, faw::String> m;
 		if (::Process32First (hSnapShot, &pe32)) {
 			do {
 				m[pe32.th32ProcessID] = pe32.szExeFile;
@@ -43,19 +43,19 @@ public:
 	}
 
 	// 打开notepad之类的命令或者传入http://xxx打开一个网页
-	static void shell_exec (string_t url) {
+	static void shell_exec (faw::String url) {
 		::ShellExecute (NULL, _T ("open"), url.c_str (), nullptr, nullptr, SW_SHOW);
 	}
 
 	// 判断进程是否存在
-	static bool process_exist (string_t file) {
+	static bool process_exist (faw::String file) {
 		HANDLE hSnapShot = ::CreateToolhelp32Snapshot (TH32CS_SNAPPROCESS, 0);
 		PROCESSENTRY32 pe32 { sizeof (PROCESSENTRY32) };
-		std::map<DWORD, string_t> m;
+		std::map<DWORD, faw::String> m;
 		if (::Process32First (hSnapShot, &pe32)) {
 			do {
-				string_t _path = pe32.szExeFile;
-				tool_StringT::replace (_path, _T ('/'), _T ('\\'));
+				faw::String _path = pe32.szExeFile;
+				_path.replace_self (_T ('/'), _T ('\\'));
 				size_t p = _path.rfind (_T ('\\'));
 				if (_path.substr (p + 1) == file) {
 					::CloseHandle (hSnapShot);
@@ -68,7 +68,7 @@ public:
 	}
 
 	// 创建进程，进程名必须包括路径的全称
-	static bool create_process (string_view_t file) {
+	static bool create_process (faw::string_view_t file) {
 		STARTUPINFO si = { sizeof (STARTUPINFO) };
 		PROCESS_INFORMATION pi = { 0 };
 		bool bRet = !!::CreateProcess (file.data (), nullptr, nullptr, nullptr, FALSE, 0, nullptr, nullptr, &si, &pi);
@@ -76,7 +76,7 @@ public:
 			CloseHandle (pi.hThread);
 			CloseHandle (pi.hProcess);
 		} else {
-			string_t err_info = tool_StringT::format (_T ("创建进程失败，%s"), tool_Utils::get_error_info (::GetLastError ()).c_str ());
+			faw::String err_info = faw::String::format (_T ("创建进程失败，%s"), tool_Utils::get_error_info (::GetLastError ()).c_str ());
 			::MessageBox (NULL, err_info.c_str (), _T ("提示"), MB_ICONHAND);
 		}
 		return bRet;
@@ -93,7 +93,7 @@ public:
 	}
 
 	// 获取某个进程的所在文件夹
-	static std::tuple<DWORD, string_t> get_path (DWORD pid) {
+	static std::tuple<DWORD, faw::String> get_path (DWORD pid) {
 		HANDLE hProcess = ::OpenProcess (PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
 		if (!hProcess) {
 			DWORD d = ::GetLastError ();

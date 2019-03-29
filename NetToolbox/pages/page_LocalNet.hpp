@@ -3,7 +3,6 @@
 
 #include "page_base.hpp"
 #include "../tools/tool_NetInfo.hpp"
-#include "../tools/tool_Encoding.hpp"
 
 
 
@@ -42,19 +41,19 @@ public:
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (tool_Encoding::gb18030_to_utf16 (desc).c_str ());
+				ctrl->SetText (faw::Encoding::gb18030_to_utf16 (desc).c_str ());
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("10,4,0,4"));
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (tool_Encoding::gb18030_to_utf16 (local).c_str ());
+				ctrl->SetText (faw::Encoding::gb18030_to_utf16 (local).c_str ());
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (tool_Encoding::gb18030_to_utf16 (gateway).c_str ());
+				ctrl->SetText (faw::Encoding::gb18030_to_utf16 (gateway).c_str ());
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);

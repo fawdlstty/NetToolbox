@@ -18,18 +18,18 @@ namespace DuiLib {
 	class UILIB_API CMarkup {
 		friend class CMarkupNode;
 	public:
-		CMarkup (string_view_t pstrXML = _T (""));
+		CMarkup (faw::string_view_t pstrXML = _T (""));
 		virtual ~CMarkup ();
 
-		bool Load (string_view_t pstrXML);
+		bool Load (faw::string_view_t pstrXML);
 		bool LoadFromMem (BYTE* pByte, DWORD dwSize, int encoding = XMLFILE_ENCODING_UTF8);
-		bool LoadFromFile (string_view_t pstrFilename, int encoding = XMLFILE_ENCODING_UTF8);
+		bool LoadFromFile (faw::string_view_t pstrFilename, int encoding = XMLFILE_ENCODING_UTF8);
 		void Release ();
 		bool IsValid () const;
 
 		void SetPreserveWhitespace (bool bPreserve = true);
-		string_view_t GetLastErrorMessage () const;
-		string_view_t GetLastErrorLocation () const;
+		faw::string_view_t GetLastErrorMessage () const;
+		faw::string_view_t GetLastErrorLocation () const;
 
 		CMarkupNode GetRoot ();
 
@@ -42,12 +42,12 @@ namespace DuiLib {
 			ULONG iData;
 		} XMLELEMENT;
 
-		string_t m_pstrXML;
+		faw::String m_pstrXML;
 		XMLELEMENT* m_pElements;
 		ULONG m_nElements;
 		ULONG m_nReservedElements;
-		string_t m_szErrorMsg;
-		string_t m_szErrorXML;
+		faw::String m_szErrorMsg;
+		faw::String m_szErrorXML;
 		bool m_bPreserveWhitespace;
 
 	private:
@@ -61,7 +61,7 @@ namespace DuiLib {
 		bool _ParseData (LPTSTR& pstrText, LPTSTR& pstrData, char cEnd);
 		void _ParseMetaChar (LPTSTR& pstrText, LPTSTR& pstrDest);
 		bool _ParseAttributes (LPTSTR& pstrText);
-		bool _Failed (string_view_t pstrError, string_view_t pstrLocation = _T (""));
+		bool _Failed (faw::string_view_t pstrError, faw::string_view_t pstrLocation = _T (""));
 	};
 
 
@@ -77,19 +77,19 @@ namespace DuiLib {
 		CMarkupNode GetParent ();
 		CMarkupNode GetSibling ();
 		CMarkupNode GetChild ();
-		CMarkupNode GetChild (string_view_t pstrName);
+		CMarkupNode GetChild (faw::string_view_t pstrName);
 
 		bool HasSiblings () const;
 		bool HasChildren () const;
-		string_t GetName () const;
-		string_t GetValue () const;
+		faw::String GetName () const;
+		faw::String GetValue () const;
 
 		bool HasAttributes ();
-		bool HasAttribute (string_view_t pstrName);
+		bool HasAttribute (faw::string_view_t pstrName);
 		int GetAttributeCount ();
-		string_t GetAttributeName (int iIndex);
-		string_t GetAttributeValue (int iIndex);
-		string_t GetAttributeValue (string_view_t pstrName);
+		faw::String GetAttributeName (int iIndex);
+		faw::String GetAttributeValue (int iIndex);
+		faw::String GetAttributeValue (faw::string_view_t pstrName);
 
 	private:
 		void _MapAttributes ();

@@ -28,15 +28,15 @@ namespace DuiLib {
 		static CControlUI* CreateControl () {
 			return new CHanAnimUI ();
 		}
-		string_view_t GetClass () const {
+		faw::string_view_t GetClass () const {
 			return _T ("CHanAnimUI");
 		}
-		LPVOID GetInterface (string_view_t pstrName) override {
+		LPVOID GetInterface (faw::string_view_t pstrName) override {
 			if (pstrName == _T ("HanAnim")) return static_cast<CHanAnimUI*>(this);
 			return CControlUI::GetInterface (pstrName);
 		}
 
-		virtual void SetBkImage (string_view_t pStrImage) {
+		virtual void SetBkImage (faw::string_view_t pStrImage) {
 			if (m_is_animate) {
 				this->KillTimer (m_timer_id);
 				m_is_animate = FALSE;
@@ -44,7 +44,7 @@ namespace DuiLib {
 			CControlUI::SetBkImage (pStrImage);
 		}
 
-		void SetAnimateBkImage (string_view_t pStrImage, int width, int height, int framecount = 0, int speed = 100) {
+		void SetAnimateBkImage (faw::string_view_t pStrImage, int width, int height, int framecount = 0, int speed = 100) {
 			if (m_is_animate) this->KillTimer (m_timer_id);
 			BOOL hori = width > height;
 			int _width, _height; _width = _height = (width > height ? height : width);
@@ -84,7 +84,7 @@ namespace DuiLib {
 
 		void DoEvent (TEventUI& event) override {
 			if (event.Type == UIEVENT_TIMER && event.wParam == m_timer_id) {
-				CControlUI::SetBkImage (m_imglist[m_moment_frame = ++m_moment_frame % m_imglist.size ()]);
+				CControlUI::SetBkImage (m_imglist[m_moment_frame = ++m_moment_frame % m_imglist.size ()].str_view ());
 			} else {
 				return CControlUI::DoEvent (event);
 			}
@@ -93,7 +93,7 @@ namespace DuiLib {
 	private:
 		int						m_moment_frame = -1;
 		bool					m_is_animate = false;
-		std::vector<CDuiString>	m_imglist;
+		std::vector< faw::String>	m_imglist;
 		UINT					m_timer_id = (UINT) this;
 
 	public:

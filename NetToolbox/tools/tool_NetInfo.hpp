@@ -25,9 +25,9 @@
 #include <iphlpapi.h>
 #include <Psapi.h>
 
-#include "tool_String.hpp"
-#include "tool_Process.hpp"
-#include "tool_Utils.hpp"
+#include "tools/tool_String.hpp"
+#include "tools/tool_Process.hpp"
+#include "tools/tool_Utils.hpp"
 
 #pragma comment(lib, "iphlpapi.lib")
 
@@ -52,7 +52,7 @@ public:
 	}
 
 	// 获取本地网段
-	static std::tuple<string_t, string_t> get_ip_segment () {
+	static std::tuple<faw::String, faw::String> get_ip_segment () {
 		ULONG size = 0;
 		GetAdaptersInfo (NULL, &size);
 		if (!size) return { _T (""), _T ("") };
@@ -72,8 +72,8 @@ public:
 	}
 
 	// 获取网络连接列表【是否是ipv4（不显示），本地地址，本地端口，远程地址，远程端口，当前连接状态，进程PID，进程名称，进程路径（不显示）】
-	static std::vector<std::tuple<bool, string_t, uint16_t, string_t, uint16_t, string_t, DWORD, string_t>> get_connections () {
-		static std::map<DWORD, string_t> mtcp_conn_state {
+	static std::vector<std::tuple<bool, faw::String, uint16_t, faw::String, uint16_t, faw::String, DWORD, faw::String>> get_connections () {
+		static std::map<DWORD, faw::String> mtcp_conn_state {
 			//{ MIB_TCP_STATE_CLOSED,			_T ("TCP已关闭") },
 			{ MIB_TCP_STATE_LISTEN,			_T ("TCP正在监听") },
 			//{ MIB_TCP_STATE_SYN_SENT,		_T ("TCP连接中") },
@@ -87,7 +87,7 @@ public:
 			//{ MIB_TCP_STATE_TIME_WAIT,		_T ("TCP已断开") },
 			//{ MIB_TCP_STATE_DELETE_TCB,		_T ("TCP删除TCB记录") },
 		};
-		std::map<DWORD, string_t> mprocesses = tool_Process::get_processes ();
+		std::map<DWORD, faw::String> mprocesses = tool_Process::get_processes ();
 		auto size_max = [](size_t p1, size_t p2) {
 			if (p1 == std::string::npos) {
 				return p2;
@@ -97,17 +97,17 @@ public:
 				return (p1 >= p2 ? p1 : p2);
 			}
 		};
-		auto ipv4_to_str = [] (DWORD &addr) -> string_t {
+		auto ipv4_to_str = [] (DWORD &addr) -> faw::String {
 			unsigned char *pch = (unsigned char*) &addr;
-			return tool_StringT::format (_T ("%d.%d.%d.%d"), pch[0], pch[1], pch[2], pch[3]);
+			return faw::String::format (_T ("%d.%d.%d.%d"), pch[0], pch[1], pch[2], pch[3]);
 		};
-		auto ipv6_to_str = [] (UCHAR *addr, DWORD scope_id) -> string_t {
+		auto ipv6_to_str = [] (UCHAR *addr, DWORD scope_id) -> faw::String {
 			TCHAR tBuf[64] = { 0 };
 			::InetNtopW (AF_INET6, &addr, tBuf, sizeof (tBuf) / sizeof (tBuf[0]));
-			return (scope_id ? tool_StringT::format (_T ("%s%%%d"), tBuf, scope_id) : string_t (tBuf));
+			return (scope_id ? faw::String::format (_T ("%s%%%d"), tBuf, scope_id) : faw::String (tBuf));
 		};
 
-		std::vector<std::tuple<bool, string_t, uint16_t, string_t, uint16_t, string_t, DWORD, string_t>> vconn;
+		std::vector<std::tuple<bool, faw::String, uint16_t, faw::String, uint16_t, faw::String, DWORD, faw::String>> vconn;
 		// tcp ipv4
 		ULONG size = 0;
 		::GetTcpTable2 (nullptr, &size, true);
@@ -115,13 +115,13 @@ public:
 		PMIB_TCPTABLE2 ptcp4 = (PMIB_TCPTABLE2) buf;
 		if (NO_ERROR == ::GetTcpTable2 (ptcp4, &size, true)) {
 			for (size_t i = 0; i < ptcp4->dwNumEntries; ++i) {
-				string_t local_ip			= ipv4_to_str (ptcp4->table[i].dwLocalAddr);
+				faw::String local_ip			= ipv4_to_str (ptcp4->table[i].dwLocalAddr);
 				uint16_t local_port			= (uint16_t) ptcp4->table[i].dwLocalPort;
-				string_t remote_ip			= ipv4_to_str (ptcp4->table[i].dwRemoteAddr);
+				faw::String remote_ip			= ipv4_to_str (ptcp4->table[i].dwRemoteAddr);
 				uint16_t remote_port		= (uint16_t) ptcp4->table[i].dwRemotePort;
-				string_t tcp_conn_state		= mtcp_conn_state[ptcp4->table[i].dwState];
+				faw::String tcp_conn_state		= mtcp_conn_state[ptcp4->table[i].dwState];
 				DWORD process_id			= ptcp4->table[i].dwOwningPid;
-				string_t exe_path			= mprocesses[process_id];
+				faw::String exe_path			= mprocesses[process_id];
 				if (tcp_conn_state == _T (""))
 					continue;
 				vconn.push_back ({ true, local_ip, local_port, remote_ip, remote_port, tcp_conn_state, process_id, exe_path });
@@ -136,13 +136,13 @@ public:
 		PMIB_TCP6TABLE2 ptcp6 = (PMIB_TCP6TABLE2) buf;
 		if (NO_ERROR == ::GetTcp6Table2 (ptcp6, &size, true)) {
 			for (size_t i = 0; i < ptcp6->dwNumEntries; ++i) {
-				string_t local_ip = ipv6_to_str (ptcp6->table[i].LocalAddr.u.Byte, ptcp6->table[i].dwLocalScopeId);
+				faw::String local_ip = ipv6_to_str (ptcp6->table[i].LocalAddr.u.Byte, ptcp6->table[i].dwLocalScopeId);
 				uint16_t local_port = (uint16_t) ptcp6->table[i].dwLocalPort;
-				string_t remote_ip = ipv6_to_str (ptcp6->table[i].RemoteAddr.u.Byte, ptcp6->table[i].dwRemoteScopeId);
+				faw::String remote_ip = ipv6_to_str (ptcp6->table[i].RemoteAddr.u.Byte, ptcp6->table[i].dwRemoteScopeId);
 				uint16_t remote_port = (uint16_t) ptcp6->table[i].dwRemotePort;
-				string_t tcp_conn_state = mtcp_conn_state[ptcp6->table[i].State];
+				faw::String tcp_conn_state = mtcp_conn_state[ptcp6->table[i].State];
 				DWORD process_id = ptcp6->table[i].dwOwningPid;
-				string_t exe_path = mprocesses[process_id];
+				faw::String exe_path = mprocesses[process_id];
 				if (tcp_conn_state == _T (""))
 					continue;
 				vconn.push_back ({ false, local_ip, local_port, remote_ip, remote_port, tcp_conn_state, process_id, exe_path });
@@ -157,10 +157,10 @@ public:
 		PMIB_UDPTABLE_OWNER_PID pudp4 = (PMIB_UDPTABLE_OWNER_PID) buf;
 		if (NO_ERROR == ::GetExtendedUdpTable (pudp4, &size, true, AF_INET, UDP_TABLE_OWNER_PID, 0)) {
 			for (size_t i = 0; i < pudp4->dwNumEntries; ++i) {
-				string_t local_ip = ipv4_to_str (pudp4->table[i].dwLocalAddr);
+				faw::String local_ip = ipv4_to_str (pudp4->table[i].dwLocalAddr);
 				uint16_t local_port = (uint16_t) pudp4->table[i].dwLocalPort;
 				DWORD process_id = pudp4->table[i].dwOwningPid;
-				string_t exe_path = mprocesses[process_id];
+				faw::String exe_path = mprocesses[process_id];
 				vconn.push_back ({ true, local_ip, local_port, _T ("*"), 0, _T ("UDP"), process_id, exe_path });
 			}
 		}
@@ -173,10 +173,10 @@ public:
 		PMIB_UDP6TABLE_OWNER_PID pudp6 = (PMIB_UDP6TABLE_OWNER_PID) buf;
 		if (NO_ERROR == ::GetExtendedUdpTable (pudp6, &size, true, AF_INET6, UDP_TABLE_OWNER_PID, 0)) {
 			for (size_t i = 0; i < pudp6->dwNumEntries; ++i) {
-				string_t local_ip = ipv6_to_str (pudp6->table[i].ucLocalAddr, pudp6->table[i].dwLocalScopeId);
+				faw::String local_ip = ipv6_to_str (pudp6->table[i].ucLocalAddr, pudp6->table[i].dwLocalScopeId);
 				uint16_t local_port = (uint16_t) pudp6->table[i].dwLocalPort;
 				DWORD process_id = pudp6->table[i].dwOwningPid;
-				string_t exe_path = mprocesses[process_id];
+				faw::String exe_path = mprocesses[process_id];
 				vconn.push_back ({ true, local_ip, local_port, _T ("*"), 0, _T ("UDP"), process_id, exe_path });
 			}
 		}

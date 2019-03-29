@@ -31,8 +31,8 @@ namespace DuiLib {
 		void Init (CIPAddressUI* pOwner);
 		RECT CalPos ();
 
-		string_view_t GetWindowClassName () const;
-		string_view_t GetSuperClassName () const;
+		faw::string_view_t GetWindowClassName () const;
+		faw::string_view_t GetSuperClassName () const;
 		void OnFinalMessage (HWND hWnd);
 
 		LRESULT HandleMessage (UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -75,11 +75,11 @@ namespace DuiLib {
 		return m_pOwner->GetPos ();
 	}
 
-	string_view_t CIPAddressWnd::GetWindowClassName () const {
+	faw::string_view_t CIPAddressWnd::GetWindowClassName () const {
 		return _T ("IPAddressWnd");
 	}
 
-	string_view_t CIPAddressWnd::GetSuperClassName () const {
+	faw::string_view_t CIPAddressWnd::GetSuperClassName () const {
 		return WC_IPADDRESS;
 	}
 
@@ -148,11 +148,11 @@ namespace DuiLib {
 		m_nIPUpdateFlag = IP_NONE;
 	}
 
-	string_view_t CIPAddressUI::GetClass () const {
+	faw::string_view_t CIPAddressUI::GetClass () const {
 		return _T ("DateTimeUI");
 	}
 
-	LPVOID CIPAddressUI::GetInterface (string_view_t pstrName) {
+	LPVOID CIPAddressUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_IPADDRESS) return static_cast<CIPAddressUI*>(this);
 		return CLabelUI::GetInterface (pstrName);
 	}
@@ -181,7 +181,7 @@ namespace DuiLib {
 		else if (m_nIPUpdateFlag == IP_UPDATE) {
 			in_addr addr;
 			addr.S_un.S_addr = m_dwIP;
-			string_t szIP = FawTools::format_str (_T ("%d.%d.%d.%d"), addr.S_un.S_un_b.s_b4, addr.S_un.S_un_b.s_b3, addr.S_un.S_un_b.s_b2, addr.S_un.S_un_b.s_b1);
+			faw::String szIP = FawTools::format_str (_T ("%d.%d.%d.%d"), addr.S_un.S_un_b.s_b4, addr.S_un.S_un_b.s_b3, addr.S_un.S_un_b.s_b2, addr.S_un.S_un_b.s_b1);
 			SetText (szIP);
 		}
 	}
@@ -228,7 +228,7 @@ namespace DuiLib {
 		CLabelUI::DoEvent (event);
 	}
 
-	void CIPAddressUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CIPAddressUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		CLabelUI::SetAttribute (pstrName, pstrValue);
 	}
 }

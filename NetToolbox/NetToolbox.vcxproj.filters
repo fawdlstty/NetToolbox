@@ -51,9 +51,6 @@
     <ClInclude Include="tools\tool_String.hpp">
       <Filter>头文件\tools</Filter>
     </ClInclude>
-    <ClInclude Include="tools\tool_Encoding.hpp">
-      <Filter>头文件\tools</Filter>
-    </ClInclude>
     <ClInclude Include="3rdparty\serial\v8stdint.h">
       <Filter>3rdparty\serial</Filter>
     </ClInclude>
@@ -113,9 +110,6 @@
     </ClInclude>
     <ClInclude Include="pages\page_Qps.hpp">
       <Filter>头文件\pages</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\tool_Path.hpp">
-      <Filter>头文件\tools</Filter>
     </ClInclude>
     <ClInclude Include="tools\tool_Mutex.hpp">
       <Filter>头文件\tools</Filter>

@@ -15,13 +15,13 @@ namespace DuiLib {
 	};
 
 	struct MenuItemInfo {
-		string_t szName;
+		faw::String szName;
 		bool bChecked;
 	};
 	struct MenuCmd {
-		string_t szName;
-		string_t szUserData;
-		string_t szText;
+		faw::String szName;
+		faw::String szUserData;
+		faw::String szText;
 		BOOL bChecked;
 	};
 
@@ -213,8 +213,8 @@ namespace DuiLib {
 		CMenuUI ();
 		virtual ~CMenuUI ();
 		CMenuWnd	*m_pWindow	= nullptr;
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 		UINT GetListType ();
 
 		virtual void DoEvent (TEventUI& event);
@@ -228,7 +228,7 @@ namespace DuiLib {
 
 		SIZE EstimateSize (SIZE szAvailable);
 
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -241,11 +241,11 @@ namespace DuiLib {
 			static MenuObserverImpl s_context_menu_observer;
 			return s_context_menu_observer;
 		}
-		static CMenuWnd* CreateMenu (CMenuElementUI* pOwner, std::variant<UINT, string_t> xml, POINT point,
+		static CMenuWnd* CreateMenu (CMenuElementUI* pOwner, std::variant<UINT, faw::String> xml, POINT point,
 			CPaintManagerUI* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo = nullptr,
 			DWORD dwAlignment = eMenuAlignment_Left | eMenuAlignment_Top);
 		static void DestroyMenu ();
-		static MenuItemInfo* SetMenuItemInfo (string_view_t pstrName, bool bChecked);
+		static MenuItemInfo* SetMenuItemInfo (faw::string_view_t pstrName, bool bChecked);
 
 	public:
 		CMenuWnd ();
@@ -261,13 +261,13 @@ namespace DuiLib {
 		 	*@dwAlignment		菜单的出现位置，默认出现在鼠标的右下侧。
 		 */
 
-		void Init (CMenuElementUI* pOwner, std::variant<UINT, string_t> xml, POINT point,
+		void Init (CMenuElementUI* pOwner, std::variant<UINT, faw::String> xml, POINT point,
 			CPaintManagerUI* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo = nullptr,
 			DWORD dwAlignment = eMenuAlignment_Left | eMenuAlignment_Top);
-		string_view_t GetWindowClassName () const;
+		faw::string_view_t GetWindowClassName () const;
 		void OnFinalMessage (HWND hWnd);
 		void Notify (TNotifyUI& msg);
-		CControlUI* CreateControl (string_view_t pstrClassName);
+		CControlUI* CreateControl (faw::string_view_t pstrClassName);
 
 		LRESULT OnCreate (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 		LRESULT OnKillFocus (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
@@ -289,7 +289,7 @@ namespace DuiLib {
 	public:
 
 		POINT			m_BasedPoint;
-		std::variant<UINT, string_t>		m_xml;
+		std::variant<UINT, faw::String>		m_xml;
 		CPaintManagerUI m_pm;
 		CMenuElementUI* m_pOwner;
 		CMenuUI	*m_pLayout;
@@ -304,8 +304,8 @@ namespace DuiLib {
 		CMenuElementUI ();
 		virtual ~CMenuElementUI ();
 
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 		bool DoPaint (HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 		void DrawItemText (HDC hDC, const RECT& rcItem);
 		SIZE EstimateSize (SIZE szAvailable);
@@ -320,7 +320,7 @@ namespace DuiLib {
 		DWORD GetLineColor () const;
 		void SetLinePadding (RECT rcInset);
 		RECT GetLinePadding () const;
-		void SetIcon (string_view_t strIcon);
+		void SetIcon (faw::string_view_t strIcon);
 		void SetIconSize (LONG cx, LONG cy);
 		void DrawItemIcon (HDC hDC, const RECT& rcItem);
 		void SetChecked (bool bCheck = true);
@@ -331,10 +331,10 @@ namespace DuiLib {
 		void SetShowExplandIcon (bool bShow);
 		void DrawItemExpland (HDC hDC, const RECT& rcItem);
 
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 
-		MenuItemInfo* GetItemInfo (string_view_t pstrName);
-		MenuItemInfo* SetItemInfo (string_view_t pstrName, bool bChecked);
+		MenuItemInfo* GetItemInfo (faw::string_view_t pstrName);
+		MenuItemInfo* SetItemInfo (faw::string_view_t pstrName, bool bChecked);
 	protected:
 		CMenuWnd	*m_pWindow			= nullptr;
 
@@ -343,7 +343,7 @@ namespace DuiLib {
 		RECT		m_rcLinePadding;	//分割线的左右边距
 
 		SIZE		m_szIconSize; 	//画图标
-		CDuiString	m_strIcon;
+		faw::String	m_strIcon;
 		bool		m_bCheckItem		= false;
 
 		bool		m_bShowExplandIcon	= false;

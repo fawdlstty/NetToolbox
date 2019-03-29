@@ -33,7 +33,7 @@ namespace DuiLib {
 		return CMarkupNode (m_pOwner, iPos);
 	}
 
-	CMarkupNode CMarkupNode::GetChild (string_view_t pstrName) {
+	CMarkupNode CMarkupNode::GetChild (faw::string_view_t pstrName) {
 		if (!m_pOwner) return CMarkupNode ();
 		ULONG iPos = m_pOwner->m_pElements[m_iPos].iChild;
 		while (iPos != 0) {
@@ -61,31 +61,31 @@ namespace DuiLib {
 		return m_pOwner;
 	}
 
-	string_t CMarkupNode::GetName () const {
+	faw::String CMarkupNode::GetName () const {
 		if (!m_pOwner) return _T ("");
 		return &m_pOwner->m_pstrXML[m_pOwner->m_pElements[m_iPos].iStart];
 	}
 
-	string_t CMarkupNode::GetValue () const {
+	faw::String CMarkupNode::GetValue () const {
 		if (!m_pOwner) return _T ("");
 		return &m_pOwner->m_pstrXML[m_pOwner->m_pElements[m_iPos].iData];
 	}
 
-	string_t CMarkupNode::GetAttributeName (int iIndex) {
+	faw::String CMarkupNode::GetAttributeName (int iIndex) {
 		if (!m_pOwner) return _T ("");
 		if (m_nAttributes == 0) _MapAttributes ();
 		if (iIndex < 0 || iIndex >= m_nAttributes) return _T ("");
 		return &m_pOwner->m_pstrXML[m_aAttributes[iIndex].iName];
 	}
 
-	string_t CMarkupNode::GetAttributeValue (int iIndex) {
+	faw::String CMarkupNode::GetAttributeValue (int iIndex) {
 		if (!m_pOwner) return _T ("");
 		if (m_nAttributes == 0) _MapAttributes ();
 		if (iIndex < 0 || iIndex >= m_nAttributes) return _T ("");
 		return &m_pOwner->m_pstrXML[m_aAttributes[iIndex].iValue];
 	}
 
-	string_t CMarkupNode::GetAttributeValue (string_view_t pstrName) {
+	faw::String CMarkupNode::GetAttributeValue (faw::string_view_t pstrName) {
 		if (!m_pOwner) return _T ("");
 		if (m_nAttributes == 0) _MapAttributes ();
 		for (int i = 0; i < m_nAttributes; i++) {
@@ -106,7 +106,7 @@ namespace DuiLib {
 		return m_nAttributes > 0;
 	}
 
-	bool CMarkupNode::HasAttribute (string_view_t pstrName) {
+	bool CMarkupNode::HasAttribute (faw::string_view_t pstrName) {
 		if (!m_pOwner) return false;
 		if (m_nAttributes == 0) _MapAttributes ();
 		for (int i = 0; i < m_nAttributes; i++) {
@@ -139,7 +139,7 @@ namespace DuiLib {
 	//
 	//
 
-	CMarkup::CMarkup (string_view_t pstrXML) {
+	CMarkup::CMarkup (faw::string_view_t pstrXML) {
 		m_pstrXML = _T ("");
 		m_pElements = nullptr;
 		m_nElements = 0;
@@ -159,7 +159,7 @@ namespace DuiLib {
 		m_bPreserveWhitespace = bPreserve;
 	}
 
-	bool CMarkup::Load (string_view_t pstrXML) {
+	bool CMarkup::Load (faw::string_view_t pstrXML) {
 		Release ();
 		m_pstrXML = pstrXML;
 		bool bRes = _Parse ();
@@ -201,9 +201,9 @@ namespace DuiLib {
 		return bRes;
 	}
 
-	bool CMarkup::LoadFromFile (string_view_t pstrFilename, int encoding) {
+	bool CMarkup::LoadFromFile (faw::string_view_t pstrFilename, int encoding) {
 		Release ();
-		CDuiString sFile = CPaintManagerUI::GetResourcePath ();
+		faw::String sFile = CPaintManagerUI::GetResourcePath ();
 		if (CPaintManagerUI::GetResourceZip ().empty ()) {
 			sFile += pstrFilename;
 			HANDLE hFile = ::CreateFile (sFile.c_str (), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -233,15 +233,15 @@ namespace DuiLib {
 			HZIP hz = nullptr;
 			if (CPaintManagerUI::IsCachedResourceZip ()) hz = (HZIP) CPaintManagerUI::GetResourceZipHandle ();
 			else {
-				CDuiString sFilePwd = CPaintManagerUI::GetResourceZipPwd ();
-				std::string pwd = FawTools::T_to_gb18030 (sFilePwd);
+				faw::String sFilePwd = CPaintManagerUI::GetResourceZipPwd ();
+				std::string pwd = sFilePwd.stra ();
 				hz = OpenZip (sFile.c_str (), pwd.c_str ());
 			}
 			if (!hz) return _Failed (_T ("Error opening zip file"));
 			ZIPENTRY ze;
 			int i = 0;
-			CDuiString key = pstrFilename;
-			key.Replace (_T ("\\"), _T ("/"));
+			faw::String key = pstrFilename;
+			key.replace_self (_T ("\\"), _T ("/"));
 			if (FindZipItem (hz, key.c_str (), true, &i, &ze) != 0) return _Failed (_T ("Could not find ziped file"));
 			DWORD dwSize = ze.unc_size;
 			if (dwSize == 0) return _Failed (_T ("File is empty"));
@@ -268,12 +268,12 @@ namespace DuiLib {
 		m_nElements = 0;
 	}
 
-	string_view_t CMarkup::GetLastErrorMessage () const {
-		return m_szErrorMsg;
+	faw::string_view_t CMarkup::GetLastErrorMessage () const {
+		return m_szErrorMsg.str_view ();
 	}
 
-	string_view_t CMarkup::GetLastErrorLocation () const {
-		return m_szErrorXML;
+	faw::string_view_t CMarkup::GetLastErrorLocation () const {
+		return m_szErrorXML.str_view ();
 	}
 
 	CMarkupNode CMarkup::GetRoot () {
@@ -473,7 +473,7 @@ namespace DuiLib {
 		}
 	}
 
-	bool CMarkup::_Failed (string_view_t pstrError, string_view_t pstrLocation) {
+	bool CMarkup::_Failed (faw::string_view_t pstrError, faw::string_view_t pstrLocation) {
 		// Register last error
 		TRACE (_T ("XML Error: %s"), pstrError.data ());
 		if (!pstrLocation.empty ()) TRACE (pstrLocation);

@@ -11,11 +11,11 @@ namespace DuiLib {
 		UpdateText ();
 	}
 
-	string_view_t CIPAddressExUI::GetClass () const {
+	faw::string_view_t CIPAddressExUI::GetClass () const {
 		return _T ("IPAddressExUI");
 	}
 
-	LPVOID CIPAddressExUI::GetInterface (string_view_t pstrName) {
+	LPVOID CIPAddressExUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_IPADDRESS) {
 			return static_cast<CIPAddressExUI*>(this);
 		}
@@ -56,7 +56,7 @@ namespace DuiLib {
 
 		m_strNum += m_chNum;
 		CharToInt ();
-		if ((m_strNum.length () == 3) && (m_nActiveSection < 4)) {
+		if ((m_strNum.size () == 3) && (m_nActiveSection < 4)) {
 			m_nActiveSection++;
 			m_strNum.clear ();
 		}
@@ -348,16 +348,13 @@ namespace DuiLib {
 		UpdateText ();
 	}
 
-	CDuiString CIPAddressExUI::GetIP () {
-		CDuiString strIP;
-		strIP.Format (_T ("%d.%d.%d.%d"), m_nFirst, m_nSecond, m_nThird, m_nFourth);
+	faw::String CIPAddressExUI::GetIP () {
+		faw::String strIP = faw::String::format (_T ("%d.%d.%d.%d"), m_nFirst, m_nSecond, m_nThird, m_nFourth);
 		return strIP;
 	}
 
 	void CIPAddressExUI::UpdateText () {
-		TCHAR szIP[MAX_PATH] = { 0 };
-		_stprintf (szIP, _T ("%d.%d.%d.%d"), m_nFirst, m_nSecond, m_nThird, m_nFourth);
-		SetText (szIP);
+		SetText (GetIP ());
 	}
 
 	void CIPAddressExUI::IncNum () {

@@ -125,11 +125,11 @@ namespace DuiLib {
 		NeedUpdate ();
 	}
 
-	string_view_t CColorPaletteUI::GetClass () const {
+	faw::string_view_t CColorPaletteUI::GetClass () const {
 		return _T ("ColorPaletteUI");
 	}
 
-	LPVOID CColorPaletteUI::GetInterface (string_view_t pstrName) {
+	LPVOID CColorPaletteUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_COLORPALETTE) return static_cast<CColorPaletteUI*>(this);
 		return CControlUI::GetInterface (pstrName);
 	}
@@ -150,18 +150,18 @@ namespace DuiLib {
 		return m_nBarHeight;
 	}
 
-	void CColorPaletteUI::SetThumbImage (string_view_t pszImage) {
+	void CColorPaletteUI::SetThumbImage (faw::string_view_t pszImage) {
 		if (m_strThumbImage != pszImage) {
 			m_strThumbImage = pszImage;
 			NeedUpdate ();
 		}
 	}
 
-	string_view_t CColorPaletteUI::GetThumbImage () const {
-		return m_strThumbImage;
+	faw::string_view_t CColorPaletteUI::GetThumbImage () const {
+		return m_strThumbImage.str_view ();
 	}
 
-	void CColorPaletteUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CColorPaletteUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("palletheight")) SetPalletHeight (_ttoi (pstrValue.data ()));
 		else if (pstrName == _T ("barheight")) SetBarHeight (_ttoi (pstrValue.data ()));
 		else if (pstrName == _T ("thumbimage")) SetThumbImage (pstrValue);
@@ -292,13 +292,13 @@ namespace DuiLib {
 		StretchBlt (hDC, m_rcItem.left, m_rcItem.bottom - m_nBarHeight, m_rcItem.right - m_rcItem.left, m_nBarHeight, m_MemDc, 0, 210, 200, m_nBarHeight, SRCCOPY);
 
 		RECT rcCurSorPaint = { m_ptLastPalletMouse.x - 4, m_ptLastPalletMouse.y - 4, m_ptLastPalletMouse.x + 4, m_ptLastPalletMouse.y + 4 };
-		CRenderEngine::DrawImageString (hDC, m_pManager, rcCurSorPaint, m_rcPaint, m_strThumbImage);
+		CRenderEngine::DrawImageString (hDC, m_pManager, rcCurSorPaint, m_rcPaint, m_strThumbImage.str_view ());
 
 		rcCurSorPaint.left = m_rcItem.left + m_nCurS * (m_rcItem.right - m_rcItem.left) / 200 - 4;
 		rcCurSorPaint.right = m_rcItem.left + m_nCurS * (m_rcItem.right - m_rcItem.left) / 200 + 4;
 		rcCurSorPaint.top = m_rcItem.bottom - m_nBarHeight / 2 - 4;
 		rcCurSorPaint.bottom = m_rcItem.bottom - m_nBarHeight / 2 + 4;
-		CRenderEngine::DrawImageString (hDC, m_pManager, rcCurSorPaint, m_rcPaint, m_strThumbImage);
+		CRenderEngine::DrawImageString (hDC, m_pManager, rcCurSorPaint, m_rcPaint, m_strThumbImage.str_view ());
 		::RestoreDC (hDC, nSaveDC);
 	}
 

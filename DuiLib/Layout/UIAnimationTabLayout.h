@@ -7,8 +7,8 @@ namespace DuiLib {
 	public:
 		CAnimationTabLayoutUI ();
 
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 
 		bool SelectItem (int iIndex);
 		void AnimationSwitch ();
@@ -19,7 +19,7 @@ namespace DuiLib {
 		virtual void OnAnimationStep (INT nTotalFrame, INT nCurFrame, INT nAnimationID);
 		virtual void OnAnimationStop (INT nAnimationID);
 
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 
 	protected:
 		bool		m_bIsVerticalDirection	= false;

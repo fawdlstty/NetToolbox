@@ -22,20 +22,20 @@ namespace DuiLib {
 		CWebBrowserUI ();
 		virtual ~CWebBrowserUI ();
 
-		void SetHomePage (string_view_t lpszUrl);
-		string_view_t GetHomePage ();
+		void SetHomePage (faw::string_view_t lpszUrl);
+		faw::string_view_t GetHomePage ();
 
 		void SetAutoNavigation (bool bAuto = TRUE);
 		bool IsAutoNavigation ();
 
 		void SetWebBrowserEventHandler (CWebBrowserEventHandler* pEventHandler);
-		void Navigate2 (string_view_t lpszUrl);
+		void Navigate2 (faw::string_view_t lpszUrl);
 		void Refresh ();
 		void Refresh2 (int Level);
 		void GoBack ();
 		void GoForward ();
 		void NavigateHomePage ();
-		void NavigateUrl (string_view_t lpszUrl);
+		void NavigateUrl (faw::string_view_t lpszUrl);
 		virtual bool DoCreateControl ();
 		IWebBrowser2* GetWebBrowser2 (void);
 		IDispatch		*GetHtmlWindow ();
@@ -51,8 +51,8 @@ namespace DuiLib {
 		DWORD					m_dwCookie		= 0;
 		virtual void ReleaseControl ();
 		HRESULT RegisterEventHandler (BOOL inAdvise);
-		virtual void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
-		CDuiString				m_sHomePage;	// 默认页面
+		virtual void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
+		faw::String				m_sHomePage;	// 默认页面
 		bool					m_bAutoNavi					= false;	// 是否启动时打开默认页面
 		CWebBrowserEventHandler	*m_pWebBrowserEventHandler	= nullptr;	//浏览器事件处理
 
@@ -67,8 +67,8 @@ namespace DuiLib {
 		void DocumentComplete (IDispatch *pDisp, VARIANT *&url);
 
 	public:
-		virtual string_view_t GetClass () const;
-		virtual LPVOID GetInterface (string_view_t pstrName);
+		virtual faw::string_view_t GetClass () const;
+		virtual LPVOID GetInterface (faw::string_view_t pstrName);
 
 		// IUnknown
 		STDMETHOD_ (ULONG, AddRef)();

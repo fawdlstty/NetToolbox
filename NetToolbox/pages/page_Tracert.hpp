@@ -8,7 +8,6 @@
 #include "../tools/tool_Tracert.hpp"
 #include "../tools/tool_DnsLookup.hpp"
 #include "../tools/tool_Formatting.hpp"
-#include "../tools/tool_Encoding.hpp"
 #include "../tools/tool_String.hpp"
 
 
@@ -19,34 +18,34 @@ public:
 	virtual ~page_Tracert () = default;
 
 	bool OnClick (TNotifyUI& msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		faw::String name = msg.pSender->GetName ();
 		if (name == _T ("tracert_begin")) {
 			m_tracert_begin->SetEnabled (false);
-			CDuiString addr = m_tracert_addr->GetText ();
+			 faw::String addr = m_tracert_addr->GetText ();
 			if (addr.empty ())
 				addr = m_tracert_addr->GetTipValue ();
 			size_t p;
-			if ((p = addr.find (_T ("//"))) != string_t::npos)
+			if ((p = addr.find (_T ("//"))) != faw::String::_npos)
 				addr = addr.substr (p + 2);
-			if ((p = addr.find (_T ("/"))) != string_t::npos)
+			if ((p = addr.find (_T ("/"))) != faw::String::_npos)
 				addr = addr.substr (0, p);
-			if ((p = addr.find (_T (":"))) != string_t::npos)
+			if ((p = addr.find (_T (":"))) != faw::String::_npos)
 				addr = addr.substr (0, p);
-			std::string s = tool_Encoding::T_to_gb18030 (addr);
+			std::string s = addr.stra ();
 			if (tool_Formatting::is_domain (s)) {
 				s = tool_DnsLookup::query_ip (s.c_str ());
 			}
-			addr = tool_Encoding::gb18030_to_T (s);
+			addr = s;
 			bool is_ipv4 = tool_Formatting::is_ipv4 (s), is_ipv6 = tool_Formatting::is_ipv6 (s);
 			if (!is_ipv4 && !is_ipv6) {
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("未知地址或域名"));
 				m_tracert_begin->SetEnabled (true);
 			} else {
 				m_tracert_list->RemoveAll ();
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, tool_StringT::format (_T ("正在路由跟踪到 %s"), addr.c_str ()));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, faw::String::format (_T ("正在路由跟踪到 %s"), addr.c_str ()));
 				std::thread ([this, s, is_ipv4] () {
 					bool _state;
-					string_t _info;
+					faw::String _info;
 					auto f = std::bind (&page_Tracert::on_show_info, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 					if (is_ipv4) {
 						std::tie (_state, _info) = tool_Tracert::start_ipv4 (s, f);
@@ -67,7 +66,7 @@ public:
 
 protected:
 	void on_show_info (size_t row, size_t col, std::string data) {
-		string_t _data = tool_Encoding::gb18030_to_T (data);
+		faw::String _data = faw::Encoding::gb18030_to_T (data);
 		m_parent->invoke ([&] () -> LRESULT {
 			CListContainerElementUI *item = nullptr;
 			if ((size_t) m_tracert_list->GetCount () <= row - 1) {

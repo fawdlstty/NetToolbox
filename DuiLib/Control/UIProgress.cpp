@@ -9,11 +9,11 @@ namespace DuiLib {
 		SetFixedHeight (12);
 	}
 
-	string_view_t CProgressUI::GetClass () const {
+	faw::string_view_t CProgressUI::GetClass () const {
 		return _T ("ProgressUI");
 	}
 
-	LPVOID CProgressUI::GetInterface (string_view_t pstrName) {
+	LPVOID CProgressUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_PROGRESS) return static_cast<CProgressUI*>(this);
 		return CLabelUI::GetInterface (pstrName);
 	}
@@ -70,7 +70,7 @@ namespace DuiLib {
 		UpdateText ();
 	}
 
-	void CProgressUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CProgressUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("hor")) SetHorizontal (FawTools::parse_bool (pstrValue));
 		else if (pstrName == _T ("min")) SetMinValue (FawTools::parse_dec (pstrValue));
 		else if (pstrName == _T ("max")) SetMaxValue (FawTools::parse_dec (pstrValue));
@@ -121,12 +121,12 @@ namespace DuiLib {
 			rc.right = rc.left + sw;
 			rc.bottom = rc.top + sh;
 			if (m_bStretchForeImage) {
-				m_sForeImageModify.Format (_T ("dest='%d,%d,%d,%d'"), rc.left, rc.top, rc.right, rc.bottom);
+				m_sForeImageModify = faw::String::format (_T ("dest='%d,%d,%d,%d'"), rc.left, rc.top, rc.right, rc.bottom);
 			} else {
-				m_sForeImageModify.Format (_T ("dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), rc.left, rc.top, rc.right, rc.bottom, rc.left, rc.top, rc.right, rc.bottom);
+				m_sForeImageModify = faw::String::format (_T ("dest='%d,%d,%d,%d' source='%d,%d,%d,%d'"), rc.left, rc.top, rc.right, rc.bottom, rc.left, rc.top, rc.right, rc.bottom);
 			}
 
-			if (DrawImage (hDC, m_sForeImage, m_sForeImageModify))
+			if (DrawImage (hDC, m_sForeImage.str_view (), m_sForeImageModify.str_view ()))
 				return;
 		}
 	}
@@ -143,8 +143,8 @@ namespace DuiLib {
 
 	void CProgressUI::UpdateText () {
 		if (m_bShowText) {
-			CDuiString sText;
-			sText.Format (_T ("%.0f%%"), (m_nValue - m_nMin) * 100.0f / (m_nMax - m_nMin));
+			faw::String sText;
+			sText = faw::String::format (_T ("%.0f%%"), (m_nValue - m_nMin) * 100.0f / (m_nMax - m_nMin));
 			SetText (sText);
 		}
 	}

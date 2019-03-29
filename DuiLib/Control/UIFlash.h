@@ -29,8 +29,8 @@ namespace DuiLib {
 		IShockwaveFlash		*m_pFlash				= nullptr;
 
 	private:
-		virtual string_view_t GetClass () const;
-		virtual LPVOID GetInterface (string_view_t pstrName);
+		virtual faw::string_view_t GetClass () const;
+		virtual LPVOID GetInterface (faw::string_view_t pstrName);
 
 		virtual HRESULT STDMETHODCALLTYPE GetTypeInfoCount (__RPC__out UINT *pctinfo);
 		virtual HRESULT STDMETHODCALLTYPE GetTypeInfo (UINT iTInfo, LCID lcid, __RPC__deref_out_opt ITypeInfo **ppTInfo);

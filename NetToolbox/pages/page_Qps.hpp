@@ -10,7 +10,6 @@
 
 #include "page_base.hpp"
 #include "../tools/tool_String.hpp"
-#include "../tools/tool_Encoding.hpp"
 #include "../tools/tool_WebRequest.hpp"
 
 
@@ -30,7 +29,7 @@ public:
 				fail_count += m_fail_counts[i];
 			}
 			size_t inc_succ_count = succ_count - m_last_succ_count, inc_fail_count = fail_count - m_last_fail_count;
-			m_desp += tool_StringT::format (_T ("发送 %-6d，成功 %-6d，失败 %d\n"), inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count);
+			m_desp += faw::String::format (_T ("发送 %-6d，成功 %-6d，失败 %d\n"), inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count);
 			m_qps_content->SetText (m_desp.c_str ());
 			m_last_succ_count += inc_succ_count;
 			m_last_fail_count += inc_fail_count;
@@ -38,7 +37,7 @@ public:
 	}
 
 	bool OnClick (TNotifyUI& msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		 faw::String name = msg.pSender->GetName ();
 		if (name == _T ("qps_begin") || name == _T ("qps_stop")) {
 			if ((name == _T ("qps_begin")) == m_is_run)
 				return true;
@@ -56,13 +55,13 @@ public:
 				m_succ_counts.resize (threnad_num);
 				m_fail_counts.resize (threnad_num);
 				m_last_succ_count = m_last_fail_count = 0;
-				std::string type = tool_Encoding::T_to_gb18030 (m_qps_type->GetText ());
-				std::string url = tool_Encoding::T_to_gb18030 (m_qps_url->GetText ());
+				std::string type = m_qps_type->GetText ().stra ();
+				std::string url = m_qps_url->GetText ().stra ();
 				if (url.empty ())
-					url = tool_Encoding::T_to_utf8 (m_qps_url->GetTipValue ());
+					url = faw::Encoding::T_to_utf8 (m_qps_url->GetTipValue ().str_view ());
 				if (m_qps_postdata_tab->GetCurSel () == 0)
 					_convert_data (true);
-				std::string post_data = (type == "POST" ? tool_Encoding::T_to_utf8 (m_qps_postdata_src->GetText ()) : "");
+				std::string post_data = (type == "POST" ? faw::Encoding::T_to_utf8 (m_qps_postdata_src->GetText ().str_view ()) : "");
 				std::tuple<std::string, std::string, std::string> params = { type, url, post_data };
 				m_is_run = !m_is_run;
 				for (size_t i = 0; i < threnad_num; ++i) {
@@ -86,8 +85,8 @@ public:
 			int n = m_qps_postdata_list->GetItemIndex (container);
 			if (n == 0)
 				return true;
-			string_t name1 { container->GetName () };
-			string_t name2 { m_qps_postdata_list->GetItemAt (n - 1)->GetName () };
+			faw::String name1 { container->GetName () };
+			faw::String name2 { m_qps_postdata_list->GetItemAt (n - 1)->GetName () };
 			_swap_item (name1, name2);
 			return true;
 		} else if (name == _T ("qps_postdata_ctrl_down")) {
@@ -95,8 +94,8 @@ public:
 			int n = m_qps_postdata_list->GetItemIndex (container);
 			if (n >= m_qps_postdata_list->GetCount () - 2)
 				return true;
-			string_t name1 { container->GetName () };
-			string_t name2 { m_qps_postdata_list->GetItemAt (n + 1)->GetName () };
+			faw::String name1 { container->GetName () };
+			faw::String name2 { m_qps_postdata_list->GetItemAt (n + 1)->GetName () };
 			_swap_item (name1, name2);
 			return true;
 		} else if (name == _T ("qps_postdata_ctrl_new")) {
@@ -111,16 +110,16 @@ public:
 			m_qps_postdata_list->Remove (container);
 			for (; n < m_qps_postdata_list->GetCount (); ++n) {
 				container = m_qps_postdata_list->GetItemAt (n);
-				string_t _name { container->GetName () };
-				string_t color = (n % 2) ? _T ("#FFDDDDDD") : _T ("#FFFFFFFF");
-				string_t _name1 = _name + _T ("_key");
+				faw::String _name { container->GetName () };
+				faw::String color = (n % 2) ? _T ("#FFDDDDDD") : _T ("#FFFFFFFF");
+				faw::String _name1 = _name + _T ("_key");
 				BindEditUI edit_key { _name1 };
-				edit_key->SetAttribute (_T ("bkcolor"), color);
-				edit_key->SetAttribute (_T ("nativebkcolor"), color);
+				edit_key->SetAttribute (_T ("bkcolor"), color.str_view ());
+				edit_key->SetAttribute (_T ("nativebkcolor"), color.str_view ());
 				_name1 = _name + _T ("_value");
 				BindEditUI edit_value { _name1 };
-				edit_value->SetAttribute (_T ("bkcolor"), color);
-				edit_value->SetAttribute (_T ("nativebkcolor"), color);
+				edit_value->SetAttribute (_T ("bkcolor"), color.str_view ());
+				edit_value->SetAttribute (_T ("nativebkcolor"), color.str_view ());
 			}
 			return true;
 		}
@@ -128,7 +127,7 @@ public:
 	}
 
 	bool OnItemSelect (TNotifyUI& msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		 faw::String name = msg.pSender->GetName ();
 		if (name == _T ("qps_type")) {
 			bool is_post = m_qps_type->GetText () == _T ("POST");
 			m_qps_change->SetEnabled (is_post);
@@ -163,23 +162,23 @@ protected:
 	}
 
 	// 新增一行
-	void _add_item (string_view_t key, string_view_t value, string_view_t btntext) {
+	void _add_item (faw::string_view_t key, faw::string_view_t value, faw::string_view_t btntext) {
 		static size_t n_sign = 0;
 		CListContainerElementUI *item = new CListContainerElementUI ();
 		item->SetFixedHeight (20);
-		string_t color = (m_qps_postdata_list->GetCount () % 2) ? _T ("#FFEEEEEE") : _T ("#FFFFFFFF");
+		faw::String color = (m_qps_postdata_list->GetCount () % 2) ? _T ("#FFEEEEEE") : _T ("#FFFFFFFF");
 		bool is_new = (btntext == _T ("新建"));
 		if (is_new)
 			color = _T ("#FFDDDDDD");
-		item->SetAttribute (_T ("name"), tool_StringT::format (_T ("qps_postdata_item_%d"), ++n_sign));
+		item->SetAttribute (_T ("name"), faw::String::format (_T ("qps_postdata_item_%d"), ++n_sign).str_view ());
 		//
 		CContainerUI *ctnr = new CContainerUI ();
 		CControlUI *ctrl = new CEditUI ();
 		ctrl->SetManager (m_parent->get_pm (), item);
 		ctrl->SetText (key);
-		ctrl->SetAttribute (_T ("name"), tool_StringT::format (_T ("qps_postdata_item_%d_key"), n_sign));
-		ctrl->SetAttribute (_T ("bkcolor"), color);
-		ctrl->SetAttribute (_T ("nativebkcolor"), color);
+		ctrl->SetAttribute (_T ("name"), faw::String::format (_T ("qps_postdata_item_%d_key"), n_sign).str_view ());
+		ctrl->SetAttribute (_T ("bkcolor"), color.str_view ());
+		ctrl->SetAttribute (_T ("nativebkcolor"), color.str_view ());
 		ctrl->SetAttribute (_T ("align"), _T ("center"));
 		ctrl->SetAttribute (_T ("padding"), _T ("10,4,0,4"));
 		if (is_new)
@@ -191,9 +190,9 @@ protected:
 		ctrl = new CEditUI ();
 		ctrl->SetManager (m_parent->get_pm (), item);
 		ctrl->SetText (value);
-		ctrl->SetAttribute (_T ("name"), tool_StringT::format (_T ("qps_postdata_item_%d_value"), n_sign));
-		ctrl->SetAttribute (_T ("bkcolor"), color);
-		ctrl->SetAttribute (_T ("nativebkcolor"), color);
+		ctrl->SetAttribute (_T ("name"), faw::String::format (_T ("qps_postdata_item_%d_value"), n_sign).str_view ());
+		ctrl->SetAttribute (_T ("bkcolor"), color.str_view ());
+		ctrl->SetAttribute (_T ("nativebkcolor"), color.str_view ());
 		ctrl->SetAttribute (_T ("align"), _T ("center"));
 		ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 		if (is_new)
@@ -232,18 +231,18 @@ protected:
 	}
 
 	// 交换两行内容
-	void _swap_item (string_t name1, string_t name2) {
-		string_t name_key1 = name1 + _T ("_key");
+	void _swap_item (faw::String name1, faw::String name2) {
+		faw::String name_key1 = name1 + _T ("_key");
 		BindEditUI edit_key1 { name_key1 };
-		string_t name_key2 = name2 + _T ("_key");
+		faw::String name_key2 = name2 + _T ("_key");
 		BindEditUI edit_key2 { name_key2 };
-		string_t name_tmp = edit_key1->GetText ();
+		faw::String name_tmp = edit_key1->GetText ();
 		edit_key1->SetText (edit_key2->GetText ());
 		edit_key2->SetText (name_tmp);
 		//
-		string_t name_value1 = name1 + _T ("_value");
+		faw::String name_value1 = name1 + _T ("_value");
 		BindEditUI edit_value1 { name_value1 };
-		string_t name_value2 = name2 + _T ("_value");
+		faw::String name_value2 = name2 + _T ("_value");
 		BindEditUI edit_value2 { name_value2 };
 		name_tmp = edit_value1->GetText ();
 		edit_value1->SetText (edit_value2->GetText ());
@@ -253,32 +252,32 @@ protected:
 	// 表格数据与原始数据互转
 	void _convert_data (bool list2src) {
 		if (list2src) {
-			string_t post_data = _T ("");
+			faw::String post_data = _T ("");
 			for (int i = 0; i < m_qps_postdata_list->GetCount () - 1; ++i) {
 				CControlUI *ctrl = m_qps_postdata_list->GetItemAt (i);
-				string_t name { ctrl->GetName () };
-				string_t name_key = name + _T ("_key");
+				faw::String name { ctrl->GetName () };
+				faw::String name_key = name + _T ("_key");
 				BindEditUI edit_key { name_key };
-				string_t name_value = name + _T ("_value");
+				faw::String name_value = name + _T ("_value");
 				BindEditUI edit_value { name_value };
 				if (!post_data.empty ())
 					post_data += _T ("&");
-				post_data += tool_Encoding::utf8_to_T (tool_Encoding::percent_str_encode (tool_Encoding::T_to_utf8 (edit_key->GetText ())));
+				post_data += faw::Encoding::utf8_to_T (faw::Encoding::percent_str_encode (faw::Encoding::T_to_utf8 (edit_key->GetText ().str_view ())));
 				post_data += _T ("=");
-				post_data += tool_Encoding::utf8_to_T (tool_Encoding::percent_str_encode (tool_Encoding::T_to_utf8 (edit_value->GetText ())));
+				post_data += faw::Encoding::utf8_to_T (faw::Encoding::percent_str_encode (faw::Encoding::T_to_utf8 (edit_value->GetText ().str_view ())));
 			}
-			m_qps_postdata_src->SetText (post_data);
+			m_qps_postdata_src->SetText (post_data.str_view ());
 		} else {
-			string_t post_data = m_qps_postdata_src->GetText ();
-			std::vector<string_t> vitems = tool_StringT::split (post_data, _T ('&'), _T ("&amp;"), true);
+			faw::String post_data = m_qps_postdata_src->GetText ();
+			std::vector<std::wstring> vitems = tool_StringT::split (post_data.str_view (), _T ('&'), _T ("&amp;"), true);
 			m_qps_postdata_list->RemoveAll ();
 			for (size_t i = 0; i < vitems.size (); ++i) {
-				std::vector<string_t> vkey_val = tool_StringT::split (vitems[i], _T ('='), _T (""), false);
+				std::vector<faw::String> vkey_val = faw::String (vitems[i]).split (_T ('='));
 				while (vkey_val.size () < 2)
 					vkey_val.push_back (_T (""));
-				vkey_val[0] = tool_Encoding::utf8_to_T (tool_Encoding::percent_str_decode (tool_Encoding::T_to_utf8 (vkey_val[0])));
-				vkey_val[1] = tool_Encoding::utf8_to_T (tool_Encoding::percent_str_decode (tool_Encoding::T_to_utf8 (vkey_val[1])));
-				_add_item (vkey_val[0], vkey_val[1], _T ("删除"));
+				vkey_val[0] = faw::Encoding::utf8_to_T (faw::Encoding::percent_str_decode (faw::Encoding::T_to_utf8 (vkey_val[0].str_view ())));
+				vkey_val[1] = faw::Encoding::utf8_to_T (faw::Encoding::percent_str_decode (faw::Encoding::T_to_utf8 (vkey_val[1].str_view ())));
+				_add_item (vkey_val[0].str_view (), vkey_val[1].str_view (), _T ("删除"));
 			}
 			_add_item (_T (""), _T (""), _T ("新建"));
 		}
@@ -295,7 +294,7 @@ protected:
 	BindRichEditUI			m_qps_postdata_src { _T ("qps_postdata_src") };
 	BindRichEditUI			m_qps_content { _T ("qps_content") };
 	volatile bool			m_is_run				= false;
-	string_t				m_desp					= _T ("");
+	faw::String				m_desp					= _T ("");
 	std::vector<size_t>		m_succ_counts;
 	std::vector<size_t>		m_fail_counts;
 	size_t					m_last_succ_count		= 0;

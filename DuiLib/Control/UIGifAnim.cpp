@@ -48,11 +48,11 @@ namespace DuiLib {
 
 	}
 
-	string_view_t CGifAnimUI::GetClass () const {
+	faw::string_view_t CGifAnimUI::GetClass () const {
 		return _T ("GifAnimUI");
 	}
 
-	LPVOID CGifAnimUI::GetInterface (string_view_t pstrName) {
+	LPVOID CGifAnimUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_GIFANIM) return static_cast<CGifAnimUI*>(this);
 		return CControlUI::GetInterface (pstrName);
 	}
@@ -83,7 +83,7 @@ namespace DuiLib {
 			StopGif ();
 	}
 
-	void CGifAnimUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CGifAnimUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("bkimage")) SetBkImage (pstrValue);
 		else if (pstrName == _T ("autoplay")) {
 			SetAutoPlay (FawTools::parse_bool (pstrValue));
@@ -93,7 +93,7 @@ namespace DuiLib {
 			CControlUI::SetAttribute (pstrName, pstrValue);
 	}
 
-	void CGifAnimUI::SetBkImage (string_view_t pStrImage) {
+	void CGifAnimUI::SetBkImage (faw::string_view_t pStrImage) {
 		if (m_sBkImage == pStrImage || nullptr == pStrImage) return;
 
 		m_sBkImage = pStrImage;
@@ -105,8 +105,8 @@ namespace DuiLib {
 
 	}
 
-	string_view_t CGifAnimUI::GetBkImage () {
-		return m_sBkImage;
+	faw::string_view_t CGifAnimUI::GetBkImage () {
+		return m_sBkImage.str_view ();
 	}
 
 	void CGifAnimUI::SetAutoPlay (bool bIsAuto) {
@@ -222,12 +222,12 @@ namespace DuiLib {
 		m_pGifImage->SelectActiveFrame (&pageGuid, m_nFramePosition);
 	}
 
-	Gdiplus::Image* CGifAnimUI::LoadGifFromFile (string_view_t pstrGifPath) {
+	Gdiplus::Image* CGifAnimUI::LoadGifFromFile (faw::string_view_t pstrGifPath) {
 		LPBYTE pData = NULL;
 		DWORD dwSize = 0;
 
 		do {
-			CDuiString sFile = CPaintManagerUI::GetResourcePath ();
+			faw::String sFile = CPaintManagerUI::GetResourcePath ();
 			if (CPaintManagerUI::GetResourceZip ().empty ()) {
 				sFile += pstrGifPath;
 				HANDLE hFile = ::CreateFile (sFile.c_str (), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);

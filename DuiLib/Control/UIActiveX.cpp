@@ -18,7 +18,7 @@ namespace DuiLib {
 		CActiveXWnd (): m_iLayeredTick (0), m_bDrawCaret (false) {}
 		HWND Init (CActiveXCtrl* pOwner, HWND hWndParent);
 
-		string_view_t GetWindowClassName () const;
+		faw::string_view_t GetWindowClassName () const;
 		void OnFinalMessage (HWND hWnd);
 
 		LRESULT HandleMessage (UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -679,7 +679,7 @@ namespace DuiLib {
 		return m_hWnd;
 	}
 
-	string_view_t CActiveXWnd::GetWindowClassName () const {
+	faw::string_view_t CActiveXWnd::GetWindowClassName () const {
 		return _T ("ActiveXWnd");
 	}
 
@@ -822,11 +822,11 @@ namespace DuiLib {
 		ReleaseControl ();
 	}
 
-	string_view_t CActiveXUI::GetClass () const {
+	faw::string_view_t CActiveXUI::GetClass () const {
 		return _T ("ActiveXUI");
 	}
 
-	LPVOID CActiveXUI::GetInterface (string_view_t pstrName) {
+	LPVOID CActiveXUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_ACTIVEX) return static_cast<CActiveXUI*>(this);
 		return CControlUI::GetInterface (pstrName);
 	}
@@ -904,7 +904,7 @@ namespace DuiLib {
 		return true;
 	}
 
-	void CActiveXUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CActiveXUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("clsid")) CreateControl (pstrValue);
 		else if (pstrName == _T ("modulename")) SetModuleName (pstrValue);
 		else if (pstrName == _T ("delaycreate")) SetDelayCreate (FawTools::parse_bool (pstrValue));
@@ -972,7 +972,7 @@ namespace DuiLib {
 		m_bMFC = bMFC;
 	}
 
-	bool CActiveXUI::CreateControl (string_view_t pstrCLSID) {
+	bool CActiveXUI::CreateControl (faw::string_view_t pstrCLSID) {
 		CLSID clsid = { 0 };
 		OLECHAR szCLSID[100] = { 0 };
 #ifndef _UNICODE
@@ -1104,11 +1104,11 @@ namespace DuiLib {
 		return m_clsid;
 	}
 
-	string_view_t CActiveXUI::GetModuleName () const {
-		return m_sModuleName;
+	faw::string_view_t CActiveXUI::GetModuleName () const {
+		return m_sModuleName.str_view ();
 	}
 
-	void CActiveXUI::SetModuleName (string_view_t pstrText) {
+	void CActiveXUI::SetModuleName (faw::string_view_t pstrText) {
 		m_sModuleName = pstrText;
 	}
 

@@ -33,8 +33,8 @@ namespace DuiLib {
 		virtual ~CContainerUI ();
 
 	public:
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 
 		CControlUI* GetItemAt (int iIndex) const;
 		int GetItemIndex (CControlUI* pControl) const;
@@ -74,21 +74,21 @@ namespace DuiLib {
 		void Move (SIZE szOffset, bool bNeedInvalidate = true);
 		bool DoPaint (HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 
 		void SetManager (CPaintManagerUI* pManager, CControlUI* pParent, bool bInit = true);
 		CControlUI* FindControl (FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags);
 
-		bool SetSubControlText (string_view_t pstrSubControlName, string_view_t pstrText);
-		bool SetSubControlFixedHeight (string_view_t pstrSubControlName, int cy);
-		bool SetSubControlFixedWdith (string_view_t pstrSubControlName, int cx);
-		bool SetSubControlUserData (string_view_t pstrSubControlName, string_view_t pstrText);
+		bool SetSubControlText (faw::string_view_t pstrSubControlName, faw::string_view_t pstrText);
+		bool SetSubControlFixedHeight (faw::string_view_t pstrSubControlName, int cy);
+		bool SetSubControlFixedWdith (faw::string_view_t pstrSubControlName, int cx);
+		bool SetSubControlUserData (faw::string_view_t pstrSubControlName, faw::string_view_t pstrText);
 
-		CDuiString GetSubControlText (string_view_t pstrSubControlName);
-		int GetSubControlFixedHeight (string_view_t pstrSubControlName);
-		int GetSubControlFixedWdith (string_view_t pstrSubControlName);
-		const CDuiString GetSubControlUserData (string_view_t pstrSubControlName);
-		CControlUI* FindSubControl (string_view_t pstrSubControlName);
+		faw::String GetSubControlText (faw::string_view_t pstrSubControlName);
+		int GetSubControlFixedHeight (faw::string_view_t pstrSubControlName);
+		int GetSubControlFixedWdith (faw::string_view_t pstrSubControlName);
+		const faw::String GetSubControlUserData (faw::string_view_t pstrSubControlName);
+		CControlUI* FindSubControl (faw::string_view_t pstrSubControlName);
 
 		virtual SIZE GetScrollPos () const;
 		virtual SIZE GetScrollRange () const;
@@ -128,8 +128,8 @@ namespace DuiLib {
 
 		CScrollBarUI	*m_pVerticalScrollBar		= nullptr;
 		CScrollBarUI	*m_pHorizontalScrollBar		= nullptr;
-		CDuiString		m_sVerticalScrollBarStyle;
-		CDuiString		m_sHorizontalScrollBarStyle;
+		faw::String		m_sVerticalScrollBarStyle;
+		faw::String		m_sHorizontalScrollBarStyle;
 	};
 
 } // namespace DuiLib

@@ -3,20 +3,18 @@
 
 #include "page_base.hpp"
 #include "../tools/tool_SysInfo.hpp"
-#include "../tools/tool_Path.hpp"
 #include "../tools/tool_String.hpp"
 #include "../tools/tool_Rsa.hpp"
-#include "../tools/tool_Encoding.hpp"
 
 
 
 class page_Rsa: public page_base {
 public:
 	page_Rsa (NetToolboxWnd *parent): page_base (parent) {
-		string_t path = tool_Path::get_exe_path ();
-		m_rsa_evp_pubkey->SetText (tool_StringT::format (_T ("%c:\\evp_pubkey.key"), path[0]));
-		m_rsa_rsa_pubkey->SetText (tool_StringT::format (_T ("%c:\\rsa_pubkey.key"), path[0]));
-		m_rsa_rsa_prvkey->SetText (tool_StringT::format (_T ("%c:\\rsa_prvkey.key"), path[0]));
+		faw::String path = faw::Directory::get_current_path ();
+		m_rsa_evp_pubkey->SetText (faw::String::format (_T ("%c:\\evp_pubkey.key"), path [0]));
+		m_rsa_rsa_pubkey->SetText (faw::String::format (_T ("%c:\\rsa_pubkey.key"), path [0]));
+		m_rsa_rsa_prvkey->SetText (faw::String::format (_T ("%c:\\rsa_prvkey.key"), path [0]));
 	}
 	virtual ~page_Rsa () = default;
 
@@ -24,9 +22,9 @@ public:
 		if (msg.pSender->GetName () == _T ("rsa_generate")) {
 			bool succ = tool_Rsa::generate (
 				_ttoi (m_rsa_gensize->GetText ().c_str ()),
-				(m_rsa_selevp_pubkey->IsSelected () ? tool_Encoding::T_to_gb18030 (m_rsa_evp_pubkey->GetText ()) : ""),
-				(m_rsa_selrsa_pubkey->IsSelected () ? tool_Encoding::T_to_gb18030 (m_rsa_rsa_pubkey->GetText ()) : ""),
-				tool_Encoding::T_to_gb18030 (m_rsa_rsa_prvkey->GetText ()));
+				(m_rsa_selevp_pubkey->IsSelected () ? m_rsa_evp_pubkey->GetText ().stra () : ""),
+				(m_rsa_selrsa_pubkey->IsSelected () ? m_rsa_rsa_pubkey->GetText ().stra () : ""),
+				m_rsa_rsa_prvkey->GetText ().stra ());
 			if (succ)
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _T ("RSA公私钥导出成功！"));
 			else

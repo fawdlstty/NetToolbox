@@ -41,7 +41,7 @@ namespace DuiLib {
 	}
 
 
-	string_view_t CHotKeyWnd::GetWindowClassName () const {
+	faw::string_view_t CHotKeyWnd::GetWindowClassName () const {
 		return _T ("HotKeyClass");
 	}
 
@@ -73,7 +73,7 @@ namespace DuiLib {
 			HDC hDC = ::BeginPaint (m_hWnd, &ps);
 			DWORD dwTextColor = m_pOwner->GetTextColor ();
 			DWORD dwBkColor = m_pOwner->GetNativeBkColor ();
-			CDuiString strText = GetHotKeyName ();
+			faw::String strText = GetHotKeyName ();
 			RECT rect = { 0 };
 			::GetClientRect (m_hWnd, &rect);
 			::SetBkMode (hDC, TRANSPARENT);
@@ -83,7 +83,7 @@ namespace DuiLib {
 			::DeleteObject (hBrush);
 			HFONT hOldFont = (HFONT) SelectObject (hDC, GetWindowFont (m_hWnd));
 			::SIZE size = { 0 };
-			::GetTextExtentPoint32 (hDC, strText.c_str (), (int) strText.length (), &size);
+			::GetTextExtentPoint32 (hDC, strText.c_str (), (int) strText.size (), &size);
 			::DrawText (hDC, strText.c_str (), -1, &rect, DT_LEFT | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX);
 			::SelectObject (hDC, hOldFont);
 			::SetCaretPos (size.cx, 0);
@@ -95,7 +95,7 @@ namespace DuiLib {
 	}
 
 
-	string_view_t CHotKeyWnd::GetSuperClassName () const {
+	faw::string_view_t CHotKeyWnd::GetSuperClassName () const {
 		return HOTKEY_CLASS;
 	}
 
@@ -144,7 +144,7 @@ namespace DuiLib {
 	}
 
 
-	CDuiString CHotKeyWnd::GetKeyName (UINT vk, BOOL fExtended) {
+	faw::String CHotKeyWnd::GetKeyName (UINT vk, BOOL fExtended) {
 		UINT nScanCode = ::MapVirtualKeyEx (vk, 0, ::GetKeyboardLayout (0));
 		switch (vk) {
 			// Keys which are "extended" (except for Return which is Numeric Enter as extended)
@@ -166,14 +166,14 @@ namespace DuiLib {
 		TCHAR szStr[MAX_PATH] = { 0 };
 		::GetKeyNameText (nScanCode << 16, szStr, MAX_PATH);
 
-		return CDuiString (szStr);
+		return faw::String (szStr);
 	}
 
 
-	CDuiString CHotKeyWnd::GetHotKeyName () {
+	faw::String CHotKeyWnd::GetHotKeyName () {
 		ASSERT (::IsWindow (m_hWnd));
 
-		CDuiString strKeyName;
+		faw::String strKeyName;
 		WORD wCode = 0;
 		WORD wModifiers = 0;
 		const TCHAR szPlus[] = _T (" + ");
@@ -213,11 +213,11 @@ namespace DuiLib {
 		SetBkColor (0xFFFFFFFF);
 	}
 
-	string_view_t CHotKeyUI::GetClass () const {
+	faw::string_view_t CHotKeyUI::GetClass () const {
 		return _T ("HotKeyUI");
 	}
 
-	LPVOID CHotKeyUI::GetInterface (string_view_t pstrName) {
+	LPVOID CHotKeyUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == _T ("HotKey")) return static_cast<CHotKeyUI *>(this);
 		return CLabelUI::GetInterface (pstrName);
 	}
@@ -299,44 +299,44 @@ namespace DuiLib {
 		}
 	}
 
-	void CHotKeyUI::SetText (string_view_t pstrText) {
+	void CHotKeyUI::SetText (faw::String pstrText) {
 		m_sText = pstrText;
-		if (m_pWindow) Edit_SetText (m_pWindow->GetHWND (), m_sText.data ());
+		if (m_pWindow) Edit_SetText (m_pWindow->GetHWND (), m_sText.c_str ());
 		Invalidate ();
 	}
 
-	string_view_t CHotKeyUI::GetNormalImage () {
-		return m_sNormalImage;
+	faw::string_view_t CHotKeyUI::GetNormalImage () {
+		return m_sNormalImage.str_view ();
 	}
 
-	void CHotKeyUI::SetNormalImage (string_view_t pStrImage) {
+	void CHotKeyUI::SetNormalImage (faw::string_view_t pStrImage) {
 		m_sNormalImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CHotKeyUI::GetHotImage () {
-		return m_sHotImage;
+	faw::string_view_t CHotKeyUI::GetHotImage () {
+		return m_sHotImage.str_view ();
 	}
 
-	void CHotKeyUI::SetHotImage (string_view_t pStrImage) {
+	void CHotKeyUI::SetHotImage (faw::string_view_t pStrImage) {
 		m_sHotImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CHotKeyUI::GetFocusedImage () {
-		return m_sFocusedImage;
+	faw::string_view_t CHotKeyUI::GetFocusedImage () {
+		return m_sFocusedImage.str_view ();
 	}
 
-	void CHotKeyUI::SetFocusedImage (string_view_t pStrImage) {
+	void CHotKeyUI::SetFocusedImage (faw::string_view_t pStrImage) {
 		m_sFocusedImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CHotKeyUI::GetDisabledImage () {
-		return m_sDisabledImage;
+	faw::string_view_t CHotKeyUI::GetDisabledImage () {
+		return m_sDisabledImage.str_view ();
 	}
 
-	void CHotKeyUI::SetDisabledImage (string_view_t pStrImage) {
+	void CHotKeyUI::SetDisabledImage (faw::string_view_t pStrImage) {
 		m_sDisabledImage = pStrImage;
 		Invalidate ();
 	}
@@ -372,7 +372,7 @@ namespace DuiLib {
 		return CControlUI::EstimateSize (szAvailable);
 	}
 
-	void CHotKeyUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CHotKeyUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("normalimage")) SetNormalImage (pstrValue);
 		else if (pstrName == _T ("hotimage")) SetHotImage (pstrValue);
 		else if (pstrName == _T ("focusedimage")) SetFocusedImage (pstrValue);
@@ -389,23 +389,23 @@ namespace DuiLib {
 
 		if ((m_uButtonState & UISTATE_DISABLED) != 0) {
 			if (!m_sDisabledImage.empty ()) {
-				if (!DrawImage (hDC, m_sDisabledImage)) {
+				if (!DrawImage (hDC, m_sDisabledImage.str_view ())) {
 				} else return;
 			}
 		} else if ((m_uButtonState & UISTATE_FOCUSED) != 0) {
 			if (!m_sFocusedImage.empty ()) {
-				if (!DrawImage (hDC, m_sFocusedImage)) {
+				if (!DrawImage (hDC, m_sFocusedImage.str_view ())) {
 				} else return;
 			}
 		} else if ((m_uButtonState & UISTATE_HOT) != 0) {
 			if (!m_sHotImage.empty ()) {
-				if (!DrawImage (hDC, m_sHotImage)) {
+				if (!DrawImage (hDC, m_sHotImage.str_view ())) {
 				} else return;
 			}
 		}
 
 		if (!m_sNormalImage.empty ()) {
-			if (!DrawImage (hDC, m_sNormalImage)) {
+			if (!DrawImage (hDC, m_sNormalImage.str_view ())) {
 			} else return;
 		}
 	}
@@ -414,7 +414,7 @@ namespace DuiLib {
 		if (m_dwTextColor == 0) m_dwTextColor = m_pManager->GetDefaultFontColor ();
 		if (m_dwDisabledTextColor == 0) m_dwDisabledTextColor = m_pManager->GetDefaultDisabledColor ();
 		if (m_sText.empty ()) return;
-		CDuiString sText = m_sText;
+		faw::String sText = m_sText;
 		RECT rc = m_rcItem;
 		rc.left += m_rcTextPadding.left;
 		rc.right -= m_rcTextPadding.right;
@@ -422,7 +422,7 @@ namespace DuiLib {
 		rc.bottom -= m_rcTextPadding.bottom;
 		DWORD dwTextColor = m_dwTextColor;
 		if (!IsEnabled ())dwTextColor = m_dwDisabledTextColor;
-		CRenderEngine::DrawText (hDC, m_pManager, rc, sText, dwTextColor, m_iFont, DT_SINGLELINE | m_uTextStyle);
+		CRenderEngine::DrawText (hDC, m_pManager, rc, sText.str_view (), dwTextColor, m_iFont, DT_SINGLELINE | m_uTextStyle);
 	}
 
 	DWORD CHotKeyUI::GetHotKey () const {

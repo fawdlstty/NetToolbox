@@ -15,11 +15,11 @@ namespace DuiLib {
 
 	CMenuUI::~CMenuUI () {}
 
-	string_view_t CMenuUI::GetClass () const {
+	faw::string_view_t CMenuUI::GetClass () const {
 		return _T ("MenuUI");
 	}
 
-	LPVOID CMenuUI::GetInterface (string_view_t pstrName) {
+	LPVOID CMenuUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == _T ("Menu")) return static_cast<CMenuUI*>(this);
 		return CListUI::GetInterface (pstrName);
 	}
@@ -104,7 +104,7 @@ namespace DuiLib {
 		return { cxFixed, cyFixed };
 	}
 
-	void CMenuUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CMenuUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		CListUI::SetAttribute (pstrName, pstrValue);
 	}
 
@@ -155,7 +155,7 @@ namespace DuiLib {
 		return TRUE;
 	}
 
-	CMenuWnd* CMenuWnd::CreateMenu (CMenuElementUI* pOwner, std::variant<UINT, string_t> xml, POINT point, CPaintManagerUI* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo /*= nullptr*/, DWORD dwAlignment /*= eMenuAlignment_Left | eMenuAlignment_Top*/) {
+	CMenuWnd* CMenuWnd::CreateMenu (CMenuElementUI* pOwner, std::variant<UINT, faw::String> xml, POINT point, CPaintManagerUI* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo /*= nullptr*/, DWORD dwAlignment /*= eMenuAlignment_Left | eMenuAlignment_Top*/) {
 		CMenuWnd* pMenu = new CMenuWnd;
 		pMenu->Init (pOwner, xml, point, pMainPaintManager, pMenuCheckInfo, dwAlignment);
 		return pMenu;
@@ -175,7 +175,7 @@ namespace DuiLib {
 		}
 	}
 
-	MenuItemInfo* CMenuWnd::SetMenuItemInfo (string_view_t pstrName, bool bChecked) {
+	MenuItemInfo* CMenuWnd::SetMenuItemInfo (faw::string_view_t pstrName, bool bChecked) {
 		if (pstrName.empty ()) return nullptr;
 
 		CStdStringPtrMap* mCheckInfos = CMenuWnd::GetGlobalContextMenuObserver ().GetMenuCheckInfo ();
@@ -195,7 +195,7 @@ namespace DuiLib {
 		return nullptr;
 	}
 
-	void CMenuWnd::Init (CMenuElementUI* pOwner, std::variant<UINT, string_t> xml, POINT point,
+	void CMenuWnd::Init (CMenuElementUI* pOwner, std::variant<UINT, faw::String> xml, POINT point,
 		CPaintManagerUI* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo/* = nullptr*/,
 		DWORD dwAlignment/* = eMenuAlignment_Left | eMenuAlignment_Top*/) {
 
@@ -225,7 +225,7 @@ namespace DuiLib {
 		::SendMessage (hWndParent, WM_NCACTIVATE, TRUE, 0L);
 	}
 
-	string_view_t CMenuWnd::GetWindowClassName () const {
+	faw::string_view_t CMenuWnd::GetWindowClassName () const {
 		return _T ("DuiMenuWnd");
 	}
 
@@ -239,7 +239,7 @@ namespace DuiLib {
 
 	}
 
-	CControlUI* CMenuWnd::CreateControl (string_view_t pstrClassName) {
+	CControlUI* CMenuWnd::CreateControl (faw::string_view_t pstrClassName) {
 		if (pstrClassName == _T ("Menu")) {
 			return new CMenuUI ();
 		} else if (pstrClassName == _T ("MenuElement")) {
@@ -287,7 +287,7 @@ namespace DuiLib {
 			m_pLayout = new CMenuUI ();
 			m_pm.SetForceUseSharedRes (true);
 			m_pLayout->SetManager (&m_pm, nullptr, true);
-			string_view_t pDefaultAttributes = m_pOwner->GetManager ()->GetDefaultAttributeList (_T ("Menu"));
+			faw::string_view_t pDefaultAttributes = m_pOwner->GetManager ()->GetDefaultAttributeList (_T ("Menu"));
 			if (!pDefaultAttributes.empty ()) {
 				m_pLayout->ApplyAttributeList (pDefaultAttributes);
 			}
@@ -571,11 +571,11 @@ namespace DuiLib {
 
 	CMenuElementUI::~CMenuElementUI () {}
 
-	string_view_t CMenuElementUI::GetClass () const {
+	faw::string_view_t CMenuElementUI::GetClass () const {
 		return _T ("MenuElementUI");
 	}
 
-	LPVOID CMenuElementUI::GetInterface (string_view_t pstrName) {
+	LPVOID CMenuElementUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == _T ("MenuElement")) return static_cast<CMenuElementUI*>(this);
 		return CListContainerElementUI::GetInterface (pstrName);
 	}
@@ -697,15 +697,15 @@ namespace DuiLib {
 				(_cxyFixed.cy - _szIconSize.cy) / 2 + _szIconSize.cy
 			};
 			GetManager ()->GetDPIObj ()->ScaleBack (&rcDest);
-			CDuiString pStrImage;
-			pStrImage.Format (_T ("dest='%d,%d,%d,%d'"), rcDest.left, rcDest.top, rcDest.right, rcDest.bottom);
-			DrawImage (hDC, m_strIcon, pStrImage);
+			faw::String pStrImage;
+			pStrImage = faw::String::format (_T ("dest='%d,%d,%d,%d'"), rcDest.left, rcDest.top, rcDest.right, rcDest.bottom);
+			DrawImage (hDC, m_strIcon.str_view (), pStrImage.str_view ());
 		}
 	}
 
 	void CMenuElementUI::DrawItemExpland (HDC hDC, const RECT& rcItem) {
 		if (m_bShowExplandIcon) {
-			CDuiString strExplandIcon;
+			faw::String strExplandIcon;
 			strExplandIcon = GetManager ()->GetDefaultAttributeList (_T ("ExplandIcon"));
 			if (strExplandIcon.empty ()) {
 				return;
@@ -714,8 +714,8 @@ namespace DuiLib {
 			_cxyFixed.cx = GetManager ()->GetDPIObj ()->Scale (_cxyFixed.cx);
 			_cxyFixed.cy = GetManager ()->GetDPIObj ()->Scale (_cxyFixed.cy);
 			int padding = GetManager ()->GetDPIObj ()->Scale (ITEM_DEFAULT_EXPLAND_ICON_WIDTH) / 3;
-			const TDrawInfo* pDrawInfo = GetManager ()->GetDrawInfo (strExplandIcon, nullptr);
-			const TImageInfo *pImageInfo = GetManager ()->GetImageEx (pDrawInfo->sImageName, nullptr, 0);
+			const TDrawInfo* pDrawInfo = GetManager ()->GetDrawInfo (strExplandIcon.str_view (), nullptr);
+			const TImageInfo *pImageInfo = GetManager ()->GetImageEx (pDrawInfo->sImageName.str_view (), nullptr, 0);
 			if (!pImageInfo) {
 				return;
 			}
@@ -727,15 +727,15 @@ namespace DuiLib {
 				(_cxyFixed.cy - pImageInfo->nY) / 2 + pImageInfo->nY
 			};
 			GetManager ()->GetDPIObj ()->ScaleBack (&rcDest);
-			CDuiString pStrImage;
-			pStrImage.Format (_T ("dest='%d,%d,%d,%d'"), rcDest.left, rcDest.top, rcDest.right, rcDest.bottom);
-			DrawImage (hDC, strExplandIcon, pStrImage);
+			faw::String pStrImage;
+			pStrImage = faw::String::format (_T ("dest='%d,%d,%d,%d'"), rcDest.left, rcDest.top, rcDest.right, rcDest.bottom);
+			DrawImage (hDC, strExplandIcon.str_view (), pStrImage.str_view ());
 		}
 	}
 
 
 	void CMenuElementUI::DrawItemText (HDC hDC, const RECT& rcItem) {
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 		if (sText.empty ()) return;
 
 		if (!m_pOwner) return;
@@ -760,10 +760,10 @@ namespace DuiLib {
 		rcText.bottom -= rcTextPadding.bottom;
 
 		if (pInfo->bShowHtml)
-			CRenderEngine::DrawHtmlText (hDC, m_pManager, rcText, sText, iTextColor, \
+			CRenderEngine::DrawHtmlText (hDC, m_pManager, rcText, sText.str_view (), iTextColor, \
 				nullptr, nullptr, nLinks, pInfo->nFont, DT_SINGLELINE | pInfo->uTextStyle);
 		else
-			CRenderEngine::DrawText (hDC, m_pManager, rcText, sText, iTextColor, \
+			CRenderEngine::DrawText (hDC, m_pManager, rcText, sText.str_view (), iTextColor, \
 				pInfo->nFont, DT_SINGLELINE | pInfo->uTextStyle);
 	}
 
@@ -794,7 +794,7 @@ namespace DuiLib {
 			if (!IsEnabled ()) {
 				iTextColor = pInfo->dwDisabledTextColor;
 			}
-			CDuiString sText = GetText ();
+			faw::String sText = GetText ();
 
 			RECT rcText = { 0, 0, MAX (szAvailable.cx, _cxyFixed.cx), 9999 };
 			RECT rcTextPadding = pInfo->rcTextPadding;
@@ -803,9 +803,9 @@ namespace DuiLib {
 			rcText.right -= rcTextPadding.right;
 			if (pInfo->bShowHtml) {
 				int nLinks = 0;
-				CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, iTextColor, nullptr, nullptr, nLinks, pInfo->nFont, DT_CALCRECT | pInfo->uTextStyle);
+				CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), iTextColor, nullptr, nullptr, nLinks, pInfo->nFont, DT_CALCRECT | pInfo->uTextStyle);
 			} else {
-				CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, iTextColor, pInfo->nFont, DT_CALCRECT | pInfo->uTextStyle);
+				CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), iTextColor, pInfo->nFont, DT_CALCRECT | pInfo->uTextStyle);
 			}
 			cXY.cx = rcText.right - rcText.left + rcTextPadding.left + rcTextPadding.right;
 			cXY.cy = rcText.bottom - rcText.top + rcTextPadding.top + rcTextPadding.bottom;
@@ -980,7 +980,7 @@ namespace DuiLib {
 		return m_rcLinePadding;
 	}
 
-	void CMenuElementUI::SetIcon (string_view_t strIcon) {
+	void CMenuElementUI::SetIcon (faw::string_view_t strIcon) {
 		if (!strIcon.empty ())
 			m_strIcon = strIcon;
 	}
@@ -995,7 +995,7 @@ namespace DuiLib {
 	}
 
 	bool CMenuElementUI::GetChecked () const {
-		string_view_t pstrName = GetName ();
+		faw::string_view_t pstrName = GetName ();
 		if (pstrName.empty ()) return false;
 
 		CStdStringPtrMap* mCheckInfos = CMenuWnd::GetGlobalContextMenuObserver ().GetMenuCheckInfo ();
@@ -1021,7 +1021,7 @@ namespace DuiLib {
 		m_bShowExplandIcon = bShow;
 	}
 
-	void CMenuElementUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CMenuElementUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("icon")) {
 			SetIcon (pstrValue);
 		} else if (pstrName == _T ("iconsize")) {
@@ -1059,7 +1059,7 @@ namespace DuiLib {
 	}
 
 
-	MenuItemInfo* CMenuElementUI::GetItemInfo (string_view_t pstrName) {
+	MenuItemInfo* CMenuElementUI::GetItemInfo (faw::string_view_t pstrName) {
 		if (pstrName.empty ()) return nullptr;
 
 		CStdStringPtrMap* mCheckInfos = CMenuWnd::GetGlobalContextMenuObserver ().GetMenuCheckInfo ();
@@ -1073,7 +1073,7 @@ namespace DuiLib {
 		return nullptr;
 	}
 
-	MenuItemInfo* CMenuElementUI::SetItemInfo (string_view_t pstrName, bool bChecked) {
+	MenuItemInfo* CMenuElementUI::SetItemInfo (faw::string_view_t pstrName, bool bChecked) {
 		if (pstrName.empty ()) return nullptr;
 
 		CStdStringPtrMap* mCheckInfos = CMenuWnd::GetGlobalContextMenuObserver ().GetMenuCheckInfo ();

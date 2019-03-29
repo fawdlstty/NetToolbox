@@ -13,10 +13,10 @@ namespace DuiLib {
 		CRingUI ();
 		virtual ~CRingUI ();
 
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
-		void SetBkImage (string_view_t pStrImage);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
+		void SetBkImage (faw::string_view_t pStrImage);
 		virtual void DoEvent (TEventUI& event);
 		virtual void PaintBkImage (HDC hDC);
 

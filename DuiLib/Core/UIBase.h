@@ -48,8 +48,8 @@ namespace DuiLib {
 
 	class UILIB_API CNotifyPump {
 	public:
-		bool AddVirtualWnd (string_view_t strName, CNotifyPump* pObject);
-		bool RemoveVirtualWnd (string_view_t strName);
+		bool AddVirtualWnd (faw::string_view_t strName, CNotifyPump* pObject);
+		bool RemoveVirtualWnd (faw::string_view_t strName);
 		void NotifyPump (TNotifyUI& msg);
 		bool LoopDispatch (TNotifyUI& msg);
 		DUI_DECLARE_MESSAGE_MAP ()
@@ -65,9 +65,9 @@ namespace DuiLib {
 		bool RegisterWindowClass ();
 		bool RegisterSuperclass ();
 
-		HWND Create (HWND hwndParent, string_view_t pstrName, DWORD dwStyle, DWORD dwExStyle, const RECT rc, HMENU hMenu = NULL);
-		HWND Create (HWND hwndParent, string_view_t pstrName, DWORD dwStyle, DWORD dwExStyle, int x = CW_USEDEFAULT, int y = CW_USEDEFAULT, int cx = CW_USEDEFAULT, int cy = CW_USEDEFAULT, HMENU hMenu = NULL);
-		HWND CreateDuiWindow (HWND hwndParent, string_view_t pstrWindowName, DWORD dwStyle = 0, DWORD dwExStyle = 0);
+		HWND Create (HWND hwndParent, faw::string_view_t pstrName, DWORD dwStyle, DWORD dwExStyle, const RECT rc, HMENU hMenu = NULL);
+		HWND Create (HWND hwndParent, faw::string_view_t pstrName, DWORD dwStyle, DWORD dwExStyle, int x = CW_USEDEFAULT, int y = CW_USEDEFAULT, int cx = CW_USEDEFAULT, int cy = CW_USEDEFAULT, HMENU hMenu = NULL);
+		HWND CreateDuiWindow (HWND hwndParent, faw::string_view_t pstrWindowName, DWORD dwStyle = 0, DWORD dwExStyle = 0);
 		HWND Subclass (HWND hWnd);
 		void Unsubclass ();
 		void ShowWindow (bool bShow = true, bool bTakeFocus = true);
@@ -81,8 +81,8 @@ namespace DuiLib {
 		void ResizeClient (int cx = -1, int cy = -1);
 
 	protected:
-		virtual string_view_t GetWindowClassName () const = 0;
-		virtual string_view_t GetSuperClassName () const { return _T (""); }
+		virtual faw::string_view_t GetWindowClassName () const = 0;
+		virtual faw::string_view_t GetSuperClassName () const { return _T (""); }
 		virtual UINT GetClassStyle () const { return 0; }
 
 		virtual LRESULT HandleMessage (UINT uMsg, WPARAM wParam, LPARAM lParam);

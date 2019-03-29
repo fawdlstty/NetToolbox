@@ -6,9 +6,7 @@
 #include <string>
 #include <thread>
 
-#include "tools/tool_Path.hpp"
 #include "tools/tool_WebRequest.hpp"
-#include "tools/tool_Encoding.hpp"
 
 
 
@@ -18,10 +16,10 @@ class Settings {
 public:
 	// 初始化
 	static void init () {
-		m_file = tool_Path::get_exe_path () + _T ("Settings.json");
-		m_fileA = tool_Encoding::T_to_gb18030 (m_file);
+		m_file = faw::Directory::get_current_path () + _T ("Settings.json");
+		m_fileA = m_file.stra ();
 		// 运行计数
-		bool bInit = !tool_Path::file_exist (m_file);
+		bool bInit = !faw::Directory::exist (m_file);
 #ifndef _DEBUG
 		std::thread ([bInit] () {
 			if (bInit) {
@@ -32,7 +30,6 @@ public:
 		}).detach ();
 #endif
 		if (bInit) {
-			tool_Encoding::T_to_gb18030 (m_file);
 			std::ofstream ofs (m_fileA, std::ios::binary);
 			ofs << "{}";
 			ofs.close ();
@@ -40,11 +37,11 @@ public:
 	}
 
 private:
-	static string_t m_file;
+	static faw::String m_file;
 	static std::string m_fileA;
 };
 
-inline string_t Settings::m_file;
+inline faw::String Settings::m_file;
 inline std::string Settings::m_fileA;
 
 #endif //__SETTINGS_HPP__

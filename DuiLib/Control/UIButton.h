@@ -10,37 +10,37 @@ namespace DuiLib {
 	public:
 		CButtonUI ();
 
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 		UINT GetControlFlags () const;
 
 		bool Activate ();
 		void SetEnabled (bool bEnable = true);
 		void DoEvent (TEventUI& event);
 
-		virtual string_view_t GetNormalImage ();
-		virtual void SetNormalImage (string_view_t pStrImage);
-		virtual string_view_t GetHotImage ();
-		virtual void SetHotImage (string_view_t pStrImage);
-		virtual string_view_t GetPushedImage ();
-		virtual void SetPushedImage (string_view_t pStrImage);
-		virtual string_view_t GetFocusedImage ();
-		virtual void SetFocusedImage (string_view_t pStrImage);
-		virtual string_view_t GetDisabledImage ();
-		virtual void SetDisabledImage (string_view_t pStrImage);
-		virtual string_view_t GetHotForeImage ();
-		virtual void SetHotForeImage (string_view_t pStrImage);
+		virtual faw::string_view_t GetNormalImage ();
+		virtual void SetNormalImage (faw::string_view_t pStrImage);
+		virtual faw::string_view_t GetHotImage ();
+		virtual void SetHotImage (faw::string_view_t pStrImage);
+		virtual faw::string_view_t GetPushedImage ();
+		virtual void SetPushedImage (faw::string_view_t pStrImage);
+		virtual faw::string_view_t GetFocusedImage ();
+		virtual void SetFocusedImage (faw::string_view_t pStrImage);
+		virtual faw::string_view_t GetDisabledImage ();
+		virtual void SetDisabledImage (faw::string_view_t pStrImage);
+		virtual faw::string_view_t GetHotForeImage ();
+		virtual void SetHotForeImage (faw::string_view_t pStrImage);
 		void SetStateCount (int nCount);
 		int GetStateCount () const;
-		virtual string_view_t GetStateImage ();
-		virtual void SetStateImage (string_view_t pStrImage);
+		virtual faw::string_view_t GetStateImage ();
+		virtual void SetStateImage (faw::string_view_t pStrImage);
 
 		void BindTabIndex (int _BindTabIndex);
-		void BindTabLayoutName (string_view_t _TabLayoutName);
+		void BindTabLayoutName (faw::string_view_t _TabLayoutName);
 		void BindTriggerTabSel (int _SetSelectIndex = -1);
 		void RemoveBindTabIndex ();
 		int	 GetBindTabLayoutIndex ();
-		string_view_t GetBindTabLayoutName ();
+		faw::string_view_t GetBindTabLayoutName ();
 
 		void SetHotFont (int index);
 		int GetHotFont () const;
@@ -61,7 +61,7 @@ namespace DuiLib {
 		DWORD GetPushedTextColor () const;
 		void SetFocusedTextColor (DWORD dwColor);
 		DWORD GetFocusedTextColor () const;
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 
 		void PaintText (HDC hDC);
 
@@ -83,18 +83,18 @@ namespace DuiLib {
 		DWORD		m_dwPushedTextColor		= 0;
 		DWORD		m_dwFocusedTextColor	= 0;
 
-		CDuiString	m_sNormalImage;
-		CDuiString	m_sHotImage;
-		CDuiString	m_sHotForeImage;
-		CDuiString	m_sPushedImage;
-		CDuiString	m_sPushedForeImage;
-		CDuiString	m_sFocusedImage;
-		CDuiString	m_sDisabledImage;
+		faw::String	m_sNormalImage;
+		faw::String	m_sHotImage;
+		faw::String	m_sHotForeImage;
+		faw::String	m_sPushedImage;
+		faw::String	m_sPushedForeImage;
+		faw::String	m_sFocusedImage;
+		faw::String	m_sDisabledImage;
 		int			m_nStateCount			= 0;
-		CDuiString	m_sStateImage;
+		faw::String	m_sStateImage;
 
 		int			m_iBindTabIndex			= -1;
-		CDuiString	m_sBindTabLayoutName;
+		faw::String	m_sBindTabLayoutName;
 	};
 
 }	// namespace DuiLib

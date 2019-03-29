@@ -11,7 +11,6 @@
 
 #include "tools/tool_String.hpp"
 #include "tools/tool_Utils.hpp"
-#include "tools/tool_Path.hpp"
 #include "tools/tool_Process.hpp"
 
 #include "pages/page_base.hpp"
@@ -57,17 +56,23 @@ void NetToolboxWnd::InitWindow () {
 		{ nullptr }
 	};
 
-	auto &args = tool_Path::get_args ();
+	std::vector<faw::String> _args;
+	auto cmd_line = ::GetCommandLineW ();
+	int _argc = 0;
+	LPWSTR *_argv = ::CommandLineToArgvW (cmd_line, &_argc);
+	for (int i = 0; i < _argc; ++i)
+		_args.push_back (_argv[i]);
+	_args[0].replace_self (_T ('/'), _T ('\\'));
 #ifdef _DEBUG
-	if (args.size () < 2) {
-		args.push_back (_T ("-jump"));
-		args.push_back (_T ("0,0"));
+	if (_args.size () < 2) {
+		_args.push_back (_T ("-jump"));
+		_args.push_back (_T ("0,0"));
 	}
 #endif
-	for (size_t i = 1; i < args.size (); ++i) {
-		if (args[i] == _T ("-jump") && i < args.size () - 1) {
-			size_t p = args[i + 1].find (_T (','));
-			size_t sel1 = _ttoi (&args[i + 1][0]), sel2 = _ttoi (&args[i + 1][p + 1]);
+	for (size_t i = 1; i < _args.size (); ++i) {
+		if (_args[i] == _T ("-jump") && i < _args.size () - 1) {
+			size_t p = _args[i + 1].find (_T (','));
+			size_t sel1 = _ttoi (&_args[i + 1][0]), sel2 = _ttoi (&_args[i + 1][p + 1]);
 			direct_page (sel1, sel2);
 		}
 	}
@@ -80,7 +85,7 @@ void NetToolboxWnd::InitWindow () {
 }
 
 void NetToolboxWnd::OnClick (TNotifyUI& msg) {
-	CDuiString name = msg.pSender->GetName ();
+	 faw::String name = msg.pSender->GetName ();
 	if (name == _T ("btn_set")) {
 		//static int t = 0;
 		//show_error_code (++t);
@@ -90,7 +95,7 @@ void NetToolboxWnd::OnClick (TNotifyUI& msg) {
 	//	tool_Process::shell_exec (_T ("https://www.fawdlstty.com"));
 	//} else if (name == _T ("btn_join")) {
 	//	tool_Process::shell_exec (_T ("https://jq.qq.com/?_wv=1027&k=5TMvF3B"));
-	} else if (name.Left (3) == _T ("tab") || name.Left (5) == _T ("group")) {
+	} else if (name.left (3) == _T ("tab") || name.left (5) == _T ("group")) {
 		WindowImplBase::OnClick (msg);
 	} else if (name == _T ("about_home")) {
 		tool_Process::shell_exec (_T ("https://nettoolbox.fawdlstty.com"));
@@ -110,9 +115,9 @@ void NetToolboxWnd::OnHeaderClick (TNotifyUI& msg) {
 }
 
 void NetToolboxWnd::OnSelectChanged (TNotifyUI& msg) {
-	CDuiString name = msg.pSender->GetName ();
+	 faw::String name = msg.pSender->GetName ();
 	//标签页切换事件
-	if (name.Left (3) == _T ("tab")) {
+	if (name.left (3) == _T ("tab")) {
 		//TCHAR s[16] = _T ("tab?");
 		//s[3] = name[3];
 		//int idx = (int) (name[5] - _T ('0'));
@@ -124,12 +129,12 @@ void NetToolboxWnd::OnSelectChanged (TNotifyUI& msg) {
 		m_tabM->SelectItem ((int) (m_sel1 = _ttoi (&name[3])));
 		m_tab[m_sel1]->SelectItem ((int) (m_sel2 = _ttoi (&name[5])));
 		ui_update_data ();
-	} else if (name.Left (5) == _T ("group")) {
+	} else if (name.left (5) == _T ("group")) {
 		size_t sel1 = _ttoi (&name[5]);
 		for (size_t i = 0; i < m_tab.size (); ++i) {
-			string_t name1 = tool_StringT::format (_T ("group%d"), i);
+			faw::String name1 = faw::String::format (_T ("group%d"), i);
 			BindOptionUI option { name1 };
-			string_t name2 = tool_StringT::format (_T ("group_item%d"), i);
+			faw::String name2 = faw::String::format (_T ("group_item%d"), i);
 			BindVerticalLayoutUI vertical { name2 };
 			if (*vertical) {
 				option->SetTextColor (i == sel1 ? 0xFFFFFFB0 : 0xFFFFFFFF);
@@ -242,15 +247,15 @@ LRESULT NetToolboxWnd::HandleMessage (UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	return WindowImplBase::HandleMessage (uMsg, wParam, lParam);
 }
 
-CControlUI* NetToolboxWnd::CreateControl (string_view_t pstrClass) {
+CControlUI* NetToolboxWnd::CreateControl (faw::string_view_t pstrClass) {
 	if (pstrClass == _T ("HanAnim")) return CHanAnimUI::CreateControl ();
 	return WindowImplBase::CreateControl (pstrClass);
 }
 
 
 
-void NetToolboxWnd::show_status (StatusIcon _icon, string_view_t _info) {
-	static std::map<StatusIcon, string_view_t> _status_images {
+void NetToolboxWnd::show_status (StatusIcon _icon, faw::String _info) {
+	static std::map<StatusIcon, faw::string_view_t> _status_images {
 		{ StatusIcon::Ok, _T ("file='status_small.png' source='0,0,16,16'") },
 		{ StatusIcon::Info, _T ("file='status_small.png' source='16,0,32,16'") },
 		{ StatusIcon::Warning, _T ("file='status_small.png' source='0,16,16,32'") },
@@ -274,8 +279,8 @@ void NetToolboxWnd::show_error_code (DWORD err_no) {
 }
 
 void NetToolboxWnd::direct_page (size_t sel1, size_t sel2) {
-	BindOptionUI { tool_StringT::format (_T ("group%d"), sel1) }->Activate ();
-	BindOptionUI { tool_StringT::format (_T ("tab%d_%d"), sel1, sel2) }->Activate ();
+	BindOptionUI { faw::String::format (_T ("group%d"), sel1) }->Activate ();
+	BindOptionUI { faw::String::format (_T ("tab%d_%d"), sel1, sel2) }->Activate ();
 }
 
 bool NetToolboxWnd::enum_pages (std::function<bool (page_base*)> f) {

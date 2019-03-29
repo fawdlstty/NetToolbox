@@ -216,116 +216,15 @@ namespace DuiLib {
 	}
 
 
-	/////////////////////////////////////////////////////////////////////////////////////
-	//
-	//
 
-	CDuiString::CDuiString () {
-		reserve (64);
-	}
-
-	CDuiString::CDuiString (const TCHAR ch) {
-		reserve (64);
-		assign (1, ch);
-	}
-
-	CDuiString::CDuiString (LPCTSTR str) {
-		reserve (64);
-		assign (str);
-	}
-
-	CDuiString::CDuiString (const string_t& src) : string_t (src) {
-		if (src.length () < 64)
-			reserve (64);
-	}
-
-	CDuiString::CDuiString (string_view_t lpsz, int nLen) {
-		reserve (64);
-		if (!lpsz.empty ()) {
-			if (nLen == -1)
-				assign (lpsz);
-			else
-				assign (lpsz, nLen);
-		}
-	}
-
-	int CDuiString::Replace (string_view_t pstrFrom, string_view_t pstrTo) {
-		//CDuiString sTemp;
-		//int nCount = 0;
-		//size_t iPos = find (pstrFrom);
-		//if (iPos == string_t::npos) return 0;
-		//int cchFrom = (int) _tcslen (pstrFrom);
-		//int cchTo = (int) _tcslen (pstrTo);
-		//while (iPos >= 0) {
-		//	sTemp = Left (iPos);
-		//	sTemp += pstrTo;
-		//	sTemp += Mid (iPos + cchFrom);
-		//	assign (sTemp);
-		//	iPos = find (pstrFrom, iPos + cchTo);
-		//	nCount++;
-		//}
-		//return nCount;
-		size_t ret = 0, pos = find (pstrFrom);
-		while (pos != string_t::npos) {
-			replace (pos, pstrFrom.length (), pstrTo);
-			++ret;
-			pos = find (pstrFrom, pos + 2);
-		}
-		return (int) ret;
-	}
-
-	int CDuiString::Format (string_view_t pstrFormat, ...) {
-		if (pstrFormat.empty ())
-			return 0;
-		try {
-			va_list ap;
-#ifndef __GNUC__
-			//来源：http://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
-			ptrdiff_t final_n, n = (pstrFormat.length ()) * 2;
-			std::unique_ptr<TCHAR[]> formatted;
-			while (true) {
-				formatted.reset (new TCHAR[n]);
-				//strcpy_s (&formatted [0], fmt_str.size (), fmt_str);
-				va_start (ap, pstrFormat);
-				// _vsntprintf_s
-				final_n = _vsntprintf_s (formatted.get (), n, _TRUNCATE, pstrFormat.data (), ap);
-				va_end (ap);
-				if (final_n < 0 || final_n >= n)
-					n += abs (final_n - n + 1);
-				else
-					break;
-			}
-			assign (formatted.get ());
-#else //__GNUC__
-			char *buf = nullptr;
-			va_start (ap, fmt_str);
-			int iresult = vasprintf (&buf, fmt_str, ap);
-			va_end (ap);
-			if (buf) {
-				if (iresult >= 0) {
-					iresult = strlen (buf);
-					str_result.append (buf, iresult);
-				}
-				free (buf);
-			}
-#endif //__GNUC__
-		} catch (...) {
-		}
-		return (int) length ();
-	}
-
-	/////////////////////////////////////////////////////////////////////////////
-	//
-	//
-
-	static UINT HashKey (string_view_t Key) {
+	static UINT HashKey (faw::string_view_t Key) {
 		UINT i = 0;
 		SIZE_T len = Key.length ();
 		while (len-- > 0) i = (i << 5) + i + Key[len];
 		return i;
 	}
 
-	static UINT HashKey (const CDuiString& Key) {
+	static UINT HashKey (const faw::String& Key) {
 		return HashKey (Key);
 	};
 
@@ -380,7 +279,7 @@ namespace DuiLib {
 		m_nCount = 0;
 	}
 
-	LPVOID CStdStringPtrMap::Find (string_view_t key, bool optimize) const {
+	LPVOID CStdStringPtrMap::Find (faw::string_view_t key, bool optimize) const {
 		if (m_nBuckets == 0 || GetSize () == 0) return nullptr;
 
 		UINT slot = HashKey (key) % m_nBuckets;
@@ -404,7 +303,7 @@ namespace DuiLib {
 		return nullptr;
 	}
 
-	bool CStdStringPtrMap::Insert (string_view_t key, LPVOID pData) {
+	bool CStdStringPtrMap::Insert (faw::string_view_t key, LPVOID pData) {
 		if (m_nBuckets == 0) return false;
 		if (Find (key)) return false;
 
@@ -422,7 +321,7 @@ namespace DuiLib {
 		return true;
 	}
 
-	LPVOID CStdStringPtrMap::Set (string_view_t key, LPVOID pData) {
+	LPVOID CStdStringPtrMap::Set (faw::string_view_t key, LPVOID pData) {
 		if (m_nBuckets == 0) return pData;
 
 		if (GetSize () > 0) {
@@ -441,7 +340,7 @@ namespace DuiLib {
 		return nullptr;
 	}
 
-	bool CStdStringPtrMap::Remove (string_view_t key) {
+	bool CStdStringPtrMap::Remove (faw::string_view_t key) {
 		if (m_nBuckets == 0 || GetSize () == 0) return false;
 
 		UINT slot = HashKey (key) % m_nBuckets;
@@ -546,11 +445,11 @@ namespace DuiLib {
 
 	//}
 
-	//const CDuiString& CImageString::GetAttributeString() const {
+	//const faw::String& CImageString::GetAttributeString() const {
 	//	return m_sImageAttribute;
 	//}
 
-	//void CImageString::SetAttributeString(string_view_t pStrImageAttri) {
+	//void CImageString::SetAttributeString(faw::string_view_t pStrImageAttri) {
 	//	if (m_sImageAttribute == pStrImageAttri) return;
 	//	Clear ();
 	//	m_sImageAttribute = pStrImageAttri;
@@ -599,7 +498,7 @@ namespace DuiLib {
 	//	return !m_sImageAttribute.empty () && m_bLoadSuccess;
 	//}
 
-	//void CImageString::ModifyAttribute (string_view_t pStrModify) {
+	//void CImageString::ModifyAttribute (faw::string_view_t pStrModify) {
 	//	//ParseAttribute (pStrModify);
 	//}
 
@@ -619,15 +518,15 @@ namespace DuiLib {
 	//	m_bTiledY = false;
 	//}
 
-	//void CImageString::ParseAttribute(string_view_t pStrImage) {
+	//void CImageString::ParseAttribute(faw::string_view_t pStrImage) {
 	//	if (!pStrImage.empty ())
 	//		return;
 
 	//	// 1、aaa.jpg
 	//	// 2、file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0' 
 	//	// mask='#FF0000' fade='255' hole='false' xtiled='false' ytiled='false'
-	//	CDuiString sItem;
-	//	CDuiString sValue;
+	//	faw::String sItem;
+	//	faw::String sValue;
 
 	//	while (*pStrImage != _T('\0')) {
 	//		sItem.Empty();
@@ -657,7 +556,7 @@ namespace DuiLib {
 	//				//	std::wstringstream wss;
 	//				//	wss << L"@" << g_Dpi.GetScale() << L".";
 	//				//	std::wstring suffix = wss.str();
-	//				//	m_sImage.Replace(L".", suffix.c_str());
+	//				//	m_sImage.replace_self(L".", suffix.c_str());
 	//				//}
 	//			} else if (sItem == _T("restype")) {					
 	//				m_sResType = sValue;

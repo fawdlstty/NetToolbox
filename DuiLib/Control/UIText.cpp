@@ -13,11 +13,11 @@ namespace DuiLib {
 
 	CTextUI::~CTextUI () {}
 
-	string_view_t CTextUI::GetClass () const {
+	faw::string_view_t CTextUI::GetClass () const {
 		return _T ("TextUI");
 	}
 
-	LPVOID CTextUI::GetInterface (string_view_t pstrName) {
+	LPVOID CTextUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_TEXT) return static_cast<CTextUI*>(this);
 		return CLabelUI::GetInterface (pstrName);
 	}
@@ -27,7 +27,7 @@ namespace DuiLib {
 		else return 0;
 	}
 
-	CDuiString* CTextUI::GetLinkContent (int iIndex) {
+	faw::String* CTextUI::GetLinkContent (int iIndex) {
 		if (iIndex >= 0 && iIndex < m_nLinks) return &m_sLinks[iIndex];
 		return nullptr;
 	}
@@ -88,7 +88,7 @@ namespace DuiLib {
 	}
 
 	SIZE CTextUI::EstimateSize (SIZE szAvailable) {
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 		RECT _rcTextPadding = GetTextPadding ();
 
 		RECT rcText = { 0, 0, m_bAutoCalcWidth ? 9999 : GetManager ()->GetDPIObj ()->Scale (m_cxyFixed.cx), 9999 };
@@ -97,9 +97,9 @@ namespace DuiLib {
 
 		if (m_bShowHtml) {
 			int nLinks = 0;
-			CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, m_dwTextColor, nullptr, nullptr, nLinks, m_iFont, DT_CALCRECT | m_uTextStyle);
+			CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), m_dwTextColor, nullptr, nullptr, nLinks, m_iFont, DT_CALCRECT | m_uTextStyle);
 		} else {
-			CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, m_dwTextColor, m_iFont, DT_CALCRECT | m_uTextStyle);
+			CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), m_dwTextColor, m_iFont, DT_CALCRECT | m_uTextStyle);
 		}
 		SIZE cXY = { rcText.right - rcText.left + _rcTextPadding.left + _rcTextPadding.right,
 			rcText.bottom - rcText.top + _rcTextPadding.top + _rcTextPadding.bottom };
@@ -115,7 +115,7 @@ namespace DuiLib {
 	}
 
 	void CTextUI::PaintText (HDC hDC) {
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 		if (sText.empty ()) {
 			m_nLinks = 0;
 			return;
@@ -132,17 +132,17 @@ namespace DuiLib {
 		rc.bottom -= m_rcTextPadding.bottom;
 		if (IsEnabled ()) {
 			if (m_bShowHtml)
-				CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText, m_dwTextColor, \
+				CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText.str_view (), m_dwTextColor, \
 					m_rcLinks, m_sLinks, m_nLinks, m_iFont, m_uTextStyle);
 			else
-				CRenderEngine::DrawText (hDC, m_pManager, rc, sText, m_dwTextColor, \
+				CRenderEngine::DrawText (hDC, m_pManager, rc, sText.str_view (), m_dwTextColor, \
 					m_iFont, m_uTextStyle);
 		} else {
 			if (m_bShowHtml)
-				CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText, m_dwDisabledTextColor, \
+				CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText.str_view (), m_dwDisabledTextColor, \
 					m_rcLinks, m_sLinks, m_nLinks, m_iFont, m_uTextStyle);
 			else
-				CRenderEngine::DrawText (hDC, m_pManager, rc, sText, m_dwDisabledTextColor, \
+				CRenderEngine::DrawText (hDC, m_pManager, rc, sText.str_view (), m_dwDisabledTextColor, \
 					m_iFont, m_uTextStyle);
 		}
 	}

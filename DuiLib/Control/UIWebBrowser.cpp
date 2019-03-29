@@ -21,7 +21,7 @@ namespace DuiLib {
 		GetManager ()->AddTranslateAccelerator (this);
 		GetControl (IID_IWebBrowser2, (LPVOID*) &m_pWebBrowser2);
 		if (m_bAutoNavi && !m_sHomePage.empty ()) {
-			this->Navigate2 (m_sHomePage);
+			this->Navigate2 (m_sHomePage.str_view ());
 		}
 		RegisterEventHandler (TRUE);
 		return true;
@@ -143,7 +143,7 @@ namespace DuiLib {
 		return ulRefCount;
 	}
 
-	void CWebBrowserUI::Navigate2 (string_view_t lpszUrl) {
+	void CWebBrowserUI::Navigate2 (faw::string_view_t lpszUrl) {
 		if (lpszUrl.empty ())
 			return;
 
@@ -392,7 +392,7 @@ namespace DuiLib {
 		m_pWebBrowser2->Refresh2 (&vLevel);
 	}
 
-	void CWebBrowserUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CWebBrowserUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("homepage")) {
 			m_sHomePage = pstrValue;
 		} else if (pstrName == _T ("autonavi")) {
@@ -403,30 +403,30 @@ namespace DuiLib {
 
 	void CWebBrowserUI::NavigateHomePage () {
 		if (!m_sHomePage.empty ())
-			this->NavigateUrl (m_sHomePage);
+			this->NavigateUrl (m_sHomePage.str_view ());
 	}
 
-	void CWebBrowserUI::NavigateUrl (string_view_t lpszUrl) {
+	void CWebBrowserUI::NavigateUrl (faw::string_view_t lpszUrl) {
 		if (m_pWebBrowser2 && !lpszUrl.empty ()) {
 			m_pWebBrowser2->Navigate ((BSTR) SysAllocString (_bstr_t (FawTools::T_to_utf16 (lpszUrl).c_str ())), nullptr, nullptr, nullptr, nullptr);
 		}
 	}
 
-	string_view_t CWebBrowserUI::GetClass () const {
+	faw::string_view_t CWebBrowserUI::GetClass () const {
 		return _T ("WebBrowserUI");
 	}
 
-	LPVOID CWebBrowserUI::GetInterface (string_view_t pstrName) {
+	LPVOID CWebBrowserUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_WEBBROWSER) return static_cast<CWebBrowserUI*>(this);
 		return CActiveXUI::GetInterface (pstrName);
 	}
 
-	void CWebBrowserUI::SetHomePage (string_view_t lpszUrl) {
-		m_sHomePage.Format (_T ("%s"), lpszUrl.data ());
+	void CWebBrowserUI::SetHomePage (faw::string_view_t lpszUrl) {
+		m_sHomePage = faw::String::format (_T ("%s"), lpszUrl.data ());
 	}
 
-	string_view_t CWebBrowserUI::GetHomePage () {
-		return m_sHomePage;
+	faw::string_view_t CWebBrowserUI::GetHomePage () {
+		return m_sHomePage.str_view ();
 	}
 
 	void CWebBrowserUI::SetAutoNavigation (bool bAuto /*= TRUE*/) {

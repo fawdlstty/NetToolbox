@@ -29,7 +29,7 @@ namespace DuiLib {
 		bool SetColor (COLORREF NewColor = 0);
 
 		// 图片阴影的函数
-		bool SetImage (string_view_t szImage);
+		bool SetImage (faw::string_view_t szImage);
 		bool SetShadowCorner (RECT rcCorner);	// 九宫格方式描述阴影
 
 		// 把自己的阴影样式复制到传入参数
@@ -97,7 +97,7 @@ namespace DuiLib {
 		COLORREF		m_Color				= RGB (0, 0, 0);	// Color of shadow
 
 		// 图片阴影成员变量
-		CDuiString		m_sShadowImage;
+		faw::String		m_sShadowImage;
 		RECT			m_rcShadowCorner	= { 0 };
 	};
 

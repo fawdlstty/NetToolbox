@@ -36,7 +36,7 @@ namespace DuiLib {
 		::ZeroMemory (&m_ListInfo.rcColumn, sizeof (m_ListInfo.rcColumn));
 	}
 
-	string_view_t CListUI::GetClass () const {
+	faw::string_view_t CListUI::GetClass () const {
 		return _T ("ListUI");
 	}
 
@@ -44,7 +44,7 @@ namespace DuiLib {
 		return UIFLAG_TABSTOP;
 	}
 
-	LPVOID CListUI::GetInterface (string_view_t pstrName) {
+	LPVOID CListUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_LIST) return static_cast<CListUI*>(this);
 		if (pstrName ==  _T ("IList")) return static_cast<IListUI*>(this);
 		if (pstrName == _T ("IListOwner")) return static_cast<IListOwnerUI*>(this);
@@ -58,7 +58,7 @@ namespace DuiLib {
 	int CListUI::GetItemIndex (CControlUI* pControl) const {
 		if (pControl->GetInterface (_T ("ListHeader"))) return CVerticalLayoutUI::GetItemIndex (pControl);
 		// We also need to recognize header sub-items
-		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != string_t::npos) return m_pHeader->GetItemIndex (pControl);
+		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != faw::String::_npos) return m_pHeader->GetItemIndex (pControl);
 
 		return m_pList->GetItemIndex (pControl);
 	}
@@ -66,7 +66,7 @@ namespace DuiLib {
 	bool CListUI::SetItemIndex (CControlUI* pControl, int iIndex) {
 		if (pControl->GetInterface (_T ("ListHeader"))) return CVerticalLayoutUI::SetItemIndex (pControl, iIndex);
 		// We also need to recognize header sub-items
-		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != string_t::npos) return m_pHeader->SetItemIndex (pControl, iIndex);
+		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != faw::String::_npos) return m_pHeader->SetItemIndex (pControl, iIndex);
 
 		int iOrginIndex = m_pList->GetItemIndex (pControl);
 		if (iOrginIndex == -1) return false;
@@ -106,7 +106,7 @@ namespace DuiLib {
 			return CVerticalLayoutUI::AddAt (pControl, 0);
 		}
 		// We also need to recognize header sub-items
-		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != string_t::npos) {
+		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != faw::String::_npos) {
 			bool ret = m_pHeader->Add (pControl);
 			m_ListInfo.nColumns = MIN (m_pHeader->GetCount (), UILIST_MAX_COLUMNS);
 			return ret;
@@ -134,7 +134,7 @@ namespace DuiLib {
 			return CVerticalLayoutUI::AddAt (pControl, 0);
 		}
 		// We also need to recognize header sub-items
-		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != string_t::npos) {
+		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != faw::String::_npos) {
 			bool ret = m_pHeader->AddAt (pControl, iIndex);
 			m_ListInfo.nColumns = MIN (m_pHeader->GetCount (), UILIST_MAX_COLUMNS);
 			return ret;
@@ -162,7 +162,7 @@ namespace DuiLib {
 	bool CListUI::Remove (CControlUI* pControl) {
 		if (pControl->GetInterface (_T ("ListHeader"))) return CVerticalLayoutUI::Remove (pControl);
 		// We also need to recognize header sub-items
-		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != string_t::npos) return m_pHeader->Remove (pControl);
+		if (pControl->GetClass ().find (_T ("ListHeaderItemUI")) != faw::String::_npos) return m_pHeader->Remove (pControl);
 
 		int iIndex = m_pList->GetItemIndex (pControl);
 		if (iIndex == -1) return false;
@@ -579,7 +579,7 @@ namespace DuiLib {
 		Invalidate ();
 	}
 
-	void CListUI::SetItemBkImage (string_view_t pStrImage) {
+	void CListUI::SetItemBkImage (faw::string_view_t pStrImage) {
 		m_ListInfo.sBkImage = pStrImage;
 		Invalidate ();
 	}
@@ -597,8 +597,8 @@ namespace DuiLib {
 		return m_ListInfo.dwBkColor;
 	}
 
-	string_view_t CListUI::GetItemBkImage () const {
-		return m_ListInfo.sBkImage;
+	faw::string_view_t CListUI::GetItemBkImage () const {
+		return m_ListInfo.sBkImage.str_view ();
 	}
 
 	bool CListUI::IsAlternateBk () const {
@@ -615,7 +615,7 @@ namespace DuiLib {
 		Invalidate ();
 	}
 
-	void CListUI::SetSelectedItemImage (string_view_t pStrImage) {
+	void CListUI::SetSelectedItemImage (faw::string_view_t pStrImage) {
 		m_ListInfo.sSelectedImage = pStrImage;
 		Invalidate ();
 	}
@@ -628,8 +628,8 @@ namespace DuiLib {
 		return m_ListInfo.dwSelectedBkColor;
 	}
 
-	string_view_t CListUI::GetSelectedItemImage () const {
-		return m_ListInfo.sSelectedImage;
+	faw::string_view_t CListUI::GetSelectedItemImage () const {
+		return m_ListInfo.sSelectedImage.str_view ();
 	}
 
 	void CListUI::SetHotItemTextColor (DWORD dwTextColor) {
@@ -642,7 +642,7 @@ namespace DuiLib {
 		Invalidate ();
 	}
 
-	void CListUI::SetHotItemImage (string_view_t pStrImage) {
+	void CListUI::SetHotItemImage (faw::string_view_t pStrImage) {
 		m_ListInfo.sHotImage = pStrImage;
 		Invalidate ();
 	}
@@ -654,8 +654,8 @@ namespace DuiLib {
 		return m_ListInfo.dwHotBkColor;
 	}
 
-	string_view_t CListUI::GetHotItemImage () const {
-		return m_ListInfo.sHotImage;
+	faw::string_view_t CListUI::GetHotItemImage () const {
+		return m_ListInfo.sHotImage.str_view ();
 	}
 
 	void CListUI::SetDisabledItemTextColor (DWORD dwTextColor) {
@@ -668,7 +668,7 @@ namespace DuiLib {
 		Invalidate ();
 	}
 
-	void CListUI::SetDisabledItemImage (string_view_t pStrImage) {
+	void CListUI::SetDisabledItemImage (faw::string_view_t pStrImage) {
 		m_ListInfo.sDisabledImage = pStrImage;
 		Invalidate ();
 	}
@@ -681,8 +681,8 @@ namespace DuiLib {
 		return m_ListInfo.dwDisabledBkColor;
 	}
 
-	string_view_t CListUI::GetDisabledItemImage () const {
-		return m_ListInfo.sDisabledImage;
+	faw::string_view_t CListUI::GetDisabledItemImage () const {
+		return m_ListInfo.sDisabledImage.str_view ();
 	}
 
 	DWORD CListUI::GetItemLineColor () const {
@@ -784,7 +784,7 @@ namespace DuiLib {
 		m_pList->SetScrollPos ({ sz.cx + dx, sz.cy + dy });
 	}
 
-	void CListUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CListUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("header")) GetHeader ()->SetVisible (pstrValue != _T ("hidden"));
 		else if (pstrName == _T ("headerbkimage")) GetHeader ()->SetBkImage (pstrValue);
 		else if (pstrName == _T ("scrollselect")) SetScrollSelect (FawTools::parse_bool (pstrValue));
@@ -792,28 +792,28 @@ namespace DuiLib {
 		else if (pstrName == _T ("multiexpanding")) SetMultiExpanding (FawTools::parse_bool (pstrValue));
 		else if (pstrName == _T ("itemfont")) m_ListInfo.nFont = FawTools::parse_dec (pstrValue);
 		else if (pstrName == _T ("itemalign")) {
-			if (pstrValue.find (_T ("left")) != string_t::npos) {
+			if (pstrValue.find (_T ("left")) != faw::String::_npos) {
 				m_ListInfo.uTextStyle &= ~(DT_CENTER | DT_RIGHT);
 				m_ListInfo.uTextStyle |= DT_LEFT;
 			}
-			if (pstrValue.find (_T ("center")) != string_t::npos) {
+			if (pstrValue.find (_T ("center")) != faw::String::_npos) {
 				m_ListInfo.uTextStyle &= ~(DT_LEFT | DT_RIGHT);
 				m_ListInfo.uTextStyle |= DT_CENTER;
 			}
-			if (pstrValue.find (_T ("right")) != string_t::npos) {
+			if (pstrValue.find (_T ("right")) != faw::String::_npos) {
 				m_ListInfo.uTextStyle &= ~(DT_LEFT | DT_CENTER);
 				m_ListInfo.uTextStyle |= DT_RIGHT;
 			}
 		} else if (pstrName == _T ("itemvalign")) {
-			if (pstrValue.find (_T ("top")) != string_t::npos) {
+			if (pstrValue.find (_T ("top")) != faw::String::_npos) {
 				m_ListInfo.uTextStyle &= ~(DT_VCENTER | DT_BOTTOM);
 				m_ListInfo.uTextStyle |= DT_TOP;
 			}
-			if (pstrValue.find (_T ("vcenter")) != string_t::npos) {
+			if (pstrValue.find (_T ("vcenter")) != faw::String::_npos) {
 				m_ListInfo.uTextStyle &= ~(DT_TOP | DT_BOTTOM | DT_WORDBREAK);
 				m_ListInfo.uTextStyle |= DT_VCENTER | DT_SINGLELINE;
 			}
-			if (pstrValue.find (_T ("bottom")) != string_t::npos) {
+			if (pstrValue.find (_T ("bottom")) != faw::String::_npos) {
 				m_ListInfo.uTextStyle &= ~(DT_TOP | DT_VCENTER);
 				m_ListInfo.uTextStyle |= DT_BOTTOM;
 			}
@@ -1210,11 +1210,11 @@ namespace DuiLib {
 		CListHeaderUI::CListHeaderUI ():
 		m_bIsScaleHeader (false) {}
 
-	string_view_t CListHeaderUI::GetClass () const {
+	faw::string_view_t CListHeaderUI::GetClass () const {
 		return _T ("ListHeaderUI");
 	}
 
-	LPVOID CListHeaderUI::GetInterface (string_view_t pstrName) {
+	LPVOID CListHeaderUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_LISTHEADER) return this;
 		return CHorizontalLayoutUI::GetInterface (pstrName);
 	}
@@ -1339,7 +1339,7 @@ namespace DuiLib {
 		cxNeeded += (nEstimateNum - 1) * m_iChildPadding;
 	}
 
-	void CListHeaderUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CListHeaderUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("scaleheader")) SetScaleHeader (FawTools::parse_bool (pstrValue));
 		else CHorizontalLayoutUI::SetAttribute (pstrName, pstrValue);
 	}
@@ -1363,11 +1363,11 @@ namespace DuiLib {
 		SetMinWidth (16);
 	}
 
-	string_view_t CListHeaderItemUI::GetClass () const {
+	faw::string_view_t CListHeaderItemUI::GetClass () const {
 		return _T ("ListHeaderItemUI");
 	}
 
-	LPVOID CListHeaderItemUI::GetInterface (string_view_t pstrName) {
+	LPVOID CListHeaderItemUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_LISTHEADERITEM) return this;
 		return CContainerUI::GetInterface (pstrName);
 	}
@@ -1443,47 +1443,47 @@ namespace DuiLib {
 		Invalidate ();
 	}
 
-	string_view_t CListHeaderItemUI::GetNormalImage () const {
-		return m_sNormalImage;
+	faw::string_view_t CListHeaderItemUI::GetNormalImage () const {
+		return m_sNormalImage.str_view ();
 	}
 
-	void CListHeaderItemUI::SetNormalImage (string_view_t pStrImage) {
+	void CListHeaderItemUI::SetNormalImage (faw::string_view_t pStrImage) {
 		m_sNormalImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CListHeaderItemUI::GetHotImage () const {
-		return m_sHotImage;
+	faw::string_view_t CListHeaderItemUI::GetHotImage () const {
+		return m_sHotImage.str_view ();
 	}
 
-	void CListHeaderItemUI::SetHotImage (string_view_t pStrImage) {
+	void CListHeaderItemUI::SetHotImage (faw::string_view_t pStrImage) {
 		m_sHotImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CListHeaderItemUI::GetPushedImage () const {
-		return m_sPushedImage;
+	faw::string_view_t CListHeaderItemUI::GetPushedImage () const {
+		return m_sPushedImage.str_view ();
 	}
 
-	void CListHeaderItemUI::SetPushedImage (string_view_t pStrImage) {
+	void CListHeaderItemUI::SetPushedImage (faw::string_view_t pStrImage) {
 		m_sPushedImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CListHeaderItemUI::GetFocusedImage () const {
-		return m_sFocusedImage;
+	faw::string_view_t CListHeaderItemUI::GetFocusedImage () const {
+		return m_sFocusedImage.str_view ();
 	}
 
-	void CListHeaderItemUI::SetFocusedImage (string_view_t pStrImage) {
+	void CListHeaderItemUI::SetFocusedImage (faw::string_view_t pStrImage) {
 		m_sFocusedImage = pStrImage;
 		Invalidate ();
 	}
 
-	string_view_t CListHeaderItemUI::GetSepImage () const {
-		return m_sSepImage;
+	faw::string_view_t CListHeaderItemUI::GetSepImage () const {
+		return m_sSepImage.str_view ();
 	}
 
-	void CListHeaderItemUI::SetSepImage (string_view_t pStrImage) {
+	void CListHeaderItemUI::SetSepImage (faw::string_view_t pStrImage) {
 		m_sSepImage = pStrImage;
 		Invalidate ();
 	}
@@ -1496,19 +1496,19 @@ namespace DuiLib {
 		return m_nScale;
 	}
 
-	void CListHeaderItemUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CListHeaderItemUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("dragable")) SetDragable (FawTools::parse_bool (pstrValue));
 		else if (pstrName == _T ("sepwidth")) SetSepWidth (FawTools::parse_dec (pstrValue));
 		else if (pstrName == _T ("align")) {
-			if (pstrValue.find (_T ("left")) != string_t::npos) {
+			if (pstrValue.find (_T ("left")) != faw::String::_npos) {
 				m_uTextStyle &= ~(DT_CENTER | DT_RIGHT);
 				m_uTextStyle |= DT_LEFT;
 			}
-			if (pstrValue.find (_T ("center")) != string_t::npos) {
+			if (pstrValue.find (_T ("center")) != faw::String::_npos) {
 				m_uTextStyle &= ~(DT_LEFT | DT_RIGHT);
 				m_uTextStyle |= DT_CENTER;
 			}
-			if (pstrValue.find (_T ("right")) != string_t::npos) {
+			if (pstrValue.find (_T ("right")) != faw::String::_npos) {
 				m_uTextStyle &= ~(DT_LEFT | DT_CENTER);
 				m_uTextStyle |= DT_RIGHT;
 			}
@@ -1637,20 +1637,20 @@ namespace DuiLib {
 		else m_uButtonState &= ~UISTATE_FOCUSED;
 
 		if ((m_uButtonState & UISTATE_PUSHED) != 0) {
-			if (m_sPushedImage.empty () && !m_sNormalImage.empty ()) DrawImage (hDC, m_sNormalImage);
-			if (!DrawImage (hDC, m_sPushedImage)) {
+			if (m_sPushedImage.empty () && !m_sNormalImage.empty ()) DrawImage (hDC, m_sNormalImage.str_view ());
+			if (!DrawImage (hDC, m_sPushedImage.str_view ())) {
 			}
 		} else if ((m_uButtonState & UISTATE_HOT) != 0) {
-			if (m_sHotImage.empty () && !m_sNormalImage.empty ()) DrawImage (hDC, m_sNormalImage);
-			if (!DrawImage (hDC, m_sHotImage)) {
+			if (m_sHotImage.empty () && !m_sNormalImage.empty ()) DrawImage (hDC, m_sNormalImage.str_view ());
+			if (!DrawImage (hDC, m_sHotImage.str_view ())) {
 			}
 		} else if ((m_uButtonState & UISTATE_FOCUSED) != 0) {
-			if (m_sFocusedImage.empty () && !m_sNormalImage.empty ()) DrawImage (hDC, m_sNormalImage);
-			if (!DrawImage (hDC, m_sFocusedImage)) {
+			if (m_sFocusedImage.empty () && !m_sNormalImage.empty ()) DrawImage (hDC, m_sNormalImage.str_view ());
+			if (!DrawImage (hDC, m_sFocusedImage.str_view ())) {
 			}
 		} else {
 			if (!m_sNormalImage.empty ()) {
-				if (!DrawImage (hDC, m_sNormalImage)) {
+				if (!DrawImage (hDC, m_sNormalImage.str_view ())) {
 				}
 			}
 		}
@@ -1663,8 +1663,8 @@ namespace DuiLib {
 			rcThumb.bottom -= m_rcItem.top;
 
 			m_sSepImageModify.clear ();
-			m_sSepImageModify.Format (_T ("dest='%d,%d,%d,%d'"), rcThumb.left, rcThumb.top, rcThumb.right, rcThumb.bottom);
-			if (!DrawImage (hDC, m_sSepImage, m_sSepImageModify)) {
+			m_sSepImageModify = faw::String::format (_T ("dest='%d,%d,%d,%d'"), rcThumb.left, rcThumb.top, rcThumb.right, rcThumb.bottom);
+			if (!DrawImage (hDC, m_sSepImage.str_view (), m_sSepImageModify.str_view ())) {
 			}
 		}
 	}
@@ -1678,13 +1678,13 @@ namespace DuiLib {
 		rcText.right -= m_rcTextPadding.right;
 		rcText.bottom -= m_rcTextPadding.bottom;
 
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 		if (sText.empty ()) return;
 		int nLinks = 0;
 		if (m_bShowHtml)
-			CRenderEngine::DrawHtmlText (hDC, m_pManager, rcText, sText, m_dwTextColor, nullptr, nullptr, nLinks, m_iFont, m_uTextStyle);
+			CRenderEngine::DrawHtmlText (hDC, m_pManager, rcText, sText.str_view (), m_dwTextColor, nullptr, nullptr, nLinks, m_iFont, m_uTextStyle);
 		else
-			CRenderEngine::DrawText (hDC, m_pManager, rcText, sText, m_dwTextColor, m_iFont, m_uTextStyle);
+			CRenderEngine::DrawText (hDC, m_pManager, rcText, sText.str_view (), m_dwTextColor, m_iFont, m_uTextStyle);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -1695,7 +1695,7 @@ namespace DuiLib {
 		m_bSelected (false),
 		m_uButtonState (0) {}
 
-	string_view_t CListElementUI::GetClass () const {
+	faw::string_view_t CListElementUI::GetClass () const {
 		return _T ("ListElementUI");
 	}
 
@@ -1703,7 +1703,7 @@ namespace DuiLib {
 		return UIFLAG_WANTRETURN;
 	}
 
-	LPVOID CListElementUI::GetInterface (string_view_t pstrName) {
+	LPVOID CListElementUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_LISTITEM) return static_cast<IListItemUI*>(this);
 		if (pstrName == DUI_CTRL_LISTELEMENT) return static_cast<CListElementUI*>(this);
 		return CControlUI::GetInterface (pstrName);
@@ -1848,7 +1848,7 @@ namespace DuiLib {
 		if (m_pOwner) m_pOwner->DoEvent (event); else CControlUI::DoEvent (event);
 	}
 
-	void CListElementUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CListElementUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("selected")) Select ();
 		else CControlUI::SetAttribute (pstrName, pstrValue);
 	}
@@ -1875,33 +1875,33 @@ namespace DuiLib {
 
 		if (!IsEnabled ()) {
 			if (!pInfo->sDisabledImage.empty ()) {
-				if (!DrawImage (hDC, pInfo->sDisabledImage)) {
+				if (!DrawImage (hDC, pInfo->sDisabledImage.str_view ())) {
 				} else return;
 			}
 		}
 		if (IsSelected ()) {
 			if (!pInfo->sSelectedImage.empty ()) {
-				if (!DrawImage (hDC, pInfo->sSelectedImage)) {
+				if (!DrawImage (hDC, pInfo->sSelectedImage.str_view ())) {
 				} else return;
 			}
 		}
 		if ((m_uButtonState & UISTATE_HOT) != 0) {
 			if (!pInfo->sHotImage.empty ()) {
-				if (!DrawImage (hDC, pInfo->sHotImage)) {
+				if (!DrawImage (hDC, pInfo->sHotImage.str_view ())) {
 				} else return;
 			}
 		}
 
 		if (!m_sBkImage.empty ()) {
 			if (!pInfo->bAlternateBk || m_iIndex % 2 == 0) {
-				if (!DrawImage (hDC, m_sBkImage)) {
+				if (!DrawImage (hDC, m_sBkImage.str_view ())) {
 				}
 			}
 		}
 
 		if (m_sBkImage.empty ()) {
 			if (!pInfo->sBkImage.empty ()) {
-				if (!DrawImage (hDC, pInfo->sBkImage)) {
+				if (!DrawImage (hDC, pInfo->sBkImage.str_view ())) {
 				} else return;
 			}
 		}
@@ -1926,16 +1926,16 @@ namespace DuiLib {
 	IMPLEMENT_DUICONTROL (CListLabelElementUI)
 
 	CListLabelElementUI::CListLabelElementUI () { SetMaxHeight (20); }
-	CListLabelElementUI::CListLabelElementUI (string_view_t text, int height) {
+	CListLabelElementUI::CListLabelElementUI (faw::string_view_t text, int height) {
 		SetText (text);
 		SetMaxHeight (height);
 	}
 
-	string_view_t CListLabelElementUI::GetClass () const {
+	faw::string_view_t CListLabelElementUI::GetClass () const {
 		return _T ("ListLabelElementUI");
 	}
 
-	LPVOID CListLabelElementUI::GetInterface (string_view_t pstrName) {
+	LPVOID CListLabelElementUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_LISTLABELELEMENT) return static_cast<CListLabelElementUI*>(this);
 		return CListElementUI::GetInterface (pstrName);
 	}
@@ -1999,7 +1999,7 @@ namespace DuiLib {
 
 	SIZE CListLabelElementUI::EstimateSize (SIZE szAvailable) {
 		if (!m_pOwner) return { 0, 0 };
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 
 		TListInfoUI* pInfo = m_pOwner->GetListInfo ();
 		SIZE cXY = m_cxyFixed;
@@ -2012,9 +2012,9 @@ namespace DuiLib {
 			RECT rcText = { 0, 0, 9999, cXY.cy };
 			if (pInfo->bShowHtml) {
 				int nLinks = 0;
-				CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, 0, nullptr, nullptr, nLinks, pInfo->nFont, DT_SINGLELINE | DT_CALCRECT | pInfo->uTextStyle & ~DT_RIGHT & ~DT_CENTER);
+				CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, nullptr, nullptr, nLinks, pInfo->nFont, DT_SINGLELINE | DT_CALCRECT | pInfo->uTextStyle & ~DT_RIGHT & ~DT_CENTER);
 			} else {
-				CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, 0, pInfo->nFont, DT_SINGLELINE | DT_CALCRECT | pInfo->uTextStyle & ~DT_RIGHT & ~DT_CENTER);
+				CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, pInfo->nFont, DT_SINGLELINE | DT_CALCRECT | pInfo->uTextStyle & ~DT_RIGHT & ~DT_CENTER);
 			}
 			cXY.cx = rcText.right - rcText.left + pInfo->rcTextPadding.left + pInfo->rcTextPadding.right;
 		}
@@ -2029,7 +2029,7 @@ namespace DuiLib {
 	}
 
 	void CListLabelElementUI::DrawItemText (HDC hDC, const RECT& rcItem) {
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 		if (sText.empty ()) return;
 
 		if (!m_pOwner) return;
@@ -2052,9 +2052,9 @@ namespace DuiLib {
 		rcText.bottom -= pInfo->rcTextPadding.bottom;
 
 		if (pInfo->bShowHtml)
-			CRenderEngine::DrawHtmlText (hDC, m_pManager, rcText, sText, iTextColor, nullptr, nullptr, nLinks, pInfo->nFont, pInfo->uTextStyle);
+			CRenderEngine::DrawHtmlText (hDC, m_pManager, rcText, sText.str_view (), iTextColor, nullptr, nullptr, nLinks, pInfo->nFont, pInfo->uTextStyle);
 		else
-			CRenderEngine::DrawText (hDC, m_pManager, rcText, sText, iTextColor, pInfo->nFont, pInfo->uTextStyle);
+			CRenderEngine::DrawText (hDC, m_pManager, rcText, sText.str_view (), iTextColor, pInfo->nFont, pInfo->uTextStyle);
 	}
 
 
@@ -2068,19 +2068,19 @@ namespace DuiLib {
 	}
 
 	CListTextElementUI::~CListTextElementUI () {
-		CDuiString* pText;
+		faw::String* pText;
 		for (int it = 0; it < m_aTexts.GetSize (); it++) {
-			pText = static_cast<CDuiString*>(m_aTexts[it]);
+			pText = static_cast<faw::String*>(m_aTexts[it]);
 			if (pText) delete pText;
 		}
 		m_aTexts.Empty ();
 	}
 
-	string_view_t CListTextElementUI::GetClass () const {
+	faw::string_view_t CListTextElementUI::GetClass () const {
 		return _T ("ListTextElementUI");
 	}
 
-	LPVOID CListTextElementUI::GetInterface (string_view_t pstrName) {
+	LPVOID CListTextElementUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_LISTTEXTELEMENT) return static_cast<CListTextElementUI*>(this);
 		return CListLabelElementUI::GetInterface (pstrName);
 	}
@@ -2089,17 +2089,17 @@ namespace DuiLib {
 		return UIFLAG_WANTRETURN | ((IsEnabled () && m_nLinks > 0) ? UIFLAG_SETCURSOR : 0);
 	}
 
-	CDuiString CListTextElementUI::GetText (int iIndex) const {
-		CDuiString* pText = static_cast<CDuiString*>(m_aTexts.GetAt (iIndex));
+	faw::String CListTextElementUI::GetText (int iIndex) const {
+		faw::String* pText = static_cast<faw::String*>(m_aTexts.GetAt (iIndex));
 		if (pText) {
 			if (!IsResourceText ())
 				return pText->c_str ();
-			return CResourceManager::GetInstance ()->GetText (*pText);
+			return CResourceManager::GetInstance ()->GetText (pText->str_view ());
 		}
 		return _T ("");
 	}
 
-	void CListTextElementUI::SetText (int iIndex, string_view_t pstrText) {
+	void CListTextElementUI::SetText (int iIndex, faw::String pstrText) {
 		if (!m_pOwner) return;
 
 		TListInfoUI* pInfo = m_pOwner->GetListInfo ();
@@ -2108,13 +2108,13 @@ namespace DuiLib {
 			m_aTexts.Add (nullptr);
 		}
 
-		CDuiString* pText = static_cast<CDuiString*>(m_aTexts[iIndex]);
+		faw::String* pText = static_cast<faw::String*>(m_aTexts[iIndex]);
 		if ((!pText && pstrText.empty ()) || (pText && *pText == pstrText)) return;
 
 		if (pText) {
 			delete pText; pText = nullptr;
 		}
-		m_aTexts.SetAt (iIndex, new CDuiString (pstrText));
+		m_aTexts.SetAt (iIndex, new faw::String (pstrText));
 
 		Invalidate ();
 	}
@@ -2124,7 +2124,7 @@ namespace DuiLib {
 		m_pOwner = static_cast<IListUI*>(pOwner->GetInterface (_T ("IList")));
 	}
 
-	CDuiString* CListTextElementUI::GetLinkContent (int iIndex) {
+	faw::String* CListTextElementUI::GetLinkContent (int iIndex) {
 		if (iIndex >= 0 && iIndex < m_nLinks) return &m_sLinks[iIndex];
 		return nullptr;
 	}
@@ -2214,23 +2214,23 @@ namespace DuiLib {
 			rcItem.top += pInfo->rcTextPadding.top;
 			rcItem.bottom -= pInfo->rcTextPadding.bottom;
 
-			CDuiString strText;
+			faw::String strText;
 			if (pCallback)
 				strText = pCallback->GetItemText (this, m_iIndex, i);
 			else
 				strText = GetText (i);
 
 			if (pInfo->bShowHtml)
-				CRenderEngine::DrawHtmlText (hDC, m_pManager, rcItem, strText, iTextColor, &m_rcLinks[m_nLinks], &m_sLinks[m_nLinks], nLinks, pInfo->nFont, pInfo->uTextStyle);
+				CRenderEngine::DrawHtmlText (hDC, m_pManager, rcItem, strText.str_view (), iTextColor, &m_rcLinks[m_nLinks], &m_sLinks[m_nLinks], nLinks, pInfo->nFont, pInfo->uTextStyle);
 			else
-				CRenderEngine::DrawText (hDC, m_pManager, rcItem, strText, iTextColor, pInfo->nFont, pInfo->uTextStyle);
+				CRenderEngine::DrawText (hDC, m_pManager, rcItem, strText.str_view (), iTextColor, pInfo->nFont, pInfo->uTextStyle);
 
 			m_nLinks += nLinks;
 			nLinks = lengthof (m_rcLinks) - m_nLinks;
 		}
 		for (int i = m_nLinks; i < lengthof (m_rcLinks); i++) {
 			::ZeroMemory (m_rcLinks + i, sizeof (RECT));
-			((CDuiString*) (m_sLinks + i))->clear ();
+			((faw::String*) (m_sLinks + i))->clear ();
 		}
 	}
 
@@ -2245,7 +2245,7 @@ namespace DuiLib {
 		m_bSelected (false),
 		m_uButtonState (0) {}
 
-	string_view_t CListContainerElementUI::GetClass () const {
+	faw::string_view_t CListContainerElementUI::GetClass () const {
 		return _T ("ListContainerElementUI");
 	}
 
@@ -2253,7 +2253,7 @@ namespace DuiLib {
 		return UIFLAG_WANTRETURN;
 	}
 
-	LPVOID CListContainerElementUI::GetInterface (string_view_t pstrName) {
+	LPVOID CListContainerElementUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == DUI_CTRL_LISTITEM) return static_cast<IListItemUI*>(this);
 		if (pstrName == DUI_CTRL_LISTCONTAINERELEMENT) return static_cast<CListContainerElementUI*>(this);
 		return CContainerUI::GetInterface (pstrName);
@@ -2452,7 +2452,7 @@ namespace DuiLib {
 		if (m_pOwner) m_pOwner->DoEvent (event); else CControlUI::DoEvent (event);
 	}
 
-	void CListContainerElementUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CListContainerElementUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("selected")) Select ();
 		//else if (pstrName == _T("expandable")) SetExpandable (FawTools::parse_bool (pstrValue));
 		else CContainerUI::SetAttribute (pstrName, pstrValue);
@@ -2489,32 +2489,32 @@ namespace DuiLib {
 
 		if (!IsEnabled ()) {
 			if (!pInfo->sDisabledImage.empty ()) {
-				if (!DrawImage (hDC, pInfo->sDisabledImage)) {
+				if (!DrawImage (hDC, pInfo->sDisabledImage.str_view ())) {
 				} else return;
 			}
 		}
 		if (IsSelected ()) {
 			if (!pInfo->sSelectedImage.empty ()) {
-				if (!DrawImage (hDC, pInfo->sSelectedImage)) {
+				if (!DrawImage (hDC, pInfo->sSelectedImage.str_view ())) {
 				} else return;
 			}
 		}
 		if ((m_uButtonState & UISTATE_HOT) != 0) {
 			if (!pInfo->sHotImage.empty ()) {
-				if (!DrawImage (hDC, pInfo->sHotImage)) {
+				if (!DrawImage (hDC, pInfo->sHotImage.str_view ())) {
 				} else return;
 			}
 		}
 		if (!m_sBkImage.empty ()) {
 			if (!pInfo->bAlternateBk || m_iIndex % 2 == 0) {
-				if (!DrawImage (hDC, m_sBkImage)) {
+				if (!DrawImage (hDC, m_sBkImage.str_view ())) {
 				}
 			}
 		}
 
 		if (m_sBkImage.empty ()) {
 			if (!pInfo->sBkImage.empty ()) {
-				if (!DrawImage (hDC, pInfo->sBkImage)) {
+				if (!DrawImage (hDC, pInfo->sBkImage.str_view ())) {
 				} else return;
 			}
 		}

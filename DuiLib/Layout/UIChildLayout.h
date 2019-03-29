@@ -10,14 +10,14 @@ namespace DuiLib {
 		CChildLayoutUI ();
 
 		void Init ();
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
-		void SetChildLayoutXML (CDuiString pXML);
-		CDuiString GetChildLayoutXML ();
-		virtual LPVOID GetInterface (string_view_t pstrName);
-		virtual string_view_t GetClass () const;
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
+		void SetChildLayoutXML (faw::String pXML);
+		faw::String GetChildLayoutXML ();
+		virtual LPVOID GetInterface (faw::string_view_t pstrName);
+		virtual faw::string_view_t GetClass () const;
 
 	private:
-		CDuiString m_pstrXMLFile;
+		faw::String m_pstrXMLFile;
 	};
 } // namespace DuiLib
 #endif // __UICHILDLAYOUT_H__

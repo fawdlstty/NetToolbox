@@ -39,9 +39,9 @@ namespace DuiLib {
 			return m_bLoadImg;
 		}
 		virtual void LoadGifImage () {
-			CDuiString sImag = m_pOwer->GetBkImage ();
+			faw::String sImag = m_pOwer->GetBkImage ();
 			m_bLoadImg = true;
-			m_pGifImage = CRenderEngine::LoadGifImageX (std::variant<UINT, string_t> (sImag), 0, 0);
+			m_pGifImage = CRenderEngine::LoadGifImageX (std::variant<UINT, faw::String> (sImag), 0, 0);
 			if (!m_pGifImage) return;
 			m_nFrameCount = m_pGifImage->GetNumFrames ();
 			m_nFramePosition = 0;
@@ -113,15 +113,15 @@ namespace DuiLib {
 			m_pImp = nullptr;
 		}
 	}
-	string_view_t CGifAnimExUI::GetClass () const {
+	faw::string_view_t CGifAnimExUI::GetClass () const {
 		return _T ("GifAnimUI");
 	}
-	LPVOID CGifAnimExUI::GetInterface (string_view_t pstrName) {
+	LPVOID CGifAnimExUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == _T ("GifAnim"))
 			return static_cast<CGifAnimExUI*>(this);
 		return CLabelUI::GetInterface (pstrName);
 	}
-	void CGifAnimExUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CGifAnimExUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("auto"))
 			m_pImp->SetAutoStart (FawTools::parse_bool (pstrValue));
 		else

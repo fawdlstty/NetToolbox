@@ -9,11 +9,11 @@ namespace DuiLib {
 
 	CLabelUI::~CLabelUI () {}
 
-	string_view_t CLabelUI::GetClass () const {
+	faw::string_view_t CLabelUI::GetClass () const {
 		return _T ("LabelUI");
 	}
 
-	LPVOID CLabelUI::GetInterface (string_view_t pstrName) {
+	LPVOID CLabelUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == _T ("Label")) return static_cast<CLabelUI*>(this);
 		return CControlUI::GetInterface (pstrName);
 	}
@@ -93,7 +93,7 @@ namespace DuiLib {
 		}
 
 		if (m_bNeedEstimateSize) {
-			CDuiString sText = GetText ();
+			faw::String sText = GetText ();
 			m_bNeedEstimateSize = false;
 			m_szAvailableLast = szAvailable;
 			m_cxyFixedLast = m_cxyFixed;
@@ -108,9 +108,9 @@ namespace DuiLib {
 						RECT rcText = { 0, 0, 9999, m_cxyFixedLast.cy };
 						if (m_bShowHtml) {
 							int nLinks = 0;
-							CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, 0, NULL, NULL, nLinks, m_iFont, DT_CALCRECT | m_uTextStyle & ~DT_RIGHT & ~DT_CENTER);
+							CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, NULL, NULL, nLinks, m_iFont, DT_CALCRECT | m_uTextStyle & ~DT_RIGHT & ~DT_CENTER);
 						} else {
-							CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, 0, m_iFont, DT_CALCRECT | m_uTextStyle & ~DT_RIGHT & ~DT_CENTER);
+							CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, m_iFont, DT_CALCRECT | m_uTextStyle & ~DT_RIGHT & ~DT_CENTER);
 						}
 						m_cxyFixedLast.cx = rcText.right - rcText.left + GetManager ()->GetDPIObj ()->Scale (m_rcTextPadding.left + m_rcTextPadding.right);
 					}
@@ -123,9 +123,9 @@ namespace DuiLib {
 						rcText.right -= m_rcTextPadding.right;
 						if (m_bShowHtml) {
 							int nLinks = 0;
-							CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, 0, NULL, NULL, nLinks, m_iFont, DT_CALCRECT | m_uTextStyle & ~DT_RIGHT & ~DT_CENTER);
+							CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, NULL, NULL, nLinks, m_iFont, DT_CALCRECT | m_uTextStyle & ~DT_RIGHT & ~DT_CENTER);
 						} else {
-							CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText, 0, m_iFont, DT_CALCRECT | m_uTextStyle & ~DT_RIGHT & ~DT_CENTER);
+							CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, m_iFont, DT_CALCRECT | m_uTextStyle & ~DT_RIGHT & ~DT_CENTER);
 						}
 						m_cxyFixedLast.cy = rcText.bottom - rcText.top + GetManager ()->GetDPIObj ()->Scale (m_rcTextPadding.top + m_rcTextPadding.bottom);
 					}
@@ -147,30 +147,30 @@ namespace DuiLib {
 		CControlUI::DoEvent (event);
 	}
 
-	void CLabelUI::SetAttribute (string_view_t pstrName, string_view_t pstrValue) {
+	void CLabelUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
 		if (pstrName == _T ("align")) {
-			if (pstrValue.find (_T ("left")) != string_t::npos) {
+			if (pstrValue.find (_T ("left")) != faw::String::_npos) {
 				m_uTextStyle &= ~(DT_CENTER | DT_RIGHT);
 				m_uTextStyle |= DT_LEFT;
 			}
-			if (pstrValue.find (_T ("center")) != string_t::npos) {
+			if (pstrValue.find (_T ("center")) != faw::String::_npos) {
 				m_uTextStyle &= ~(DT_LEFT | DT_RIGHT);
 				m_uTextStyle |= DT_CENTER;
 			}
-			if (pstrValue.find (_T ("right")) != string_t::npos) {
+			if (pstrValue.find (_T ("right")) != faw::String::_npos) {
 				m_uTextStyle &= ~(DT_LEFT | DT_CENTER);
 				m_uTextStyle |= DT_RIGHT;
 			}
 		} else if (pstrName == _T ("valign")) {
-			if (pstrValue.find (_T ("top")) != string_t::npos) {
+			if (pstrValue.find (_T ("top")) != faw::String::_npos) {
 				m_uTextStyle &= ~(DT_BOTTOM | DT_VCENTER | DT_WORDBREAK);
 				m_uTextStyle |= (DT_TOP | DT_SINGLELINE);
 			}
-			if (pstrValue.find (_T ("vcenter")) != string_t::npos) {
+			if (pstrValue.find (_T ("vcenter")) != faw::String::_npos) {
 				m_uTextStyle &= ~(DT_TOP | DT_BOTTOM | DT_WORDBREAK);
 				m_uTextStyle |= (DT_VCENTER | DT_SINGLELINE);
 			}
-			if (pstrValue.find (_T ("bottom")) != string_t::npos) {
+			if (pstrValue.find (_T ("bottom")) != faw::String::_npos) {
 				m_uTextStyle &= ~(DT_TOP | DT_VCENTER | DT_WORDBREAK);
 				m_uTextStyle |= (DT_BOTTOM | DT_SINGLELINE);
 			}
@@ -224,19 +224,19 @@ namespace DuiLib {
 		rc.top += _rcTextPadding.top;
 		rc.bottom -= _rcTextPadding.bottom;
 
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 		if (sText.empty ()) return;
 		int nLinks = 0;
 		if (IsEnabled ()) {
 			if (m_bShowHtml)
-				CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText, m_dwTextColor, nullptr, nullptr, nLinks, m_iFont, m_uTextStyle);
+				CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText.str_view (), m_dwTextColor, nullptr, nullptr, nLinks, m_iFont, m_uTextStyle);
 			else
-				CRenderEngine::DrawText (hDC, m_pManager, rc, sText, m_dwTextColor, m_iFont, m_uTextStyle);
+				CRenderEngine::DrawText (hDC, m_pManager, rc, sText.str_view (), m_dwTextColor, m_iFont, m_uTextStyle);
 		} else {
 			if (m_bShowHtml)
-				CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText, m_dwDisabledTextColor, nullptr, nullptr, nLinks, m_iFont, m_uTextStyle);
+				CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText.str_view (), m_dwDisabledTextColor, nullptr, nullptr, nLinks, m_iFont, m_uTextStyle);
 			else
-				CRenderEngine::DrawText (hDC, m_pManager, rc, sText, m_dwDisabledTextColor, m_iFont, m_uTextStyle);
+				CRenderEngine::DrawText (hDC, m_pManager, rc, sText.str_view (), m_dwDisabledTextColor, m_iFont, m_uTextStyle);
 		}
 	}
 
@@ -256,7 +256,7 @@ namespace DuiLib {
 		m_bAutoCalcHeight = bAutoCalcHeight;
 	}
 
-	void CLabelUI::SetText (string_view_t pstrText) {
+	void CLabelUI::SetText (faw::String pstrText) {
 		CControlUI::SetText (pstrText);
 		if (GetAutoCalcWidth () || GetAutoCalcHeight ()) {
 			NeedParentUpdate ();

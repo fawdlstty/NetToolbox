@@ -32,11 +32,11 @@ namespace DuiLib {
 		return CS_DBLCLKS;
 	}
 
-	CControlUI* WindowImplBase::CreateControl (string_view_t pstrClass) {
+	CControlUI* WindowImplBase::CreateControl (faw::string_view_t pstrClass) {
 		return nullptr;
 	}
 
-	string_view_t WindowImplBase::QueryControlText (string_view_t lpstrId, string_view_t lpstrType) {
+	faw::string_view_t WindowImplBase::QueryControlText (faw::string_view_t lpstrId, faw::string_view_t lpstrType) {
 		return nullptr;
 	}
 
@@ -82,18 +82,18 @@ namespace DuiLib {
 		if (!pControl || pControl->IsDynamic (pt))
 			return FALSE;
 
-		CDuiString strClassName;
-		static std::vector<CDuiString> vctStaticName { _T ("controlui"), _T ("textui"), _T ("labelui"), _T ("containerui"), _T ("horizontallayoutui"), _T ("verticallayoutui"), _T("tablayoutui"), _T ("childlayoutui"), _T ("dialoglayoutui"), _T ("progresscontainerui") };
+		faw::String strClassName;
+		static std::vector<faw::String> vctStaticName { _T ("controlui"), _T ("textui"), _T ("labelui"), _T ("containerui"), _T ("horizontallayoutui"), _T ("verticallayoutui"), _T("tablayoutui"), _T ("childlayoutui"), _T ("dialoglayoutui"), _T ("progresscontainerui") };
 
 		strClassName = pControl->GetClass ();
-		strClassName.MakeLower ();
+		strClassName.lower_self ();
 		if (vctStaticName.end () != std::find (vctStaticName.begin (), vctStaticName.end (), strClassName)) {
 			CControlUI* pParent = pControl->GetParent ();
 			while (pParent) {
 				if (pParent->IsDynamic (pt))
 					return FALSE;
 				strClassName = pParent->GetClass ();
-				strClassName.MakeLower ();
+				strClassName.lower_self ();
 				if (vctStaticName.end () == std::find (vctStaticName.begin (), vctStaticName.end (), strClassName))
 					return FALSE;
 
@@ -243,18 +243,18 @@ namespace DuiLib {
 		// 创建主窗口
 		CControlUI* pRoot = nullptr;
 		CDialogBuilder builder;
-		CDuiString sSkinType = GetSkinType ();
-		std::variant<UINT, string_t> xml;
+		faw::String sSkinType = GetSkinType ();
+		std::variant<UINT, faw::String> xml;
 		if (!sSkinType.empty ()) {
-			std::variant<UINT, string_t> xml = FawTools::parse_dec (GetSkinFile ());
-			pRoot = builder.Create (xml, sSkinType, this, &m_pm);
+			std::variant<UINT, faw::String> xml = FawTools::parse_dec (GetSkinFile ());
+			pRoot = builder.Create (xml, sSkinType.str_view (), this, &m_pm);
 		} else {
-			std::variant<UINT, string_t> xml = string_t (GetSkinFile ());
+			std::variant<UINT, faw::String> xml = faw::String (GetSkinFile ());
 			pRoot = builder.Create (xml, _T (""), this, &m_pm);
 		}
 
 		if (!pRoot) {
-			CDuiString sError = _T ("加载资源文件失败：");
+			faw::String sError = _T ("加载资源文件失败：");
 			sError += GetSkinFile ();
 			MessageBox (nullptr, sError.c_str (), _T ("Duilib"), MB_OK | MB_ICONERROR);
 			ExitProcess (1);
@@ -362,7 +362,7 @@ namespace DuiLib {
 	}
 
 	void WindowImplBase::OnClick (TNotifyUI& msg) {
-		CDuiString sCtrlName = msg.pSender->GetName ();
+		faw::String sCtrlName = msg.pSender->GetName ();
 		if (sCtrlName == _T ("closebtn")) {
 			Close ();
 			return;

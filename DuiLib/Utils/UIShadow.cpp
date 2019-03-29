@@ -107,6 +107,7 @@ namespace DuiLib {
 			break;
 		}
 		case WM_WINDOWPOSCHANGED:
+		{
 			LPWINDOWPOS pWndPos = (LPWINDOWPOS) lParam;
 			GetWindowRect (hwnd, &WndRect);
 			if (pThis->m_bIsImageMode) {
@@ -126,6 +127,7 @@ namespace DuiLib {
 					pThis->m_Status &= ~(SS_VISABLE | SS_PARENTVISIBLE);
 				}
 			}
+		}
 			break;
 		case WM_MOVE:
 			if (pThis->m_Status & SS_VISABLE) {
@@ -270,7 +272,7 @@ namespace DuiLib {
 		}
 		if (m_bIsImageMode) {
 			RECT rcPaint = { 0, 0, nShadWndWid, nShadWndHei };
-			const TImageInfo* data = m_pManager->GetImageEx (m_sShadowImage, nullptr, 0);
+			const TImageInfo* data = m_pManager->GetImageEx (m_sShadowImage.str_view (), nullptr, 0);
 			if (!data) return;
 			RECT rcBmpPart = { 0 };
 			rcBmpPart.right = data->nX;
@@ -592,7 +594,7 @@ namespace DuiLib {
 		return true;
 	}
 
-	bool CShadowUI::SetImage (string_view_t szImage) {
+	bool CShadowUI::SetImage (faw::string_view_t szImage) {
 		if (!szImage.empty ())
 			return false;
 
@@ -617,7 +619,7 @@ namespace DuiLib {
 
 	bool CShadowUI::CopyShadow (CShadowUI* pShadow) {
 		if (m_bIsImageMode) {
-			pShadow->SetImage (m_sShadowImage);
+			pShadow->SetImage (m_sShadowImage.str_view ());
 			pShadow->SetShadowCorner (m_rcShadowCorner);
 			pShadow->SetSize ((int) m_nSize);
 		} else {

@@ -12,14 +12,14 @@ namespace DuiLib {
 		DECLARE_DUICONTROL (CIPAddressExUI)
 	public:
 		CIPAddressExUI ();
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 		UINT GetControlFlags () const;
 		void DoEvent (TEventUI& event);
 		void PaintText (HDC hDC);
 
 		void SetIP (LPCWSTR lpIP);
-		CDuiString GetIP ();
+		faw::String GetIP ();
 
 	private:
 		void CharToInt ();
@@ -36,7 +36,7 @@ namespace DuiLib {
 		int			m_nActiveSection	= 0;
 
 		TCHAR		m_chNum;
-		CDuiString	m_strNum;
+		faw::String	m_strNum;
 	};
 }
 #endif // __UIIPADDRESSEX_H__

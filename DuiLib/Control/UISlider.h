@@ -9,9 +9,9 @@ namespace DuiLib {
 	public:
 		CSliderUI ();
 
-		string_view_t GetClass () const;
+		faw::string_view_t GetClass () const;
 		UINT GetControlFlags () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		LPVOID GetInterface (faw::string_view_t pstrName);
 
 		void SetEnabled (bool bEnable = true);
 
@@ -19,15 +19,15 @@ namespace DuiLib {
 		void SetChangeStep (int step);
 		void SetThumbSize (SIZE szXY);
 		RECT GetThumbRect () const;
-		string_view_t GetThumbImage () const;
-		void SetThumbImage (string_view_t pStrImage);
-		string_view_t GetThumbHotImage () const;
-		void SetThumbHotImage (string_view_t pStrImage);
-		string_view_t GetThumbPushedImage () const;
-		void SetThumbPushedImage (string_view_t pStrImage);
+		faw::string_view_t GetThumbImage () const;
+		void SetThumbImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetThumbHotImage () const;
+		void SetThumbHotImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetThumbPushedImage () const;
+		void SetThumbPushedImage (faw::string_view_t pStrImage);
 
 		void DoEvent (TEventUI& event);
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 		void PaintForeImage (HDC hDC);
 
 		void SetValue (int nValue);
@@ -38,11 +38,11 @@ namespace DuiLib {
 		UINT		m_uButtonState	= 0;
 		int			m_nStep			= 1;
 
-		CDuiString	m_sThumbImage;
-		CDuiString	m_sThumbHotImage;
-		CDuiString	m_sThumbPushedImage;
+		faw::String	m_sThumbImage;
+		faw::String	m_sThumbHotImage;
+		faw::String	m_sThumbPushedImage;
 
-		CDuiString	m_sImageModify;
+		faw::String	m_sImageModify;
 		bool		m_bSendMove		= false;
 	};
 }

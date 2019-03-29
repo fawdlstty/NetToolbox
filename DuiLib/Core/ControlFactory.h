@@ -2,12 +2,12 @@
 #include <map>
 namespace DuiLib {
 	typedef CControlUI* (*CreateClass)();
-	typedef std::map<CDuiString, CreateClass> MAP_DUI_CTRATECLASS;
+	typedef std::map<faw::String, CreateClass> MAP_DUI_CTRATECLASS;
 
 	class UILIB_API CControlFactory {
 	public:
-		CControlUI* CreateControl (CDuiString strClassName);
-		void RegistControl (CDuiString strClassName, CreateClass pFunc);
+		CControlUI* CreateControl (faw::String strClassName);
+		void RegistControl (faw::String strClassName, CreateClass pFunc);
 
 		static CControlFactory* GetInstance ();
 		void Release ();

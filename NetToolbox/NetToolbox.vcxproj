@@ -321,14 +321,12 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="Settings.hpp" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="tools\tool_DnsLookup.hpp" />
-    <ClInclude Include="tools\tool_Encoding.hpp" />
     <ClInclude Include="tools\tool_Formatting.hpp" />
     <ClInclude Include="tools\tool_Gdip.hpp" />
     <ClInclude Include="tools\tool_Gzip.hpp" />
     <ClInclude Include="tools\tool_MakeAvi.hpp" />
     <ClInclude Include="tools\tool_Mutex.hpp" />
     <ClInclude Include="tools\tool_NetInfo.hpp" />
-    <ClInclude Include="tools\tool_Path.hpp" />
     <ClInclude Include="tools\tool_PE.hpp" />
     <ClInclude Include="tools\tool_Priv.hpp" />
     <ClInclude Include="tools\tool_Process.hpp" />

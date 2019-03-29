@@ -16,8 +16,7 @@
 #include <Windows.h>
 #include <ShlObj.h>
 
-#include "tool_String.hpp"
-#include "tool_Path.hpp"
+#include "tools/tool_String.hpp"
 
 
 
@@ -32,8 +31,8 @@ public:
 	static bool adjust_restart (size_t sel1, size_t sel2) {
 		if (IDOK != ::MessageBox (NULL, _T ("权限不足，是否以管理员权限重新打开程序？"), _T ("提示"), MB_ICONQUESTION | MB_OKCANCEL))
 			return false;
-		string_t str_param = tool_StringT::format (_T ("-jump %d,%d"), sel1, sel2);
-		return (size_t) ::ShellExecute (NULL, _T ("runas"), tool_Path::get_args ()[0].c_str (), str_param.c_str (), _T (""), SW_SHOWNORMAL) > 32;
+		faw::String str_param = faw::String::format (_T ("-jump %d,%d"), sel1, sel2);
+		return (size_t) ::ShellExecute (NULL, _T ("runas"), faw::Directory::get_current_file ().c_str (), str_param.c_str (), _T (""), SW_SHOWNORMAL) > 32;
 	}
 
 	// 提升调试模式权限

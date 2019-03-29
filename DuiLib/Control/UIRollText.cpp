@@ -11,11 +11,11 @@ namespace DuiLib {
 		m_pManager->KillTimer (this, ROLLTEXT_TIMERID);
 	}
 
-	string_view_t CRollTextUI::GetClass () const {
+	faw::string_view_t CRollTextUI::GetClass () const {
 		return _T ("RollTextUI");
 	}
 
-	LPVOID CRollTextUI::GetInterface (string_view_t pstrName) {
+	LPVOID CRollTextUI::GetInterface (faw::string_view_t pstrName) {
 		if (pstrName == _T ("RollText")) return static_cast<CRollTextUI*>(this);
 		return CLabelUI::GetInterface (pstrName);
 	}
@@ -50,7 +50,7 @@ namespace DuiLib {
 		m_nText_W_H = 0;			//布局变化重新计算
 	}
 
-	void CRollTextUI::SetText (string_view_t pstrText) {
+	void CRollTextUI::SetText (faw::String pstrText) {
 		CLabelUI::SetText (pstrText);
 		m_nText_W_H = 0;			//文本变化重新计算
 	}
@@ -70,7 +70,7 @@ namespace DuiLib {
 		if (m_dwTextColor == 0) m_dwTextColor = m_pManager->GetDefaultFontColor ();
 		if (m_dwDisabledTextColor == 0) m_dwDisabledTextColor = m_pManager->GetDefaultDisabledColor ();
 		DWORD dwTextColor = IsEnabled () ? m_dwTextColor : m_dwDisabledTextColor;
-		CDuiString sText = GetText ();
+		faw::String sText = GetText ();
 		if (sText.empty ()) return;
 		RECT rcTextPadding = GetTextPadding ();
 		RECT  rcClient;
@@ -120,9 +120,9 @@ namespace DuiLib {
 
 		if (m_bShowHtml) {
 			int nLinks = 0;
-			CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText, dwTextColor, nullptr, nullptr, nLinks, m_iFont, uTextStyle);
+			CRenderEngine::DrawHtmlText (hDC, m_pManager, rc, sText.str_view (), dwTextColor, nullptr, nullptr, nLinks, m_iFont, uTextStyle);
 		} else {
-			CRenderEngine::DrawText (hDC, m_pManager, rc, sText, dwTextColor, m_iFont, uTextStyle);
+			CRenderEngine::DrawText (hDC, m_pManager, rc, sText.str_view (), dwTextColor, m_iFont, uTextStyle);
 		}
 
 		if (m_nText_W_H == 0) {

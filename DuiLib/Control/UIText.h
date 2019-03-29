@@ -10,11 +10,11 @@ namespace DuiLib {
 		CTextUI ();
 		virtual ~CTextUI ();
 
-		string_view_t GetClass () const;
+		faw::string_view_t GetClass () const;
 		UINT GetControlFlags () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		LPVOID GetInterface (faw::string_view_t pstrName);
 
-		CDuiString* GetLinkContent (int iIndex);
+		faw::String* GetLinkContent (int iIndex);
 
 		void DoEvent (TEventUI& event);
 		SIZE EstimateSize (SIZE szAvailable);
@@ -25,7 +25,7 @@ namespace DuiLib {
 		enum { MAX_LINK = 8 };
 		int			m_nLinks			= 0;
 		RECT		m_rcLinks[MAX_LINK];
-		CDuiString	m_sLinks[MAX_LINK];
+		faw::String	m_sLinks[MAX_LINK];
 		int			m_nHoverLink		= -1;
 	};
 

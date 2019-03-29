@@ -15,7 +15,8 @@
 
 #include <zlib.h>
 #include <string>
-#include "tool_Encoding.hpp"
+#pragma comment (lib, "zlib.lib")
+//#include "tools/faw::Encoding.hpp"
 
 #define CHUNK 16384
 #define windowBits 15

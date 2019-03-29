@@ -56,8 +56,8 @@ namespace DuiLib {
 
 	CControlFactory::~CControlFactory () {}
 
-	CControlUI* CControlFactory::CreateControl (CDuiString strClassName) {
-		strClassName.MakeLower ();
+	CControlUI* CControlFactory::CreateControl (faw::String strClassName) {
+		strClassName.lower_self ();
 		MAP_DUI_CTRATECLASS::iterator iter = m_mapControl.find (strClassName);
 		if (iter == m_mapControl.end ()) {
 			return nullptr;
@@ -66,8 +66,8 @@ namespace DuiLib {
 		}
 	}
 
-	void CControlFactory::RegistControl (CDuiString strClassName, CreateClass pFunc) {
-		strClassName.MakeLower ();
+	void CControlFactory::RegistControl (faw::String strClassName, CreateClass pFunc) {
+		strClassName.lower_self ();
 		m_mapControl.insert (MAP_DUI_CTRATECLASS::value_type (strClassName, pFunc));
 	}
 

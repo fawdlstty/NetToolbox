@@ -15,14 +15,14 @@ namespace DuiLib {
 	public:
 		CComboUI ();
 
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 
 		void DoInit ();
 		UINT GetControlFlags () const;
 
-		CDuiString GetText () const;
-		void SetText (string_view_t pstrText) override;
+		faw::String GetText () const;
+		void SetText (faw::String pstrText) override;
 		void SetEnabled (bool bEnable = true);
 
 		void SetTextStyle (UINT uStyle);
@@ -40,8 +40,8 @@ namespace DuiLib {
 		bool IsShowShadow ();
 		void SetShowShadow (bool bShow = true);
 
-		string_view_t GetDropBoxAttributeList ();
-		void SetDropBoxAttributeList (string_view_t pstrList);
+		faw::string_view_t GetDropBoxAttributeList ();
+		void SetDropBoxAttributeList (faw::string_view_t pstrList);
 		SIZE GetDropBoxSize () const;
 		void SetDropBoxSize (SIZE szDropBox);
 
@@ -61,16 +61,16 @@ namespace DuiLib {
 
 		bool Activate ();
 
-		string_view_t GetNormalImage () const;
-		void SetNormalImage (string_view_t pStrImage);
-		string_view_t GetHotImage () const;
-		void SetHotImage (string_view_t pStrImage);
-		string_view_t GetPushedImage () const;
-		void SetPushedImage (string_view_t pStrImage);
-		string_view_t GetFocusedImage () const;
-		void SetFocusedImage (string_view_t pStrImage);
-		string_view_t GetDisabledImage () const;
-		void SetDisabledImage (string_view_t pStrImage);
+		faw::string_view_t GetNormalImage () const;
+		void SetNormalImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetHotImage () const;
+		void SetHotImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetPushedImage () const;
+		void SetPushedImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetFocusedImage () const;
+		void SetFocusedImage (faw::string_view_t pStrImage);
+		faw::string_view_t GetDisabledImage () const;
+		void SetDisabledImage (faw::string_view_t pStrImage);
 
 		bool GetScrollSelect ();
 		void SetScrollSelect (bool bScrollSelect);
@@ -83,28 +83,28 @@ namespace DuiLib {
 		void SetItemTextColor (DWORD dwTextColor);
 		DWORD GetItemBkColor () const;
 		void SetItemBkColor (DWORD dwBkColor);
-		string_view_t GetItemBkImage () const;
-		void SetItemBkImage (string_view_t pStrImage);
+		faw::string_view_t GetItemBkImage () const;
+		void SetItemBkImage (faw::string_view_t pStrImage);
 		bool IsAlternateBk () const;
 		void SetAlternateBk (bool bAlternateBk);
 		DWORD GetSelectedItemTextColor () const;
 		void SetSelectedItemTextColor (DWORD dwTextColor);
 		DWORD GetSelectedItemBkColor () const;
 		void SetSelectedItemBkColor (DWORD dwBkColor);
-		string_view_t GetSelectedItemImage () const;
-		void SetSelectedItemImage (string_view_t pStrImage);
+		faw::string_view_t GetSelectedItemImage () const;
+		void SetSelectedItemImage (faw::string_view_t pStrImage);
 		DWORD GetHotItemTextColor () const;
 		void SetHotItemTextColor (DWORD dwTextColor);
 		DWORD GetHotItemBkColor () const;
 		void SetHotItemBkColor (DWORD dwBkColor);
-		string_view_t GetHotItemImage () const;
-		void SetHotItemImage (string_view_t pStrImage);
+		faw::string_view_t GetHotItemImage () const;
+		void SetHotItemImage (faw::string_view_t pStrImage);
 		DWORD GetDisabledItemTextColor () const;
 		void SetDisabledItemTextColor (DWORD dwTextColor);
 		DWORD GetDisabledItemBkColor () const;
 		void SetDisabledItemBkColor (DWORD dwBkColor);
-		string_view_t GetDisabledItemImage () const;
-		void SetDisabledItemImage (string_view_t pStrImage);
+		faw::string_view_t GetDisabledItemImage () const;
+		void SetDisabledItemImage (faw::string_view_t pStrImage);
 		DWORD GetItemLineColor () const;
 		void SetItemLineColor (DWORD dwLineColor);
 		bool IsItemShowHtml ();
@@ -114,7 +114,7 @@ namespace DuiLib {
 		void SetPos (RECT rc, bool bNeedInvalidate = true);
 		void Move (SIZE szOffset, bool bNeedInvalidate = true);
 		void DoEvent (TEventUI& event);
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 
 		bool DoPaint (HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 		void PaintText (HDC hDC);
@@ -131,15 +131,15 @@ namespace DuiLib {
 		RECT		m_rcTextPadding			= { 0 };
 		bool		m_bShowHtml				= false;
 		bool		m_bShowShadow;
-		CDuiString	m_sDropBoxAttributes;
+		faw::String	m_sDropBoxAttributes;
 		SIZE		m_szDropBox				= { 0, 150 };
 		UINT		m_uButtonState			= 0;
 
-		CDuiString	m_sNormalImage;
-		CDuiString	m_sHotImage;
-		CDuiString	m_sPushedImage;
-		CDuiString	m_sFocusedImage;
-		CDuiString	m_sDisabledImage;
+		faw::String	m_sNormalImage;
+		faw::String	m_sHotImage;
+		faw::String	m_sPushedImage;
+		faw::String	m_sFocusedImage;
+		faw::String	m_sDisabledImage;
 
 		bool		m_bScrollSelect			= true;
 		TListInfoUI	m_ListInfo;

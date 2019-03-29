@@ -12,7 +12,6 @@
 #include "page_base.hpp"
 #include "../tools/tool_String.hpp"
 #include "../tools/tool_SerialPort.hpp"
-#include "../tools/tool_Encoding.hpp"
 
 
 
@@ -81,7 +80,7 @@ public:
 		s_vSp = _vSp;
 		m_serial_name->RemoveAll ();
 		for (auto name : s_vSp) {
-			m_serial_name->Add (new CListLabelElementUI (tool_Encoding::gb18030_to_T (name).c_str (), 20));
+			m_serial_name->Add (new CListLabelElementUI (faw::Encoding::gb18030_to_T (name).c_str (), 20));
 		}
 		if (s_vSp.size () > 0)
 			m_serial_name->SelectItem (0);
@@ -91,8 +90,8 @@ public:
 	bool on_send () {
 		if (m_tmp_port_name == "")
 			return false;
-		CDuiString data = m_serial_senddata->GetText ();
-		std::string _data = tool_Encoding::T_to_gb18030 (data);
+		 faw::String data = m_serial_senddata->GetText ();
+		std::string _data = data.stra ();
 		if (!append_data (SerialDataTypeSend, _data, !m_serial_hex->IsSelected ()))
 			return false;
 		if (m_serial_newline->IsSelected ())
@@ -113,12 +112,12 @@ public:
 
 	bool OnClick (TNotifyUI& msg) override {
 		try {
-			CDuiString name = msg.pSender->GetName ();
+			 faw::String name = msg.pSender->GetName ();
 			if (name == _T ("serial_btnopen")) {
 				if (!m_serial.is_open () && m_tmp_port_name == "") {
-					m_tmp_port_name = tool_Encoding::T_to_gb18030 (m_serial_name->GetText ());
-					std::string _parity = tool_Encoding::T_to_gb18030 (m_serial_parity->GetText ());
-					std::string _stopbits = tool_Encoding::T_to_gb18030 (m_serial_stopbits->GetText ());
+					m_tmp_port_name = m_serial_name->GetText ().stra ();
+					std::string _parity = m_serial_parity->GetText ().stra ();
+					std::string _stopbits = m_serial_stopbits->GetText ().stra ();
 					if (m_tmp_port_name == "") {
 						m_parent->invoke ([this] () -> LRESULT {
 							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("打开串口失败：未选择可用的串口"));
@@ -156,19 +155,19 @@ public:
 			}
 			return false;
 		} catch (std::exception &e) {
-			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, tool_Encoding::gb18030_to_T (e.what ()).c_str ());
+			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, faw::Encoding::gb18030_to_T (e.what ()).c_str ());
 			return true;
 		}
 	}
 
 	bool OnSelectChanged (TNotifyUI& msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		 faw::String name = msg.pSender->GetName ();
 		if (name == _T ("serial_hex")) {
 			bool is_source = !m_serial_hex->IsSelected ();
 			for (size_t i = 0; i < m_data.size (); ++i) {
 				auto[type, source, hex] = m_data[i];
 				if (type != SerialDataTypeInfo) {
-					BindTextUI ctrl { tool_StringT::format (_T ("serial_cnt_%d"), i) };
+					BindTextUI ctrl { faw::String::format (_T ("serial_cnt_%d"), i) };
 					ctrl->SetText ((is_source ? source : hex).c_str ());
 				}
 			}
@@ -185,7 +184,7 @@ public:
 	}
 
 	bool OnTimer (TNotifyUI& msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		 faw::String name = msg.pSender->GetName ();
 		if (name == _T ("serial_repeat")) {
 			on_send ();
 			return true;
@@ -220,11 +219,11 @@ protected:
 				data += c;
 			}
 		}
-		string_t _data = tool_Encoding::gb18030_to_T (data).c_str ();
-		string_t _hex_data = tool_Encoding::gb18030_to_T (hex_data).c_str ();
+		faw::String _data = faw::Encoding::gb18030_to_T (data).c_str ();
+		faw::String _hex_data = faw::Encoding::gb18030_to_T (hex_data).c_str ();
 		m_data.push_back ({ type, _data, _hex_data });
 		auto ctrl = new CTextUI ();
-		ctrl->SetName (tool_StringT::format (_T ("serial_cnt_%d"), m_data.size () - 1).c_str ());
+		ctrl->SetName (faw::String::format (_T ("serial_cnt_%d"), m_data.size () - 1).c_str ());
 		ctrl->SetText ((m_serial_hex->IsSelected () && type != SerialDataTypeInfo ? _hex_data : _data).c_str ());
 		ctrl->SetBkColor (0xFFCCCCCC);
 		ctrl->SetAutoCalcWidth (true);
@@ -284,7 +283,7 @@ protected:
 	tool_SerialPort			m_serial;
 	std::string				m_tmp_port_name			= "";
 	bool					m_repeat_timer			= false;
-	std::vector<std::tuple<SerialDataType, string_t, string_t>>	m_data;
+	std::vector<std::tuple<SerialDataType, faw::String, faw::String>>	m_data;
 };
 
 #endif //__PAGE_SERIAL_PORT_HPP__

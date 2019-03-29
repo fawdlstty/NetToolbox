@@ -18,8 +18,8 @@ namespace DuiLib {
 		virtual ~CTreeNodeUI (void);
 
 	public:
-		string_view_t GetClass () const;
-		LPVOID GetInterface (string_view_t pstrName);
+		faw::string_view_t GetClass () const;
+		LPVOID GetInterface (faw::string_view_t pstrName);
 		void DoEvent (TEventUI& event);
 		void Invalidate ();
 		bool Select (bool bSelect = true);
@@ -31,8 +31,8 @@ namespace DuiLib {
 
 		void SetVisibleTag (bool _IsVisible);
 		bool GetVisibleTag ();
-		void SetItemText (string_view_t pstrValue);
-		CDuiString GetItemText ();
+		void SetItemText (faw::string_view_t pstrValue);
+		faw::String GetItemText ();
 		void CheckBoxSelected (bool _Selected);
 		bool IsCheckBoxSelected () const;
 		bool IsHasChild () const;
@@ -57,7 +57,7 @@ namespace DuiLib {
 		DWORD GetSelItemTextColor () const;
 		void SetSelItemHotTextColor (DWORD _dwSelHotItemTextColor);
 		DWORD GetSelItemHotTextColor () const;
-		void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 
 		CStdPtrArray GetTreeNodes ();
 		int			 GetTreeIndex ();
@@ -110,8 +110,8 @@ namespace DuiLib {
 		virtual ~CTreeViewUI (void);
 
 	public:
-		virtual string_view_t GetClass () const;
-		virtual LPVOID	GetInterface (string_view_t pstrName);
+		virtual faw::string_view_t GetClass () const;
+		virtual LPVOID	GetInterface (faw::string_view_t pstrName);
 
 		virtual UINT GetListType ();
 		virtual bool Add (CTreeNodeUI* pControl);
@@ -137,7 +137,7 @@ namespace DuiLib {
 		virtual void SetSelItemTextColor (DWORD _dwSelItemTextColor);
 		virtual void SetSelItemHotTextColor (DWORD _dwSelHotItemTextColor);
 
-		virtual void SetAttribute (string_view_t pstrName, string_view_t pstrValue);
+		virtual void SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue);
 	private:
 		UINT m_uItemMinWidth;
 		bool m_bVisibleFolderBtn;

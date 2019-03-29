@@ -6,7 +6,6 @@
 #include <gdiplus.h>
 
 #include "page_base.hpp"
-#include "../tools/tool_Path.hpp"
 #include "../tools/tool_String.hpp"
 #include "../tools/tool_Gdip.hpp"
 #include "../tools/tool_Zoomer.hpp"
@@ -23,8 +22,8 @@ public:
 		}
 	}
 
-	string_view_t GetWindowClassName () const override { return _T ("NetToolbox"); }
-	string_view_t GetSkinFile () override { return _T ("scr2gif.xml"); }
+	faw::string_view_t GetWindowClassName () const override { return _T ("NetToolbox"); }
+	faw::string_view_t GetSkinFile () override { return _T ("scr2gif.xml"); }
 	void InitWindow () override {
 		m_init = true;
 		RECT rc { 0 };
@@ -35,14 +34,14 @@ public:
 	LRESULT OnSize (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override {
 		if (m_init) {
 			POINT pt = { GET_X_LPARAM (lParam), GET_Y_LPARAM (lParam) };
-			m_gifw_width->SetText (tool_StringT::format (_T ("%d"), pt.x - 24));
-			m_gifw_height->SetText (tool_StringT::format (_T ("%d"), pt.y - 64));
+			m_gifw_width->SetText (faw::String::format (_T ("%d"), pt.x - 24));
+			m_gifw_height->SetText (faw::String::format (_T ("%d"), pt.y - 64));
 		}
 		return WindowImplBase::OnSize (uMsg, wParam, lParam, bHandled);
 	}
 
 	void OnClick (TNotifyUI& msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		 faw::String name = msg.pSender->GetName ();
 		if (name == _T ("gifw_ok")) {
 			if (m_run) {
 				m_run = false;
@@ -93,7 +92,7 @@ public:
 	}
 
 	void OnTextChanged (TNotifyUI &msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		 faw::String name = msg.pSender->GetName ();
 		if (name == _T ("gifw_width")) {
 			SIZE sz = m_pm.GetInitSize ();
 			sz.cx = _ttoi (m_gifw_width->GetText ().c_str ()) + 24;
@@ -175,13 +174,13 @@ private:
 class page_Gif: public page_base {
 public:
 	page_Gif (NetToolboxWnd *parent): page_base (parent) {
-		string_t path = tool_Path::get_exe_path ();
-		m_gif_path->SetText (tool_StringT::format (_T ("%c:\\record.gif"), path[0]));
+		faw::String path = faw::Directory::get_current_path ();
+		m_gif_path->SetText (faw::String::format (_T ("%c:\\record.gif"), path [0]));
 	}
 	virtual ~page_Gif () = default;
 
 	bool OnClick (TNotifyUI& msg) override {
-		CDuiString name = msg.pSender->GetName ();
+		 faw::String name = msg.pSender->GetName ();
 		if (name == _T ("gif_showwnd")) {
 			m_run = false;
 			m_parent->ShowWindow (false);
@@ -201,9 +200,9 @@ public:
 			}
 			return true;
 		} else if (name == _T ("gif_save")) {
-			string_t file = m_gif_path->GetText ();
-			if (tool_Path::file_exist (file)) {
-				string_t info = tool_StringT::format (_T ("以下文件已存在，是否覆盖？\n%s"), file.c_str ());
+			faw::String file = m_gif_path->GetText ();
+			if (faw::Directory::exist (file)) {
+				faw::String info = faw::String::format (_T ("以下文件已存在，是否覆盖？\n%s"), file.c_str ());
 				if (IDOK != ::MessageBox (NULL, info.c_str (), _T ("提示"), MB_ICONQUESTION | MB_OKCANCEL))
 					return true;
 			}
