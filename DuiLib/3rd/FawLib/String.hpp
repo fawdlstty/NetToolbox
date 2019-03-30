@@ -807,7 +807,7 @@ namespace faw {
 			size_t pos = m_str.find (_src);
 			while (pos != _npos) {
 				m_str.replace (pos, _src.size (), _dest);
-				pos = _src.find (_src, pos + 2);
+				pos = m_str.find (_src, pos + 2);
 			}
 			return *this;
 #endif
@@ -817,7 +817,7 @@ namespace faw {
 			size_t pos = m_str.find (_src);
 			while (pos != _npos) {
 				m_str.replace (pos, _src.size (), _dest);
-				pos = _src.find (_src, pos + 2);
+				pos = m_str.find (_src, pos + 2);
 			}
 			return *this;
 #else

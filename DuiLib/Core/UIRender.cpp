@@ -2033,7 +2033,7 @@ namespace DuiLib {
 				faw::string_view_t pstrNext;
 				SIZE szText = { 0 };
 				if (!bInRaw && p[0] == _T ('<') || p[0] == _T ('{')) p = p.substr (1), cchChars++, cchSize++;
-				while (p[0] != _T ('\0') && p[0] != _T ('\n')) {
+				while (p.size () > 0 && p[0] != _T ('\n')) {
 					// This part makes sure that we're word-wrapping if needed or providing support
 					// for DT_END_ELLIPSIS. Unfortunately the GetTextExtentPoint32() call is pretty
 					// slow when repeated so often.
