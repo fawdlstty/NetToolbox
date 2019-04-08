@@ -55,7 +55,7 @@
 					<Option style="x_item2" name="tab5_1" text="串口调试工具" />
 					<Option style="x_item2" name="tab5_2" text="窗口工具" />
 					<Option style="x_item2" name="tab5_3" text="文件工具" />
-					<Button style="x_item2" name="step_recorder" text="步骤记录器" />
+					<!--<Option style="x_item2" name="tab5_4" text="二维码生成" />-->
 					<!--<Option style="x_item2" name="tab5_4" text="屏幕录像" />-->
 				</VerticalLayout>
 				<Option name="group6" text="其他" style="x_item1" bkimage="file='qb6.png' dest='10,4,26,20'" />
@@ -530,6 +530,18 @@
 						<Text text="（可拖动文件至窗口实现选择文件）" height="12" padding="110,8,0,0" />
 						<HorizontalLayout>
 							<RichEdit name="file_result" readonly="true" padding="15,15,15,15" style="x_richedit" />
+						</HorizontalLayout>
+					</VerticalLayout>
+					<!-- 二维码生成 -->
+					<VerticalLayout>
+						<HorizontalLayout height="40">
+							<Text text="二维码内容：" padding="10,22,0,4" width="120" />
+							<Edit name="qrcode_content" padding="0,16,20,0" style="x_edit" />
+							<Button name="qrcode_generate" text="生成" style="x_button" padding="0,15,20,0" />
+						</HorizontalLayout>
+						<HorizontalLayout height="40">
+							<Text text="背景图片（可选）：" padding="10,22,0,4" width="120" />
+							<Edit name="qrcode_bkimg" padding="0,16,20,0" style="x_edit" />
 						</HorizontalLayout>
 					</VerticalLayout>
 					<!-- 屏幕录像 -->

@@ -1,5 +1,5 @@
-﻿#ifndef __page_Record_HPP__
-#define __page_Record_HPP__
+﻿#ifndef __PAGE_RECORD_HPP__
+#define __PAGE_RECORD_HPP__
 
 #include <thread>
 #include <chrono>
@@ -61,4 +61,4 @@ protected:
 	BindEditUI						m_record_path { _T ("record_path") };
 };
 
-#endif //__page_Record_HPP__
+#endif //__PAGE_RECORD_HPP__

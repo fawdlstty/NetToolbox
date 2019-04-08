@@ -28,6 +28,9 @@
     <Filter Include="头文件\db">
       <UniqueIdentifier>{c04a2ce7-6e0c-4ac7-9df0-8a12cd8f3201}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rdparty\QRcode">
+      <UniqueIdentifier>{09282857-07e5-4300-9ed3-018b80e26719}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -171,6 +174,12 @@
     <ClInclude Include="pages\page_Record.hpp">
       <Filter>头文件\pages</Filter>
     </ClInclude>
+    <ClInclude Include="pages\page_QRcode.hpp">
+      <Filter>头文件\pages</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\QRcode\qrcode.h">
+      <Filter>3rdparty\QRcode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -190,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="3rdparty\serial\serial.cc">
       <Filter>3rdparty\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\QRcode\qrcode.cpp">
+      <Filter>3rdparty\QRcode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -34,6 +34,7 @@
 #include "pages/page_SerialPort.hpp"
 #include "pages/page_Window.hpp"
 #include "pages/page_File.hpp"
+#include "pages/page_QRcode.hpp"
 #include "pages/page_Record.hpp"
 //
 
@@ -52,7 +53,7 @@ void NetToolboxWnd::InitWindow () {
 		{ nullptr },
 		{ new page_Tracert (this), new page_Http (this), new page_Qps (this), new page_IPScan (this) },
 		{ new page_Regex (this), new page_Rsa (this), new page_EncDec (this) },
-		{ new page_Gif (this), new page_SerialPort (this), new page_Window (this), new page_File (this), new page_Record (this) },
+		{ new page_Gif (this), new page_SerialPort (this), new page_Window (this), new page_File (this), new page_QRcode (this), new page_Record (this) },
 		{ nullptr }
 	};
 
@@ -66,7 +67,7 @@ void NetToolboxWnd::InitWindow () {
 #ifdef _DEBUG
 	if (_args.size () < 2) {
 		_args.push_back (_T ("-jump"));
-		_args.push_back (_T ("0,0"));
+		_args.push_back (_T ("5,4"));
 	}
 #endif
 	for (size_t i = 1; i < _args.size (); ++i) {
@@ -89,8 +90,8 @@ void NetToolboxWnd::OnClick (TNotifyUI& msg) {
 	if (name == _T ("btn_set")) {
 		//static int t = 0;
 		//show_error_code (++t);
-	} else if (name == _T ("step_recorder")) {
-		tool_Process::shell_exec (_T ("psr.exe"));
+	//} else if (name == _T ("step_recorder")) {
+	//	tool_Process::shell_exec (_T ("psr.exe"));
 	//} else if (name == _T ("btn_blog")) {
 	//	tool_Process::shell_exec (_T ("https://www.fawdlstty.com"));
 	//} else if (name == _T ("btn_join")) {
