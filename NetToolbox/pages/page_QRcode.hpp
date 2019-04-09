@@ -58,7 +58,7 @@ public:
 					g.FillRectangle (qrcode_getModule (&qrcode, (uint8_t) x, (uint8_t) y) ? _bbrush : _wbrush, Gdiplus::Rect (x * 5, y * 5, 5, 5));
 				}
 			}
-			//tool_Gdip::gdip_save (m_bmp, L"d:/text.png");
+			tool_Gdip::gdip_save (m_bmp, L"d:/text.png");
 			delete _wbrush;
 			delete _bbrush;
 

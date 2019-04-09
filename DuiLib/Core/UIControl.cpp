@@ -742,7 +742,7 @@ namespace DuiLib {
 	}
 
 	void CControlUI::SetAttribute (faw::string_view_t pstrName, faw::string_view_t pstrValue) {
-		// 是否样式表
+		// 样式表
 		if (m_pManager) {
 			faw::string_view_t pStyle = m_pManager->GetStyle (pstrValue);
 			if (!pStyle.empty ()) {
@@ -750,7 +750,10 @@ namespace DuiLib {
 				return;
 			}
 		}
-		if (pstrName == _T ("pos")) {
+		// 属性
+		if (pstrName == _T ("innerstyle")) {
+			ApplyAttributeList (pstrValue);
+		} else if (pstrName == _T ("pos")) {
 			RECT rcPos = FawTools::parse_rect (pstrValue);
 			SIZE szXY = { rcPos.left >= 0 ? rcPos.left : rcPos.right, rcPos.top >= 0 ? rcPos.top : rcPos.bottom };
 			SetFixedXY (szXY);
@@ -880,45 +883,7 @@ namespace DuiLib {
 			else if (pstrValue == _T ("no"))		SetCursor (DUI_NO);
 			else if (pstrValue == _T ("hand"))		SetCursor (DUI_HAND);
 		} else if (pstrName == _T ("virtualwnd")) SetVirtualWnd (pstrValue);
-		else if (pstrName == _T ("innerstyle")) {
-			faw::String sXmlData = pstrValue;
-			sXmlData.replace_self (_T ("&quot;"), _T ("\""));
-			faw::string_view_t pstrList = sXmlData.str_view ();
-			faw::String sItem;
-			faw::String sValue;
-			while (!pstrList.empty ()) {
-				sItem.clear ();
-				sValue.clear ();
-				while (!pstrList.empty () && pstrList[0] != _T ('=')) {
-					faw::string_view_t pstrTemp = pstrList.substr (1);
-					while (pstrList.length () > pstrTemp.length ()) {
-						sItem += pstrList[0];
-						pstrList = pstrList.substr (1);
-					}
-				}
-				ASSERT (pstrList[0] == _T ('='));
-				if (pstrList[0] != _T ('=')) return;
-				pstrList = pstrList.substr (1);
-				ASSERT (pstrList[0] == _T ('\"'));
-				if (pstrList[0] != _T ('\"')) return;
-				pstrList = pstrList.substr (1);
-				while (!pstrList.empty () && pstrList[0] != _T ('\"')) {
-					faw::string_view_t pstrTemp = pstrList.substr (1);
-					while (pstrList.length () > pstrTemp.length ()) {
-						sValue += pstrList[0];
-						pstrList = pstrList.substr (1);
-					}
-				}
-				ASSERT (pstrList[0] == _T ('\"'));
-				if (pstrList[0] != _T ('\"')) return;
-				pstrList = pstrList.substr (1);
-				SetAttribute (sItem.str_view (), sValue.str_view ());
-				if (pstrList[0] != _T (' ')) return;
-				pstrList = pstrList.substr (1);
-				if (pstrList[0] != _T (',')) return;
-				pstrList = pstrList.substr (1);
-			}
-		} else if (pstrName == _T ("isdynamic")) {
+		else if (pstrName == _T ("isdynamic")) {
 			SetIsDynamic (FawTools::parse_bool (pstrValue));
 		} else {
 			AddCustomAttribute (pstrName, pstrValue);
