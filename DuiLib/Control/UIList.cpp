@@ -2009,14 +2009,15 @@ namespace DuiLib {
 		}
 
 		if (cXY.cx == 0 && m_pManager) {
-			RECT rcText = { 0, 0, 9999, cXY.cy };
-			if (pInfo->bShowHtml) {
-				int nLinks = 0;
-				CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, nullptr, nullptr, nLinks, pInfo->nFont, DT_SINGLELINE | DT_CALCRECT | pInfo->uTextStyle & ~DT_RIGHT & ~DT_CENTER);
-			} else {
-				CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, pInfo->nFont, DT_SINGLELINE | DT_CALCRECT | pInfo->uTextStyle & ~DT_RIGHT & ~DT_CENTER);
-			}
-			cXY.cx = rcText.right - rcText.left + pInfo->rcTextPadding.left + pInfo->rcTextPadding.right;
+			//RECT rcText = { 0, 0, 9999, cXY.cy };
+			//if (pInfo->bShowHtml) {
+			//	int nLinks = 0;
+			//	CRenderEngine::DrawHtmlText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, nullptr, nullptr, nLinks, pInfo->nFont, DT_SINGLELINE | DT_CALCRECT | pInfo->uTextStyle & ~DT_RIGHT & ~DT_CENTER);
+			//} else {
+			//	CRenderEngine::DrawText (m_pManager->GetPaintDC (), m_pManager, rcText, sText.str_view (), 0, pInfo->nFont, DT_SINGLELINE | DT_CALCRECT | pInfo->uTextStyle & ~DT_RIGHT & ~DT_CENTER);
+			//}
+			//cXY.cx = rcText.right - rcText.left + pInfo->rcTextPadding.left + pInfo->rcTextPadding.right;
+			cXY.cx = szAvailable.cx;
 		}
 
 		return cXY;

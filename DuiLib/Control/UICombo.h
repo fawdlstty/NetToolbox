@@ -44,6 +44,8 @@ namespace DuiLib {
 		void SetDropBoxAttributeList (faw::string_view_t pstrList);
 		SIZE GetDropBoxSize () const;
 		void SetDropBoxSize (SIZE szDropBox);
+		RECT GetDropBoxInset () const;
+		void SetDropBoxInset (RECT szDropBox);
 
 		UINT GetListType ();
 		TListInfoUI* GetListInfo ();
@@ -133,6 +135,7 @@ namespace DuiLib {
 		bool		m_bShowShadow;
 		faw::String	m_sDropBoxAttributes;
 		SIZE		m_szDropBox				= { 0, 150 };
+		RECT		m_rcDropBox				= { 0 };
 		UINT		m_uButtonState			= 0;
 
 		faw::String	m_sNormalImage;

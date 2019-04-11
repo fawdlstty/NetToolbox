@@ -44,7 +44,6 @@ namespace DuiLib {
 				}
 				pCtrl = pCtrl->GetParent ();
 			}
-			if (m_pOwner->GetManager () != NULL) m_pOwner->GetManager ()->SendNotify (msg.pSender, DUI_MSGTYPE_CLICK, 0, 0);
 		}
 	}
 
@@ -56,6 +55,7 @@ namespace DuiLib {
 
 		// Position the popup window in absolute space
 		SIZE szDrop = m_pOwner->GetDropBoxSize ();
+		RECT rcInset = m_pOwner->GetDropBoxInset ();
 		RECT rcOwner = pOwner->GetPos ();
 		RECT rc = rcOwner;
 		rc.top = rc.bottom;		// 父窗口left、bottom位置作为弹出窗口起点
@@ -63,7 +63,7 @@ namespace DuiLib {
 		if (szDrop.cx > 0) rc.right = rc.left + szDrop.cx;	// 计算弹出窗口宽度
 
 		SIZE szAvailable = { rc.right - rc.left, rc.bottom - rc.top };
-		int cyFixed = 0;
+		int cyFixed = rcInset.top;
 		for (int it = 0; it < pOwner->GetCount (); it++) {
 			CControlUI* pControl = static_cast<CControlUI*>(pOwner->GetItemAt (it));
 			if (!pControl->IsVisible ()) continue;
@@ -129,6 +129,7 @@ namespace DuiLib {
 		if (uMsg == WM_CREATE) {
 			m_pm.SetForceUseSharedRes (true);
 			m_pm.Init (m_hWnd);
+			m_pm.SetLayered (true);
 			// The trick is to add the items to the new container. Their owner gets
 			// reassigned by this operation - which is why it is important to reassign
 			// the items back to the righfull owner/manager when the window closes.
@@ -149,10 +150,8 @@ namespace DuiLib {
 				m_pLayout->Add (static_cast<CControlUI*>(m_pOwner->GetItemAt (i)));
 			}
 			CShadowUI *pShadow = m_pOwner->GetManager ()->GetShadow ();
-			if (pShadow && m_pOwner) {
-				pShadow->CopyShadow (m_pm.GetShadow ());
-				m_pm.GetShadow ()->ShowShadow (m_pOwner->IsShowShadow ());
-			}
+			pShadow->CopyShadow (m_pm.GetShadow ());
+			m_pm.GetShadow ()->ShowShadow (m_pOwner->IsShowShadow ());
 			m_pm.AttachDialog (m_pLayout);
 			m_pm.AddNotifier (this);
 			return 0;
@@ -215,9 +214,8 @@ namespace DuiLib {
 	}
 
 	void CComboWnd::EnsureVisible (int iIndex) {
-		int nCurSel = m_pOwner->GetCurSel ();
-		if (nCurSel < 0) return;
-		m_pLayout->FindSelectable (nCurSel, false);
+		if (m_pOwner->GetCurSel () < 0) return;
+		m_pLayout->FindSelectable (m_pOwner->GetCurSel (), false);
 		RECT rcItem = m_pLayout->GetItemAt (iIndex)->GetPos ();
 		RECT rcList = m_pLayout->GetPos ();
 		CScrollBarUI* pHorizontalScrollBar = m_pLayout->GetHorizontalScrollBar ();
@@ -238,6 +236,7 @@ namespace DuiLib {
 
 #if(_WIN32_WINNT >= 0x0501)
 	UINT CComboWnd::GetClassStyle () const {
+		return __super::GetClassStyle ();
 		if (m_pOwner->IsShowShadow ()) {
 			return __super::GetClassStyle ();
 
@@ -528,12 +527,9 @@ namespace DuiLib {
 	}
 
 	faw::String CComboUI::GetText () const {
-		if (m_iCurSel < 0 || m_iCurSel >= m_items.GetSize ()) {
-			return __super::GetText ();
-		} else {
-			CControlUI* pControl = static_cast<CControlUI*>(m_items[m_iCurSel]);
-			return pControl->GetText ();
-		}
+		if (m_iCurSel < 0) return _T ("");
+		CControlUI* pControl = static_cast<CControlUI*>(m_items[m_iCurSel]);
+		return pControl->GetText ();
 	}
 
 	void CComboUI::SetText (faw::String pstrText) {
@@ -573,6 +569,14 @@ namespace DuiLib {
 
 	void CComboUI::SetDropBoxSize (SIZE szDropBox) {
 		m_szDropBox = szDropBox;
+	}
+
+	RECT CComboUI::GetDropBoxInset () const {
+		return m_rcDropBox;
+	}
+
+	void CComboUI::SetDropBoxInset (RECT rcDropBox) {
+		m_rcDropBox = rcDropBox;
 	}
 
 	void CComboUI::SetTextStyle (UINT uStyle) {
@@ -912,6 +916,9 @@ namespace DuiLib {
 		else if (pstrName == _T ("dropboxsize")) {
 			SIZE szDropBoxSize = FawTools::parse_size (pstrValue);
 			SetDropBoxSize (szDropBoxSize);
+		} else if (pstrName == _T ("dropboxinset")) {
+			RECT rcDropboxInset = FawTools::parse_rect (pstrValue);
+			SetDropBoxInset (rcDropboxInset);
 		} else if (pstrName == _T ("itemfont")) SetItemFont (_ttoi (pstrValue.data ()));
 		else if (pstrName == _T ("itemalign")) {
 			if (pstrValue.find (_T ("left")) != faw::String::_npos) {

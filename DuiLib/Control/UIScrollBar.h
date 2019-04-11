@@ -97,7 +97,7 @@ namespace DuiLib {
 		};
 
 		bool			m_bHorizontal			= false;
-		int				m_nRange				= 100;
+		int				m_nRange				= 0;
 		int				m_nScrollPos			= 0;
 		int				m_nLineSize				= 8;
 		CContainerUI	*m_pOwner				= nullptr;
