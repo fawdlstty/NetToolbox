@@ -122,6 +122,9 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	faw::String _src = path + _T ("NetToolbox.exe"), _srcd = path + _T ("res.dll");
 	auto ver_src = tool_PE::get_version (_src.stra ().c_str ());
 
+	// 加载配置文件
+	Settings::init ();
+
 	// 判断版本 & 更新控制
 #ifndef _DEBUG
 	// 比较版本
@@ -230,9 +233,6 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 		}
 	}
 #endif
-
-	// 加载配置文件
-	Settings::init ();
 
 	// 初始化路径
 	CPaintManagerUI::SetInstance (hInstance);

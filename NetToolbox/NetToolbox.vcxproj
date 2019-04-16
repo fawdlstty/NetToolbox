@@ -302,6 +302,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="3rdparty\serial\win.h" />
     <ClInclude Include="db\db_Sqlite.hpp" />
     <ClInclude Include="HanAnim.hpp" />
+    <ClInclude Include="International.hpp" />
     <ClInclude Include="NetToolboxWnd.h" />
     <ClInclude Include="pages\page_QRcode.hpp" />
     <ClInclude Include="pages\page_Record.hpp" />
