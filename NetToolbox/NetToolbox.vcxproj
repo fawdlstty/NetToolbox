@@ -186,7 +186,9 @@
     </Manifest>
     <PreBuildEvent>
       <Command>del "$(SolutionDir)$(ProjectName)\res\res.zip" /q
-7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"</Command>
+del "$(SolutionDir)$(ProjectName)\res\res_en.zip" /q
+7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"
+7z u -tzip "$(SolutionDir)$(ProjectName)\res\res_en.zip" "$(SolutionDir)res_en\*"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>upx -9 $(SolutionDir)$(IntDir)$(TargetFileName)
@@ -347,6 +349,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
   <ItemGroup>
     <ClCompile Include="3rdparty\QRcode\qrcode.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="3rdparty\serial\list_ports_win.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -402,6 +405,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <None Include="res\find_color.cur" />
     <None Include="res\find_pos.cur" />
     <None Include="res\res.zip" />
+    <None Include="res\res_en.zip" />
     <None Include="res\zoom_size.cur" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
