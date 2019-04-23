@@ -1,6 +1,6 @@
-# NetToolbox
+﻿# NetToolbox
 
-English | [中文](README.md)
+English | [中文](README-cn.md)
 
 Net Toolbox for Master Yi
 
@@ -10,35 +10,34 @@ Net Toolbox for Master Yi
 
 NetToolbox is a opensource mini tool collection, it's contains some tool for network, it's may improve your productivity.
 
-Source structure explanation：[【易大师网络工具箱】项目解析](https://www.fawdlstty.com/archives/608.html)
+Source structure explanation: [【易大师网络工具箱】项目解析](https://www.fawdlstty.com/archives/608.html)
 
-UI Library（MIT License）：[DuiLib_Faw](https://github.com/fawdlstty/DuiLib_Faw)
+UI Library（MIT License）: [DuiLib_Faw](https://github.com/fawdlstty/DuiLib_Faw)
 
-> 本地网络
+> Local Net
 
-1. 本机信息：Display various system information of the machine, including configuration information, CPU ID, motherboard ID and other information
-2. 本机网络：Displays all network information on the machine
-3. 网络连接：Shows which processes are currently accessing the network on the machine, lists the port address of the connection, right click to open the process location or end the process
+1. Localhost Info: Display various system information of the machine, including configuration information, CPU ID, motherboard ID and other information
+2. Localhost Net: Displays all network information on the machine
+3. Net Connect: Shows which processes are currently accessing the network on the machine, lists the port address of the connection, right click to open the process location or end the process
 
-> 网络工具
+> Net Tool
 
-1. 路由跟踪：Keeps track of the number of links from the current host to the destination address
-2. HTTP请求：Simulate GET/POST requests that implement HTTP(s)
-3. QPS测试：Test specifies the maximum number of HTTP connections the Web service can withstand
+1. Tracert: Keeps track of the number of links from the current host to the destination address
+2. HTTP Request: Simulate GET/POST requests that implement HTTP(s)
+3. QPS Test: Test specifies the maximum number of HTTP connections the Web service can withstand
 
-> 格式工具
+> Format Tool
 
-1. 正则表达式：Used to test and validate regular expression execution
-2. RSA生成：Used to generate RSA public-private key pairs
-3. 转码解码：Supports 4 modes of transcoding and decoding operations
+1. Regex Tool: Used to test and validate regular expression execution
+2. RSA Generate: Used to generate RSA public-private key pairs
+3. Encode Decode: Supports 4 modes of transcoding and decoding operations
 
-> 单机工具
+> Standalone Tool
 
-1. GIF录制：Used to record GIF images
-2. 串口调试工具：Used for debugging serial ports
-3. 窗口工具：Used for screen color, window information acquisition
-4. 文件工具：Used to calculate the file hash value
-5. 步骤记录器：Open the steps recorder that comes with Windows
+1. GIF Record: Used to record GIF images
+2. Serial Port: Used for debugging serial ports
+3. Window Tool: Used for screen color, window information acquisition
+4. File Tool: Used to calculate the file hash value
 
 ## Compile Steps
 
@@ -96,4 +95,4 @@ GPL-2.0
 
 ## Other
 
-technical exchange：[Click the link to join the group【网络工具箱交流群 943497747】](https://jq.qq.com/?_wv=1027&k=5vG1SGq)
+technical exchange: [Click the link to join the group【网络工具箱交流群 943497747】](https://jq.qq.com/?_wv=1027&k=5vG1SGq)
