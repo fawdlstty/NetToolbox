@@ -241,6 +241,5 @@
       <Filter>Resource File</Filter>
     </None>
     <None Include="res\res.zip" />
-    <None Include="res\res_en.zip" />
   </ItemGroup>
 </Project>

@@ -23,7 +23,7 @@ public:
 	}
 
 	faw::string_view_t GetWindowClassName () const override { return _T ("NetToolbox"); }
-	faw::string_view_t GetSkinFile () override { return _T ("scr2gif.xml"); }
+	faw::string_view_t GetSkinFile () override { return International::translate (_T ("scr2gif.xml")); }
 	void InitWindow () override {
 		m_init = true;
 		RECT rc { 0 };

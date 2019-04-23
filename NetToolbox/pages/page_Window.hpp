@@ -21,7 +21,7 @@ public:
 		}
 	}
 	faw::string_view_t GetWindowClassName () const override { return _T ("NetToolbox"); }
-	faw::string_view_t GetSkinFile () override { return _T ("cur_findcolor.xml"); }
+	faw::string_view_t GetSkinFile () override { return International::translate (_T ("cur_findcolor.xml")); }
 
 	void parent_notify_onmove (POINT &pt, faw::string_view_t text) {
 		try {

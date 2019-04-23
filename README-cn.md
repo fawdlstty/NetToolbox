@@ -1,5 +1,7 @@
 ﻿# NetToolbox
 
+中文 | [English](README-en.md)
+
 易大师网络工具箱
 
 ![capture.jpg](capture.jpg)

@@ -187,8 +187,7 @@
     <PreBuildEvent>
       <Command>del "$(SolutionDir)$(ProjectName)\res\res.zip" /q
 del "$(SolutionDir)$(ProjectName)\res\res_en.zip" /q
-7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"
-7z u -tzip "$(SolutionDir)$(ProjectName)\res\res_en.zip" "$(SolutionDir)res_en\*"</Command>
+7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>upx -9 $(SolutionDir)$(IntDir)$(TargetFileName)
@@ -406,7 +405,6 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <None Include="res\find_color.cur" />
     <None Include="res\find_pos.cur" />
     <None Include="res\res.zip" />
-    <None Include="res\res_en.zip" />
     <None Include="res\zoom_size.cur" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

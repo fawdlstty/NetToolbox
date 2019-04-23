@@ -4,4 +4,8 @@
 	<Xml id="XML_FINDCOLOR" path="cur_findcolor.xml"/>
 	<Xml id="XML_SCR2GIF" path="scr2gif.xml"/>
 	<Xml id="XML_LOCALNET" path="menu_localnet.xml"/>
+	<Xml id="XML_MAIN_CN" path="main_cn.xml"/>
+	<Xml id="XML_FINDCOLOR_CN" path="cur_findcolor_cn.xml"/>
+	<Xml id="XML_SCR2GIF_CN" path="scr2gif_cn.xml"/>
+	<Xml id="XML_LOCALNET_CN" path="menu_localnet_cn.xml"/>
 </Res>

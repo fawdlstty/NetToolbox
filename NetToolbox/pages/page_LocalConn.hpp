@@ -51,7 +51,7 @@ public:
 				}
 				CMenuWnd::GetGlobalContextMenuObserver ().SetMenuCheckInfo (&m_MenuInfos);
 				m_menu = new CMenuWnd ();
-				m_menu->Init (nullptr, _T ("menu_localnet.xml"), pt, m_parent->get_pm ());
+				m_menu->Init (nullptr, International::translate (_T ("menu_localnet.xml")), pt, m_parent->get_pm ());
 				return 0;
 			});
 			return true;
