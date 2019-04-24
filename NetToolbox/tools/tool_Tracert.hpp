@@ -67,11 +67,11 @@ public:
 			f (ttl, 4, route_ip);
 			if (dest_ip == route_ip) {
 				::IcmpCloseHandle (hIcmp);
-				return { true, _T ("路由跟踪完成。") };
+				return { true, International::translate (_T ("Tracert Complete.")) };
 			}
 		}
 		::IcmpCloseHandle (hIcmp);
-		return { true, _T ("路由跟踪结束，已超过可跟踪的最大跃点数。") };
+		return { true, International::translate (_T ("Routing trace has ended and the maximum traceable hop count has been exceeded.")) };
 	}
 
 	// 开始ipv6路由跟踪
@@ -113,11 +113,11 @@ public:
 			f (ttl, 4, route_ip);
 			if (dest_ip == route_ip) {
 				::IcmpCloseHandle (hIcmp);
-				return { true, _T ("路由跟踪完成。") };
+				return { true, International::translate (_T ("Tracert Complete.")) };
 			}
 		}
 		::IcmpCloseHandle (hIcmp);
-		return { true, _T ("路由跟踪结束，已超过可跟踪的最大跃点数。") };
+		return { true, International::translate (_T ("Routing trace has ended and the maximum traceable hop count has been exceeded.")) };
 	}
 
 private:

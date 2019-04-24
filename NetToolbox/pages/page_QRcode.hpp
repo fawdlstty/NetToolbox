@@ -41,7 +41,7 @@ public:
 					break;
 			}
 			if (_ver > 40) {
-				::MessageBox (m_parent->GetHWND (), _T ("内容过长，生成二维码失败"), _T ("提示"), MB_ICONHAND);
+				::MessageBox (m_parent->GetHWND (), _T ("内容过长，生成二维码失败"), International::translate (_T ("Info")).data (), MB_ICONHAND);
 				delete[] _data;
 				return true;
 			}

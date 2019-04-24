@@ -75,10 +75,10 @@ public:
 	static std::vector<std::tuple<bool, faw::String, uint16_t, faw::String, uint16_t, faw::String, DWORD, faw::String>> get_connections () {
 		static std::map<DWORD, faw::String> mtcp_conn_state {
 			//{ MIB_TCP_STATE_CLOSED,			_T ("TCP已关闭") },
-			{ MIB_TCP_STATE_LISTEN,			_T ("TCP正在监听") },
+			{ MIB_TCP_STATE_LISTEN,			International::translate (_T ("TCP Listening")) },
 			//{ MIB_TCP_STATE_SYN_SENT,		_T ("TCP连接中") },
 			//{ MIB_TCP_STATE_SYN_RCVD,		_T ("TCP连接中") },
-			{ MIB_TCP_STATE_ESTAB,			_T ("TCP已连接") },
+			{ MIB_TCP_STATE_ESTAB,			International::translate (_T ("TCP Connected")) },
 			//{ MIB_TCP_STATE_FIN_WAIT1,		_T ("TCP断开中") },
 			//{ MIB_TCP_STATE_FIN_WAIT2,		_T ("TCP断开中") },
 			//{ MIB_TCP_STATE_CLOSE_WAIT,		_T ("TCP断开中") },

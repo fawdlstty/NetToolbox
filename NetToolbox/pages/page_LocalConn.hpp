@@ -78,15 +78,15 @@ public:
 
 	bool OnMenuClick (MenuCmd *mc) override {
 		if (mc->szName == _T ("menu_localnet_kill")) {
-			faw::String tip_info = faw::String::format (_T ("确定要结束进程 %s (pid:%d) 吗？"), m_sel_pname.c_str (), m_sel_pid);
-			if (IDOK == ::MessageBox (m_parent->GetHWND (), tip_info.c_str (), _T ("提示"), MB_ICONQUESTION | MB_OKCANCEL)) {
+			faw::String tip_info = faw::String::format (International::translate (_T ("Are you sure you want to terminate the process %s (pid:%d)?")).data (), m_sel_pname.c_str (), m_sel_pid);
+			if (IDOK == ::MessageBox (m_parent->GetHWND (), tip_info.c_str (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL)) {
 				if (tool_Process::kill ((DWORD) m_sel_pid)) {
 					ui_update_data ();
 				} else {
 					// 进程无法结束
 					if (tool_Priv::is_admin ()) {
 						// Admin权限：提示失败
-						::MessageBox (m_parent->GetHWND (), _T ("进程无法结束！"), _T ("提示"), MB_ICONWARNING);
+						::MessageBox (m_parent->GetHWND (), International::translate ( _T ("Process could not terminate!")).data (), International::translate (_T ("Info")).data (), MB_ICONWARNING);
 					} else if (tool_Priv::adjust_restart (m_parent->m_sel1, m_parent->m_sel2)) {
 						// 非Admin权限：提权并退出
 						m_parent->Close ();
@@ -101,7 +101,7 @@ public:
 				if (tool_Priv::is_admin ()) {
 					// Admin权限：提示失败
 					faw::String err_str = tool_Utils::get_error_info (err);
-					::MessageBox (m_parent->GetHWND (), err_str.c_str (), _T ("提示"), MB_ICONWARNING);
+					::MessageBox (m_parent->GetHWND (), err_str.c_str (), International::translate (_T ("Info")).data (), MB_ICONWARNING);
 				} else if (tool_Priv::adjust_restart (m_parent->m_sel1, m_parent->m_sel2)) {
 					// 非Admin权限：提权并退出
 					m_parent->Close ();
@@ -141,43 +141,37 @@ protected:
 			if (bUpdateData) {
 				vconns.swap (_vconns);
 				std::sort (vconns.begin (), vconns.end (), [this] (const conn_item_t &_v1, const conn_item_t &_v2) -> bool {
-					if (m_sort_str == _T ("本地地址")) {
+					if (m_sort_str == International::translate (_T ("Local Addr"))) {
 						faw::String _val1 = std::get<1> (_v1);
 						faw::String _val2 = std::get<1> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("本地端口")) {
+					} else if (m_sort_str == International::translate (_T ("Local Port"))) {
 						uint16_t _val1 = std::get<2> (_v1);
 						uint16_t _val2 = std::get<2> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("远程地址")) {
+					} else if (m_sort_str == International::translate (_T ("Remote Addr"))) {
 						faw::String _val1 = std::get<3> (_v1);
 						faw::String _val2 = std::get<3> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("远程端口")) {
+					} else if (m_sort_str == International::translate (_T ("Remote Port"))) {
 						uint16_t _val1 = std::get<4> (_v1);
 						uint16_t _val2 = std::get<4> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("连接状态")) {
-						faw::String _val1 = std::get<5> (_v1);
-						faw::String _val2 = std::get<5> (_v2);
-						if (_val1 == _val2)
-							return false;
-						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("进程PID")) {
+					} else if (m_sort_str == International::translate (_T ("Process ID"))) {
 						DWORD _val1 = std::get<6> (_v1);
 						DWORD _val2 = std::get<6> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
-					} else if (m_sort_str == _T ("进程名称")) {
+					} else if (m_sort_str == International::translate (_T ("Process Name"))) {
 						faw::String _val1 = std::get<7> (_v1);
 						faw::String _val2 = std::get<7> (_v2);
 						if (_val1 == _val2)
@@ -269,8 +263,8 @@ protected:
 
 protected:
 	BindListUI			m_localnet_connection { _T ("localnet_connection") };
-	 faw::String			m_sort_str = _T ("本地端口");
-	faw::String			m_show_type = _T ("TCP正在监听");
+	faw::String			m_sort_str = International::translate (_T ("Local Port"));
+	faw::String			m_show_type = International::translate (_T ("TCP Listening"));
 	bool				m_is_increment = true;
 
 	CStdStringPtrMap	m_MenuInfos;

@@ -76,8 +76,8 @@ public:
 			CloseHandle (pi.hThread);
 			CloseHandle (pi.hProcess);
 		} else {
-			faw::String err_info = faw::String::format (_T ("创建进程失败，%s"), tool_Utils::get_error_info (::GetLastError ()).c_str ());
-			::MessageBox (NULL, err_info.c_str (), _T ("提示"), MB_ICONHAND);
+			faw::String err_info = faw::String::format (International::translate (_T ("Create Process Failed, %s")).data (), tool_Utils::get_error_info (::GetLastError ()).c_str ());
+			::MessageBox (NULL, err_info.c_str (), International::translate (_T ("Info")).data (), MB_ICONHAND);
 		}
 		return bRet;
 	}

@@ -276,7 +276,7 @@ public:
 		} catch (std::exception &e) {
 			err = e.what ();
 		} catch (...) {
-			err = "未知错误。";
+			err = International::translate ("Unknown Error.");
 		}
 		return { err, v };
 	}

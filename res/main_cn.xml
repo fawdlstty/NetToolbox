@@ -81,47 +81,47 @@
 				<TabLayout name="tab0">
 					<!-- 本机信息 -->
 					<VerticalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,50,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,50,50,0">
 							<Text text="电脑品牌：" padding="0,4,10,0" />
 							<Edit name="sysinfo_trademark" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,15,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,15,50,0">
 							<Text text="系统版本：" padding="0,4,10,0" />
 							<Edit name="sysinfo_version" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,15,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,15,50,0">
 							<Text text="CPU信息：" padding="0,4,10,0" />
 							<Edit name="sysinfo_cpu1" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,5,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,5,50,0">
 							<Text padding="0,4,10,0" />
 							<Edit name="sysinfo_cpu2" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,15,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,15,50,0">
 							<Text text="内存信息：" padding="0,4,10,0" />
 							<Edit name="sysinfo_mem" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,50,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,50,50,0">
 							<Text text="BIOS ID：" padding="0,4,10,0" />
 							<Edit name="sysinfo_bios_id" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,15,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,15,50,0">
 							<Text text="CPU ID：" padding="0,4,10,0" />
 							<Edit name="sysinfo_cpu_id" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,15,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,15,50,0">
 							<Text text="磁盘ID：" padding="0,4,10,0" />
 							<Edit name="sysinfo_disk_id" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,15,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,15,50,0">
 							<Text text="主板ID：" padding="0,4,10,0" />
 							<Edit name="sysinfo_mainboard_id" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,15,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,15,50,0">
 							<Text text="网卡MAC：" padding="0,4,10,0" />
 							<Edit name="sysinfo_netcard_mac" style="x_edit" width="400" />
 						</HorizontalLayout>
-						<HorizontalLayout height="24" width="500" padding="100,15,100,0">
+						<HorizontalLayout height="24" width="600" padding="50,15,50,0">
 							<Text text="网卡ID：" padding="0,4,10,0" />
 							<Edit name="sysinfo_netcard_id" style="x_edit" width="400" />
 						</HorizontalLayout>
@@ -152,7 +152,6 @@
 								<ListHeaderItem style="x_list_hdr" width="60" text="本地端口" />
 								<ListHeaderItem style="x_list_hdr" width="180" text="远程地址" />
 								<ListHeaderItem style="x_list_hdr" width="60" text="远程端口" />
-								<!--<ListHeaderItem style="x_list_hdr" width="100" text="连接状态" />-->
 								<ListHeaderItem style="x_list_hdr" width="60" text="进程PID" />
 								<ListHeaderItem style="x_list_hdr" width="180" text="进程名称" />
 							</ListHeader>

@@ -24,7 +24,7 @@ public:
 	// 生成公钥私钥对
 	static bool generate (int bits, std::string file_pubkey, std::string file_rsapubkey, std::string file_rsaprvkey) {
 		bool bExist = false;
-		std::string info = "以下文件已存在，是否覆盖？";
+		std::string info = International::translate ("The following file already exists. Do you want to overwrite it?");
 		if (faw::Directory::exist (file_pubkey)) {
 			bExist = true;
 			info += "\n";
@@ -41,7 +41,7 @@ public:
 			info += file_rsaprvkey;
 		}
 		if (bExist) {
-			if (IDOK != ::MessageBoxA (NULL, info.c_str (), "提示", MB_ICONQUESTION | MB_OKCANCEL))
+			if (IDOK != ::MessageBoxA (NULL, info.c_str (), International::translate ("Info").data (), MB_ICONQUESTION | MB_OKCANCEL))
 				return false;
 		}
 

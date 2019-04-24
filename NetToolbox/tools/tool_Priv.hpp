@@ -29,7 +29,7 @@ public:
 
 	// 重启并以管理员方式运行。假设成功，即需要退出自身
 	static bool adjust_restart (size_t sel1, size_t sel2) {
-		if (IDOK != ::MessageBox (NULL, _T ("权限不足，是否以管理员权限重新打开程序？"), _T ("提示"), MB_ICONQUESTION | MB_OKCANCEL))
+		if (IDOK != ::MessageBox (NULL, International::translate (_T ("Insufficient permissions. Do you want to reopen the program with administrator permissions?")).data (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
 			return false;
 		faw::String str_param = faw::String::format (_T ("-jump %d,%d"), sel1, sel2);
 		return (size_t) ::ShellExecute (NULL, _T ("runas"), faw::Directory::get_current_file ().c_str (), str_param.c_str (), _T (""), SW_SHOWNORMAL) > 32;

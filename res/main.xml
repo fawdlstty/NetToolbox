@@ -131,9 +131,9 @@
 						<List name="localnet_list" style="x_list">
 							<ListHeader>
 								<ListHeaderItem style="x_list_hdr" width="30" />
-								<ListHeaderItem style="x_list_hdr" width="390" text="网络名称" />
-								<ListHeaderItem style="x_list_hdr" width="120" text="本机IP" />
-								<ListHeaderItem style="x_list_hdr" width="120" text="网关IP" />
+								<ListHeaderItem style="x_list_hdr" width="390" text="Network Name" />
+								<ListHeaderItem style="x_list_hdr" width="120" text="Localhost IP" />
+								<ListHeaderItem style="x_list_hdr" width="120" text="Gateway IP" />
 								<ListHeaderItem style="x_list_hdr" width="80" text="DHCP" />
 							</ListHeader>
 						</List>
@@ -152,7 +152,6 @@
 								<ListHeaderItem style="x_list_hdr" width="60" text="Local Port" />
 								<ListHeaderItem style="x_list_hdr" width="180" text="Remote Addr" />
 								<ListHeaderItem style="x_list_hdr" width="60" text="Remote Port" />
-								<!--<ListHeaderItem style="x_list_hdr" width="100" text="Conn State" />-->
 								<ListHeaderItem style="x_list_hdr" width="60" text="Process ID" />
 								<ListHeaderItem style="x_list_hdr" width="180" text="Process Name" />
 							</ListHeader>
