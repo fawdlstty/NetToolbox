@@ -32,25 +32,25 @@ public:
 			if (faw::Encoding::is_percent_str (data)) {
 				t_data = faw::Encoding::utf8_to_T (faw::Encoding::percent_str_decode (data));
 			} else {
-				t_data = _T ("(解码失败)");
+				t_data = _T ("(Decoding failure)");
 			}
 			m_encdec_percent->SetText (t_data.str_view ());
 			if (faw::Encoding::is_escape_x_str (data)) {
 				t_data = faw::Encoding::utf8_to_T (faw::Encoding::escape_x_str_decode (data));
 			} else {
-				t_data = _T ("(解码失败)");
+				t_data = _T ("(Decoding failure)");
 			}
 			m_encdec_escape_x->SetText (t_data.str_view ());
 			if (faw::Encoding::is_escape_u_str (data)) {
 				t_data = faw::Encoding::gb18030_to_T (faw::Encoding::escape_u_str_decode (data));
 			} else {
-				t_data = _T ("(解码失败)");
+				t_data = _T ("(Decoding failure)");
 			}
 			m_encdec_escape_u->SetText (t_data.str_view ());
 			if (faw::Encoding::is_base64_str (data)) {
 				t_data = faw::Encoding::gb18030_to_T (faw::Encoding::base64_decode (data));
 			} else {
-				t_data = _T ("(解码失败)");
+				t_data = _T ("(Decoding failure)");
 			}
 			m_encdec_base64->SetText (t_data.str_view ());
 			return true;

@@ -1,6 +1,6 @@
 ﻿# NetToolbox
 
-中文 | [English](README.md)
+简体中文 | [English](README.md)
 
 易大师网络工具箱
 

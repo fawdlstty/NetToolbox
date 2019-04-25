@@ -106,7 +106,7 @@ public:
 
 	void on_close () {
 		enable_combos (true);
-		append_data (SerialDataTypeInfo, tool_StringA::format ("串口已主动断开：<c #7f0000>%s</c>", m_tmp_port_name.c_str ()));
+		append_data (SerialDataTypeInfo, faw::String::format (International::translate ("The serial port has been actively disconnected: <c #7f0000>%s</c>").data (), m_tmp_port_name.c_str ()).stra ());
 		m_tmp_port_name = "";
 	}
 
@@ -120,8 +120,8 @@ public:
 					std::string _stopbits = m_serial_stopbits->GetText ().stra ();
 					if (m_tmp_port_name == "") {
 						m_parent->invoke ([this] () -> LRESULT {
-							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("打开串口失败：未选择可用的串口"));
-							append_data (SerialDataTypeInfo, "打开串口失败：未选择可用的串口");
+							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("Failed to open a serial port: no available serial port was selected")));
+							append_data (SerialDataTypeInfo, International::translate ("Failed to open a serial port: no available serial port was selected"));
 							return 0;
 						});
 						return true;

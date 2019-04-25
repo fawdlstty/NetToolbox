@@ -29,7 +29,7 @@ public:
 				fail_count += m_fail_counts[i];
 			}
 			size_t inc_succ_count = succ_count - m_last_succ_count, inc_fail_count = fail_count - m_last_fail_count;
-			m_desp += faw::String::format (_T ("发送 %-6d，成功 %-6d，失败 %d\n"), inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count);
+			m_desp += faw::String::format (International::translate (_T ("Sended %-6d，Succeed %-6d，Failed %d\n")).data (), inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count);
 			m_qps_content->SetText (m_desp.c_str ());
 			m_last_succ_count += inc_succ_count;
 			m_last_fail_count += inc_fail_count;
@@ -45,10 +45,10 @@ public:
 				// start
 				size_t threnad_num = _ttoi (m_qps_thread_num->GetText ().c_str ());
 				if (threnad_num < 1) {
-					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("线程数至少为1。"));
+					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("The number of threads must be >= 1.")));
 					return true;
 				} else if (threnad_num > 100) {
-					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("线程数至多为100。"));
+					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("The number of threads must be <= 100.")));
 					return true;
 				}
 				m_desp = _T ("");
@@ -101,8 +101,8 @@ public:
 		} else if (name == _T ("qps_postdata_ctrl_new")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
 			m_qps_postdata_list->Remove (container);
-			_add_item (_T (""), _T (""), _T ("删除"));
-			_add_item (_T (""), _T (""), _T ("新建"));
+			_add_item (_T (""), _T (""), International::translate (_T ("Delete")));
+			_add_item (_T (""), _T (""), International::translate (_T ("Create")));
 			return true;
 		} else if (name == _T ("qps_postdata_ctrl_del")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
@@ -167,7 +167,7 @@ protected:
 		CListContainerElementUI *item = new CListContainerElementUI ();
 		item->SetFixedHeight (20);
 		faw::String color = (m_qps_postdata_list->GetCount () % 2) ? _T ("#FFEEEEEE") : _T ("#FFFFFFFF");
-		bool is_new = (btntext == _T ("新建"));
+		bool is_new = (btntext == International::translate (_T ("Create")));
 		if (is_new)
 			color = _T ("#FFDDDDDD");
 		item->SetAttribute (_T ("name"), faw::String::format (_T ("qps_postdata_item_%d"), ++n_sign).str_view ());
@@ -277,9 +277,9 @@ protected:
 					vkey_val.push_back (_T (""));
 				vkey_val[0] = faw::Encoding::utf8_to_T (faw::Encoding::percent_str_decode (faw::Encoding::T_to_utf8 (vkey_val[0].str_view ())));
 				vkey_val[1] = faw::Encoding::utf8_to_T (faw::Encoding::percent_str_decode (faw::Encoding::T_to_utf8 (vkey_val[1].str_view ())));
-				_add_item (vkey_val[0].str_view (), vkey_val[1].str_view (), _T ("删除"));
+				_add_item (vkey_val[0].str_view (), vkey_val[1].str_view (), International::translate (_T ("Delete")));
 			}
-			_add_item (_T (""), _T (""), _T ("新建"));
+			_add_item (_T (""), _T (""), International::translate (_T ("Create")));
 		}
 	}
 

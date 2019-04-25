@@ -1,6 +1,6 @@
 ﻿# NetToolbox
 
-English | [中文](README-cn.md)
+English | [简体中文](README-cn.md)
 
 Net Toolbox for Master Yi
 

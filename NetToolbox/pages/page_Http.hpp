@@ -38,7 +38,7 @@ public:
 			} catch (std::exception &e) {
 				m_http_content->SetText (faw::Encoding::gb18030_to_T (e.what ()));
 			} catch (...) {
-				m_http_content->SetText (_T ("请求发起失败：未知错误。"));
+				m_http_content->SetText (International::translate (_T ("Request initiation failed: Unknown error.")));
 			}
 			return true;
 		} else if (name == _T ("http_change")) {
@@ -67,8 +67,8 @@ public:
 		} else if (name == _T ("http_postdata_ctrl_new")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
 			m_http_postdata_list->Remove (container);
-			_add_item (_T (""), _T (""), _T ("删除"));
-			_add_item (_T (""), _T (""), _T ("新建"));
+			_add_item (_T (""), _T (""), International::translate (_T ("Delete")));
+			_add_item (_T (""), _T (""), International::translate (_T ("Create")));
 			return true;
 		} else if (name == _T ("http_postdata_ctrl_del")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
@@ -117,7 +117,7 @@ protected:
 		CListContainerElementUI *item = new CListContainerElementUI ();
 		item->SetFixedHeight (20);
 		faw::String color = (m_http_postdata_list->GetCount () % 2) ? _T ("#FFEEEEEE") : _T ("#FFFFFFFF");
-		bool is_new = (btntext == _T ("新建"));
+		bool is_new = (btntext == International::translate (_T ("Create")));
 		if (is_new)
 			color = _T ("#FFDDDDDD");
 		item->SetAttribute (_T ("name"), faw::String::format (_T ("http_postdata_item_%d"), ++n_sign).str_view ());
@@ -227,9 +227,9 @@ protected:
 					vkey_val.push_back (_T (""));
 				vkey_val[0] = faw::Encoding::utf8_to_T (faw::Encoding::percent_str_decode (faw::Encoding::T_to_utf8 (vkey_val[0].str_view ())));
 				vkey_val[1] = faw::Encoding::utf8_to_T (faw::Encoding::percent_str_decode (faw::Encoding::T_to_utf8 (vkey_val[1].str_view ())));
-				_add_item (vkey_val[0].str_view (), vkey_val[1].str_view (), _T ("删除"));
+				_add_item (vkey_val[0].str_view (), vkey_val[1].str_view (), International::translate (_T ("Delete")));
 			}
-			_add_item (_T (""), _T (""), _T ("新建"));
+			_add_item (_T (""), _T (""), International::translate (_T ("Create")));
 		}
 	}
 
