@@ -116,11 +116,11 @@ public:
 		if (NO_ERROR == ::GetTcpTable2 (ptcp4, &size, true)) {
 			for (size_t i = 0; i < ptcp4->dwNumEntries; ++i) {
 				faw::String local_ip			= ipv4_to_str (ptcp4->table[i].dwLocalAddr);
-				uint16_t local_port			= (uint16_t) ptcp4->table[i].dwLocalPort;
+				uint16_t local_port				= (uint16_t) ::ntohs (ptcp4->table[i].dwLocalPort);
 				faw::String remote_ip			= ipv4_to_str (ptcp4->table[i].dwRemoteAddr);
-				uint16_t remote_port		= (uint16_t) ptcp4->table[i].dwRemotePort;
+				uint16_t remote_port			= (uint16_t) ::ntohs (ptcp4->table[i].dwRemotePort);
 				faw::String tcp_conn_state		= mtcp_conn_state[ptcp4->table[i].dwState];
-				DWORD process_id			= ptcp4->table[i].dwOwningPid;
+				DWORD process_id				= ptcp4->table[i].dwOwningPid;
 				faw::String exe_path			= mprocesses[process_id];
 				if (tcp_conn_state == _T (""))
 					continue;
