@@ -46,13 +46,16 @@ public:
 			{ _T ("Network Group"),									{ _T ("网络类") } },
 			{ _T ("File not found"),								{ _T ("未找到文件") } },
 			{ _T ("Unknown Error."),								{ _T ("未知错误。") } },
+			{ _T ("Color extraction"),								{ _T ("颜色萃取") } },
 			{ _T ("Tracert Complete."),								{ _T ("路由跟踪完成。") } },
 			{ _T ("(Decoding failure)"),							{ _T ("(解码失败)") } },
 			{ _T ("Execution complete."),							{ _T ("执行完毕。") } },
+			{ _T ("Routing trace to %s"),							{ _T ("正在路由跟踪到 %s") } },
 			{ _T ("\nImport Function:\n"),							{ _T ("\n导入函数：\n") } },
 			{ _T ("Total %s / Available %s"),						{ _T ("总共 %s / 可用 %s") } },
 			{ _T ("File analysis completed."),						{ _T ("文件分析完毕。") } },
 			{ _T ("Create Process Failed, %s"),						{ _T ("创建进程失败，%s") } },
+			{ _T ("Unknown IP or domain name"),						{ _T ("未知地址或域名") } },
 			{ _T ("Chinese Character(GB18030)"),					{ _T ("汉字(GB18030)") } },
 			{ _T ("GIF Image exported failure!"),					{ _T ("GIF图导出失败！") } },
 			{ _T ("Process could not terminate!"),					{ _T ("进程无法结束！") } },
@@ -68,6 +71,8 @@ public:
 			{ _T ("Start IP cannot be greater than stop IP!"),		{ _T ("起始IP不能大于中止IP！") } },
 			{ _T ("Request initiation failed: Unknown error."),		{ _T ("请求发起失败：未知错误。") } },
 			{ _T ("RSA Public/private key exported successfully!"),	{ _T ("RSA公私钥导出成功！") } },
+			{ _T ("The serial port has been closed: <c #7f0000>%s</c>"), { _T ("已关闭串口：<c #7f0000>%s</c>") } },
+			{ _T ("The serial port has been opened: <c #00007f>%s</c>"), { _T ("已打开串口：<c #00007f>%s</c>") } },
 			{ _T ("File path: %s\nFile size: %ld byte (%s) \nFile Hash: \n"), { _T ("文件路径： %s\n文件大小： %ld 字节（%s）\n文件Hash：\n") } },
 			{ _T ("This function does not support very large range IP scan!"), { _T ("此功能不支持超大范围IP扫描！") } },
 			{ _T ("Are you sure you want to terminate the process %s (pid:%d)?"), { _T ("确定要结束进程 %s (pid:%d) 吗？") } },
@@ -79,6 +84,8 @@ public:
 			{ _T ("Routing trace has ended and the maximum traceable hop count has been exceeded."), { _T ("路由跟踪结束，已超过可跟踪的最大跃点数。") } },
 			{ _T ("Insufficient permissions. Do you want to reopen the program with administrator permissions?"), { _T ("权限不足，是否以管理员权限重新打开程序？") } },
 		};
+		if (_lcid == 0x804)
+			return _datum[_src][0];
 		return _src;
 	}
 #ifdef _UNICODE

@@ -55,7 +55,7 @@
 					<Option style="x_item2" name="tab5_1" text="串口调试工具" />
 					<Option style="x_item2" name="tab5_2" text="窗口工具" />
 					<Option style="x_item2" name="tab5_3" text="文件工具" />
-					<Option style="x_item2" name="tab5_4" text="二维码生成" />
+					<!-- <Option style="x_item2" name="tab5_4" text="二维码生成" /> -->
 					<!--<Option style="x_item2" name="tab5_4" text="屏幕录像" />-->
 				</VerticalLayout>
 				<Option name="group6" text="其他" style="x_item1" bkimage="file='qb6.png' dest='10,4,26,20'" />

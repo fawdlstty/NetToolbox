@@ -131,7 +131,7 @@ public:
 					m_serial.open (_serial_name (m_tmp_port_name), _baud_rate, _byte_size, _parity, _stopbits);
 					if (m_serial.is_open ()) {
 						enable_combos (false);
-						append_data (SerialDataTypeInfo, tool_StringA::format ("已打开串口：<c #00007f>%s</c>", m_tmp_port_name.c_str ()));
+						append_data (SerialDataTypeInfo, faw::String::format (International::translate ("The serial port has been opened: <c #00007f>%s</c>").data (), m_tmp_port_name.c_str ()).stra ());
 					}
 				}
 				return true;
@@ -139,7 +139,7 @@ public:
 				if (m_serial.is_open ()) {
 					m_serial.close ();
 					enable_combos (true);
-					append_data (SerialDataTypeInfo, tool_StringA::format ("已关闭串口：<c #7f0000>%s</c>", m_tmp_port_name.c_str ()));
+					append_data (SerialDataTypeInfo, faw::String::format (International::translate ("The serial port has been closed: <c #7f0000>%s</c>").data (), m_tmp_port_name.c_str ()).stra ());
 					m_tmp_port_name = "";
 				}
 				return true;

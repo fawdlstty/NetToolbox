@@ -103,7 +103,7 @@ public:
 		m_bkimg_findcolor = m_window_findcolor->GetBkImage ();
 		m_cur_findcolor = ::LoadCursor (m_parent->get_instance (), MAKEINTRESOURCE (IDC_CURSOR_FINDCOLOR));
 		m_find_wnd = new page_FindWnd ();
-		m_find_wnd->Create (m_parent->GetHWND (), _T ("颜色萃取"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+		m_find_wnd->Create (m_parent->GetHWND (), International::translate (_T ("Color extraction")), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
 		m_find_wnd->ShowWindow (false);
 
 		m_bkimg_detector = m_window_detector->GetBkImage ();

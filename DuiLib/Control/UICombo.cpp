@@ -527,7 +527,7 @@ namespace DuiLib {
 	}
 
 	faw::String CComboUI::GetText () const {
-		if (m_iCurSel < 0) return _T ("");
+		if (m_iCurSel < 0) return __super::GetText ();
 		CControlUI* pControl = static_cast<CControlUI*>(m_items[m_iCurSel]);
 		return pControl->GetText ();
 	}

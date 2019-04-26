@@ -38,11 +38,11 @@ public:
 			addr = s;
 			bool is_ipv4 = tool_Formatting::is_ipv4 (s), is_ipv6 = tool_Formatting::is_ipv6 (s);
 			if (!is_ipv4 && !is_ipv6) {
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _T ("未知地址或域名"));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("Unknown IP or domain name")));
 				m_tracert_begin->SetEnabled (true);
 			} else {
 				m_tracert_list->RemoveAll ();
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, faw::String::format (_T ("正在路由跟踪到 %s"), addr.c_str ()));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, faw::String::format (International::translate (_T ("Routing trace to %s")).data (), addr.c_str ()));
 				std::thread ([this, s, is_ipv4] () {
 					bool _state;
 					faw::String _info;

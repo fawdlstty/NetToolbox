@@ -55,7 +55,7 @@
 					<Option style="x_item2" name="tab5_1" text="Serial Port" />
 					<Option style="x_item2" name="tab5_2" text="Window Tool" />
 					<Option style="x_item2" name="tab5_3" text="File Tool" />
-					<Option style="x_item2" name="tab5_4" text="QRcode Build" />
+					<!-- <Option style="x_item2" name="tab5_4" text="QRcode Build" /> -->
 					<!--<Option style="x_item2" name="tab5_4" text="Screen Record" />-->
 				</VerticalLayout>
 				<Option name="group6" text="Other" style="x_item1" bkimage="file='qb6.png' dest='10,4,26,20'" />
@@ -252,7 +252,7 @@
 							<HorizontalLayout padding="15,15,15,0">
 								<VerticalLayout width="80">
 									<Text text="Post Data: " autocalcwidth="true" height="20" />
-									<Button name="qps_change" text="Switch Content" style="x_button" />
+									<Button name="qps_change" text="Switch" style="x_button" />
 								</VerticalLayout>
 								<TabLayout name="qps_postdata_tab">
 									<List name="qps_postdata_list" style="x_list" padding="15,0,0,0" fixedscrollbar="true">
@@ -319,14 +319,14 @@
 						<VerticalLayout style="x_ver_sep" height="70" minheight="70" maxheight="500" padding="15,3,15,5">
 							<HorizontalLayout height="24" padding="0,0,0,5">
 								<Text text="Regex: " height="12" padding="0,12,0,0" width="100" />
-								<Combo name="regex_combo_net" style="x_combo" text="Type Network" width="100" dropboxsize="0,102" padding="15,0,0,0">
+								<Combo name="regex_combo_net" style="x_combo" text="Network Group" width="100" dropboxsize="0,102" padding="15,0,0,0">
 									<ListLabelElement text="IPv4" />
 									<ListLabelElement text="IPv6" />
 									<ListLabelElement text="URL" />
 									<ListLabelElement text="Domain" />
 									<ListLabelElement text="E-Mail" />
 								</Combo>
-								<Combo name="regex_combo_format" style="x_combo" text="Type Format" width="100" dropboxsize="0,122" padding="15,0,0,0">
+								<Combo name="regex_combo_format" style="x_combo" text="Format Group" width="100" dropboxsize="0,122" padding="15,0,0,0">
 									<ListLabelElement text="Human ID" />
 									<ListLabelElement text="Phone" />
 									<ListLabelElement text="Date" />
