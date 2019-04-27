@@ -7,9 +7,6 @@
     <Filter Include="3rdparty\serial">
       <UniqueIdentifier>{b8661dc5-170b-432e-9de8-b079bb7d1f8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3rdparty\QRcode">
-      <UniqueIdentifier>{09282857-07e5-4300-9ed3-018b80e26719}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header File">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
@@ -177,9 +174,6 @@
     <ClInclude Include="pages\page_QRcode.hpp">
       <Filter>Header File\pages</Filter>
     </ClInclude>
-    <ClInclude Include="3rdparty\QRcode\qrcode.h">
-      <Filter>3rdparty\QRcode</Filter>
-    </ClInclude>
     <ClInclude Include="International.hpp">
       <Filter>Header File</Filter>
     </ClInclude>
@@ -202,9 +196,6 @@
     </ClCompile>
     <ClCompile Include="3rdparty\serial\serial.cc">
       <Filter>3rdparty\serial</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\QRcode\qrcode.cpp">
-      <Filter>3rdparty\QRcode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

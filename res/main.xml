@@ -55,7 +55,7 @@
 					<Option style="x_item2" name="tab5_1" text="Serial Port" />
 					<Option style="x_item2" name="tab5_2" text="Window Tool" />
 					<Option style="x_item2" name="tab5_3" text="File Tool" />
-					<!-- <Option style="x_item2" name="tab5_4" text="QRcode Build" /> -->
+					<Option style="x_item2" name="tab5_4" text="QRcode Build" />
 					<!--<Option style="x_item2" name="tab5_4" text="Screen Record" />-->
 				</VerticalLayout>
 				<Option name="group6" text="Other" style="x_item1" bkimage="file='qb6.png' dest='10,4,26,20'" />
@@ -536,12 +536,14 @@
 						<HorizontalLayout height="40">
 							<Text text="QRcode content: " padding="10,22,0,4" width="120" />
 							<Edit name="qrcode_content" padding="0,16,20,0" style="x_edit" />
-							<Button name="qrcode_generate" text="Make" style="x_button" padding="0,15,20,0" />
+							<Button name="qrcode_generate" text="Generate" style="x_button" padding="0,15,20,0" />
 						</HorizontalLayout>
 						<HorizontalLayout height="40">
-							<Text text="Background image (optional): " padding="10,22,0,4" width="120" />
+							<Text text="Background Path (optional): " padding="10,22,0,4" width="120" />
 							<Edit name="qrcode_bkimg" padding="0,16,20,0" style="x_edit" />
+							<Button name="qrcode_save" text="Save" style="x_button" padding="0,15,20,0" />
 						</HorizontalLayout>
+						<Text name="qrcode_preview" padding="15,15,15,15" bkcolor="#33000000" text="No preview" align="center" valign="vcenter" />
 					</VerticalLayout>
 					<!-- Screen Record -->
 					<VerticalLayout>

@@ -7,7 +7,14 @@
 #include <tchar.h>
 
 #include "../tools/tool_Gdip.hpp"
-#include "../3rdparty/QRcode/qrcode.h"
+extern "C" {
+#include "../../QRCode/qrcode.h"
+}
+#ifdef _DEBUG
+#pragma comment (lib, "../lib/QRCode_d.lib")
+#else
+#pragma comment (lib, "../lib/QRCode.lib")
+#endif
 
 #include "page_base.hpp"
 
@@ -58,7 +65,7 @@ public:
 					g.FillRectangle (qrcode_getModule (&qrcode, (uint8_t) x, (uint8_t) y) ? _bbrush : _wbrush, Gdiplus::Rect (x * 5, y * 5, 5, 5));
 				}
 			}
-			tool_Gdip::gdip_save (m_bmp, L"d:/text.png");
+			//tool_Gdip::gdip_save (m_bmp, L"d:/text.png");
 			delete _wbrush;
 			delete _bbrush;
 

@@ -55,7 +55,7 @@
 					<Option style="x_item2" name="tab5_1" text="串口调试工具" />
 					<Option style="x_item2" name="tab5_2" text="窗口工具" />
 					<Option style="x_item2" name="tab5_3" text="文件工具" />
-					<!-- <Option style="x_item2" name="tab5_4" text="二维码生成" /> -->
+					<Option style="x_item2" name="tab5_4" text="二维码生成" />
 					<!--<Option style="x_item2" name="tab5_4" text="屏幕录像" />-->
 				</VerticalLayout>
 				<Option name="group6" text="其他" style="x_item1" bkimage="file='qb6.png' dest='10,4,26,20'" />
@@ -539,9 +539,11 @@
 							<Button name="qrcode_generate" text="生成" style="x_button" padding="0,15,20,0" />
 						</HorizontalLayout>
 						<HorizontalLayout height="40">
-							<Text text="背景图片（可选）：" padding="10,22,0,4" width="120" />
+							<Text text="背景路径（可选）：" padding="10,22,0,4" width="120" />
 							<Edit name="qrcode_bkimg" padding="0,16,20,0" style="x_edit" />
+							<Button name="qrcode_save" text="保存" style="x_button" padding="0,15,20,0" />
 						</HorizontalLayout>
+						<Text name="qrcode_preview" padding="15,15,15,15" bkcolor="#33000000" text="暂无预览" align="center" valign="vcenter" />
 					</VerticalLayout>
 					<!-- 屏幕录像 -->
 					<VerticalLayout>

@@ -36,6 +36,7 @@ public:
 			{ International::translate ("Money"), "^([0-9]+|[0-9]{1,3}(,?[0-9]{3})*)(.[0-9]{1,5})?$" },
 			{ International::translate ("Postcode"), "^\\d{6}$" },
 			{ International::translate ("Chinese Character(GB18030)"), "^((\\u8140-\\ufefe)|(\\u8130-\\ufe39){2})+$" },
+			//{ International::translate ("Chinese Character(UTF8)"), "^#(\\S{4,8})($|\\s.+)$" },
 		};
 		return m_regex_items[desp];
 	}
