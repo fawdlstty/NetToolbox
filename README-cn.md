@@ -4,7 +4,7 @@
 
 易大师网络工具箱
 
-![capture.jpg](capture.jpg)
+![capture.jpg](capture_cn.jpg)
 
 ## 描述
 

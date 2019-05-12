@@ -67,7 +67,7 @@ void NetToolboxWnd::InitWindow () {
 #ifdef _DEBUG
 	if (_args.size () < 2) {
 		_args.push_back (_T ("-jump"));
-		_args.push_back (_T ("5,4"));
+		_args.push_back (_T ("5,3"));
 	}
 #endif
 	for (size_t i = 1; i < _args.size (); ++i) {

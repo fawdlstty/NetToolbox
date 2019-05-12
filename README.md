@@ -4,7 +4,7 @@ English | [简体中文](README-cn.md)
 
 Net Toolbox for Master Yi
 
-![capture.jpg](capture.jpg)
+![capture.jpg](capture_en.jpg)
 
 ## Description
 

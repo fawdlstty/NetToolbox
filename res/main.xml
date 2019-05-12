@@ -50,12 +50,12 @@
 					<Option style="x_item2" name="tab4_2" text="Encode Decode" />
 				</VerticalLayout>
 				<Option name="group5" text="Standalone Tool" style="x_item1" bkimage="file='qb5.png' dest='10,4,26,20'" />
-				<VerticalLayout name="group_item5" height="200" visible="false">
+				<VerticalLayout name="group_item5" height="160" visible="false">
 					<Option style="x_item2" name="tab5_0" text="GIF Record" />
 					<Option style="x_item2" name="tab5_1" text="Serial Port" />
 					<Option style="x_item2" name="tab5_2" text="Window Tool" />
 					<Option style="x_item2" name="tab5_3" text="File Tool" />
-					<Option style="x_item2" name="tab5_4" text="QRcode Build" />
+					<!--<Option style="x_item2" name="tab5_4" text="QRcode Build" />-->
 					<!--<Option style="x_item2" name="tab5_4" text="Screen Record" />-->
 				</VerticalLayout>
 				<Option name="group6" text="Other" style="x_item1" bkimage="file='qb6.png' dest='10,4,26,20'" />
