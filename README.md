@@ -49,10 +49,6 @@ UI Library（MIT License）: [DuiLib_Faw](https://github.com/fawdlstty/DuiLib_Fa
 
 GPL-2.0
 
-## Donate
-
-![poor.jpg](poor.jpg)
-
 ## Other
 
 technical exchange: [Click the link to join the group【网络工具箱交流群 943497747】](https://jq.qq.com/?_wv=1027&k=5vG1SGq)
