@@ -1399,7 +1399,7 @@ namespace DuiLib {
 	}
 
 	void CRenderEngine::DrawRoundRect (HDC hDC, const RECT& rc, int nSize, int width, int height, DWORD dwPenColor, int nStyle /*= PS_SOLID*/) {
-#ifdef USE_GDI_RENDER
+//#ifdef USE_GDI_RENDER
 		ASSERT (::GetObjectType (hDC) == OBJ_DC || ::GetObjectType (hDC) == OBJ_MEMDC);
 		HPEN hPen = ::CreatePen (nStyle, nSize, RGB (GetBValue (dwPenColor), GetGValue (dwPenColor), GetRValue (dwPenColor)));
 		HPEN hOldPen = (HPEN)::SelectObject (hDC, hPen);
@@ -1407,9 +1407,9 @@ namespace DuiLib {
 		::RoundRect (hDC, rc.left, rc.top, rc.right, rc.bottom, width, height);
 		::SelectObject (hDC, hOldPen);
 		::DeleteObject (hPen);
-#else
-		DrawRoundRectange (hDC, rc.left, rc.top, rc.right - rc.left - 1, rc.bottom - rc.top - 1, width, Gdiplus::Color (dwPenColor), nSize, false, Gdiplus::Color (dwPenColor));
-#endif
+//#else
+//		DrawRoundRectange (hDC, rc.left, rc.top, rc.right - rc.left - 1, rc.bottom - rc.top - 1, width, Gdiplus::Color (dwPenColor), nSize, false, Gdiplus::Color (dwPenColor));
+//#endif
 	}
 
 	void CRenderEngine::DrawText (HDC hDC, CPaintManagerUI* pManager, RECT& rc, faw::string_view_t pstrText, DWORD dwTextColor, int iFont, UINT uStyle) {
@@ -1647,7 +1647,7 @@ namespace DuiLib {
 				switch (pstrText[0]) {
 				case _T ('a'):  // Link
 				{
-					pstrText = pstrText.substr (1);
+					pstrText = pstrText.substr (2);
 					if (iLinkIndex < nLinkRects && !bLineDraw) {
 						faw::String *pStr = (faw::String*) (sLinks + iLinkIndex);
 						pStr->clear ();
@@ -1705,7 +1705,7 @@ namespace DuiLib {
 				break;
 				case _T ('c'):  // Color
 				{
-					pstrText = pstrText.substr (1);
+					pstrText = pstrText.substr (2);
 					DWORD clrColor = (DWORD) (FawTools::parse_hex (pstrText));
 					aColorArray.Add ((LPVOID) clrColor);
 					::SetTextColor (hDC, RGB (GetBValue (clrColor), GetGValue (clrColor), GetRValue (clrColor)));
@@ -1713,7 +1713,7 @@ namespace DuiLib {
 				break;
 				case _T ('f'):  // Font
 				{
-					pstrText = pstrText.substr (1);
+					pstrText = pstrText.substr (2);
 					faw::string_view_t pstrTemp = pstrText;
 					int _iFont = _ttoi (pstrText.data ());
 					if (pstrTemp != pstrText) {
@@ -1762,7 +1762,7 @@ namespace DuiLib {
 				case _T ('i'):  // Italic or Image
 				{
 					pstrNextStart = &pstrText.data ()[-1];
-					pstrText = pstrText.substr (1);
+					pstrText = pstrText.substr (2);
 					faw::String sImageString = pstrText;
 					int iWidth = 0;
 					int iHeight = 0;
@@ -1920,7 +1920,7 @@ namespace DuiLib {
 				break;
 				case _T ('x'):  // X Indent
 				{
-					pstrText = pstrText.substr (1);
+					pstrText = pstrText.substr (2);
 					int iWidth = (int) FawTools::parse_dec (pstrText);
 					pt.x += iWidth;
 					cxMaxWidth = MAX (cxMaxWidth, pt.x);
@@ -1928,7 +1928,7 @@ namespace DuiLib {
 				break;
 				case _T ('y'):  // Y Indent
 				{
-					pstrText = pstrText.substr (1);
+					pstrText = pstrText.substr (2);
 					int iWidth = (int) FawTools::parse_dec (pstrText);
 				}
 				break;

@@ -50,7 +50,7 @@
 					<Option style="x_item2" name="tab4_2" text="转码解码" />
 				</VerticalLayout>
 				<Option name="group5" text="单机工具" style="x_item1" bkimage="file='qb5.png' dest='10,4,26,20'" />
-				<VerticalLayout name="group_item5" height="200" visible="false">
+				<VerticalLayout name="group_item5" height="160" visible="false">
 					<Option style="x_item2" name="tab5_0" text="GIF录制" />
 					<Option style="x_item2" name="tab5_1" text="串口调试工具" />
 					<Option style="x_item2" name="tab5_2" text="窗口工具" />
