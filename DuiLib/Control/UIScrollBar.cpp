@@ -6,7 +6,6 @@ namespace DuiLib {
 
 	CScrollBarUI::CScrollBarUI () {
 		m_cxyFixed.cx = DEFAULT_SCROLLBAR_SIZE;
-		ptLastMouse.x = ptLastMouse.y = 0;
 	}
 
 	faw::string_view_t CScrollBarUI::GetClass () const {
@@ -408,7 +407,7 @@ namespace DuiLib {
 					int cyThumb = cy * (rc.bottom - rc.top) / (m_nRange + rc.bottom - rc.top);
 					if (cyThumb < cxyFixed.cx) cyThumb = cxyFixed.cx;
 
-					m_rcThumb.top = m_nScrollPos * (cy - cyThumb) / m_nRange + m_rcButton1.bottom;
+					m_rcThumb.top = (m_nScrollPos * 1.0f / m_nRange) * (cy - cyThumb) + m_rcButton1.bottom;
 					m_rcThumb.bottom = m_rcThumb.top + cyThumb;
 					if (m_rcThumb.bottom > m_rcButton2.top) {
 						m_rcThumb.top = m_rcButton2.top - cyThumb;
@@ -486,7 +485,7 @@ namespace DuiLib {
 				}
 			} else if (::PtInRect (&m_rcThumb, event.ptMouse)) {
 				m_uThumbState |= UISTATE_CAPTURED | UISTATE_PUSHED;
-				ptLastMouse = event.ptMouse;
+				m_ptLastMouse = event.ptMouse;
 				m_nLastScrollPos = m_nScrollPos;
 			} else {
 				if (!m_bHorizontal) {
@@ -529,12 +528,13 @@ namespace DuiLib {
 		}
 		if (event.Type == UIEVENT_MOUSEMOVE) {
 			if ((m_uThumbState & UISTATE_CAPTURED) != 0) {
+				int64_t fMouseRange = (event.ptMouse.y - m_ptLastMouse.y) * m_nRange;
 				if (!m_bHorizontal) {
-					int vRange = m_rcItem.bottom - m_rcItem.top - m_rcThumb.bottom + m_rcThumb.top - 2 * m_cxyFixed.cx;
-					if (vRange != 0) m_nLastScrollOffset = (event.ptMouse.y - ptLastMouse.y) * m_nRange / abs (vRange);
+					int vRange = m_rcItem.bottom - m_rcItem.top - (m_rcThumb.bottom - m_rcThumb.top) - 2 * m_cxyFixed.cx;
+					if (vRange != 0) m_nLastScrollOffset = fMouseRange / abs (vRange);
 				} else {
 					int hRange = m_rcItem.right - m_rcItem.left - m_rcThumb.right + m_rcThumb.left - 2 * m_cxyFixed.cy;
-					if (hRange != 0) m_nLastScrollOffset = (event.ptMouse.x - ptLastMouse.x) * m_nRange / abs (hRange);
+					if (hRange != 0) m_nLastScrollOffset = fMouseRange / abs (hRange);
 				}
 			} else {
 				if ((m_uThumbState & UISTATE_HOT) != 0) {

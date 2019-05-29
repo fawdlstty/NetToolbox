@@ -110,7 +110,7 @@ namespace DuiLib {
 					}
 					if (id >= 0) {
 						pManager->AddFont (id, pFontName.str_view (), size, bold, underline, italic, shared);
-						if (defaultfont) pManager->SetDefaultFont (pFontName.str_view (), pManager->GetDPIObj ()->Scale (size), bold, underline, italic, shared);
+						if (defaultfont) pManager->SetDefaultFont (pFontName.str_view (), size, bold, underline, italic, shared);
 					}
 				} else if (pstrClass == _T ("Default")) {
 					nAttributes = node.GetAttributeCount ();

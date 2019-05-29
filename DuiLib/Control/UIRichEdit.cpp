@@ -1546,7 +1546,7 @@ namespace DuiLib {
 			m_pTwh->GetTextServices ()->TxSendMessage (EM_SETEVENTMASK, 0, ENM_DROPFILES | ENM_LINK | ENM_CHANGE, &lResult);
 			m_pTwh->OnTxInPlaceActivate (nullptr);
 			m_pManager->AddMessageFilter (this);
-			if (m_pManager->IsLayered ()) m_pManager->SetTimer (this, DEFAULT_TIMERID, ::GetCaretBlinkTime ());
+			m_pManager->SetTimer (this, DEFAULT_TIMERID, ::GetCaretBlinkTime ());
 			if (!m_bEnabled) {
 				m_pTwh->SetColor (m_pManager->GetDefaultDisabledColor ());
 			}
@@ -1739,13 +1739,12 @@ namespace DuiLib {
 			return;
 		} else if (event.Type == UIEVENT_TIMER) {
 			if (event.wParam == DEFAULT_TIMERID) {
-				if (m_pTwh && m_pManager->IsLayered () && IsFocused ()) {
+				if (m_pManager->IsLayered () && IsFocused () && m_pTwh && m_pTwh->IsShowCaret ()) {
 					if (::GetFocus () != m_pManager->GetPaintWindow ()) return;
 					m_bDrawCaret = !m_bDrawCaret;
 					POINT ptCaret = { 0 };
 					::GetCaretPos (&ptCaret);
-					RECT rcCaret = { ptCaret.x, ptCaret.y, ptCaret.x + m_pTwh->GetCaretWidth (),
-						ptCaret.y + m_pTwh->GetCaretHeight () };
+					RECT rcCaret = { ptCaret.x, ptCaret.y, ptCaret.x + m_pTwh->GetCaretWidth (), ptCaret.y + m_pTwh->GetCaretHeight () };
 					RECT rcTemp = rcCaret;
 					if (!::IntersectRect (&rcCaret, &rcTemp, &m_rcItem)) return;
 					CControlUI* pParent = this;
@@ -1757,10 +1756,13 @@ namespace DuiLib {
 							return;
 					}
 					m_pManager->Invalidate (rcCaret);
+				} else if (IsFocused () && m_pTwh) {
+					if (::GetFocus () != m_pManager->GetPaintWindow ()) return;
+					if (m_pTwh->IsShowCaret ()) m_pTwh->TxShowCaret (FALSE);
+					else m_pTwh->TxShowCaret (TRUE);
 				}
 				return;
-			}
-			if (m_pTwh) {
+			} else if (m_pTwh) {
 				m_pTwh->GetTextServices ()->TxSendMessage (WM_TIMER, event.wParam, event.lParam, 0);
 			}
 			return;
@@ -1786,7 +1788,6 @@ namespace DuiLib {
 	}
 
 	SIZE CRichEditUI::EstimateSize (SIZE szAvailable) {
-		//return CDuiSize(m_rcItem); // 这种方式在第一次设置大小之后就大小不变了
 		return CContainerUI::EstimateSize (szAvailable);
 	}
 
@@ -1800,7 +1801,6 @@ namespace DuiLib {
 		rc.bottom -= m_rcInset.bottom;
 
 		RECT rcScrollView = rc;
-
 		bool bVScrollBarVisiable = false;
 		if (m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible ()) {
 			bVScrollBarVisiable = true;
@@ -1985,12 +1985,15 @@ namespace DuiLib {
 			}
 		}
 
-		if (m_pTwh && m_pTwh->IsShowCaret () && m_pManager->IsLayered () && IsFocused () && m_bDrawCaret) {
-			POINT ptCaret = { 0 };
-			::GetCaretPos (&ptCaret);
-			if (::PtInRect (&m_rcItem, ptCaret)) {
-				RECT rcCaret = { ptCaret.x, ptCaret.y, ptCaret.x, ptCaret.y + m_pTwh->GetCaretHeight () };
-				CRenderEngine::DrawLine (hDC, rcCaret, m_pTwh->GetCaretWidth (), 0xFF000000);
+		if (m_pManager->IsLayered () && IsFocused () && m_pTwh && m_pTwh->IsShowCaret ()) {
+			if (m_bDrawCaret) {
+				POINT ptCaret;
+				::GetCaretPos (&ptCaret);
+				if (::PtInRect (&m_rcItem, ptCaret)) {
+					RECT rcCaret = { ptCaret.x, ptCaret.y, ptCaret.x, ptCaret.y + m_pTwh->GetCaretHeight () };
+					DWORD dwTextColor = GetTextColor ();
+					CRenderEngine::DrawLine (hDC, rcCaret, m_pTwh->GetCaretWidth (), dwTextColor);
+				}
 			}
 		}
 
@@ -2076,6 +2079,7 @@ namespace DuiLib {
 
 	void CRichEditUI::SetTipValue (faw::string_view_t pStrTipValue) {
 		m_sTipValue = pStrTipValue;
+		Invalidate ();
 	}
 
 	faw::string_view_t CRichEditUI::GetTipValue () {
@@ -2084,6 +2088,7 @@ namespace DuiLib {
 
 	void CRichEditUI::SetTipValueColor (faw::string_view_t pStrColor) {
 		m_dwTipValueColor = (DWORD) FawTools::parse_hex (pStrColor);
+		Invalidate ();
 	}
 
 	DWORD CRichEditUI::GetTipValueColor () {
