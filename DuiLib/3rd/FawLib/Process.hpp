@@ -6,7 +6,7 @@
 // Author:      Fawdlstty
 // Author URI:  https://www.fawdlstty.com/
 // License:     MIT
-// Last Update: Jan 25, 2019
+// Last Update: May 20, 2019
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -36,7 +36,7 @@ namespace faw {
 		static bool create (String _cmd_line, std::function<void ()> _on_exit = nullptr) {
 			STARTUPINFO si = { sizeof (STARTUPINFO) };
 			PROCESS_INFORMATION pi = { 0 };
-			bool bRet = !!::CreateProcess (nullptr, &_cmd_line [0], nullptr, nullptr, FALSE, 0, nullptr, nullptr, &si, &pi);
+			bool bRet = !!::CreateProcess (nullptr, &_cmd_line [0], nullptr, nullptr, TRUE, 0, nullptr, nullptr, &si, &pi);
 			if (!bRet)
 				return false;
 			CloseHandle (pi.hThread);

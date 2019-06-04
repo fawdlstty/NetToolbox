@@ -683,7 +683,7 @@ namespace faw {
 			}
 			return _ret;
 		}
-		size_t find_any (std::initializer_list<std::string> _ss) {
+		size_t find_any (std::initializer_list<LPCSTR> _ss) {
 			size_t _ret = _npos;
 			for (auto &_s : _ss) {
 				size_t _n = find (std::string_view (_s));
@@ -691,7 +691,7 @@ namespace faw {
 			}
 			return _ret;
 		}
-		size_t find_any (std::initializer_list<std::wstring> _ss) {
+		size_t find_any (std::initializer_list<LPCWSTR> _ss) {
 			size_t _ret = _npos;
 			for (auto &_s : _ss) {
 				size_t _n = find (std::wstring_view (_s));
@@ -780,7 +780,9 @@ namespace faw {
 			return _s;
 		}
 		String left (size_t n) const { return (n >= size () ? str () : str ().substr (0, n)); }
+		bool left_is (String _str) const { return left (_str.size ()) == _str; }
 		String right (size_t n) const { return (n >= size () ? str () : str ().substr (size () - n)); }
+		bool right_is (String _str) const { return right (_str.size ()) == _str; }
 		String substr (size_t begin, size_t len = String::_npos) const { return (begin >= size () ? _T ("") : (begin + len >= size () ? str ().substr (begin) : str ().substr (begin, len))); }
 
 		// 字符串处理（改变自身）

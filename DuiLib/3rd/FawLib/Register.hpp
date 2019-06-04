@@ -6,7 +6,7 @@
 // Author:      Fawdlstty
 // Author URI:  https://www.fawdlstty.com/
 // License:     MIT
-// Last Update: Jan 21, 2019
+// Last Update: May 20, 2019
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <type_traits>
 #include <Windows.h>
 
 
@@ -78,41 +79,73 @@ namespace faw {
 		}
 
 		// 获取path的值
-		static bool get_path_value (std::wstring path, BYTE *&data, DWORD &data_len) {
+		template<typename T>
+		static T get_path_value (std::wstring path) {
 			HKEY main_key = parse_path (path);
-			return (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.c_str (), nullptr, nullptr, data, &data_len));
-		}
-		static bool get_path_value (std::wstring path, DWORD &data) {
-			HKEY main_key = parse_path (path);
-			DWORD data_size = sizeof (data);
-			return (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.c_str (), nullptr, nullptr, (BYTE*) &data, &data_size));
-		}
-		static bool get_path_value (std::wstring path, std::wstring &data) {
-			HKEY main_key = parse_path (path);
-			std::wstring _data = L"";
-			_data.reserve (4096);
-			DWORD sz = (DWORD) 4096 * sizeof (wchar_t);
-			bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.c_str (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
-			data = std::wstring (_data.c_str (), sz / 2);
-			return bRet;
-		}
-		static bool get_path_value (std::wstring path, std::vector<std::wstring> &data) {
-			HKEY main_key = parse_path (path);
-			std::wstring _data = L"";
-			_data.reserve (4096);
-			DWORD sz = (DWORD) 4096 * sizeof (wchar_t);
-			bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.c_str (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
-			data.clear ();
-			wchar_t *p1 = &_data[0];
-			while (*p1) {
-				int len = lstrlenW (p1);
-				data.push_back (std::wstring (p1, len));
-				p1 += len;
+			DWORD _data_len = 2048, _type = 0;
+			if constexpr (std::is_same <T, std::tuple<BYTE*, size_t>>::value) {
+				// TODO: make sure
+				BYTE *_data = new BYTE [2048];
+				memset (_data, 0, 2048);
+				_type = REG_BINARY;
+				if (ERROR_SUCCESS != ::RegQueryValueExW (main_key, path.c_str (), nullptr, &_type, _data, &_data_len)) {
+					delete [] _data;
+					_data = nullptr;
+					_data_len = 0;
+				}
+				return { _data, (size_t) _data_len };
+			} else if constexpr (std::is_same <T, DWORD>::value) {
+				// TODO: make sure
+				DWORD _data = 0;
+				_data_len = 4;
+				_type = REG_DWORD;
+				::RegQueryValueExW (main_key, path.c_str (), nullptr, &_type, (BYTE*) &_data, &_data_len);
+				return _data;
+			} else if constexpr (std::is_same <T, std::wstring>::value) {
+				std::wstring _data = L"";
+				_data.reserve (2048);
+				::RegQueryValueW (main_key, path.c_str (), &_data [0], (PLONG) &_data_len);
+				return std::wstring (_data.c_str (), _data_len / 2);
+			} else if constexpr (std::is_same <T, std::vector<std::wstring>>::value) {
+				// TODO: make sure
+				std::wstring _data = L"";
+				_data.reserve (4096);
+				_type = REG_MULTI_SZ;
+				::RegQueryValueExW (main_key, path.c_str (), nullptr, &_type, (BYTE*) &_data [0], &_data_len);
+				_data.resize (_data_len / 2, L'\0');
+				std::vector<std::wstring> _v;
+				wchar_t *p1 = &_data [0];
+				while (*p1) {
+					int len = lstrlenW (p1);
+					_v.push_back (std::wstring (p1, len));
+					p1 += len;
+				}
+				return _v;
+			} else {
+				return T {};
 			}
-			return bRet;
 		}
 
-		// 获取key的值
+		//// 获取key的值
+		//template<typename T>
+		//static T get_path_value (std::wstring path, std::wstring key_name) {
+		//	HKEY main_key = parse_path (path), sub_key = NULL;
+		//	if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_READ, &sub_key)) return false;
+		//	if constexpr (std::is_same <T, std::tuple<BYTE*, size_t>>::value) {
+		//		//
+		//	} else if constexpr (std::is_same <T, DWORD>::value) {
+		//		//
+		//	} else if constexpr (std::is_same <T, std::wstring>::value) {
+		//		//
+		//	} else if constexpr (std::is_same <T, std::vector<std::wstring>>::value) {
+		//		//
+		//	} else {
+		//		return T {};
+		//	}
+		//	::RegCloseKey (sub_key);
+		//	return bRet;
+		//}
+
 		static bool get_key_value (std::wstring path, std::wstring key_name, BYTE *&data, DWORD &data_len) {
 			HKEY main_key = parse_path (path), sub_key = NULL;
 			if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_READ, &sub_key)) return false;

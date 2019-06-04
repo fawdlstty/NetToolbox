@@ -6,7 +6,7 @@
 // Author:      Fawdlstty
 // Author URI:  https://www.fawdlstty.com/
 // License:     MIT
-// Last Update: Jan 22, 2019
+// Last Update: May 16, 2019
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -34,8 +34,9 @@ namespace faw {
 			DWORD _attr = ::GetFileAttributes (_path.c_str ());
 			return (_attr != INVALID_FILE_ATTRIBUTES && !(_attr & FILE_ATTRIBUTE_DIRECTORY));
 		}
-		static void remove (String _path) { ::DeleteFile (_path.c_str ()); }
+		static bool remove (String _path) { return !!::DeleteFile (_path.c_str ()); }
 		static bool copy (String _src, String _dest) { return !!::CopyFile (_src.c_str (), _dest.c_str (), FALSE); }
+		static bool move (String _src, String _dest) { return !!::MoveFile (_src.c_str (), _dest.c_str ()); }
 		static bool write (String _path, String _data, String _encoding = _T ("utf-8"), std::ios::openmode _openmode = std::ios::binary) {
 			MakeSureDirectoryPathExists (_path.stra ().c_str ());
 			_encoding.lower_self ();

@@ -6,7 +6,7 @@
 // Author:      Fawdlstty
 // Author URI:  https://www.fawdlstty.com/
 // License:     MIT
-// Last Update: Jan 22, 2019
+// Last Update: May 16, 2019
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -20,6 +20,8 @@
 
 #include <DbgHelp.h>
 #pragma comment (lib, "DbgHelp.lib")
+#include <shellapi.h>
+#pragma comment (lib, "shell32.lib")
 
 #include "String.hpp"
 #include "File.hpp"
@@ -114,6 +116,20 @@ namespace faw {
 		}
 		static String get_current_path () {
 			String _s = get_current_file ();
+			size_t _p = _s.rfind_any ({ _T ('/'), _T ('\\') });
+			return _s.left (_p + 1);
+		}
+		static String get_current_file1 (HMODULE hModule) {
+			TCHAR buf [MAX_PATH] = { 0 };
+			::GetModuleFileName (hModule, buf, MAX_PATH);
+			String _s { buf };
+			TCHAR _end_ch = _T (' ');
+			if (_s [0] == _T ('"'))
+				_end_ch << _s;
+			return _s.left (_s.find (_end_ch));
+		}
+		static String get_current_path1 (HMODULE hModule) {
+			String _s = get_current_file1 (hModule);
 			size_t _p = _s.rfind_any ({ _T ('/'), _T ('\\') });
 			return _s.left (_p + 1);
 		}
