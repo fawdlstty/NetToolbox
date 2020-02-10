@@ -48,8 +48,6 @@ public:
 			::MD4_Init (&_md4);
 			MD5_CTX _md5;
 			::MD5_Init (&_md5);
-			SHA_CTX _sha;
-			::SHA_Init (&_sha);
 			SHA_CTX _sha1;
 			::SHA1_Init (&_sha1);
 			SHA256_CTX _sha224;
@@ -66,7 +64,6 @@ public:
 				crc32.process_bytes (buf, sz_1M);
 				::MD4_Update (&_md4, buf, sz_1M);
 				::MD5_Update (&_md5, buf, sz_1M);
-				::SHA_Update (&_sha, buf, sz_1M);
 				::SHA1_Update (&_sha1, buf, sz_1M);
 				::SHA224_Update (&_sha224, buf, sz_1M);
 				::SHA256_Update (&_sha256, buf, sz_1M);
@@ -78,7 +75,6 @@ public:
 				crc32.process_bytes (buf, last_size);
 				::MD4_Update (&_md4, buf, last_size);
 				::MD5_Update (&_md5, buf, last_size);
-				::SHA_Update (&_sha, buf, last_size);
 				::SHA1_Update (&_sha1, buf, last_size);
 				::SHA224_Update (&_sha224, buf, last_size);
 				::SHA256_Update (&_sha256, buf, last_size);
@@ -89,7 +85,6 @@ public:
 			unsigned char buf_md4[16] = { 0 }, buf_md5[16] = { 0 }, buf_sha[20] = { 0 }, buf_sha1[20] = { 0 }, buf_sha224[28] = { 0 }, buf_sha256[32] = { 0 }, buf_sha384[48] = { 0 }, buf_sha512[64] = { 0 };
 			::MD4_Final (buf_md4, &_md4);
 			::MD5_Final (buf_md5, &_md5);
-			::SHA_Final (buf_sha, &_sha);
 			::SHA1_Final (buf_sha1, &_sha1);
 			::SHA224_Final (buf_sha224, &_sha224);
 			::SHA256_Final (buf_sha256, &_sha256);

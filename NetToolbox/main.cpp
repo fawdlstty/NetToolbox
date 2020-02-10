@@ -39,6 +39,8 @@ using Json = nlohmann::json;
 #	pragma comment (lib, "../lib/DuiLibA_s.lib")
 #endif
 
+#pragma comment (lib, "Crypt32.lib")
+
 
 
 // 获取文件md5
@@ -97,7 +99,7 @@ public:
 			::CoUninitialize ();
 			::WSACleanup ();
 		} else {
-			::curl_global_init (NULL);
+			//::curl_global_init (NULL);
 			tool_Priv::adjust_debug ();
 
 			is_succeed = true;
@@ -105,7 +107,7 @@ public:
 	}
 	~ProgramGuard () {
 		if (is_succeed) {
-			::curl_global_cleanup ();
+			//::curl_global_cleanup ();
 			::CoUninitialize ();
 			::WSACleanup ();
 		}

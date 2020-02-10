@@ -137,9 +137,9 @@ public:
 		if (NO_ERROR == ::GetTcp6Table2 (ptcp6, &size, true)) {
 			for (size_t i = 0; i < ptcp6->dwNumEntries; ++i) {
 				faw::String local_ip = ipv6_to_str (ptcp6->table[i].LocalAddr.u.Byte, ptcp6->table[i].dwLocalScopeId);
-				uint16_t local_port = (uint16_t) ptcp6->table[i].dwLocalPort;
+				uint16_t local_port = (uint16_t) ::ntohs (ptcp6->table[i].dwLocalPort);
 				faw::String remote_ip = ipv6_to_str (ptcp6->table[i].RemoteAddr.u.Byte, ptcp6->table[i].dwRemoteScopeId);
-				uint16_t remote_port = (uint16_t) ptcp6->table[i].dwRemotePort;
+				uint16_t remote_port = (uint16_t) ::ntohs (ptcp6->table[i].dwRemotePort);
 				faw::String tcp_conn_state = mtcp_conn_state[ptcp6->table[i].State];
 				DWORD process_id = ptcp6->table[i].dwOwningPid;
 				faw::String exe_path = mprocesses[process_id];
@@ -158,7 +158,7 @@ public:
 		if (NO_ERROR == ::GetExtendedUdpTable (pudp4, &size, true, AF_INET, UDP_TABLE_OWNER_PID, 0)) {
 			for (size_t i = 0; i < pudp4->dwNumEntries; ++i) {
 				faw::String local_ip = ipv4_to_str (pudp4->table[i].dwLocalAddr);
-				uint16_t local_port = (uint16_t) pudp4->table[i].dwLocalPort;
+				uint16_t local_port = (uint16_t) ::ntohs (pudp4->table[i].dwLocalPort);
 				DWORD process_id = pudp4->table[i].dwOwningPid;
 				faw::String exe_path = mprocesses[process_id];
 				vconn.push_back ({ true, local_ip, local_port, _T ("*"), 0, _T ("UDP"), process_id, exe_path });
@@ -174,7 +174,7 @@ public:
 		if (NO_ERROR == ::GetExtendedUdpTable (pudp6, &size, true, AF_INET6, UDP_TABLE_OWNER_PID, 0)) {
 			for (size_t i = 0; i < pudp6->dwNumEntries; ++i) {
 				faw::String local_ip = ipv6_to_str (pudp6->table[i].ucLocalAddr, pudp6->table[i].dwLocalScopeId);
-				uint16_t local_port = (uint16_t) pudp6->table[i].dwLocalPort;
+				uint16_t local_port = (uint16_t) ::ntohs (pudp6->table[i].dwLocalPort);
 				DWORD process_id = pudp6->table[i].dwOwningPid;
 				faw::String exe_path = mprocesses[process_id];
 				vconn.push_back ({ true, local_ip, local_port, _T ("*"), 0, _T ("UDP"), process_id, exe_path });
