@@ -198,7 +198,8 @@
 									<ListHeaderItem style="x_list_hdr" width="100" text="Delay1" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="Delay2" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="Delay3" />
-									<ListHeaderItem style="x_list_hdr" width="180" text="IP Addr" />
+									<ListHeaderItem style="x_list_hdr" width="100" text="IP Addr" />
+									<ListHeaderItem style="x_list_hdr" width="200" text="Description" />
 								</ListHeader>
 							</List>
 						</HorizontalLayout>

@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Window size="120,102">
-	<Font id="1" name="宋体" size="12" default="true" />
-	<VerticalLayout>
-		<Control name="find_image" bkimage="findcolor.png" width="120" height="88" />
-		<Text name="find_text" text="测试" textpadding="0,2,0,0" bkcolor="#FFDDDDDD" height="14" />
-	</VerticalLayout>
-</Window>

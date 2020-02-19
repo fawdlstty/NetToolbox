@@ -30,7 +30,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3327CB5C-CFAF-4DE9-8BAD-C6F15E09EE26}</ProjectGuid>
     <RootNamespace>NetToolbox</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <VcpkgEnabled>true</VcpkgEnabled>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -334,6 +334,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="tools\tool_Priv.hpp" />
     <ClInclude Include="tools\tool_Process.hpp" />
     <ClInclude Include="tools\tool_Register.hpp" />
+    <ClInclude Include="tools\tool_Resource.hpp" />
     <ClInclude Include="tools\tool_Rsa.hpp" />
     <ClInclude Include="tools\tool_SerialPort.hpp" />
     <ClInclude Include="tools\tool_String.hpp" />
@@ -399,6 +400,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <None Include="res\arrow_main.cur" />
     <None Include="res\find_color.cur" />
     <None Include="res\find_pos.cur" />
+    <None Include="res\ip2region.db" />
     <None Include="res\res.zip" />
     <None Include="res\zoom_size.cur" />
   </ItemGroup>

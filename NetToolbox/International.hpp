@@ -13,10 +13,10 @@ public:
 	static faw::string_view_t translate (faw::string_view_t _src) {
 		static LCID _lcid = ::GetSystemDefaultLCID ();
 		static std::map<faw::string_view_t, std::vector<faw::string_view_t>> _datum = {
-			{ _T ("main.xml"),										{ _T ("main_cn.xml"), _T ("main_tw.xml") } },
-			{ _T ("cur_findcolor.xml"),								{ _T ("cur_findcolor_cn.xml"), _T ("cur_findcolor_tw.xml") } },
-			{ _T ("scr2gif.xml"),									{ _T ("scr2gif_cn.xml"), _T ("scr2gif_tw.xml") } },
-			{ _T ("menu_localnet.xml"),								{ _T ("menu_localnet_cn.xml"), _T ("menu_localnet_tw.xml") } },
+			{ _T ("main.xml"),										{ _T ("main_zh_hans.xml"), _T ("main_zh_hant.xml") } },
+			{ _T ("cur_findcolor.xml"),								{ _T ("cur_findcolor_zh_hans.xml"), _T ("cur_findcolor_zh_hant.xml") } },
+			{ _T ("scr2gif.xml"),									{ _T ("scr2gif_zh_hans.xml"), _T ("scr2gif_zh_hant.xml") } },
+			{ _T ("menu_localnet.xml"),								{ _T ("menu_localnet_zh_hans.xml"), _T ("menu_localnet_zh_hant.xml") } },
 			{ _T ("Info"),											{ _T ("提示"), _T ("提示") } },
 			{ _T ("Date"),											{ _T ("日期"), _T ("日期") } },
 			{ _T ("Time"),											{ _T ("时间"), _T ("時間") } },

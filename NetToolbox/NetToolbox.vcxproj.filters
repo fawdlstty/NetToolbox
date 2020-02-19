@@ -177,6 +177,9 @@
     <ClInclude Include="International.hpp">
       <Filter>Header File</Filter>
     </ClInclude>
+    <ClInclude Include="tools\tool_Resource.hpp">
+      <Filter>Header File\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -232,5 +235,6 @@
       <Filter>Resource File</Filter>
     </None>
     <None Include="res\res.zip" />
+    <None Include="res\ip2region.db" />
   </ItemGroup>
 </Project>
