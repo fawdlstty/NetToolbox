@@ -28,6 +28,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="3rdparty\QrCode">
+      <UniqueIdentifier>{3aaa9901-7802-440d-bc6d-fdc5736b84b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -180,6 +183,9 @@
     <ClInclude Include="tools\tool_Resource.hpp">
       <Filter>Header File\tools</Filter>
     </ClInclude>
+    <ClInclude Include="3rdparty\QrCode\QrCode.hpp">
+      <Filter>3rdparty\QrCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -199,6 +205,9 @@
     </ClCompile>
     <ClCompile Include="3rdparty\serial\serial.cc">
       <Filter>3rdparty\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\QrCode\QrCode.cpp">
+      <Filter>3rdparty\QrCode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

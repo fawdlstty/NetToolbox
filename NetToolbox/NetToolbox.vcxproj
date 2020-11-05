@@ -295,6 +295,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rdparty\QrCode\QrCode.hpp" />
     <ClInclude Include="3rdparty\serial\serial.h" />
     <ClInclude Include="3rdparty\serial\v8stdint.h" />
     <ClInclude Include="3rdparty\serial\win.h" />
@@ -347,6 +348,14 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="tools\tool_Zoomer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rdparty\QrCode\QrCode.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='LTL|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="3rdparty\serial\list_ports_win.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
