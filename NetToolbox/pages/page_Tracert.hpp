@@ -10,29 +10,19 @@
 #include "../tools/tool_Formatting.hpp"
 #include "../tools/tool_String.hpp"
 #include "../tools/tool_Resource.hpp"
+#include "../tools/tool_QQWry.hpp"
 
 #define INDEX_BLOCK_LENGTH 12
 
 
 
 class page_Tracert: public page_base {
-	uint8_t *m_ipdata = nullptr;
+	//uint8_t *m_ipdata = nullptr;
 
 public:
-	page_Tracert (NetToolboxWnd *parent): page_base (parent) {
-		m_ipdata = tool_Resource::load_binary ((HMODULE) CPaintManagerUI::GetInstance (), _T ("IPDB"), MAKEINTRESOURCE (IDR_IPDB1));
-		if (m_ipdata) {
-			m_first_index_ptr = _get_unsigned_int (m_ipdata, 0);
-			m_last_index_ptr = _get_unsigned_int (m_ipdata, 4);
-			m_total_blocks = (m_last_index_ptr - m_first_index_ptr) / INDEX_BLOCK_LENGTH + 1;
-		}
-	}
-	virtual ~page_Tracert () {
-		if (m_ipdata) {
-			delete [] m_ipdata;
-			m_ipdata = nullptr;
-		}
-	}
+	page_Tracert (NetToolboxWnd *parent)
+		: page_base (parent)
+		, m_qqwry (tool_QQWry (tool_Resource::load_binary ((HMODULE) CPaintManagerUI::GetInstance (), _T ("IPDB"), MAKEINTRESOURCE (IDR_IPDB1)))) {}
 
 	bool OnClick (TNotifyUI& msg) override {
 		faw::String name = msg.pSender->GetName ();
@@ -154,19 +144,20 @@ protected:
 		});
 	}
 
-	uint32_t _get_unsigned_int (uint8_t *_tmp_buff, int offset) {
-		return (((_tmp_buff [offset]) & 0x000000FF)
-			| ((_tmp_buff [offset + 1] << 8) & 0x0000FF00)
-			| ((_tmp_buff [offset + 2] << 16) & 0x00FF0000)
-			| ((_tmp_buff [offset + 3] << 24) & 0xFF000000));
-	}
+	//uint32_t _get_unsigned_int (uint8_t *_tmp_buff, int offset) {
+	//	return (((_tmp_buff [offset]) & 0x000000FF)
+	//		| ((_tmp_buff [offset + 1] << 8) & 0x0000FF00)
+	//		| ((_tmp_buff [offset + 2] << 16) & 0x00FF0000)
+	//		| ((_tmp_buff [offset + 3] << 24) & 0xFF000000));
+	//}
 
 protected:
 	BindButtonUI	m_tracert_begin { _T ("tracert_begin") };
 	BindEditUI		m_tracert_addr { _T ("tracert_addr") };
 	BindListUI		m_tracert_list { _T ("tracert_list") };
 
-	uint32_t		m_first_index_ptr = 0, m_last_index_ptr = 0, m_total_blocks = 0;
+	//uint32_t		m_first_index_ptr = 0, m_last_index_ptr = 0, m_total_blocks = 0;
+	tool_QQWry		m_qqwry;
 };
 
 #endif //__PAGE_TRACERT_HPP__

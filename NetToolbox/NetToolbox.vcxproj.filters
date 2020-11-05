@@ -186,6 +186,9 @@
     <ClInclude Include="3rdparty\QrCode\QrCode.hpp">
       <Filter>3rdparty\QrCode</Filter>
     </ClInclude>
+    <ClInclude Include="tools\tool_QQWry.hpp">
+      <Filter>Header File\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -244,6 +247,6 @@
       <Filter>Resource File</Filter>
     </None>
     <None Include="res\res.zip" />
-    <None Include="res\ip2region.db" />
+    <None Include="res\qqwry.dat" />
   </ItemGroup>
 </Project>

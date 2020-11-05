@@ -334,6 +334,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="tools\tool_PE.hpp" />
     <ClInclude Include="tools\tool_Priv.hpp" />
     <ClInclude Include="tools\tool_Process.hpp" />
+    <ClInclude Include="tools\tool_QQWry.hpp" />
     <ClInclude Include="tools\tool_Register.hpp" />
     <ClInclude Include="tools\tool_Resource.hpp" />
     <ClInclude Include="tools\tool_Rsa.hpp" />
@@ -409,7 +410,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <None Include="res\arrow_main.cur" />
     <None Include="res\find_color.cur" />
     <None Include="res\find_pos.cur" />
-    <None Include="res\ip2region.db" />
+    <None Include="res\qqwry.dat" />
     <None Include="res\res.zip" />
     <None Include="res\zoom_size.cur" />
   </ItemGroup>
