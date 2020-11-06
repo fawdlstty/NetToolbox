@@ -10,8 +10,11 @@
 
 class tool_QQWry {
 public:
-	tool_QQWry (uint8_t *_ipdata): m_ipdata (_ipdata) {}
-	~tool_QQWry () { delete [] m_ipdata; }
+	tool_QQWry (uint8_t *_bytes): m_bytes (_bytes) {
+		m_index_head = read_item_uint32 (0);
+		m_index_tail = read_item_uint32 (4);
+	}
+	~tool_QQWry () { delete [] m_bytes; }
 
 	std::tuple<std::string, std::string> find_info (std::string _ip) {
 		uint32_t _nip = ::htonl (::inet_addr (_ip.c_str ()));
@@ -78,7 +81,7 @@ private:
 	}
 
 private:
-	uint8_t		*m_ipdata = nullptr;
+	uint8_t		*m_bytes = nullptr;
 	uint32_t	m_index_head = 0;
 	uint32_t	m_index_tail = 0;
 };

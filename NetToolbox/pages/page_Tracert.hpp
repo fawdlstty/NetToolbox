@@ -97,47 +97,51 @@ protected:
 				m_tracert_list->Add (item);
 			} else {
 				item = dynamic_cast<CListContainerElementUI*> (m_tracert_list->GetItemAt ((int) row - 1));
-
-				// search ip location
-				uint32_t ip = (uint32_t) ::ntohl (inet_addr (data.c_str ()));
 				if (col == 4) {
-					if (_data != _T ("") && _data != _T ("0.0.0.0") && m_ipdata) {
-						int32_t l = 0, h = m_total_blocks, m, p;
-						uint32_t dptr = 0;
-						uint8_t *_ipdata = m_ipdata;
-						while (l <= h) {
-							m = (l + h) >> 1;
-							p = m_first_index_ptr + m * INDEX_BLOCK_LENGTH;
-
-							_ipdata = m_ipdata + p;
-							uint32_t sip = _get_unsigned_int (_ipdata, 0);
-							if (ip < sip) {
-								h = m - 1;
-							} else {
-								uint32_t eip = _get_unsigned_int (_ipdata, 4);
-								if (ip > eip) {
-									l = m + 1;
-								} else {
-									dptr = _get_unsigned_int (_ipdata, 8);
-									break;
-								}
-							}
-						}
-						if (dptr != 0) {
-							int32_t dataLen = ((dptr >> 24) & 0xFF);
-							int32_t dataptr = (dptr & 0x00FFFFFF);
-							_ipdata = m_ipdata + dataptr;
-							uint32_t _city_id = _get_unsigned_int (_ipdata, 0);
-							dataLen -= 4;
-							static char s_region [MAX_PATH];
-							memcpy (s_region, _ipdata + 4, dataLen);
-							s_region [dataLen] = '\0';
-							std::string _region_str = s_region;
-							_region_str = faw::Encoding::utf8_to_gb18030 (_region_str);
-							dynamic_cast<CTextUI*> (item->GetItemAt ((int) col + 2))->SetText (_region_str.c_str ());
-						}
+					if (data != "" && data != "0.0.0.0") {
+						auto [_a, _b] = m_qqwry.find_info (data);
+						dynamic_cast<CTextUI*> (item->GetItemAt ((int) col + 2))->SetText (_a);
 					}
 				}
+				//// search ip location
+				//uint32_t ip = (uint32_t) ::ntohl (inet_addr (data.c_str ()));
+				//if (col == 4) {
+				//	if (_data != _T ("") && _data != _T ("0.0.0.0") && m_ipdata) {
+				//		int32_t l = 0, h = m_total_blocks, m, p;
+				//		uint32_t dptr = 0;
+				//		uint8_t *_ipdata = m_ipdata;
+				//		while (l <= h) {
+				//			m = (l + h) >> 1;
+				//			p = m_first_index_ptr + m * INDEX_BLOCK_LENGTH;
+				//			_ipdata = m_ipdata + p;
+				//			uint32_t sip = _get_unsigned_int (_ipdata, 0);
+				//			if (ip < sip) {
+				//				h = m - 1;
+				//			} else {
+				//				uint32_t eip = _get_unsigned_int (_ipdata, 4);
+				//				if (ip > eip) {
+				//					l = m + 1;
+				//				} else {
+				//					dptr = _get_unsigned_int (_ipdata, 8);
+				//					break;
+				//				}
+				//			}
+				//		}
+				//		if (dptr != 0) {
+				//			int32_t dataLen = ((dptr >> 24) & 0xFF);
+				//			int32_t dataptr = (dptr & 0x00FFFFFF);
+				//			_ipdata = m_ipdata + dataptr;
+				//			uint32_t _city_id = _get_unsigned_int (_ipdata, 0);
+				//			dataLen -= 4;
+				//			static char s_region [MAX_PATH];
+				//			memcpy (s_region, _ipdata + 4, dataLen);
+				//			s_region [dataLen] = '\0';
+				//			std::string _region_str = s_region;
+				//			_region_str = faw::Encoding::utf8_to_gb18030 (_region_str);
+				//			dynamic_cast<CTextUI*> (item->GetItemAt ((int) col + 2))->SetText (_region_str.c_str ());
+				//		}
+				//	}
+				//}
 			}
 			dynamic_cast<CTextUI*> (item->GetItemAt ((int) col + 1))->SetText (_data.c_str ());
 			return 0;
