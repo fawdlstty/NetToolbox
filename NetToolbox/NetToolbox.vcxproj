@@ -331,6 +331,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="tools\tool_MakeAvi.hpp" />
     <ClInclude Include="tools\tool_Mutex.hpp" />
     <ClInclude Include="tools\tool_NetInfo.hpp" />
+    <ClInclude Include="tools\tool_ObjectPool.hpp" />
     <ClInclude Include="tools\tool_PE.hpp" />
     <ClInclude Include="tools\tool_Priv.hpp" />
     <ClInclude Include="tools\tool_Process.hpp" />
@@ -342,6 +343,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="tools\tool_String.hpp" />
     <ClInclude Include="tools\tool_SysInfo.hpp" />
     <ClInclude Include="tools\tool_Tracert.hpp" />
+    <ClInclude Include="tools\tool_Tracert2.hpp" />
     <ClInclude Include="tools\tool_Utils.hpp" />
     <ClInclude Include="tools\tool_VP9.hpp" />
     <ClInclude Include="tools\tool_WebRequest.hpp" />

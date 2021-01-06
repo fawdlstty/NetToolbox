@@ -189,6 +189,12 @@
     <ClInclude Include="tools\tool_QQWry.hpp">
       <Filter>Header File\tools</Filter>
     </ClInclude>
+    <ClInclude Include="tools\tool_Tracert2.hpp">
+      <Filter>Header File\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tool_ObjectPool.hpp">
+      <Filter>Header File\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
