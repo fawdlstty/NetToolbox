@@ -6,6 +6,7 @@
 
 #include "page_base.hpp"
 #include "../tools/tool_Tracert.hpp"
+#include "../tools/tool_Tracert2.hpp"
 #include "../tools/tool_DnsLookup.hpp"
 #include "../tools/tool_Formatting.hpp"
 #include "../tools/tool_String.hpp"

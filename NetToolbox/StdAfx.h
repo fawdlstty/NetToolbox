@@ -2,6 +2,7 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define _SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING
 #define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
+#define PIO_APC_ROUTINE_DEFINED
 #include <WinSock2.h>
 #include <ws2ipdef.h>
 #include <iphlpapi.h>
