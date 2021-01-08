@@ -13,6 +13,7 @@
 #ifndef __TOOL_TRACERT2_HPP__
 #define __TOOL_TRACERT2_HPP__
 
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <functional>
@@ -27,6 +28,8 @@
 #include <IcmpAPI.h>
 #include <iphlpapi.h>
 #include <ip2string.h>
+
+#include <fmt/format.h>
 
 #include "tool_String.hpp"
 #include "tool_Utils.hpp"
@@ -68,17 +71,35 @@ struct Tracert2RecvItem1 {
 struct Tracert2ViewItem {
 	std::string m_ip;
 	std::string m_loss;
-	int32_t m_sent_count;
-	int32_t m_recv_count;
+	std::string m_sent_n;
+	std::string m_recv_n;
 	std::string m_best;
 	std::string m_worst;
-	std::string m_last;
 
 	Tracert2ViewItem (Tracert2RecvItem1 &_item) {
 		in_addr _addr { 0 };
 		_addr.s_addr = _item.m_ip;
 		m_ip = ::inet_ntoa (_addr);
-		double _loss = (_item.m_total_send - _item.m_elapses.size ()) / _item.m_total_send;
+		m_loss = fmt::format ("{0:.2f}%", (_item.m_total_send - _item.m_elapses.size ()) / (double) _item.m_total_send * 100);
+		m_sent_n = fmt::format ("{}", _item.m_total_send);
+		m_recv_n = fmt::format ("{}", _item.m_elapses.size ());
+		if (_item.m_elapses.size () > 0) {
+			auto _n = std::min_element (_item.m_elapses.cbegin (), _item.m_elapses.cend ());
+			if (*_n < 1) {
+				m_best = "<1 ms";
+			} else {
+				m_best = fmt::format ("{} ms", *_n);
+			}
+			_n = std::max_element (_item.m_elapses.cbegin (), _item.m_elapses.cend ());
+			if (*_n < 1) {
+				m_worst = "<1 ms";
+			} else {
+				m_worst = fmt::format ("{} ms", *_n);
+			}
+		} else {
+			m_best = "N/A";
+			m_worst = "N/A";
+		}
 	}
 };
 
@@ -114,6 +135,8 @@ struct Tracert2Ipv4SentItem {
 			if (!is_valid ())
 				return;
 			DWORD dwRetVal = ::IcmpSendEcho2 (m_icmp, NULL, _sent_item::_apc_routine, this, _dest_ip, m_sent_buf, sizeof (m_sent_buf), _ioi, m_recv_buf, sizeof (m_recv_buf), 990);
+			DWORD _d = ::GetLastError (); // TODO: 997 重叠 I/O 操作在进行中。 
+			_d = _d;
 		}
 		static void NTAPI _apc_routine (PVOID ApcContext, PIO_STATUS_BLOCK IoStatusBlock, ULONG Reserved) {
 			_sent_item *_pThis = (_sent_item*) ApcContext;
@@ -182,11 +205,12 @@ public:
 	tool_Tracert2 () {}
 	~tool_Tracert2 () { stop (); }
 
-	void set_view_callback (std::function<void (std::unique_ptr<std::vector<Tracert2ViewItem>>)> _set_view) { m_set_view = _set_view; }
+	void set_view_callback (std::function<void (std::vector<Tracert2ViewItem>)> _set_view) { m_set_view = _set_view; }
 	void set_abort_callback (std::function<void (faw::String)> _abort) { m_abort = _abort; }
 
 	// 开始ipv4路由跟踪
-	std::tuple<bool, faw::String> start_ipv4 (std::string _dest_ip /*TODO: 新增记录日志的参数*/) {
+	void start_ipv4 (std::string _dest_ip /*TODO: 新增记录日志的参数*/) {
+		m_want_run.store (true);
 		IPAddr _ul_dest_ip = ::inet_addr (&_dest_ip [0]);
 		m_thread = std::move (std::make_unique<std::thread> ([this, _ul_dest_ip] () {
 			Tracert2Ipv4SentItem _sents [30];
@@ -196,13 +220,14 @@ public:
 				auto [_result, _reason] = _sents [_i].init (5, _ul_dest_ip, _i + 1);
 				if (!_result) {
 					m_abort (_reason);
+					m_want_run.store (false);
 					return;
 				}
 			}
 
 			// 循环处理，每秒一次
 			auto _until_time = std::chrono::system_clock::now ();
-			while (true) {
+			while (m_want_run.load ()) {
 				// 向30个链路节点发送跟踪ping
 				for (size_t _i = 0; _i < 30; ++_i) {
 					_sents [_i].do_send ();
@@ -215,7 +240,7 @@ public:
 				std::vector<Tracert2RecvItem1> _cur_recvs;
 				for (size_t _i = 0; _i < 30; ++_i) {
 					_cur_recvs.push_back (_sents [_i].get_result ());
-					decltype (auto) _ref = _cur_recvs.cend ();
+					decltype (auto) _ref = _cur_recvs.crbegin ();
 					//if (_ref->m_elapses.size () > 0)
 					//	_value_valid = true;
 					if (_ref->m_ip == _ul_dest_ip) {
@@ -259,13 +284,13 @@ public:
 						_counts [_i].m_sents.erase (_counts [_i].m_sents.begin ());
 				}
 
-				// 整理UI显示内容
+				// 整理UI显示内容并展示
 				std::vector<Tracert2ViewItem> _views;
 				for (size_t _i = 0; _i < _counts_length; ++_i) {
-					//_cur_recvs
 					_cur_recvs [_i].m_ip = _counts [_i].m_ip;
 					_views.emplace_back (Tracert2ViewItem (_cur_recvs [_i]));
 				}
+				m_set_view (_views);
 
 				// 是否存日志文件
 				// TODO
@@ -274,19 +299,22 @@ public:
 	}
 
 	void stop () {
+		m_want_run.store (false);
 		if (m_thread != nullptr && m_thread->joinable ()) {
 			m_thread->join ();
 			m_thread = nullptr;
 		}
 	}
 
+	bool is_running () {
+		return m_want_run.load ();
+	}
+
 private:
-	std::function<void (std::unique_ptr<std::vector<Tracert2ViewItem>>)> m_set_view;
+	std::function<void (std::vector<Tracert2ViewItem>)> m_set_view;
 	std::unique_ptr<std::thread> m_thread;
 	std::function<void (faw::String)> m_abort;
-
-	// tmp
-	tool_ObjectPool<std::vector<Tracert2ViewItem>> m_views_pool;
+	std::atomic_bool m_want_run = false;
 };
 
 #endif //__TOOL_TRACERT2_HPP__

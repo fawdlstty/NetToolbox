@@ -202,7 +202,7 @@ public:
 			sysname = _T ("Microsoft Win32s");
 			break;
 		default:
-			return false;
+			return _T ("Unknown");
 		}
 		return sysname;
 	}

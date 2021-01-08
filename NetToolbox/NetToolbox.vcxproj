@@ -30,21 +30,21 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3327CB5C-CFAF-4DE9-8BAD-C6F15E09EE26}</ProjectGuid>
     <RootNamespace>NetToolbox</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <VcpkgEnabled>true</VcpkgEnabled>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <VcpkgTriplet>x86-windows-static</VcpkgTriplet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <VcpkgTriplet>x86-windows-static</VcpkgTriplet>
@@ -52,7 +52,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <VcpkgTriplet>x86-windows-static</VcpkgTriplet>
@@ -60,14 +60,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <VcpkgTriplet>x64-windows-static</VcpkgTriplet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <VcpkgTriplet>x64-windows-static</VcpkgTriplet>
@@ -75,7 +75,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LTL|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <VcpkgTriplet>x64-windows-static</VcpkgTriplet>
@@ -422,9 +422,17 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <Manifest Include="res\xml.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="..\res\cur_findcolor.xml" />
+    <Xml Include="..\res\cur_findcolor_zh_hans.xml" />
+    <Xml Include="..\res\cur_findcolor_zh_hant.xml" />
     <Xml Include="..\res\main.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="..\res\main_zh_hans.xml" />
+    <Xml Include="..\res\main_zh_hant.xml" />
+    <Xml Include="..\res\menu_localnet.xml" />
+    <Xml Include="..\res\menu_localnet_zh_hans.xml" />
+    <Xml Include="..\res\menu_localnet_zh_hant.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\arrow_main.cur" />

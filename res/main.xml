@@ -195,10 +195,17 @@
 								<ListHeader>
 									<ListHeaderItem style="x_list_hdr" width="30" />
 									<ListHeaderItem style="x_list_hdr" width="50" text="TTL" />
-									<ListHeaderItem style="x_list_hdr" width="100" text="Delay1" />
+									<!--<ListHeaderItem style="x_list_hdr" width="100" text="Delay1" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="Delay2" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="Delay3" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="IP Addr" />
+									<ListHeaderItem style="x_list_hdr" width="200" text="Description" />-->
+									<ListHeaderItem style="x_list_hdr" width="100" text="IP Address" />
+									<ListHeaderItem style="x_list_hdr" width="100" text="Loss" />
+									<ListHeaderItem style="x_list_hdr" width="100" text="Sent Count" />
+									<ListHeaderItem style="x_list_hdr" width="100" text="Recv Count" />
+									<ListHeaderItem style="x_list_hdr" width="100" text="Best" />
+									<ListHeaderItem style="x_list_hdr" width="100" text="Worst" />
 									<ListHeaderItem style="x_list_hdr" width="200" text="Description" />
 								</ListHeader>
 							</List>

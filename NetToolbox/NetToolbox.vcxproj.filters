@@ -238,6 +238,30 @@
     <Xml Include="..\res\main.xml">
       <Filter>Resource File</Filter>
     </Xml>
+    <Xml Include="..\res\main_zh_hans.xml">
+      <Filter>Resource File</Filter>
+    </Xml>
+    <Xml Include="..\res\main_zh_hant.xml">
+      <Filter>Resource File</Filter>
+    </Xml>
+    <Xml Include="..\res\menu_localnet_zh_hans.xml">
+      <Filter>Resource File</Filter>
+    </Xml>
+    <Xml Include="..\res\menu_localnet_zh_hant.xml">
+      <Filter>Resource File</Filter>
+    </Xml>
+    <Xml Include="..\res\cur_findcolor.xml">
+      <Filter>Resource File</Filter>
+    </Xml>
+    <Xml Include="..\res\cur_findcolor_zh_hans.xml">
+      <Filter>Resource File</Filter>
+    </Xml>
+    <Xml Include="..\res\cur_findcolor_zh_hant.xml">
+      <Filter>Resource File</Filter>
+    </Xml>
+    <Xml Include="..\res\menu_localnet.xml">
+      <Filter>Resource File</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\arrow_main.cur">
