@@ -4,6 +4,7 @@
 #define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
 #define PIO_APC_ROUTINE_DEFINED
 #include <WinSock2.h>
+#include <winternl.h>
 #include <ws2ipdef.h>
 #include <iphlpapi.h>
 #include "../DuiLib/StdAfx.h"

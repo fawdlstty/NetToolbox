@@ -115,7 +115,9 @@ public:
 	bool		is_succeed = false;
 };
 
+#include <fmt/format.h>
 int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
+	std::string _str = fmt::format ("{.2}", 123.43233);
 	// 初始化软件环境
 	ProgramGuard pg;
 	if (!pg.is_succeed)
