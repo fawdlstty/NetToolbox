@@ -56,6 +56,8 @@
 //	_ec_20, _ec_21, _ec_22, _ec_23, _ec_24, _ec_25, _ec_26, _ec_27, _ec_28, _ec_29,
 //};
 
+#define PING_PER_SECOND 1
+
 
 
 struct Tracert2RecvItem1 {
@@ -205,7 +207,7 @@ public:
 	tool_Tracert2 () {}
 	~tool_Tracert2 () { stop (); }
 
-	void set_view_callback (std::function<void (std::vector<Tracert2ViewItem>)> _set_view) { m_set_view = _set_view; }
+	void set_view_callback (std::function<void (std::shared_ptr<std::vector<Tracert2ViewItem>>)> _set_view) { m_set_view = _set_view; }
 	void set_abort_callback (std::function<void (faw::String)> _abort) { m_abort = _abort; }
 
 	// 开始ipv4路由跟踪
@@ -217,7 +219,7 @@ public:
 			Tracert2CountingItem _counts [30]; // TODO: 此结构用于统计数据，但暂未使用
 			size_t _counts_length = 0;
 			for (size_t _i = 0; _i < 30; ++_i) {
-				auto [_result, _reason] = _sents [_i].init (5, _ul_dest_ip, _i + 1);
+				auto [_result, _reason] = _sents [_i].init (PING_PER_SECOND, _ul_dest_ip, _i + 1);
 				if (!_result) {
 					m_abort (_reason);
 					m_want_run.store (false);
@@ -285,10 +287,11 @@ public:
 				}
 
 				// 整理UI显示内容并展示
-				std::vector<Tracert2ViewItem> _views;
+
+				auto _views = std::make_shared<std::vector<Tracert2ViewItem>> ();
 				for (size_t _i = 0; _i < _counts_length; ++_i) {
 					_cur_recvs [_i].m_ip = _counts [_i].m_ip;
-					_views.emplace_back (Tracert2ViewItem (_cur_recvs [_i]));
+					_views->emplace_back (Tracert2ViewItem (_cur_recvs [_i]));
 				}
 				m_set_view (_views);
 
@@ -311,7 +314,7 @@ public:
 	}
 
 private:
-	std::function<void (std::vector<Tracert2ViewItem>)> m_set_view;
+	std::function<void (std::shared_ptr<std::vector<Tracert2ViewItem>>)> m_set_view;
 	std::unique_ptr<std::thread> m_thread;
 	std::function<void (faw::String)> m_abort;
 	std::atomic_bool m_want_run = false;

@@ -46,6 +46,7 @@ public:
 			{ _T ("Network Group"),									{ _T ("网络类"), _T ("網絡類") } },
 			{ _T ("File not found"),								{ _T ("未找到文件"), _T ("未找到檔案") } },
 			{ _T ("Unknown Error."),								{ _T ("未知错误。"), _T ("未知錯誤") } },
+			{ _T ("User cancelled."),								{ _T ("用户已取消"), _T ("用戶已取消") } },
 			{ _T ("Color extraction"),								{ _T ("颜色萃取"), _T ("顏色萃取") } },
 			{ _T ("Tracert Complete."),								{ _T ("路由跟踪完成。"), _T ("路由跟蹤完成。") } },
 			{ _T ("(Decoding failure)"),							{ _T ("(解码失败)"), _T ("(解碼失敗)") } },

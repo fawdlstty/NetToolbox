@@ -54,47 +54,58 @@ public:
 					m_tracert.set_abort_callback ([this] (faw::String _err_msg) {
 						m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _err_msg);
 						// TODO 恢复为未跟踪状态
-						m_tracert_begin->SetText ("重新开始");
+						m_tracert_begin->SetText ("开始");
 					});
-					m_tracert.set_view_callback ([this] (std::vector<Tracert2ViewItem> _views) {
-						while (m_tracert_list->GetCount () > _views.size ()) {
-							m_tracert_list->RemoveAt (_views.size ());
-						}
-						while (m_tracert_list->GetCount () < _views.size ()) {
-							auto item = new CListContainerElementUI ();
-							item->SetFixedHeight (20);
-							CControlUI* ctrl = new CContainerUI ();
-							ctrl->SetBkImage (_T ("file='list_ico_2.png' source='0,0,16,16' dest='0,0,16,16'"));
-							ctrl->SetAttribute (_T ("padding"), _T ("7,2,7,2"));
-							item->Add (ctrl);
-							for (size_t i = 0; i < 6; ++i) {
+					m_tracert.set_view_callback ([this] (std::shared_ptr<std::vector<Tracert2ViewItem>> _views) {
+						m_parent->async_invoke ([this, _views] () -> LRESULT {
+							while (m_tracert_list->GetCount () > _views->size ()) {
+								m_tracert_list->RemoveAt (_views->size ());
+							}
+							while (m_tracert_list->GetCount () < _views->size ()) {
+								auto item = new CListContainerElementUI ();
+								item->SetFixedHeight (20);
+								CControlUI* ctrl = new CContainerUI ();
+								ctrl->SetBkImage (_T ("file='list_ico_2.png' source='0,0,16,16' dest='0,0,16,16'"));
+								ctrl->SetAttribute (_T ("padding"), _T ("7,2,7,2"));
+								item->Add (ctrl);
+								for (size_t i = 0; i < 7; ++i) {
+									ctrl = new CTextUI ();
+									ctrl->SetAttribute (_T ("align"), _T ("center"));
+									ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
+									if (i == 0)
+										ctrl->SetText (fmt::format ("{}", m_tracert_list->GetCount () + 1));
+									item->Add (ctrl);
+								}
 								ctrl = new CTextUI ();
-								ctrl->SetAttribute (_T ("align"), _T ("center"));
+								ctrl->SetAttribute (_T ("align"), _T ("left"));
 								ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 								item->Add (ctrl);
+								m_tracert_list->Add (item);
 							}
-							ctrl = new CTextUI ();
-							ctrl->SetAttribute (_T ("align"), _T ("left"));
-							ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
-							item->Add (ctrl);
-							m_tracert_list->Add (item);
-						}
-						for (size_t i = 0; i < _views.size (); ++i) {
-							auto item = dynamic_cast<CListContainerElementUI*> (m_tracert_list->GetItemAt (i));
-							dynamic_cast<CTextUI*> (item->GetItemAt (1))->SetText (_views [i].m_ip);
-							dynamic_cast<CTextUI*> (item->GetItemAt (2))->SetText (_views [i].m_loss);
-							dynamic_cast<CTextUI*> (item->GetItemAt (3))->SetText (_views [i].m_sent_n);
-							dynamic_cast<CTextUI*> (item->GetItemAt (4))->SetText (_views [i].m_recv_n);
-							dynamic_cast<CTextUI*> (item->GetItemAt (5))->SetText (_views [i].m_best);
-							dynamic_cast<CTextUI*> (item->GetItemAt (6))->SetText (_views [i].m_worst);
-							auto [_a, _b] = m_qqwry.find_info (_views [i].m_ip);
-							dynamic_cast<CTextUI*> (item->GetItemAt (7))->SetText (_a);
-						}
+							for (size_t i = 0; i < _views->size (); ++i) {
+								auto item = dynamic_cast<CListContainerElementUI*> (m_tracert_list->GetItemAt (i));
+								dynamic_cast<CTextUI*> (item->GetItemAt (2))->SetText ((*_views) [i].m_ip);
+								dynamic_cast<CTextUI*> (item->GetItemAt (3))->SetText ((*_views) [i].m_loss);
+								dynamic_cast<CTextUI*> (item->GetItemAt (4))->SetText ((*_views) [i].m_sent_n);
+								dynamic_cast<CTextUI*> (item->GetItemAt (5))->SetText ((*_views) [i].m_recv_n);
+								dynamic_cast<CTextUI*> (item->GetItemAt (6))->SetText ((*_views) [i].m_best);
+								dynamic_cast<CTextUI*> (item->GetItemAt (7))->SetText ((*_views) [i].m_worst);
+								if ((*_views) [i].m_ip != "0.0.0.0") {
+									auto [_a, _b] = m_qqwry.find_info ((*_views) [i].m_ip);
+									dynamic_cast<CTextUI*> (item->GetItemAt (8))->SetText (_a);
+								} else {
+									dynamic_cast<CTextUI*> (item->GetItemAt (8))->SetText ("");
+								}
+							}
+							return 0;
+						});
 					});
 					m_tracert.start_ipv4 (s);
 				}
 			} else {
 				m_tracert.stop ();
+				m_tracert_begin->SetText ("开始");
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("User cancelled.")));
 			}
 			return true;
 		}
