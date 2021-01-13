@@ -186,7 +186,7 @@
 					<VerticalLayout>
 						<HorizontalLayout height="35">
 							<Text padding="15,18,20,0" text="Type dest IP or host: " autocalcwidth="true" />
-							<Edit name="tracert_addr" width="240" padding="0,13,0,0" style="x_edit" tipvalue="nettoolbox.fawdlstty.com" />
+							<Edit name="tracert_addr" width="240" padding="0,13,0,0" style="x_edit" tipvalue="www.fawdlstty.com" text="www.fawdlstty.com" />
 							<Button name="tracert_begin" text="Begin" style="x_button" padding="20,13,0,0" />
 							<Text padding="45,18,20,0" text="Track with up to 30 hops." autocalcwidth="true" />
 						</HorizontalLayout>

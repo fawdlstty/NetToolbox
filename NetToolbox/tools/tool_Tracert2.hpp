@@ -235,6 +235,7 @@ public:
 					_sents [_i].do_send ();
 				}
 				_until_time += std::chrono::seconds (1);
+				// TODO: WaitForSingleObjectEx
 				std::this_thread::sleep_until (_until_time);
 
 				// 检查本轮结果是否有效
