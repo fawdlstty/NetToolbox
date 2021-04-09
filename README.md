@@ -42,7 +42,7 @@ UI Library（MIT License）: [DuiLib_Faw](https://github.com/fawdlstty/DuiLib_Fa
 ## Compile Steps
 
 1. Install VS2017/vcpkg/7-zip/upx and set environment variables, Until these commands can be used directly from the command line
-2. run: vcpkg install boost:x86-windows boost:x86-windows-static openssl:x86-windows openssl:x86-windows-static nlohmann-json:x86-windows nlohmann-json:x86-windows-static curl:x86-windows curl:x86-windows-static
+2. run: vcpkg install boost:x86-windows-static openssl:x86-windows-static nlohmann-json:x86-windows-static curl:x86-windows-static fmt:x86-windows-static
 3. compile
 
 ## License

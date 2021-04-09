@@ -204,7 +204,6 @@
     </Manifest>
     <PreBuildEvent>
       <Command>del "$(SolutionDir)$(ProjectName)\res\res.zip" /q
-del "$(SolutionDir)$(ProjectName)\res\res_en.zip" /q
 7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"</Command>
     </PreBuildEvent>
     <PostBuildEvent>

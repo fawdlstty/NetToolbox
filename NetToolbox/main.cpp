@@ -40,6 +40,11 @@ using Json = nlohmann::json;
 #endif
 
 #pragma comment (lib, "Crypt32.lib")
+#ifdef _DEBUG
+#	pragma comment (lib, "fmtd.lib")
+#else
+#	pragma comment (lib, "fmt.lib")
+#endif
 
 
 
@@ -149,91 +154,91 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 		return { stoi (v[0]), stoi (v[1]), stoi (v[2]), stoi (v[3]) };
 	};
 
-	// 更新控制
-	faw::string_t _new = path + _T ("NetToolbox.new.exe"), _newd = path + _T ("res.new.dll"), _oldd = path + _T ("res.dll");
-	decltype (ver_src) ver_new = { 0, 0, 0, 0 };
-	bool exist_new = faw::Directory::exist (_new.data ());
-	if (!exist_new) {
-		// 检查新版
-		std::thread ([=] () {
-			try {
-				std::string url_base = "https://nettoolbox.fawdlstty.com/";
-				std::string data = tool_WebRequest::get (url_base + "info.json");
-				Json o = Json::parse (data);
-				std::string ver_srv = o["version"];
-				if (_parse_ver (ver_srv) > ver_src) {
-					tool_Mutex m (_T ("nettoolbox_checknew"));
-					if (!m.try_lock ())
-						return;
-					for (auto &item : o["files"]) {
-						std::string _file = item["name"];
-						std::string _md5 = item["md5"];
-						std::string _local_file = path.stra () + (_file == "NetToolbox.exe" ? "NetToolbox.new.exe" : _file);
-						if (_get_file_md5 (faw::Encoding::gb18030_to_T (_local_file).data ()) != _md5) {
-							std::string _data = tool_WebRequest::get (url_base + _file);
-							if (!_data.empty ()) {
-								MD5_CTX ctx_md5;
-								::MD5_Init (&ctx_md5);
-								::MD5_Update (&ctx_md5, &_data[0], _data.size ());
-								unsigned char buf_md5[16] = { 0 };
-								::MD5_Final (buf_md5, &ctx_md5);
-								std::string str_md5 = "";
-								for (size_t i = 0; i < sizeof (buf_md5); ++i)
-									str_md5 += tool_StringA::byte_to_str (buf_md5[i]);
-								if (tool_StringA::is_equal_nocase (str_md5, _md5)) {
-									// 修复release下可能直接创建文件的问题
-									[_local_file, _data] () {
-										std::ofstream ofs (_local_file, std::ios::trunc | std::ios::binary);
-										ofs.write (_data.data (), _data.size ());
-										ofs.close ();
-									} ();
-								} else {
-									if (faw::Directory::exist (_new))
-										::DeleteFile (_new.data ());
-									if (faw::Directory::exist (_newd))
-										::DeleteFile (_newd.data ());
-									if (IDOK == ::MessageBox (NULL, _T ("更新失败，是否尝试手动更新？"), _T ("易大师网络工具箱"), MB_ICONQUESTION | MB_OKCANCEL))
-										::ShellExecute (NULL, _T ("open"), _T ("https://nettoolbox.fawdlstty.com/NetToolbox.7z"), NULL, NULL, SW_SHOW);
-									return;
-								}
-							}
-						}
-					}
-					::MessageBox (NULL, _T ("更新已完成，软件将在下次启动时完成更新。"), _T ("易大师网络工具箱"), MB_ICONINFORMATION);
-				}
-			} catch (...) {
-			}
-		}).detach ();
-	} else {
-		ver_new = tool_PE::get_version (_new.stra ().data ());
-		if (faw::Directory::get_filename (faw::Directory::get_current_file ()) == _T ("NetToolbox.exe")) {
-			// 检查版本号是否等于新文件，如果相等，则等待新进程退出并删除新文件，否则创建新进程并结束自身
-			if (_cmp_ver (ver_src, ver_new) == 0) {
-				while (tool_Process::process_exist (_T ("NetToolbox.new.exe")))
-					std::this_thread::sleep_for (std::chrono::milliseconds (100));
-				if (faw::Directory::exist (_new))
-					::DeleteFile (_new.data ());
-				if (faw::Directory::exist (_newd))
-					::DeleteFile (_newd.data ());
-				if (faw::Directory::exist (_oldd))
-					::DeleteFile (_oldd.data ());
-			} else {
-				tool_Process::create_process (_new.str_view ());
-				return 0;
-			}
-		} else {
-			// 检查版本号是否等于主程序，如果相等，则退出自身，否则等主程序退出并将自身复制给主程序
-			if (_cmp_ver (ver_src, ver_new) != 0) {
-				while (tool_Process::process_exist (_T ("NetToolbox.exe")))
-					std::this_thread::sleep_for (std::chrono::milliseconds (100));
-				::CopyFile (_new.data (), _src.data (), FALSE);
-				if (faw::Directory::exist (_newd.data ()))
-					::CopyFile (_newd.data (), _srcd.data (), FALSE);
-			}
-			tool_Process::create_process (_src.str_view ());
-			return 0;
-		}
-	}
+	//// 更新控制
+	//faw::string_t _new = path + _T ("NetToolbox.new.exe"), _newd = path + _T ("res.new.dll"), _oldd = path + _T ("res.dll");
+	//decltype (ver_src) ver_new = { 0, 0, 0, 0 };
+	//bool exist_new = faw::Directory::exist (_new);
+	//if (!exist_new) {
+	//	// 检查新版
+	//	std::thread ([=] () {
+	//		try {
+	//			std::string url_base = "https://nettoolbox.fawdlstty.com/";
+	//			std::string data = tool_WebRequest::get (url_base + "info.json");
+	//			Json o = Json::parse (data);
+	//			std::string ver_srv = o["version"];
+	//			if (_parse_ver (ver_srv) > ver_src) {
+	//				tool_Mutex m (_T ("nettoolbox_checknew"));
+	//				if (!m.try_lock ())
+	//					return;
+	//				for (auto &item : o["files"]) {
+	//					std::string _file = item["name"];
+	//					std::string _md5 = item["md5"];
+	//					std::string _local_file = path.stra () + (_file == "NetToolbox.exe" ? "NetToolbox.new.exe" : _file);
+	//					if (_get_file_md5 (faw::Encoding::gb18030_to_T (_local_file).data ()) != _md5) {
+	//						std::string _data = tool_WebRequest::get (url_base + _file);
+	//						if (!_data.empty ()) {
+	//							MD5_CTX ctx_md5;
+	//							::MD5_Init (&ctx_md5);
+	//							::MD5_Update (&ctx_md5, &_data[0], _data.size ());
+	//							unsigned char buf_md5[16] = { 0 };
+	//							::MD5_Final (buf_md5, &ctx_md5);
+	//							std::string str_md5 = "";
+	//							for (size_t i = 0; i < sizeof (buf_md5); ++i)
+	//								str_md5 += tool_StringA::byte_to_str (buf_md5[i]);
+	//							if (tool_StringA::is_equal_nocase (str_md5, _md5)) {
+	//								// 修复release下可能直接创建文件的问题
+	//								[_local_file, _data] () {
+	//									std::ofstream ofs (_local_file, std::ios::trunc | std::ios::binary);
+	//									ofs.write (_data.data (), _data.size ());
+	//									ofs.close ();
+	//								} ();
+	//							} else {
+	//								if (faw::Directory::exist (_new))
+	//									::DeleteFile (_new.data ());
+	//								if (faw::Directory::exist (_newd))
+	//									::DeleteFile (_newd.data ());
+	//								if (IDOK == ::MessageBox (NULL, _T ("更新失败，是否尝试手动更新？"), _T ("易大师网络工具箱"), MB_ICONQUESTION | MB_OKCANCEL))
+	//									::ShellExecute (NULL, _T ("open"), _T ("https://nettoolbox.fawdlstty.com/NetToolbox.7z"), NULL, NULL, SW_SHOW);
+	//								return;
+	//							}
+	//						}
+	//					}
+	//				}
+	//				::MessageBox (NULL, _T ("更新已完成，软件将在下次启动时完成更新。"), _T ("易大师网络工具箱"), MB_ICONINFORMATION);
+	//			}
+	//		} catch (...) {
+	//		}
+	//	}).detach ();
+	//} else {
+	//	ver_new = tool_PE::get_version (_new.stra ().data ());
+	//	if (faw::Directory::get_filename (faw::Directory::get_current_file ()) == _T ("NetToolbox.exe")) {
+	//		// 检查版本号是否等于新文件，如果相等，则等待新进程退出并删除新文件，否则创建新进程并结束自身
+	//		if (_cmp_ver (ver_src, ver_new) == 0) {
+	//			while (tool_Process::process_exist (_T ("NetToolbox.new.exe")))
+	//				std::this_thread::sleep_for (std::chrono::milliseconds (100));
+	//			if (faw::Directory::exist (_new))
+	//				::DeleteFile (_new.data ());
+	//			if (faw::Directory::exist (_newd))
+	//				::DeleteFile (_newd.data ());
+	//			if (faw::Directory::exist (_oldd))
+	//				::DeleteFile (_oldd.data ());
+	//		} else {
+	//			tool_Process::create_process (_new.str_view ());
+	//			return 0;
+	//		}
+	//	} else {
+	//		// 检查版本号是否等于主程序，如果相等，则退出自身，否则等主程序退出并将自身复制给主程序
+	//		if (_cmp_ver (ver_src, ver_new) != 0) {
+	//			while (tool_Process::process_exist (_T ("NetToolbox.exe")))
+	//				std::this_thread::sleep_for (std::chrono::milliseconds (100));
+	//			::CopyFile (_new.data (), _src.data (), FALSE);
+	//			if (faw::Directory::exist (_newd.data ()))
+	//				::CopyFile (_newd.data (), _srcd.data (), FALSE);
+	//		}
+	//		tool_Process::create_process (_src.str_view ());
+	//		return 0;
+	//	}
+	//}
 #endif
 
 	// 初始化路径

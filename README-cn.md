@@ -42,7 +42,7 @@
 ## 编译步骤
 
 1. 安装VS2017、vcpkg、7-zip与upx并设置环境变量，直到这几个命令能在命令行里直接使用
-2. 执行命令：vcpkg install boost:x86-windows boost:x86-windows-static openssl:x86-windows openssl:x86-windows-static nlohmann-json:x86-windows nlohmann-json:x86-windows-static curl:x86-windows curl:x86-windows-static
+2. 执行命令：vcpkg install boost:x86-windows-static openssl:x86-windows-static nlohmann-json:x86-windows-static curl:x86-windows-static fmt:x86-windows-static
 3. 编译
 
 ## 许可证
