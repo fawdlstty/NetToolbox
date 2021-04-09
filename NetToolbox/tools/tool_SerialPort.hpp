@@ -1,16 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-//
-// Class Name:  tool_SerialPort
-// Description: 串口工具类
-// Class URI:   https://github.com/fawdlstty/NetToolbox
-// Author:      Fawdlstty
-// Author URI:  https://www.fawdlstty.com/
-// License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Jan 05, 2019
-//
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef __TOOL_SERIAL_PORT_HPP__
+﻿#ifndef __TOOL_SERIAL_PORT_HPP__
 #define __TOOL_SERIAL_PORT_HPP__
 
 #include <string>
@@ -27,6 +15,7 @@
 #include <SetupAPI.h>
 
 #include "../3rdparty/serial/serial.h"
+#include "../../FawLib/include/FawLib/FawLib.hpp"
 
 #pragma comment (lib, "SetupAPI.lib")
 
@@ -35,21 +24,21 @@
 class tool_SerialPort {
 public:
 	// 获取串口名称列表
-	static std::vector<std::string> get_list () {
-		std::vector<std::string> v;
-		HDEVINFO hDevInfo = ::SetupDiGetClassDevsA (&GUID_DEVCLASS_PORTS, NULL, NULL, 0);
+	static std::vector<faw::string_t> get_list () {
+		std::vector<faw::string_t> v;
+		HDEVINFO hDevInfo = ::SetupDiGetClassDevs (&GUID_DEVCLASS_PORTS, NULL, NULL, 0);
 		if (hDevInfo != INVALID_HANDLE_VALUE) {
 			SP_DEVINFO_DATA dd = { sizeof (SP_DEVINFO_DATA) };
 			for (DWORD dw = 0; ::SetupDiEnumDeviceInfo (hDevInfo, dw, &dd); dw++) {
-				char tbuf[MAX_PATH] = { 0 };
-				if (::SetupDiGetDeviceRegistryPropertyA (hDevInfo, &dd, SPDRP_FRIENDLYNAME, NULL, (PBYTE) tbuf, sizeof (tbuf), NULL))
+				TCHAR tbuf[MAX_PATH] = { 0 };
+				if (::SetupDiGetDeviceRegistryProperty (hDevInfo, &dd, SPDRP_FRIENDLYNAME, NULL, (PBYTE) tbuf, sizeof (tbuf), NULL))
 					v.push_back (tbuf);
 			}
 			::SetupDiDestroyDeviceInfoList (hDevInfo);
 		}
-		std::sort (v.begin (), v.end (), [] (std::string s1, std::string s2) {
-			size_t p1 = s1.find ('('), p2 = s2.find ('(');
-			return atoi (&s1[p1 + 4]) < atoi (&s2[p2 + 4]);
+		std::sort (v.begin (), v.end (), [] (faw::string_t s1, faw::string_t s2) {
+			size_t p1 = s1.find (_T ('(')), p2 = s2.find (_T ('('));
+			return _ttoi (&s1[p1 + 4]) < _ttoi (&s2[p2 + 4]);
 		});
 		return v;
 	}
@@ -79,6 +68,12 @@ public:
 		m_serial.open ();
 		return (m_is_open = m_serial.isOpen ());
 	}
+	bool open (std::wstring name, uint32_t baud_rate = 9600, uint8_t byte_size = 8, std::wstring parity = _T ("none"), std::wstring stopbits = _T ("1")) {
+		std::string _name = faw::Encoding::utf16_to_utf8 (name);
+		std::string _parity = faw::Encoding::utf16_to_utf8 (parity);
+		std::string _stopbits = faw::Encoding::utf16_to_utf8 (stopbits);
+		return open (_name, baud_rate, byte_size, _parity, _stopbits);
+	}
 
 	// 关闭串口
 	void close () {
@@ -93,6 +88,9 @@ public:
 			return 0;
 		return m_serial.write (data);
 	}
+	size_t write (std::wstring data) {
+		return write (faw::Encoding::utf16_to_utf8 (data));
+	}
 
 	// 设置读到数据及关闭串口时触发的事件
 	void set_on_event (std::function<void (std::string)> on_receive, std::function<void ()> on_close) {
@@ -104,7 +102,7 @@ public:
 	bool is_open () { return m_serial.isOpen (); }
 
 	// 获取串口名称
-	std::string get_name () { return m_serial.getPort (); }
+	faw::string_t get_name () { return faw::Encoding::utf8_to_T (m_serial.getPort ()); }
 
 protected:
 	// 串口内部工作线程

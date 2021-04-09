@@ -1,16 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-//
-// Class Name:  tool_Tracert
-// Description: 路由跟踪工具类
-// Class URI:   https://github.com/fawdlstty/NetToolbox
-// Author:      Fawdlstty
-// Author URI:  https://www.fawdlstty.com/
-// License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Jan 05, 2019
-//
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef __TOOL_TRACERT_HPP__
+﻿#ifndef __TOOL_TRACERT_HPP__
 #define __TOOL_TRACERT_HPP__
 
 #include <string>
@@ -32,11 +20,11 @@
 class tool_Tracert {
 public:
 	// 开始ipv4路由跟踪
-	static std::tuple<bool, faw::String> start_ipv4 (std::string dest_ip, std::function<void (size_t, size_t, std::string)> f) {
+	static std::tuple<bool, faw::string_t> start_ipv4 (std::string dest_ip, std::function<void (size_t, size_t, std::string)> f) {
 		IPAddr ul_dest_ip = ::inet_addr (&dest_ip[0]);
 		HANDLE hIcmp = ::IcmpCreateFile ();
 		if (hIcmp == INVALID_HANDLE_VALUE)
-			return { false, faw::String::format (_T ("IcmpCreateFile %s"), tool_Utils::get_error_info (::GetLastError ()).c_str ()) };
+			return { false, fmt::format (_T ("IcmpCreateFile {}"), tool_Utils::get_error_info (::GetLastError ())) };
 		constexpr DWORD reply_size = sizeof (ICMP_ECHO_REPLY) + sizeof (m_send);
 		BYTE b_reply[reply_size];
 		PICMP_ECHO_REPLY reply = (PICMP_ECHO_REPLY) b_reply;
@@ -75,12 +63,12 @@ public:
 	}
 
 	// 开始ipv6路由跟踪
-	static std::tuple<bool, faw::String> start_ipv6 (std::string dest_ip, std::function<void (size_t, size_t, std::string)> f) {
+	static std::tuple<bool, faw::string_t> start_ipv6 (std::string dest_ip, std::function<void (size_t, size_t, std::string)> f) {
 		in_addr6 ul_dest_ip = { 0 };
-		::inet_pton (AF_INET6, dest_ip.c_str (), &ul_dest_ip);
+		::inet_pton (AF_INET6, dest_ip.data (), &ul_dest_ip);
 		HANDLE hIcmp = ::Icmp6CreateFile ();
 		if (hIcmp == INVALID_HANDLE_VALUE)
-			return { false, faw::String::format (_T ("Icmp6CreateFile %s"), tool_Utils::get_error_info (::GetLastError ()).c_str ()) };
+			return { false, fmt::format (_T ("Icmp6CreateFile %s"), tool_Utils::get_error_info (::GetLastError ())) };
 		constexpr DWORD reply_size = sizeof (ICMPV6_ECHO_REPLY) + sizeof (m_send);
 		BYTE b_reply[reply_size];
 		PICMPV6_ECHO_REPLY reply = (PICMPV6_ECHO_REPLY) b_reply;

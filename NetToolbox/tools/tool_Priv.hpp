@@ -1,16 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-//
-// Class Name:  tool_Priv
-// Description: 权限工具类
-// Class URI:   https://github.com/fawdlstty/NetToolbox
-// Author:      Fawdlstty
-// Author URI:  https://www.fawdlstty.com/
-// License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Jan 05, 2019
-//
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef __TOOL_PRIV_HPP__
+﻿#ifndef __TOOL_PRIV_HPP__
 #define __TOOL_PRIV_HPP__
 
 #include <Windows.h>
@@ -31,8 +19,8 @@ public:
 	static bool adjust_restart (size_t sel1, size_t sel2) {
 		if (IDOK != ::MessageBox (NULL, International::translate (_T ("Insufficient permissions. Do you want to reopen the program with administrator permissions?")).data (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
 			return false;
-		faw::String str_param = faw::String::format (_T ("-jump %d,%d"), sel1, sel2);
-		return (size_t) ::ShellExecute (NULL, _T ("runas"), faw::Directory::get_current_file ().c_str (), str_param.c_str (), _T (""), SW_SHOWNORMAL) > 32;
+		faw::string_t str_param = fmt::format (_T ("-jump {},{}"), sel1, sel2);
+		return (size_t) ::ShellExecute (NULL, _T ("runas"), faw::Directory::get_current_file ().c_str (), str_param.data (), _T (""), SW_SHOWNORMAL) > 32;
 	}
 
 	// 提升调试模式权限

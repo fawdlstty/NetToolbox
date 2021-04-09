@@ -1,16 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-//
-// Class Name:  tool_String
-// Description: 字符串工具类
-// Class URI:   https://github.com/fawdlstty/NetToolbox
-// Author:      Fawdlstty
-// Author URI:  https://www.fawdlstty.com/
-// License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Jan 05, 2019
-//
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef __TOOL_STRING_HPP__
+﻿#ifndef __TOOL_STRING_HPP__
 #define __TOOL_STRING_HPP__
 
 #include <string>
@@ -138,13 +126,13 @@ public:
 			std::unique_ptr<T[]> formatted;
 			while (true) {
 				formatted.reset (new T[n]);
-				//strcpy_s (&formatted [0], fmt_str.size (), fmt_str.c_str ());
+				//strcpy_s (&formatted [0], fmt_str.size (), fmt_str.data ());
 				va_start (ap, fmt_str);
 				// _vsntprintf_s
 				if constexpr (sizeof(T) == 2)
-					final_n = _vsnwprintf_s (&formatted[0], n, _TRUNCATE, fmt_str.c_str (), ap);
+					final_n = _vsnwprintf_s (&formatted[0], n, _TRUNCATE, fmt_str.data (), ap);
 				else
-					final_n = _vsnprintf_s (&formatted[0], n, _TRUNCATE, fmt_str.c_str (), ap);
+					final_n = _vsnprintf_s (&formatted[0], n, _TRUNCATE, fmt_str.data (), ap);
 				va_end (ap);
 				if (final_n < 0 || final_n >= n)
 					n += abs (final_n - n + 1);
@@ -155,7 +143,7 @@ public:
 #else //__GNUC__
 			char *buf = nullptr;
 			va_start (ap, fmt_str);
-			int iresult = vasprintf (&buf, fmt_str.c_str (), ap);
+			int iresult = vasprintf (&buf, fmt_str.data (), ap);
 			va_end (ap);
 			if (buf) {
 				if (iresult >= 0) {
@@ -276,7 +264,7 @@ public:
 		} catch (std::exception &e) {
 			err = e.what ();
 		} catch (...) {
-			err = International::translate ("Unknown Error.");
+			err = faw::Encoding::T_to_gb18030 (International::translate (_T ("Unknown Error.")));
 		}
 		return { err, v };
 	}

@@ -1,16 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-//
-// Class Name:  tool_Register
-// Description: 注册表工具类
-// Class URI:   https://github.com/fawdlstty/NetToolbox
-// Author:      Fawdlstty
-// Author URI:  https://www.fawdlstty.com/
-// License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Jan 05, 2019
-//
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef __TOOL_REGISTER_HPP__
+﻿#ifndef __TOOL_REGISTER_HPP__
 #define __TOOL_REGISTER_HPP__
 
 #include <string>
@@ -27,68 +15,68 @@ class tool_Register {
 public:
 	static bool set_path (std::wstring path, BYTE *data, DWORD data_len) {
 		HKEY main_key = parse_path (path);
-		return (ERROR_SUCCESS == ::RegSetValueExW (main_key, path.c_str (), 0, REG_BINARY, data, data_len));
+		return (ERROR_SUCCESS == ::RegSetValueExW (main_key, path.data (), 0, REG_BINARY, data, data_len));
 	}
 	static bool set_path (std::wstring path, DWORD data) {
 		HKEY main_key = parse_path (path);
-		return (ERROR_SUCCESS == ::RegSetValueExW (main_key, path.c_str (), 0, REG_DWORD, (BYTE*) &data, sizeof (data)));
+		return (ERROR_SUCCESS == ::RegSetValueExW (main_key, path.data (), 0, REG_DWORD, (BYTE*) &data, sizeof (data)));
 	}
 	static bool set_path (std::wstring path, std::wstring data, bool expand = false) {
 		HKEY main_key = parse_path (path);
-		return (ERROR_SUCCESS == ::RegSetValueExW (main_key, path.c_str (), 0, (expand ? REG_EXPAND_SZ : REG_SZ), (BYTE*) &data[0], (DWORD) data.size ()));
+		return (ERROR_SUCCESS == ::RegSetValueExW (main_key, path.data (), 0, (expand ? REG_EXPAND_SZ : REG_SZ), (BYTE*) &data[0], (DWORD) data.size ()));
 	}
 	static bool set_path (std::wstring path, std::vector<std::wstring> data) {
 		HKEY main_key = parse_path (path);
 		std::wstring s = make_multi_sz (data);
-		return (ERROR_SUCCESS == ::RegSetValueExW (main_key, path.c_str (), 0, REG_MULTI_SZ, (BYTE*) &s[0], (DWORD) s.size ()));
+		return (ERROR_SUCCESS == ::RegSetValueExW (main_key, path.data (), 0, REG_MULTI_SZ, (BYTE*) &s[0], (DWORD) s.size ()));
 	}
 
 	static bool set_key (std::wstring path, std::wstring key_name, BYTE *data, DWORD data_len) {
 		HKEY hKey = parse_path (path);
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (hKey, path.c_str (), 0, KEY_WRITE, &hKey)) return false;
-		bool bRet = (ERROR_SUCCESS == ::RegSetValueExW (hKey, key_name.c_str (), 0, REG_BINARY, data, data_len));
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (hKey, path.data (), 0, KEY_WRITE, &hKey)) return false;
+		bool bRet = (ERROR_SUCCESS == ::RegSetValueExW (hKey, key_name.data (), 0, REG_BINARY, data, data_len));
 		::RegCloseKey (hKey);
 		return bRet;
 	}
 	static bool set_key (std::wstring path, std::wstring key_name, DWORD data) {
 		HKEY hKey = parse_path (path);
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (hKey, path.c_str (), 0, KEY_WRITE, &hKey)) return false;
-		bool bRet = (ERROR_SUCCESS == ::RegSetValueExW (hKey, key_name.c_str (), 0, REG_BINARY, (BYTE*) &data, sizeof (data)));
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (hKey, path.data (), 0, KEY_WRITE, &hKey)) return false;
+		bool bRet = (ERROR_SUCCESS == ::RegSetValueExW (hKey, key_name.data (), 0, REG_BINARY, (BYTE*) &data, sizeof (data)));
 		::RegCloseKey (hKey);
 		return bRet;
 	}
 	static bool set_key (std::wstring path, std::wstring key_name, std::wstring data, bool expand = false) {
 		HKEY hKey = parse_path (path);
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (hKey, path.c_str (), 0, KEY_WRITE, &hKey)) return false;
-		bool bRet = (ERROR_SUCCESS == ::RegSetValueExW (hKey, key_name.c_str (), 0, (expand ? REG_EXPAND_SZ : REG_SZ), (BYTE*) &data[0], (DWORD) data.size ()));
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (hKey, path.data (), 0, KEY_WRITE, &hKey)) return false;
+		bool bRet = (ERROR_SUCCESS == ::RegSetValueExW (hKey, key_name.data (), 0, (expand ? REG_EXPAND_SZ : REG_SZ), (BYTE*) &data[0], (DWORD) data.size ()));
 		::RegCloseKey (hKey);
 		return bRet;
 	}
 	static bool set_key (std::wstring path, std::wstring key_name, std::vector<std::wstring> data) {
 		HKEY hKey = parse_path (path);
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (hKey, path.c_str (), 0, KEY_WRITE, &hKey)) return false;
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (hKey, path.data (), 0, KEY_WRITE, &hKey)) return false;
 		std::wstring s = make_multi_sz (data);
-		bool bRet = (ERROR_SUCCESS == ::RegSetValueExW (hKey, key_name.c_str (), 0, REG_MULTI_SZ, (BYTE*) &s[0], (DWORD) s.size ()));
+		bool bRet = (ERROR_SUCCESS == ::RegSetValueExW (hKey, key_name.data (), 0, REG_MULTI_SZ, (BYTE*) &s[0], (DWORD) s.size ()));
 		::RegCloseKey (hKey);
 		return bRet;
 	}
 
 	static bool get_path_value (std::wstring path, BYTE *&data, DWORD &data_len) {
 		HKEY main_key = parse_path (path);
-		return (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.c_str (), nullptr, nullptr, data, &data_len));
+		return (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.data (), nullptr, nullptr, data, &data_len));
 	}
 	static bool get_path_value (std::wstring path, DWORD &data) {
 		HKEY main_key = parse_path (path);
 		DWORD data_size = sizeof (data);
-		return (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.c_str (), nullptr, nullptr, (BYTE*) &data, &data_size));
+		return (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.data (), nullptr, nullptr, (BYTE*) &data, &data_size));
 	}
 	static bool get_path_value (std::wstring path, std::wstring &data) {
 		HKEY main_key = parse_path (path);
 		std::wstring _data = L"";
 		_data.reserve (4096);
 		DWORD sz = (DWORD) 4096 * sizeof (wchar_t);
-		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.c_str (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
-		data = std::wstring (_data.c_str (), sz / 2);
+		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.data (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
+		data = std::wstring (_data.data (), sz / 2);
 		return bRet;
 	}
 	static bool get_path_value (std::wstring path, std::vector<std::wstring> &data) {
@@ -96,7 +84,7 @@ public:
 		std::wstring _data = L"";
 		_data.reserve (4096);
 		DWORD sz = (DWORD) 4096 * sizeof (wchar_t);
-		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.c_str (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
+		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (main_key, path.data (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
 		data.clear ();
 		wchar_t *p1 = &_data[0];
 		while (*p1) {
@@ -109,16 +97,16 @@ public:
 
 	static bool get_key_value (std::wstring path, std::wstring key_name, BYTE *&data, DWORD &data_len) {
 		HKEY main_key = parse_path (path), sub_key = NULL;
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_READ, &sub_key)) return false;
-		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (sub_key, key_name.c_str (), nullptr, nullptr, data, &data_len));
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.data (), 0, KEY_READ, &sub_key)) return false;
+		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (sub_key, key_name.data (), nullptr, nullptr, data, &data_len));
 		::RegCloseKey (sub_key);
 		return bRet;
 	}
 	static bool get_key_value (std::wstring path, std::wstring key_name, DWORD &data) {
 		HKEY main_key = parse_path (path), sub_key = NULL;
 		DWORD data_size = sizeof (data);
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_READ, &sub_key)) return false;
-		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (sub_key, key_name.c_str (), nullptr, nullptr, (BYTE*) &data, &data_size));
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.data (), 0, KEY_READ, &sub_key)) return false;
+		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (sub_key, key_name.data (), nullptr, nullptr, (BYTE*) &data, &data_size));
 		::RegCloseKey (sub_key);
 		return bRet;
 	}
@@ -127,10 +115,10 @@ public:
 		std::wstring _data = L"";
 		_data.reserve (4096);
 		DWORD sz = (DWORD) 4096 * sizeof (wchar_t);
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_READ, &sub_key)) return false;
-		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (sub_key, key_name.c_str (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.data (), 0, KEY_READ, &sub_key)) return false;
+		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (sub_key, key_name.data (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
 		::RegCloseKey (sub_key);
-		data = std::wstring (_data.c_str (), sz / 2);
+		data = std::wstring (_data.data (), sz / 2);
 		return bRet;
 	}
 	static bool get_key_value (std::wstring path, std::wstring key_name, std::vector<std::wstring> &data) {
@@ -138,8 +126,8 @@ public:
 		std::wstring _data = L"";
 		_data.reserve (4096);
 		DWORD sz = (DWORD) 4096 * sizeof (wchar_t);
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_READ, &sub_key)) return false;
-		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (sub_key, key_name.c_str (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.data (), 0, KEY_READ, &sub_key)) return false;
+		bool bRet = (ERROR_SUCCESS == ::RegQueryValueExW (sub_key, key_name.data (), nullptr, nullptr, (BYTE*) &_data[0], &sz));
 		::RegCloseKey (sub_key);
 		data.clear ();
 		wchar_t *p1 = &_data[0];
@@ -153,19 +141,19 @@ public:
 
 	static bool delete_path (std::wstring path) {
 		HKEY main_key = parse_path (path);
-		return (ERROR_SUCCESS == ::RegDeleteKeyW (main_key, path.c_str ()));
+		return (ERROR_SUCCESS == ::RegDeleteKeyW (main_key, path.data ()));
 	}
 	static bool delete_key (std::wstring path, std::wstring key_name) {
 		HKEY main_key = parse_path (path), sub_key = NULL;
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_ALL_ACCESS, &sub_key)) return false;
-		bool bRet = (ERROR_SUCCESS == ::RegDeleteKeyW (sub_key, path.c_str ()));
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.data (), 0, KEY_ALL_ACCESS, &sub_key)) return false;
+		bool bRet = (ERROR_SUCCESS == ::RegDeleteKeyW (sub_key, path.data ()));
 		::RegCloseKey (sub_key);
 		return bRet;
 	}
 
 	static bool path_exist (std::wstring path) {
 		HKEY main_key = parse_path (path), sub_key = NULL;
-		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.c_str (), 0, KEY_QUERY_VALUE, &sub_key)) return false;
+		if (ERROR_SUCCESS != ::RegOpenKeyExW (main_key, path.data (), 0, KEY_QUERY_VALUE, &sub_key)) return false;
 		::RegCloseKey (sub_key);
 		return TRUE;
 	}

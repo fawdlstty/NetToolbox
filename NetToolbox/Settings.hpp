@@ -16,8 +16,7 @@ class Settings {
 public:
 	// 初始化
 	static void init () {
-		m_file = faw::Directory::get_current_path () + _T ("Settings.json");
-		m_fileA = m_file.stra ();
+		m_file = faw::Directory::get_current_path ().str () + _T ("Settings.json");
 		// 运行计数
 		bool bInit = !faw::Directory::exist (m_file);
 #ifndef _DEBUG
@@ -33,18 +32,16 @@ public:
 		::GetSystemDefaultLCID ();
 		// 是否第一次运行
 		if (bInit) {
-			std::ofstream ofs (m_fileA, std::ios::binary);
+			std::ofstream ofs (m_file, std::ios::binary);
 			ofs << "{}";
 			ofs.close ();
 		}
 	}
 
 private:
-	static faw::String m_file;
-	static std::string m_fileA;
+	static faw::string_t m_file;
 };
 
-inline faw::String Settings::m_file;
-inline std::string Settings::m_fileA;
+inline faw::string_t Settings::m_file;
 
 #endif //__SETTINGS_HPP__

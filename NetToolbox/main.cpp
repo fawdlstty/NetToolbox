@@ -115,15 +115,14 @@ public:
 	bool		is_succeed = false;
 };
 
-#include <fmt/format.h>
 int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	// 初始化软件环境
 	ProgramGuard pg;
 	if (!pg.is_succeed)
 		return 0;
-	faw::String path = faw::Directory::get_current_path ();
-	faw::String _src = path + _T ("NetToolbox.exe"), _srcd = path + _T ("res.dll");
-	auto ver_src = tool_PE::get_version (_src.stra ().c_str ());
+	faw::string_t path = faw::Directory::get_current_path ().str ();
+	faw::string_t _src = path + _T ("NetToolbox.exe"), _srcd = path + _T ("res.dll");
+	auto ver_src = tool_PE::get_version (_src.data ());
 
 	// 加载配置文件
 	Settings::init ();
@@ -151,9 +150,9 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	};
 
 	// 更新控制
-	faw::String _new = path + _T ("NetToolbox.new.exe"), _newd = path + _T ("res.new.dll"), _oldd = path + _T ("res.dll");
+	faw::string_t _new = path + _T ("NetToolbox.new.exe"), _newd = path + _T ("res.new.dll"), _oldd = path + _T ("res.dll");
 	decltype (ver_src) ver_new = { 0, 0, 0, 0 };
-	bool exist_new = faw::Directory::exist (_new.c_str ());
+	bool exist_new = faw::Directory::exist (_new.data ());
 	if (!exist_new) {
 		// 检查新版
 		std::thread ([=] () {
@@ -170,7 +169,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 						std::string _file = item["name"];
 						std::string _md5 = item["md5"];
 						std::string _local_file = path.stra () + (_file == "NetToolbox.exe" ? "NetToolbox.new.exe" : _file);
-						if (_get_file_md5 (faw::Encoding::gb18030_to_T (_local_file).c_str ()) != _md5) {
+						if (_get_file_md5 (faw::Encoding::gb18030_to_T (_local_file).data ()) != _md5) {
 							std::string _data = tool_WebRequest::get (url_base + _file);
 							if (!_data.empty ()) {
 								MD5_CTX ctx_md5;
@@ -185,14 +184,14 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 									// 修复release下可能直接创建文件的问题
 									[_local_file, _data] () {
 										std::ofstream ofs (_local_file, std::ios::trunc | std::ios::binary);
-										ofs.write (_data.c_str (), _data.size ());
+										ofs.write (_data.data (), _data.size ());
 										ofs.close ();
 									} ();
 								} else {
 									if (faw::Directory::exist (_new))
-										::DeleteFile (_new.c_str ());
+										::DeleteFile (_new.data ());
 									if (faw::Directory::exist (_newd))
-										::DeleteFile (_newd.c_str ());
+										::DeleteFile (_newd.data ());
 									if (IDOK == ::MessageBox (NULL, _T ("更新失败，是否尝试手动更新？"), _T ("易大师网络工具箱"), MB_ICONQUESTION | MB_OKCANCEL))
 										::ShellExecute (NULL, _T ("open"), _T ("https://nettoolbox.fawdlstty.com/NetToolbox.7z"), NULL, NULL, SW_SHOW);
 									return;
@@ -206,18 +205,18 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 			}
 		}).detach ();
 	} else {
-		ver_new = tool_PE::get_version (_new.stra ().c_str ());
+		ver_new = tool_PE::get_version (_new.stra ().data ());
 		if (faw::Directory::get_filename (faw::Directory::get_current_file ()) == _T ("NetToolbox.exe")) {
 			// 检查版本号是否等于新文件，如果相等，则等待新进程退出并删除新文件，否则创建新进程并结束自身
 			if (_cmp_ver (ver_src, ver_new) == 0) {
 				while (tool_Process::process_exist (_T ("NetToolbox.new.exe")))
 					std::this_thread::sleep_for (std::chrono::milliseconds (100));
 				if (faw::Directory::exist (_new))
-					::DeleteFile (_new.c_str ());
+					::DeleteFile (_new.data ());
 				if (faw::Directory::exist (_newd))
-					::DeleteFile (_newd.c_str ());
+					::DeleteFile (_newd.data ());
 				if (faw::Directory::exist (_oldd))
-					::DeleteFile (_oldd.c_str ());
+					::DeleteFile (_oldd.data ());
 			} else {
 				tool_Process::create_process (_new.str_view ());
 				return 0;
@@ -227,9 +226,9 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 			if (_cmp_ver (ver_src, ver_new) != 0) {
 				while (tool_Process::process_exist (_T ("NetToolbox.exe")))
 					std::this_thread::sleep_for (std::chrono::milliseconds (100));
-				::CopyFile (_new.c_str (), _src.c_str (), FALSE);
-				if (faw::Directory::exist (_newd.c_str ()))
-					::CopyFile (_newd.c_str (), _srcd.c_str (), FALSE);
+				::CopyFile (_new.data (), _src.data (), FALSE);
+				if (faw::Directory::exist (_newd.data ()))
+					::CopyFile (_newd.data (), _srcd.data (), FALSE);
 			}
 			tool_Process::create_process (_src.str_view ());
 			return 0;
@@ -240,8 +239,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	// 初始化路径
 	CPaintManagerUI::SetInstance (hInstance);
 #ifdef _DEBUG
-	path.left_self (path.rfind (_T ('\\'), path.size () - 2) + 1);
-	CPaintManagerUI::SetResourcePath ((path + _T ("res")).c_str ());
+	CPaintManagerUI::SetResourcePath (_T ("..\\res"));
 #else
 	CPaintManagerUI::SetResourceType (UILIB_ZIPRESOURCE);
 	HRSRC hResource = ::FindResource (hInstance, MAKEINTRESOURCE (IDR_ZIPRES1), _T ("ZIPRES"));
@@ -262,9 +260,9 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	// 计算编译器版本
 	auto[v1, v2, v3, v4] = ver_src;
 	std::vector<LPCTSTR> publish { _T ("Alpha"), _T ("Beta"), _T ("Gamma"), _T ("RC"), _T ("GA") };
-	faw::String str_publish = _T ("Community");
+	faw::string_t str_publish = _T ("Community");
 	//_T ("Community"), _T ("Personal"), _T ("Professional"), _T ("Enterprise"), _T ("Ultimate")
-	faw::String _caption2 = faw::String::format (_T ("%04d.%02d.%02d　%s"), v1, v2, v3, str_publish.c_str ());
+	faw::string_t _caption2 = fmt::format (_T ("{:04}.{:02}.{:02}　{}"), v1, v2, v3, str_publish);
 
 	// 创建窗口
 	NetToolboxWnd wnd (_caption2);

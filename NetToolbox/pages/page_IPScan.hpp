@@ -23,9 +23,9 @@ public:
 	virtual ~page_IPScan () = default;
 
 	bool OnClick (TNotifyUI& msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("ipscan_start")) {
-			faw::String sip1 = m_ipscan_ip1->GetText (), sip2 = m_ipscan_ip2->GetText ();
+			faw::string_t sip1 = m_ipscan_ip1->GetText (), sip2 = m_ipscan_ip2->GetText ();
 			uint32_t ip1 = tool_Utils::from_ipv4_my (sip1), ip2 = tool_Utils::from_ipv4_my (sip2);
 			if (ip1 > ip2) {
 				::MessageBox (m_parent->GetHWND (), International::translate (_T ("Start IP cannot be greater than stop IP!")).data (), International::translate (_T ("Error")).data (), MB_ICONHAND);
@@ -79,7 +79,7 @@ private:
 		//on_receive (boost::system::error_code (), 0);
 		//
 		while (ip1 <= ip2) {
-			std::string sip = tool_Utils::format_ipv4_my (ip1).stra ();
+			std::string sip = faw::Encoding::T_to_gb18030 (tool_Utils::format_ipv4_my (ip1));
 			boost::asio::ip::udp::endpoint ep { boost::asio::ip::address::from_string (sip), 137 };
 			sock.send_to (send_buf, ep);
 			++ip1;

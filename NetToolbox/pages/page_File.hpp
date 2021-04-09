@@ -22,10 +22,10 @@ public:
 	virtual ~page_File () = default;
 
 	bool OnClick (TNotifyUI& msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("file_analysis")) {
-			 faw::String file = m_file_path->GetText ();
-			HANDLE hFile = ::CreateFile (file.c_str (), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+			 faw::string_t file = m_file_path->GetText ();
+			HANDLE hFile = ::CreateFile (file.data (), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 			if (hFile == INVALID_HANDLE_VALUE) {
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("File not found, cannot be analyzed.")));
 				return true;
@@ -39,7 +39,7 @@ public:
 			int8_t *buf = new int8_t[sz_1M];
 			size_t i, j, block_count = (size_t) (file_length / sz_1M);
 			size_t last_size = (size_t) (file_length - (sz_1M * (int64_t) block_count));
-			faw::String content = faw::String::format (International::translate (_T ("File path: %s\nFile size: %ld byte (%s) \nFile Hash: \n")).data (), file.c_str (), file_length, tool_Utils::format_unit (file_length).c_str ());
+			faw::string_t content = fmt::format (International::translate (_T ("File path: {}\nFile size: {} byte ({}) \nFile Hash: \n")), file, file_length, tool_Utils::format_unit (file_length));
 			//
 			// 文件Hash
 			//
@@ -91,8 +91,8 @@ public:
 			::SHA384_Final (buf_sha384, &_sha384);
 			::SHA512_Final (buf_sha512, &_sha512);
 			//
-			faw::String str_crc32 = faw::String::format (_T ("%08X"), crc32.checksum ());
-			faw::String str_md4 = _T (""), str_md5 = _T (""), str_sha = _T (""), str_sha1 = _T (""), str_sha224 = _T (""), str_sha256 = _T (""), str_sha384 = _T (""), str_sha512 = _T ("");
+			faw::string_t str_crc32 = fmt::format (_T ("{:08X}"), crc32.checksum ());
+			faw::string_t str_md4 = _T (""), str_md5 = _T (""), str_sha = _T (""), str_sha1 = _T (""), str_sha224 = _T (""), str_sha256 = _T (""), str_sha384 = _T (""), str_sha512 = _T ("");
 			for (i = 0; i < 64; ++i) {
 				if (i < sizeof (buf_md4)) str_md4 += tool_StringT::byte_to_str (buf_md4[i]);
 				if (i < sizeof (buf_md5)) str_md5 += tool_StringT::byte_to_str (buf_md5[i]);
@@ -107,21 +107,21 @@ public:
 			delete[] buf;
 			::CloseHandle (hFile);
 			//
-			content += faw::String::format (_T ("CRC32:     %s\n"), str_crc32.c_str ());
-			content += faw::String::format (_T ("MD4:       %s\n"), str_md4.c_str ());
-			content += faw::String::format (_T ("MD5:       %s\n"), str_md5.c_str ());
-			content += faw::String::format (_T ("SHA:       %s\n"), str_sha.c_str ());
-			content += faw::String::format (_T ("SHA1:      %s\n"), str_sha1.c_str ());
-			content += faw::String::format (_T ("SHA224:    %s\n"), str_sha224.c_str ());
-			content += faw::String::format (_T ("SHA256:    %s\n"), str_sha256.c_str ());
-			content += faw::String::format (_T ("SHA384:    %s\n"), str_sha384.c_str ());
-			content += faw::String::format (_T ("SHA512:    %s\n"), str_sha512.c_str ());
+			content += fmt::format (_T ("CRC32:     {}\n"), str_crc32);
+			content += fmt::format (_T ("MD4:       {}\n"), str_md4);
+			content += fmt::format (_T ("MD5:       {}\n"), str_md5);
+			content += fmt::format (_T ("SHA:       {}\n"), str_sha);
+			content += fmt::format (_T ("SHA1:      {}\n"), str_sha1);
+			content += fmt::format (_T ("SHA224:    {}\n"), str_sha224);
+			content += fmt::format (_T ("SHA256:    {}\n"), str_sha256);
+			content += fmt::format (_T ("SHA384:    {}\n"), str_sha384);
+			content += fmt::format (_T ("SHA512:    {}\n"), str_sha512);
 			//
 			// PE分析
 			//
 			std::vector<std::string> vexport;
 			std::vector<std::tuple<std::string, std::vector<std::tuple<int16_t, std::string>>>> vimport;
-			if (tool_PE::read_import_export (file.c_str (), vexport, vimport)) {
+			if (tool_PE::read_import_export (file.data (), vexport, vimport)) {
 				content += International::translate (_T ("\n\n\nPE Info：\nExport Function：\n"));
 				for (size_t i = 0; i < vexport.size (); ++i) {
 					content += faw::Encoding::gb18030_to_T (vexport[i]);
@@ -134,14 +134,14 @@ public:
 					content += _T ('\n');
 					for (j = 0; j < dll_funcs.size (); ++j) {
 						auto[func_id, func_name] = dll_funcs[j];
-						content += faw::String::format (_T ("\t%d\t%s\n"), func_id, faw::Encoding::gb18030_to_T (func_name).c_str ());
+						content += fmt::format (_T ("\t{}\t{}\n"), func_id, faw::Encoding::gb18030_to_T (func_name));
 					}
 				}
 			} else {
 				content += International::translate (_T ("\n\n\nFile non-pe file, no PE data.\n"));
 			}
 			//
-			m_file_result->SetText (content.c_str ());
+			m_file_result->SetText (content.data ());
 			m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, International::translate (_T ("File analysis completed.")));
 			return true;
 		}

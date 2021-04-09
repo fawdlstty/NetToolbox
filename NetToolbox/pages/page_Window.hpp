@@ -20,10 +20,10 @@ public:
 			m_bmp_cover = NULL;
 		}
 	}
-	faw::string_view_t GetWindowClassName () const override { return _T ("NetToolbox"); }
-	faw::string_view_t GetSkinFile () override { return International::translate (_T ("cur_findcolor.xml")); }
+	LPCTSTR GetWindowClassName () const override { return _T ("NetToolbox"); }
+	faw::string_t GetSkinFile () override { return International::translate (_T ("cur_findcolor.xml")); }
 
-	void parent_notify_onmove (POINT &pt, faw::string_view_t text) {
+	void parent_notify_onmove (POINT &pt, faw::string_t text) {
 		try {
 			//POINT pt { 0 };
 			::GetCursorPos (&pt);
@@ -214,13 +214,13 @@ public:
 		if (m_cap_findcolor) {
 			m_cap_findcolor = false;
 			::ReleaseCapture ();
-			m_window_findcolor->SetBkImage (m_bkimg_findcolor.c_str ());
+			m_window_findcolor->SetBkImage (m_bkimg_findcolor.data ());
 			m_find_wnd->ShowWindow (false);
 		} else if (m_cap_detector) {
 			m_cap_detector = false;
 			::ReleaseCapture ();
 			m_window_detector->KillTimer ((UINT) *m_window_detector);
-			m_window_detector->SetBkImage (m_bkimg_detector.c_str ());
+			m_window_detector->SetBkImage (m_bkimg_detector.data ());
 
 			//POINT pt { 0 };
 			::GetCursorPos (&pt);
@@ -228,17 +228,17 @@ public:
 			Gdiplus::Color _color;
 			m_bmp_screen->GetPixel (pt.x, pt.y, &_color);
 			m_window_color->SetBkColor (_color.GetValue () | 0xFF000000);
-			faw::String str = faw::String::format (_T ("#%06X (%d, %d, %d)"), _color.GetValue (), _color.GetR (), _color.GetG (), _color.GetB ());
-			m_window_txt_color->SetText (str.c_str ());
+			faw::string_t str = fmt::format (_T ("#{:06} ({}, {}, {})"), _color.GetValue (), _color.GetR (), _color.GetG (), _color.GetB ());
+			m_window_txt_color->SetText (str.data ());
 			// 获取窗口句柄
 			HWND hDestWnd = ::WindowFromPoint (pt);
-			str = faw::String::format (_T ("%X"), hDestWnd);
-			m_window_txt_handle->SetText (str.c_str ());
+			str = fmt::format (_T ("{:X}"), (void*) hDestWnd);
+			m_window_txt_handle->SetText (str.data ());
 			// 获取窗口位置
 			RECT rcDest { 0 };
 			::GetWindowRect (hDestWnd, &rcDest);
-			str = faw::String::format (_T ("pos (%d, %d), size (%d, %d)"), rcDest.left, rcDest.top, rcDest.right - rcDest.left, rcDest.bottom - rcDest.top);
-			m_window_txt_pos->SetText (str.c_str ());
+			str = fmt::format (_T ("pos ({}, {}), size ({}, {})"), rcDest.left, rcDest.top, rcDest.right - rcDest.left, rcDest.bottom - rcDest.top);
+			m_window_txt_pos->SetText (str.data ());
 			// 获取窗口标题
 			TCHAR wnd_text[MAX_PATH] = { 0 };
 			::GetWindowText (hDestWnd, wnd_text, MAX_PATH);
@@ -248,15 +248,15 @@ public:
 			//HWND hNextWnd = ::GetNextWindow (hDestWnd, GW_HWNDNEXT);
 			//HWND hChildWnd = ::GetNextWindow (hDestWnd, GW_CHILD);
 			HWND hParentWnd = ::GetNextWindow (hDestWnd, GW_OWNER);
-			str = faw::String::format (_T ("%X"), hParentWnd);
-			m_window_txt_parent->SetText (str.c_str ());
+			str = fmt::format (_T ("{:X}"), (void *) hParentWnd);
+			m_window_txt_parent->SetText (str.data ());
 			// 窗口样式
 			LONG style = ::GetWindowLong (hDestWnd, GWL_STYLE);
-			str = faw::String::format (_T ("0x%08X"), style);
-			m_window_txt_style->SetText (str.c_str ());
+			str = fmt::format (_T ("0x{:08X}"), style);
+			m_window_txt_style->SetText (str.data ());
 			LONG exstyle = ::GetWindowLong (hDestWnd, GWL_EXSTYLE);
-			str = faw::String::format (_T ("0x%08X"), exstyle);
-			m_window_txt_exstyle->SetText (str.c_str ());
+			str = fmt::format (_T ("0x{:08X}"), exstyle);
+			m_window_txt_exstyle->SetText (str.data ());
 			// 获取窗口类
 			TCHAR class_text[MAX_PATH] = { 0 };
 			::GetClassName (hDestWnd, class_text, MAX_PATH);
@@ -266,7 +266,7 @@ public:
 			m_cap_zoomer = false;
 			::ReleaseCapture ();
 			m_window_zoomer->KillTimer ((UINT) *m_window_zoomer);
-			m_window_zoomer->SetBkImage (m_bkimg_zoomer.c_str ());
+			m_window_zoomer->SetBkImage (m_bkimg_zoomer.data ());
 			return true;
 		}
 		return false;
@@ -294,11 +294,11 @@ public:
 			Gdiplus::Color _color;
 			m_bmp_screen->GetPixel (pt.x, pt.y, &_color);
 			m_window_color->SetBkColor (_color.GetValue () | 0xFF000000);
-			faw::String str = faw::String::format (_T ("#%06X (%d, %d, %d)"), _color.GetValue () & 0xFFFFFF, _color.GetR (), _color.GetG (), _color.GetB ());
-			m_window_txt_color->SetText (str.c_str ());
+			faw::string_t str = fmt::format (_T ("#{:06X} ({}, {}, {})"), _color.GetValue () & 0xFFFFFF, _color.GetR (), _color.GetG (), _color.GetB ());
+			m_window_txt_color->SetText (str.data ());
 			//
-			str = faw::String::format (_T ("RGB (%d, %d, %d)"), _color.GetR (), _color.GetG (), _color.GetB ());
-			m_find_wnd->parent_notify_onmove (pt, str.str_view ());
+			str = fmt::format (_T ("RGB ({}, {}, {})"), _color.GetR (), _color.GetG (), _color.GetB ());
+			m_find_wnd->parent_notify_onmove (pt, str);
 			return true;
 		}
 		return false;
@@ -315,18 +315,18 @@ protected:
 	Gdiplus::Bitmap		*m_bmp_screen			= nullptr;
 
 	BindContainerUI		m_window_findcolor { _T ("window_findcolor") };
-	faw::String			m_bkimg_findcolor		= _T ("");
+	faw::string_t			m_bkimg_findcolor		= _T ("");
 	bool				m_cap_findcolor			= false;
 	HCURSOR				m_cur_findcolor;
 	page_FindWnd		*m_find_wnd				= nullptr;
 
 	BindContainerUI		m_window_detector { _T ("window_detector") };
-	faw::String			m_bkimg_detector		= _T ("");
+	faw::string_t			m_bkimg_detector		= _T ("");
 	bool				m_cap_detector			= false;
 	HCURSOR				m_cur_detector;
 
 	BindContainerUI		m_window_zoomer { _T ("window_zoomer") };
-	faw::String			m_bkimg_zoomer			= _T ("");
+	faw::string_t			m_bkimg_zoomer			= _T ("");
 	bool				m_cap_zoomer			= false;
 	HCURSOR				m_cur_zoomer;
 

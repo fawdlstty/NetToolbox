@@ -12,47 +12,43 @@ public:
 	virtual ~page_EncDec () = default;
 
 	bool OnClick (TNotifyUI& msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("encdec_enc")) {
-			faw::String _src = m_encdec_data->GetText (), t_data;
-			std::string data_gb18030 = _src.stra ();
-			std::string data_utf8 = faw::Encoding::T_to_utf8 (_src.str_view ());
-			t_data = faw::Encoding::gb18030_to_T (faw::Encoding::percent_str_encode (data_utf8));
-			m_encdec_percent->SetText (t_data.str_view ());
-			t_data = faw::Encoding::gb18030_to_T (faw::Encoding::escape_x_str_encode (data_utf8));
-			m_encdec_escape_x->SetText (t_data.str_view ());
-			t_data = faw::Encoding::gb18030_to_T (faw::Encoding::escape_u_str_encode (data_gb18030));
-			m_encdec_escape_u->SetText (t_data.str_view ());
-			t_data = faw::Encoding::gb18030_to_T (faw::Encoding::base64_encode (data_utf8));
-			m_encdec_base64->SetText (t_data.str_view ());
+			faw::string_t _src = m_encdec_data->GetText ();
+			//std::string data_gb18030 = _src.stra ();
+			//std::string data_utf8 = faw::Encoding::T_to_utf8 (_src.str_view ());
+			m_encdec_percent->SetText (faw::Encoding::percent_str_encode (_src));
+			m_encdec_escape_x->SetText (faw::Encoding::escape_x_str_encode (_src));
+			m_encdec_escape_u->SetText (faw::Encoding::escape_u_str_encode (_src));
+			m_encdec_base64->SetText (faw::Encoding::base64_encode (_src));
 			return true;
 		} else if (name == _T ("encdec_dec")) {
-			std::string data = faw::Encoding::T_to_gb18030 (m_encdec_data->GetText ().str_view ());
-			faw::String t_data;
+			faw::string_t data = m_encdec_data->GetText ();
+			faw::string_t t_data;
 			if (faw::Encoding::is_percent_str (data)) {
-				t_data = faw::Encoding::utf8_to_T (faw::Encoding::percent_str_decode (data));
+				t_data = faw::Encoding::percent_str_decode (data);
 			} else {
 				t_data = _T ("(Decoding failure)");
 			}
-			m_encdec_percent->SetText (t_data.str_view ());
+			m_encdec_percent->SetText (t_data);
 			if (faw::Encoding::is_escape_x_str (data)) {
-				t_data = faw::Encoding::utf8_to_T (faw::Encoding::escape_x_str_decode (data));
+				t_data = faw::Encoding::escape_x_str_decode (data);
 			} else {
 				t_data = _T ("(Decoding failure)");
 			}
-			m_encdec_escape_x->SetText (t_data.str_view ());
+			m_encdec_escape_x->SetText (t_data);
 			if (faw::Encoding::is_escape_u_str (data)) {
-				t_data = faw::Encoding::gb18030_to_T (faw::Encoding::escape_u_str_decode (data));
+				t_data = faw::Encoding::escape_u_str_decode (data);
 			} else {
 				t_data = _T ("(Decoding failure)");
 			}
-			m_encdec_escape_u->SetText (t_data.str_view ());
+			m_encdec_escape_u->SetText (t_data);
 			if (faw::Encoding::is_base64_str (data)) {
-				t_data = faw::Encoding::gb18030_to_T (faw::Encoding::base64_decode (data));
+				t_data = faw::Encoding::base64_decode (data);
 			} else {
 				t_data = _T ("(Decoding failure)");
 			}
-			m_encdec_base64->SetText (t_data.str_view ());
+			m_encdec_base64->SetText (t_data);
 			return true;
 		}
 		return false;

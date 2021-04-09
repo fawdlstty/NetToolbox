@@ -24,20 +24,20 @@ public:
 	}
 
 	bool OnClick (TNotifyUI& msg) override {
-		faw::String name = msg.pSender->GetName ();
+		faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("qrcode_generate")) {
-			std::string _str = m_qrcode_content->GetText ().stra ();
-			faw::String _str_bkimg = m_qrcode_bkimg->GetText ();
+			std::string _str = faw::Encoding::T_to_utf8 (m_qrcode_content->GetText ());
+			faw::string_t _str_bkimg = m_qrcode_bkimg->GetText ();
 
 			// 生成数据
-			const qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText (_str.c_str (), qrcodegen::QrCode::Ecc::LOW);
+			const qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText (_str.data (), qrcodegen::QrCode::Ecc::LOW);
 			//QRCode qrcode;
 			//uint8_t _ver = 1, *_data = nullptr;
 			//for (; _ver <= 40; ++_ver) {
 			//	if (_data)
 			//		delete[] _data;
 			//	_data = new uint8_t[qrcode_getBufferSize (_ver)];
-			//	bool _succ = qrcode_initText (&qrcode, _data, _ver, ECC_MEDIUM, _str.c_str ()) >= 0;
+			//	bool _succ = qrcode_initText (&qrcode, _data, _ver, ECC_MEDIUM, _str.data ()) >= 0;
 			//	if (_succ)
 			//		break;
 			//}

@@ -3,8 +3,8 @@
 
 #include "resource.h"
 
-#include "../DuiLib/StdAfx.h"
-#include "../DuiLib/UIlib.h"
+#include "../DuiLib_Faw/DuiLib/StdAfx.h"
+#include "../DuiLib_Faw/DuiLib/UIlib.h"
 using namespace DuiLib;
 
 #include <vector>
@@ -27,11 +27,11 @@ public:
 		Error		= 3,
 		Loading		= 4
 	};
-	NetToolboxWnd (faw::String caption): m_caption (caption) {}
+	NetToolboxWnd (faw::string_t caption): m_caption (caption) {}
 
 	// duilib所需要的重载函数
-	faw::string_view_t GetWindowClassName () const override { return _T ("NetToolbox"); }
-	faw::string_view_t GetSkinFile () override { return International::translate (_T ("main.xml")); }
+	LPCTSTR GetWindowClassName () const override { return _T ("NetToolbox"); }
+	faw::string_t GetSkinFile () override { return International::translate (_T ("main.xml")); }
 	void InitWindow () override;
 	void OnClick (TNotifyUI& msg) override;
 	void OnHeaderClick (TNotifyUI& msg) override;
@@ -41,20 +41,20 @@ public:
 	void OnTimer (TNotifyUI& msg) override;
 	void Notify (TNotifyUI& msg) override;
 	virtual void OnDropFiles (HDROP hDrop);
-	LRESULT OnLButtonDown (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-	LRESULT OnLButtonUp (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-	LRESULT OnRButtonDown (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-	LRESULT OnRButtonUp (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-	LRESULT OnMouseMove (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
+	std::optional<LRESULT> OnLButtonDown (UINT uMsg, WPARAM wParam, LPARAM lParam) override;
+	std::optional<LRESULT> OnLButtonUp (UINT uMsg, WPARAM wParam, LPARAM lParam) override;
+	std::optional<LRESULT> OnRButtonDown (UINT uMsg, WPARAM wParam, LPARAM lParam) override;
+	std::optional<LRESULT> OnRButtonUp (UINT uMsg, WPARAM wParam, LPARAM lParam) override;
+	std::optional<LRESULT> OnMouseMove (UINT uMsg, WPARAM wParam, LPARAM lParam) override;
 	LRESULT HandleMessage (UINT uMsg, WPARAM wParam, LPARAM lParam) override;
-	CControlUI* CreateControl (faw::string_view_t pstrClass) override;
+	CControlUI* CreateControl (faw::string_t pstrClass) override;
 
 	// 窗口所提供的功能函数
-	void show_status (StatusIcon _icon = StatusIcon::Info, faw::String _info = _T (""));
+	void show_status (StatusIcon _icon = StatusIcon::Info, faw::string_t _info = _T (""));
 	void show_error_code (DWORD last_error);
 	LRESULT invoke (std::function<LRESULT ()> f) { return ::SendMessage (m_hWnd, WM_USER + 0x101, 1, (LPARAM) &f); }
 	void async_invoke (std::function<LRESULT ()> f) { ::PostMessage (m_hWnd, WM_USER + 0x101, 0, (LPARAM) new decltype (f) (f)); }
-	void direct_page (size_t sel1, size_t sel2 = faw::String::_npos);
+	void direct_page (size_t sel1, size_t sel2 = faw::string_t::npos);
 	CControlUI *find_control (POINT pt) { return m_pm.FindControl (pt); }
 	HINSTANCE get_instance () { return CPaintManagerUI::GetInstance (); }
 	CPaintManagerUI *get_pm () { return &m_pm; }
@@ -67,7 +67,7 @@ private:
 	// 功能处理函数
 	void ui_update_data ();
 
-	faw::String								m_caption;
+	faw::string_t								m_caption;
 	HICON			m_icon				= ::LoadIcon (CPaintManagerUI::GetInstance (), MAKEINTRESOURCE (IDI_ICON1));
 	DWORD									m_last_img_status	= 1;
 	BindTextUI								m_text_caption { _T ("text_caption2") };

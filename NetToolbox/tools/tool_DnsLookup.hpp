@@ -30,7 +30,10 @@ using boost::asio::ip::udp;
 
 class tool_DnsLookup {
 public:
-	static std::string query_ip (const char *dest_domain) {
+	static std::wstring query_ip (std::wstring dest_domain) {
+		return faw::Encoding::gb18030_to_utf16 (query_ip (faw::Encoding::utf16_to_gb18030 (dest_domain)));
+	}
+	static std::string query_ip (std::string dest_domain) {
 		////getaddrinfo (PCSTR pNodeName, PCSTR pServiceName, const ADDRINFOA *pHints, PADDRINFOA *ppResult);
 		//addrinfo hints = { 0 }, *result = nullptr;
 		//hints.ai_flags = AI_NUMERICHOST;
@@ -42,7 +45,7 @@ public:
 		//result = result;
 		//::freeaddrinfo (result);
 		//return "";
-		hostent *host = ::gethostbyname (dest_domain);
+		hostent *host = ::gethostbyname (dest_domain.data ());
 		return (host ? (char*) inet_ntoa (*(in_addr*) host->h_addr) : "");
 	}
 	static std::string query_ipv4_udp (const char *dest_domain, const char *dns_server = "8.8.8.8") {

@@ -45,7 +45,7 @@ void NetToolboxWnd::InitWindow () {
 	::SendMessage (m_hWnd, WM_SETICON, ICON_SMALL, (LPARAM) m_icon);
 
 	// 设置标题
-	m_text_caption->SetText (m_caption.c_str ());
+	m_text_caption->SetText (m_caption.data ());
 
 	m_pages = {
 		{ new page_SysInfo (this), new page_LocalNet (this), new page_LocalConn (this) },
@@ -57,13 +57,13 @@ void NetToolboxWnd::InitWindow () {
 		{ nullptr }
 	};
 
-	std::vector<faw::String> _args;
+	std::vector<faw::string_t> _args;
 	auto cmd_line = ::GetCommandLineW ();
 	int _argc = 0;
 	LPWSTR *_argv = ::CommandLineToArgvW (cmd_line, &_argc);
 	for (int i = 0; i < _argc; ++i)
-		_args.push_back (_argv[i]);
-	_args[0].replace_self (_T ('/'), _T ('\\'));
+		_args.push_back (faw::Encoding::utf16_to_T (_argv [i]));
+	std::transform (_args [0].begin (), _args [0].end (), _args [0].begin (), [] (TCHAR ch) { return ch == _T ('/') ? _T ('\\') : ch; });
 #ifdef _DEBUG
 	if (_args.size () < 2) {
 		_args.push_back (_T ("-jump"));
@@ -86,7 +86,7 @@ void NetToolboxWnd::InitWindow () {
 }
 
 void NetToolboxWnd::OnClick (TNotifyUI& msg) {
-	 faw::String name = msg.pSender->GetName ();
+	 faw::string_t name = msg.pSender->GetName ();
 	if (name == _T ("btn_set")) {
 		//static int t = 0;
 		//show_error_code (++t);
@@ -96,7 +96,7 @@ void NetToolboxWnd::OnClick (TNotifyUI& msg) {
 	//	tool_Process::shell_exec (_T ("https://www.fawdlstty.com"));
 	//} else if (name == _T ("btn_join")) {
 	//	tool_Process::shell_exec (_T ("https://jq.qq.com/?_wv=1027&k=5TMvF3B"));
-	} else if (name.left (3) == _T ("tab") || name.left (5) == _T ("group")) {
+	} else if (name.substr (0, 3) == _T ("tab") || name.substr (0, 5) == _T ("group")) {
 		WindowImplBase::OnClick (msg);
 	} else if (name == _T ("about_home")) {
 		tool_Process::shell_exec (_T ("https://nettoolbox.fawdlstty.com"));
@@ -116,9 +116,9 @@ void NetToolboxWnd::OnHeaderClick (TNotifyUI& msg) {
 }
 
 void NetToolboxWnd::OnSelectChanged (TNotifyUI& msg) {
-	 faw::String name = msg.pSender->GetName ();
+	 faw::string_t name = msg.pSender->GetName ();
 	//标签页切换事件
-	if (name.left (3) == _T ("tab")) {
+	if (name.substr (0, 3) == _T ("tab")) {
 		//TCHAR s[16] = _T ("tab?");
 		//s[3] = name[3];
 		//int idx = (int) (name[5] - _T ('0'));
@@ -130,12 +130,12 @@ void NetToolboxWnd::OnSelectChanged (TNotifyUI& msg) {
 		m_tabM->SelectItem ((int) (m_sel1 = _ttoi (&name[3])));
 		m_tab[m_sel1]->SelectItem ((int) (m_sel2 = _ttoi (&name[5])));
 		ui_update_data ();
-	} else if (name.left (5) == _T ("group")) {
+	} else if (name.substr (0, 5) == _T ("group")) {
 		size_t sel1 = _ttoi (&name[5]);
 		for (size_t i = 0; i < m_tab.size (); ++i) {
-			faw::String name1 = faw::String::format (_T ("group%d"), i);
+			faw::string_t name1 = fmt::format (_T ("group{}"), i);
 			BindOptionUI option { name1 };
-			faw::String name2 = faw::String::format (_T ("group_item%d"), i);
+			faw::string_t name2 = fmt::format (_T ("group_item{}"), i);
 			BindVerticalLayoutUI vertical { name2 };
 			if (*vertical) {
 				option->SetTextColor (i == sel1 ? 0xFFFFFFB0 : 0xFFFFFFFF);
@@ -187,39 +187,54 @@ void NetToolboxWnd::OnDropFiles (HDROP hDrop) {
 	}
 }
 
-LRESULT NetToolboxWnd::OnLButtonDown (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+std::optional<LRESULT> NetToolboxWnd::OnLButtonDown (UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	POINT pt = { GET_X_LPARAM (lParam), GET_Y_LPARAM (lParam) };
 	page_base *ppage = get_moment_page ();
-	bHandled = ppage ? !!ppage->OnLButtonDown (pt) : FALSE;
-	return (bHandled ? 0 : WindowImplBase::OnLButtonDown (uMsg, wParam, lParam, bHandled));
+	if (ppage ? !!ppage->OnLButtonDown (pt) : FALSE) {
+		return 0;
+	} else {
+		return WindowImplBase::OnLButtonDown (uMsg, wParam, lParam);
+	}
 }
 
-LRESULT NetToolboxWnd::OnLButtonUp (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+std::optional<LRESULT> NetToolboxWnd::OnLButtonUp (UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	POINT pt = { GET_X_LPARAM (lParam), GET_Y_LPARAM (lParam) };
 	page_base *ppage = get_moment_page ();
-	bHandled = ppage ? !!ppage->OnLButtonUp (pt) : FALSE;
-	return (bHandled ? 0 : WindowImplBase::OnLButtonUp (uMsg, wParam, lParam, bHandled));
+	if (ppage ? !!ppage->OnLButtonUp (pt) : FALSE) {
+		return 0;
+	} else {
+		return WindowImplBase::OnLButtonUp (uMsg, wParam, lParam);
+	}
 }
 
-LRESULT NetToolboxWnd::OnRButtonDown (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+std::optional<LRESULT> NetToolboxWnd::OnRButtonDown (UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	POINT pt = { GET_X_LPARAM (lParam), GET_Y_LPARAM (lParam) };
 	page_base *ppage = get_moment_page ();
-	bHandled = ppage ? !!ppage->OnRButtonDown (pt) : FALSE;
-	return (bHandled ? 0 : WindowImplBase::OnRButtonDown (uMsg, wParam, lParam, bHandled));
+	if (ppage ? !!ppage->OnRButtonDown (pt) : FALSE) {
+		return 0;
+	} else {
+		return WindowImplBase::OnRButtonDown (uMsg, wParam, lParam);
+	}
 }
 
-LRESULT NetToolboxWnd::OnRButtonUp (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+std::optional<LRESULT> NetToolboxWnd::OnRButtonUp (UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	POINT pt = { GET_X_LPARAM (lParam), GET_Y_LPARAM (lParam) };
 	page_base *ppage = get_moment_page ();
-	bHandled = ppage ? !!ppage->OnRButtonUp (pt) : FALSE;
-	return (bHandled ? 0 : WindowImplBase::OnRButtonUp (uMsg, wParam, lParam, bHandled));
+	if (ppage ? !!ppage->OnRButtonUp (pt) : FALSE) {
+		return 0;
+	} else {
+		return WindowImplBase::OnRButtonUp (uMsg, wParam, lParam);
+	}
 }
 
-LRESULT NetToolboxWnd::OnMouseMove (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+std::optional<LRESULT> NetToolboxWnd::OnMouseMove (UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	POINT pt = { GET_X_LPARAM (lParam), GET_Y_LPARAM (lParam) };
 	page_base *ppage = get_moment_page ();
-	bHandled = ppage ? !!ppage->OnMouseMove (pt) : FALSE;
-	return (bHandled ? 0 : WindowImplBase::OnMouseMove (uMsg, wParam, lParam, bHandled));
+	if (ppage ? !!ppage->OnMouseMove (pt) : FALSE) {
+		return 0;
+	} else {
+		return WindowImplBase::OnMouseMove (uMsg, wParam, lParam);
+	}
 }
 
 LRESULT NetToolboxWnd::HandleMessage (UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -248,15 +263,15 @@ LRESULT NetToolboxWnd::HandleMessage (UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	return WindowImplBase::HandleMessage (uMsg, wParam, lParam);
 }
 
-CControlUI* NetToolboxWnd::CreateControl (faw::string_view_t pstrClass) {
+CControlUI* NetToolboxWnd::CreateControl (faw::string_t pstrClass) {
 	if (pstrClass == _T ("HanAnim")) return CHanAnimUI::CreateControl ();
 	return WindowImplBase::CreateControl (pstrClass);
 }
 
 
 
-void NetToolboxWnd::show_status (StatusIcon _icon, faw::String _info) {
-	static std::map<StatusIcon, faw::string_view_t> _status_images {
+void NetToolboxWnd::show_status (StatusIcon _icon, faw::string_t _info) {
+	static std::map<StatusIcon, faw::string_t> _status_images {
 		{ StatusIcon::Ok, _T ("file='status_small.png' source='0,0,16,16'") },
 		{ StatusIcon::Info, _T ("file='status_small.png' source='16,0,32,16'") },
 		{ StatusIcon::Warning, _T ("file='status_small.png' source='0,16,16,32'") },
@@ -275,13 +290,13 @@ void NetToolboxWnd::show_error_code (DWORD err_no) {
 	if (err_no == 0) {
 		show_status (StatusIcon::Ok, _T ("成功。"));
 	} else {
-		show_status (StatusIcon::Ok, tool_Utils::get_error_info (err_no).c_str ());
+		show_status (StatusIcon::Ok, tool_Utils::get_error_info (err_no).data ());
 	}
 }
 
 void NetToolboxWnd::direct_page (size_t sel1, size_t sel2) {
-	BindOptionUI { faw::String::format (_T ("group%d"), sel1) }->Activate ();
-	BindOptionUI { faw::String::format (_T ("tab%d_%d"), sel1, sel2) }->Activate ();
+	BindOptionUI { fmt::format (_T ("group{}"), sel1) }->Activate ();
+	BindOptionUI { fmt::format (_T ("tab{}_{}"), sel1, sel2) }->Activate ();
 }
 
 bool NetToolboxWnd::enum_pages (std::function<bool (page_base*)> f) {

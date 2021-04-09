@@ -22,8 +22,8 @@ public:
 		}
 	}
 
-	faw::string_view_t GetWindowClassName () const override { return _T ("NetToolbox"); }
-	faw::string_view_t GetSkinFile () override { return International::translate (_T ("scr2gif.xml")); }
+	LPCTSTR GetWindowClassName () const override { return _T ("NetToolbox"); }
+	faw::string_t GetSkinFile () override { return International::translate (_T ("scr2gif.xml")); }
 	void InitWindow () override {
 		m_init = true;
 		RECT rc { 0 };
@@ -31,17 +31,17 @@ public:
 		::SetWindowPos (GetHWND (), HWND_TOPMOST, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, SWP_NOREDRAW);
 	}
 
-	LRESULT OnSize (UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override {
+	std::optional<LRESULT> OnSize (UINT uMsg, WPARAM wParam, LPARAM lParam) override {
 		if (m_init) {
 			POINT pt = { GET_X_LPARAM (lParam), GET_Y_LPARAM (lParam) };
-			m_gifw_width->SetText (faw::String::format (_T ("%d"), pt.x - 24));
-			m_gifw_height->SetText (faw::String::format (_T ("%d"), pt.y - 64));
+			m_gifw_width->SetText (fmt::format (_T ("{}"), pt.x - 24));
+			m_gifw_height->SetText (fmt::format (_T ("{}"), pt.y - 64));
 		}
-		return WindowImplBase::OnSize (uMsg, wParam, lParam, bHandled);
+		return WindowImplBase::OnSize (uMsg, wParam, lParam);
 	}
 
 	void OnClick (TNotifyUI& msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("gifw_ok")) {
 			if (m_run) {
 				m_run = false;
@@ -70,10 +70,10 @@ public:
 			RECT sz_box { 0, 0, 0, 0 };
 			m_pm.SetSizeBox (sz_box);
 			m_run = true;
-			m_delay = (size_t) (100.0 / _ttoi (m_gifw_fps->GetText ().c_str ()) + 0.5) * 10;
-			size_t _width = _ttoi (m_gifw_width->GetText ().c_str ());
+			m_delay = (size_t) (100.0 / _ttoi (m_gifw_fps->GetText ().data ()) + 0.5) * 10;
+			size_t _width = _ttoi (m_gifw_width->GetText ().data ());
 			_width = tool_Zoomer::zoom_x (_width);
-			size_t _height = _ttoi (m_gifw_height->GetText ().c_str ());
+			size_t _height = _ttoi (m_gifw_height->GetText ().data ());
 			_height = tool_Zoomer::zoom_y (_height);
 			m_thread = std::thread (&page_GifWnd::_record_thread, this, m_delay, _width, _height);
 			m_gifw_stop->SetVisible (true);
@@ -92,15 +92,15 @@ public:
 	}
 
 	void OnTextChanged (TNotifyUI &msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("gifw_width")) {
 			SIZE sz = m_pm.GetInitSize ();
-			sz.cx = _ttoi (m_gifw_width->GetText ().c_str ()) + 24;
+			sz.cx = _ttoi (m_gifw_width->GetText ().data ()) + 24;
 			//m_pm.SetInitSize (sz.cx, sz.cy);
 			::SetWindowPos (GetHWND (), nullptr, 0, 0, sz.cx, sz.cy, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE);
 		} else if (name == _T ("gifw_height")) {
 			SIZE sz = m_pm.GetInitSize ();
-			sz.cy = _ttoi (m_gifw_height->GetText ().c_str ()) + 64;
+			sz.cy = _ttoi (m_gifw_height->GetText ().data ()) + 64;
 			//m_pm.SetInitSize (sz.cx, sz.cy);
 			::SetWindowPos (GetHWND (), nullptr, 0, 0, sz.cx, sz.cy, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE);
 		} else {
@@ -174,13 +174,13 @@ private:
 class page_Gif: public page_base {
 public:
 	page_Gif (NetToolboxWnd *parent): page_base (parent) {
-		faw::String path = faw::Directory::get_current_path ();
-		m_gif_path->SetText (faw::String::format (_T ("%c:\\record.gif"), path [0]));
+		faw::string_t path = faw::Directory::get_current_path ().str ();
+		m_gif_path->SetText (fmt::format (_T ("{}:\\record.gif"), path [0]));
 	}
 	virtual ~page_Gif () = default;
 
 	bool OnClick (TNotifyUI& msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("gif_showwnd")) {
 			m_run = false;
 			m_parent->ShowWindow (false);
@@ -200,13 +200,13 @@ public:
 			}
 			return true;
 		} else if (name == _T ("gif_save")) {
-			faw::String file = m_gif_path->GetText ();
+			faw::string_t file = m_gif_path->GetText ();
 			if (faw::Directory::exist (file)) {
-				faw::String info = faw::String::format (International::translate (_T ("The following file already exists. Do you want to overwrite it?\n%s")).data (), file.c_str ());
-				if (IDOK != ::MessageBox (NULL, info.c_str (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
+				faw::string_t info = fmt::format (International::translate (_T ("The following file already exists. Do you want to overwrite it?\n{}")).data (), file);
+				if (IDOK != ::MessageBox (NULL, info.data (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
 					return true;
 			}
-			if (tool_Gdip::gdip_save_animation (m_vgif, file.c_str (), m_delay))
+			if (tool_Gdip::gdip_save_animation (m_vgif, file.data (), m_delay))
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, International::translate (_T ("GIF Image exported successfully!")));
 			else
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("GIF Image exported failure!")));

@@ -1,16 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-//
-// Class Name:  tool_SysInfo
-// Description: 系统信息工具类
-// Class URI:   https://github.com/fawdlstty/NetToolbox
-// Author:      Fawdlstty
-// Author URI:  https://www.fawdlstty.com/
-// License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Jan 05, 2019
-//
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef __TOOL_SYS_INFO_HPP__
+﻿#ifndef __TOOL_SYS_INFO_HPP__
 #define __TOOL_SYS_INFO_HPP__
 
 #include <iostream>
@@ -39,7 +27,7 @@ public:
 		std::wstring facturer, product;
 		tool_Register::get_key_value (L"HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS", L"SystemManufacturer", facturer);
 		tool_Register::get_key_value (L"HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS", L"SystemProductName", product);
-		return tool_StringW::format (L"%s - %s", facturer.c_str (), product.c_str ());
+		return tool_StringW::format (L"%s - %s", facturer.data (), product.data ());
 	}
 
 	//获取系统版本信息
@@ -217,14 +205,14 @@ public:
 	}
 
 	//获取内存信息
-	static faw::String get_memory_info () {
+	static faw::string_t get_memory_info () {
 		MEMORYSTATUSEX ms = { sizeof (MEMORYSTATUSEX) };
 		if (!::GlobalMemoryStatusEx (&ms))
 			return _T ("");
-		return faw::String::format (International::translate (_T ("Total %s / Available %s")).data (), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ());
+		return fmt::format (International::translate (_T ("Total {} / Available {}")), tool_Utils::format_unit (ms.ullTotalPhys).data (), tool_Utils::format_unit (ms.ullAvailPhys).data ());
 		//return {
-		//	faw::String::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalPhys).c_str (), tool_Utils::format_unit (ms.ullAvailPhys).c_str ()),
-		//	faw::String::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalVirtual).c_str (), tool_Utils::format_unit (ms.ullAvailVirtual).c_str ())
+		//	faw::string_t::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalPhys).data (), tool_Utils::format_unit (ms.ullAvailPhys).data ()),
+		//	faw::string_t::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalVirtual).data (), tool_Utils::format_unit (ms.ullAvailVirtual).data ())
 		//};
 	}
 };

@@ -1,16 +1,4 @@
-﻿//////////////////////////////////////////////////////////////////////////////////
-////
-//// Class Name:  tool_VP9
-//// Description: VP9工具类
-//// Class URI:   https://github.com/fawdlstty/NetToolbox
-//// Author:      Fawdlstty
-//// Author URI:  https://www.fawdlstty.com/
-//// License:     此文件单独授权 以MIT方式开源共享
-//// Last Update: Jan 05, 2019
-////
-//////////////////////////////////////////////////////////////////////////////////
-//
-//#ifndef __TOOL_VP9_HPP__
+﻿//#ifndef __TOOL_VP9_HPP__
 //#define __TOOL_VP9_HPP__
 //
 //#include <string>
@@ -23,18 +11,18 @@
 //#include <libvpx/tools_common.h>
 //
 ////#ifdef _UNICODE
-////using faw::String = std::wstring;
-////using faw::string_view_t = std::wstring_view;
+////using faw::string_t = std::wstring;
+////using faw::string_t_view_t = std::wstring_view;
 ////#else
-////using faw::String = std::string;
-////using faw::string_view_t = std::string_view;
+////using faw::string_t = std::string;
+////using faw::string_t_view_t = std::string_view;
 ////#endif
 //
 //
 //
 //class tool_VP9 {
 //public:
-//	tool_VP9 (faw::string_view_t path) {
+//	tool_VP9 (faw::string_t_view_t path) {
 //		//vpx_codec_ctx_t codec;
 //		int frame_count = 0;
 //		const int fps = 30;

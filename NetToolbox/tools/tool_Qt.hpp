@@ -1,16 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-//
-// Class Name:  tool_Qt
-// Description: Qt工具类
-// Class URI:   https://github.com/fawdlstty/NetToolbox
-// Author:      Fawdlstty
-// Author URI:  https://www.fawdlstty.com/
-// License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Dec 19, 2018
-//
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef __TOOL_QT_HPP__
+﻿#ifndef __TOOL_QT_HPP__
 #define __TOOL_QT_HPP__
 
 #include <QtCore/QString>
@@ -47,7 +35,7 @@ public:
 		std::string s1 = std::string ((const char *) s.toLocal8Bit ());
 		return faw::Encoding::gb18030_to_utf16 (s1);
 	}
-	static faw::string_t to_t (QString s) {
+	static faw::string_t_t to_t (QString s) {
 		std::string s1 = std::string ((const char *) s.toLocal8Bit ());
 		return faw::Encoding::gb18030_to_T (s1);
 	}

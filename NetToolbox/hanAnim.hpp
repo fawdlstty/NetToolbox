@@ -28,15 +28,15 @@ namespace DuiLib {
 		static CControlUI* CreateControl () {
 			return new CHanAnimUI ();
 		}
-		faw::string_view_t GetClass () const {
+		faw::string_t GetClass () const {
 			return _T ("CHanAnimUI");
 		}
-		LPVOID GetInterface (faw::string_view_t pstrName) override {
+		LPVOID GetInterface (faw::string_t pstrName) override {
 			if (pstrName == _T ("HanAnim")) return static_cast<CHanAnimUI*>(this);
 			return CControlUI::GetInterface (pstrName);
 		}
 
-		virtual void SetBkImage (faw::string_view_t pStrImage) {
+		virtual void SetBkImage (faw::string_t pStrImage) {
 			if (m_is_animate) {
 				this->KillTimer (m_timer_id);
 				m_is_animate = FALSE;
@@ -44,38 +44,23 @@ namespace DuiLib {
 			CControlUI::SetBkImage (pStrImage);
 		}
 
-		void SetAnimateBkImage (faw::string_view_t pStrImage, int width, int height, int framecount = 0, int speed = 100) {
+		void SetAnimateBkImage (faw::string_t pStrImage, int width, int height, int framecount = 0, int speed = 100) {
 			if (m_is_animate) this->KillTimer (m_timer_id);
-			BOOL hori = width > height;
+			BOOL _hori = width > height;
 			int _width, _height; _width = _height = (width > height ? height : width);
-			if (!framecount) framecount = hori ? (width / height) : (height / width);
+			if (!framecount) framecount = _hori ? (width / height) : (height / width);
 			if (m_imglist.size ()) m_imglist.clear ();
-			TCHAR buf[MAX_PATH];
-			TCHAR fmt[32];
-			size_t szFmt = sizeof (fmt) / sizeof (fmt[0]);
+			faw::string_t _buf = _T ("");
 			for (int i = 0; i < framecount; ++i) {
-				lstrcpy (buf, _T ("file='"));
-				lstrcat (buf, pStrImage.data ());
-				lstrcat (buf, _T ("' source='"));
-				if (hori) {
-					_stprintf_s (fmt, szFmt, _T ("%d,%d,%d,%d"), _width*i, 0, _width*(i + 1), _height);
+				if (_hori) {
+					_buf = fmt::format (_T ("file='{}' source='{},{},{},{}'"), pStrImage, _width * i, 0, _width * (i + 1), _height);
 				} else {
-					_stprintf_s (fmt, szFmt, _T ("%d,%d,%d,%d"), 0, _height*i, _width, _height*(i + 1));
+					_buf = fmt::format (_T ("file='{}' source='{},{},{},{}'"), pStrImage, 0, _height * i, _width, _height * (i + 1));
 				}
-				lstrcat (buf, fmt);
-				lstrcat (buf, _T ("'"));
 				if (this->GetWidth () != _width || this->GetHeight () != _height) {
-					lstrcat (buf, _T ("dest='"));
-					_stprintf_s (
-						fmt, szFmt, _T ("%d,%d,%d,%d'"),
-						this->GetWidth () > _width ? this->GetWidth () - _width : 0,
-						0,
-						this->GetWidth (),
-						_height
-					);
-					lstrcat (buf, fmt);
+					_buf += fmt::format (_T (" dest='{},{},{},{}'"), this->GetWidth () > _width ? this->GetWidth () - _width : 0, 0, this->GetWidth (), _height);
 				}
-				m_imglist.push_back (buf);
+				m_imglist.push_back (_buf);
 			}
 			m_moment_frame = -1;
 			m_is_animate = true;
@@ -84,17 +69,17 @@ namespace DuiLib {
 
 		void DoEvent (TEventUI& event) override {
 			if (event.Type == UIEVENT_TIMER && event.wParam == m_timer_id) {
-				CControlUI::SetBkImage (m_imglist[m_moment_frame = ++m_moment_frame % m_imglist.size ()].str_view ());
+				CControlUI::SetBkImage (m_imglist[m_moment_frame = ++m_moment_frame % m_imglist.size ()]);
 			} else {
 				return CControlUI::DoEvent (event);
 			}
 		}
 
 	private:
-		int						m_moment_frame = -1;
-		bool					m_is_animate = false;
-		std::vector< faw::String>	m_imglist;
-		UINT					m_timer_id = (UINT) this;
+		int							m_moment_frame = -1;
+		bool						m_is_animate = false;
+		std::vector<faw::string_t>	m_imglist;
+		UINT						m_timer_id = (UINT) this;
 
 	public:
 		static LPCTSTR			s_interface;

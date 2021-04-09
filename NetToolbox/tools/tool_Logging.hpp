@@ -14,7 +14,7 @@
 class tool_Logging {
 public:
 	static void info (const char* _file, const int _line, const char* fmt_str, ...) {
-		faw::String str_file = faw::Directory::get_filename (_file), str_result = "";
+		faw::string_t str_file = faw::Directory::get_filename (_file), str_result = "";
 		try {
 			int _len = lstrlenA (fmt_str);
 			if (_len > 0) {
@@ -58,7 +58,7 @@ public:
 		ofs.close ();
 	}
 	static void info_label (const char* _file, const int _line, const char* _label, const char* fmt_str, ...) {
-		faw::String str_file = faw::Directory::get_filename (_file);
+		faw::string_t str_file = faw::Directory::get_filename (_file);
 		std::string str_result = _T ("");
 		try {
 			int _len = lstrlenA (fmt_str);

@@ -195,18 +195,18 @@
 								<ListHeader>
 									<ListHeaderItem style="x_list_hdr" width="30" />
 									<ListHeaderItem style="x_list_hdr" width="50" text="TTL" />
-									<!--<ListHeaderItem style="x_list_hdr" width="100" text="延迟1" />
+									<ListHeaderItem style="x_list_hdr" width="100" text="延迟1" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="延迟2" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="延迟3" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="IP地址" />
-									<ListHeaderItem style="x_list_hdr" width="200" text="描述" />-->
-									<ListHeaderItem style="x_list_hdr" width="100" text="IP地址" />
+									<ListHeaderItem style="x_list_hdr" width="200" text="描述" />
+									<!--<ListHeaderItem style="x_list_hdr" width="100" text="IP地址" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="丢包率" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="已发送" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="已接收" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="最快" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="最慢" />
-									<ListHeaderItem style="x_list_hdr" width="200" text="描述" />
+									<ListHeaderItem style="x_list_hdr" width="200" text="描述" />-->
 								</ListHeader>
 							</List>
 						</HorizontalLayout>

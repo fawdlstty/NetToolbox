@@ -7,7 +7,8 @@
 #include <winternl.h>
 #include <ws2ipdef.h>
 #include <iphlpapi.h>
-#include "../DuiLib/StdAfx.h"
+#include <fmt/core.h>
+#include "../DuiLib_Faw/DuiLib/StdAfx.h"
 #ifdef min
 #undef min
 #endif

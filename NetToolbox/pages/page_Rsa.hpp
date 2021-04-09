@@ -11,20 +11,20 @@
 class page_Rsa: public page_base {
 public:
 	page_Rsa (NetToolboxWnd *parent): page_base (parent) {
-		faw::String path = faw::Directory::get_current_path ();
-		m_rsa_evp_pubkey->SetText (faw::String::format (_T ("%c:\\evp_pubkey.key"), path [0]));
-		m_rsa_rsa_pubkey->SetText (faw::String::format (_T ("%c:\\rsa_pubkey.key"), path [0]));
-		m_rsa_rsa_prvkey->SetText (faw::String::format (_T ("%c:\\rsa_prvkey.key"), path [0]));
+		faw::string_t path = faw::Directory::get_current_path ().str ();
+		m_rsa_evp_pubkey->SetText (fmt::format (_T ("{}:\\evp_pubkey.key"), path [0]));
+		m_rsa_rsa_pubkey->SetText (fmt::format (_T ("{}:\\rsa_pubkey.key"), path [0]));
+		m_rsa_rsa_prvkey->SetText (fmt::format (_T ("{}:\\rsa_prvkey.key"), path [0]));
 	}
 	virtual ~page_Rsa () = default;
 
 	bool OnClick (TNotifyUI &msg) override {
 		if (msg.pSender->GetName () == _T ("rsa_generate")) {
 			bool succ = tool_Rsa::generate (
-				_ttoi (m_rsa_gensize->GetText ().c_str ()),
-				(m_rsa_selevp_pubkey->IsSelected () ? m_rsa_evp_pubkey->GetText ().stra () : ""),
-				(m_rsa_selrsa_pubkey->IsSelected () ? m_rsa_rsa_pubkey->GetText ().stra () : ""),
-				m_rsa_rsa_prvkey->GetText ().stra ());
+				_ttoi (m_rsa_gensize->GetText ().data ()),
+				(m_rsa_selevp_pubkey->IsSelected () ? m_rsa_evp_pubkey->GetText () : _T ("")),
+				(m_rsa_selrsa_pubkey->IsSelected () ? m_rsa_rsa_pubkey->GetText () : _T ("")),
+				m_rsa_rsa_prvkey->GetText ());
 			if (succ)
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, International::translate (_T ("RSA Public/private key exported successfully!")));
 			else

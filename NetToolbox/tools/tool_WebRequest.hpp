@@ -1,16 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-//
-// Class Name:  tool_WebRequest
-// Description: 网络请求工具类
-// Class URI:   https://github.com/fawdlstty/NetToolbox
-// Author:      Fawdlstty
-// Author URI:  https://www.fawdlstty.com/
-// License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Jan 05, 2019
-//
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef __TOOL_WEB_REQUEST_HPP__
+﻿#ifndef __TOOL_WEB_REQUEST_HPP__
 #define __TOOL_WEB_REQUEST_HPP__
 
 #include <string>
@@ -65,7 +53,7 @@ public:
 	static std::string post (std::string _url, std::string _data) {
 		std::string _ret = "";
 		//CURL *_curl = curl_easy_init ();
-		//curl_easy_setopt (_curl, CURLOPT_URL, _url.c_str ());
+		//curl_easy_setopt (_curl, CURLOPT_URL, _url.data ());
 		//curl_easy_setopt (_curl, CURLOPT_WRITEFUNCTION, _write_data);
 		//curl_easy_setopt (_curl, CURLOPT_WRITEDATA, &_ret);
 		//curl_easy_setopt (_curl, CURLOPT_CONNECTTIMEOUT, 2);
@@ -73,7 +61,7 @@ public:
 		//curl_slist *_headers = curl_slist_append (nullptr, "Content-Type: application/json");//x-www-form-urlencoded
 		//_headers = curl_slist_append (_headers, "User-Agent: NetToolbox");
 		//curl_easy_setopt (_curl, CURLOPT_HTTPHEADER, _headers);
-		//curl_easy_setopt (_curl, CURLOPT_POSTFIELDS, _data.c_str ());
+		//curl_easy_setopt (_curl, CURLOPT_POSTFIELDS, _data.data ());
 		//curl_easy_setopt (_curl, CURLOPT_POSTFIELDSIZE, _data.size ());
 		///*CURLcode code =*/ curl_easy_perform (_curl);
 		//curl_slist_free_all (_headers);

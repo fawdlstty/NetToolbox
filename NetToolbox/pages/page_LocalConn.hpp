@@ -11,7 +11,7 @@
 
 
 class page_LocalConn: public page_base {
-	using conn_item_t = std::tuple<bool, faw::String, uint16_t, faw::String, uint16_t, faw::String, DWORD, faw::String>;
+	using conn_item_t = std::tuple<bool, faw::string_t, uint16_t, faw::string_t, uint16_t, faw::string_t, DWORD, faw::string_t>;
 public:
 	page_LocalConn (NetToolboxWnd *parent): page_base (parent) {}
 	virtual ~page_LocalConn () {
@@ -23,7 +23,7 @@ public:
 	}
 
 	bool OnClick (TNotifyUI& msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("localnet_tcplisten") || name == _T ("localnet_tcpconn") || name == _T ("localnet_udp")) {
 			m_show_type = msg.pSender->GetText ();
 			_update_data (false);
@@ -63,7 +63,7 @@ public:
 
 	bool OnHeaderClick (TNotifyUI &msg) {
 		if (msg.pSender->GetParent ()->GetParent ()->GetName () == _T ("localnet_connection")) {
-			 faw::String name = msg.pSender->GetText ();
+			 faw::string_t name = msg.pSender->GetText ();
 			if (name == m_sort_str) {
 				m_is_increment = !m_is_increment;
 			} else {
@@ -78,8 +78,8 @@ public:
 
 	bool OnMenuClick (MenuCmd *mc) override {
 		if (mc->szName == _T ("menu_localnet_kill")) {
-			faw::String tip_info = faw::String::format (International::translate (_T ("Are you sure you want to terminate the process %s (pid:%d)?")).data (), m_sel_pname.c_str (), m_sel_pid);
-			if (IDOK == ::MessageBox (m_parent->GetHWND (), tip_info.c_str (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL)) {
+			faw::string_t tip_info = fmt::format (International::translate (_T ("Are you sure you want to terminate the process {} (pid:{})?")), m_sel_pname, m_sel_pid);
+			if (IDOK == ::MessageBox (m_parent->GetHWND (), tip_info.data (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL)) {
 				if (tool_Process::kill ((DWORD) m_sel_pid)) {
 					ui_update_data ();
 				} else {
@@ -100,8 +100,8 @@ public:
 				// 路径无法显示
 				if (tool_Priv::is_admin ()) {
 					// Admin权限：提示失败
-					faw::String err_str = tool_Utils::get_error_info (err);
-					::MessageBox (m_parent->GetHWND (), err_str.c_str (), International::translate (_T ("Info")).data (), MB_ICONWARNING);
+					faw::string_t err_str = tool_Utils::get_error_info (err);
+					::MessageBox (m_parent->GetHWND (), err_str.data (), International::translate (_T ("Info")).data (), MB_ICONWARNING);
 				} else if (tool_Priv::adjust_restart (m_parent->m_sel1, m_parent->m_sel2)) {
 					// 非Admin权限：提权并退出
 					m_parent->Close ();
@@ -142,8 +142,8 @@ protected:
 				vconns.swap (_vconns);
 				std::sort (vconns.begin (), vconns.end (), [this] (const conn_item_t &_v1, const conn_item_t &_v2) -> bool {
 					if (m_sort_str == International::translate (_T ("Local Addr"))) {
-						faw::String _val1 = std::get<1> (_v1);
-						faw::String _val2 = std::get<1> (_v2);
+						faw::string_t _val1 = std::get<1> (_v1);
+						faw::string_t _val2 = std::get<1> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
@@ -154,8 +154,8 @@ protected:
 							return false;
 						return (_val1 < _val2) == m_is_increment;
 					} else if (m_sort_str == International::translate (_T ("Remote Addr"))) {
-						faw::String _val1 = std::get<3> (_v1);
-						faw::String _val2 = std::get<3> (_v2);
+						faw::string_t _val1 = std::get<3> (_v1);
+						faw::string_t _val2 = std::get<3> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
@@ -172,8 +172,8 @@ protected:
 							return false;
 						return (_val1 < _val2) == m_is_increment;
 					} else if (m_sort_str == International::translate (_T ("Process Name"))) {
-						faw::String _val1 = std::get<7> (_v1);
-						faw::String _val2 = std::get<7> (_v2);
+						faw::string_t _val1 = std::get<7> (_v1);
+						faw::string_t _val2 = std::get<7> (_v2);
 						if (_val1 == _val2)
 							return false;
 						return (_val1 < _val2) == m_is_increment;
@@ -204,8 +204,8 @@ protected:
 				//是否是ipv4（不显示），本地地址，本地端口，远程地址，远程端口，当前连接状态，进程PID，进程名称，进程路径（不显示）
 				auto[is_ipv4/**/, local_addr, local_port, remote_addr, remote_port, conn_state/**/, pid, pname] = type_vconns[i];
 				CListContainerElementUI *item = new CListContainerElementUI ();
-				item->AddCustomAttribute (_T ("pid"), faw::String::format (_T ("%d"), pid).str_view ());
-				item->AddCustomAttribute (_T ("pname"), pname.str_view ());
+				item->AddCustomAttribute (_T ("pid"), fmt::format (_T ("{}"), pid));
+				item->AddCustomAttribute (_T ("pname"), pname);
 				item->SetFixedHeight (20);
 				//
 				CControlUI *ctrl = new CControlUI ();
@@ -216,43 +216,43 @@ protected:
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (local_addr.c_str ());
+				ctrl->SetText (local_addr.data ());
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("10,4,0,4"));
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (faw::String::format (_T ("%d"), local_port).c_str ());
+				ctrl->SetText (fmt::format (_T ("{}"), local_port));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (remote_addr.c_str ());
+				ctrl->SetText (remote_addr.data ());
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (remote_addr == _T ("*") ? _T ("*") : faw::String::format (_T ("%d"), remote_port).c_str ());
+				ctrl->SetText (remote_addr == _T ("*") ? _T ("*") : fmt::format (_T ("{}"), remote_port));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);
 				//
 				//ctrl = new CTextUI ();
-				//ctrl->SetText (conn_state.c_str ());
+				//ctrl->SetText (conn_state.data ());
 				//ctrl->SetAttribute (_T ("align"), _T ("center"));
 				//ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				//item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (faw::String::format (_T ("%d"), pid).c_str ());
+				ctrl->SetText (fmt::format (_T ("{}"), pid));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (pname.c_str ());
+				ctrl->SetText (pname.data ());
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);
@@ -263,14 +263,14 @@ protected:
 
 protected:
 	BindListUI			m_localnet_connection { _T ("localnet_connection") };
-	faw::String			m_sort_str = International::translate (_T ("Local Port"));
-	faw::String			m_show_type = International::translate (_T ("TCP Listening"));
+	faw::string_t			m_sort_str = International::translate (_T ("Local Port"));
+	faw::string_t			m_show_type = International::translate (_T ("TCP Listening"));
 	bool				m_is_increment = true;
 
 	CStdStringPtrMap	m_MenuInfos;
 	CMenuWnd			*m_menu = nullptr;
 	size_t				m_sel_pid = 0;
-	faw::String			m_sel_pname = _T ("");
+	faw::string_t			m_sel_pname = _T ("");
 };
 
 #endif //__PAGE_LOCAL_CONNECTION_HPP__

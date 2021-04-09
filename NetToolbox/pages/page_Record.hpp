@@ -20,13 +20,13 @@
 class page_Record: public page_base {
 public:
 	page_Record (NetToolboxWnd *parent): page_base (parent) {
-		faw::String path = faw::Directory::get_current_path ();
-		m_record_path->SetText (faw::String::format (_T ("%c:\\record.gif"), path[0]));
+		faw::string_t path = faw::Directory::get_current_path ().str ();
+		m_record_path->SetText (fmt::format (_T ("%c:\\record.gif"), path[0]));
 	}
 	virtual ~page_Record () = default;
 
 	bool OnClick (TNotifyUI& msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("record_begin")) {
 			//tool_VP9 (_T ("D:/a.ivf"));
 			//

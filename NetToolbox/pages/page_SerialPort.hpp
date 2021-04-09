@@ -53,7 +53,7 @@ public:
 	virtual ~page_SerialPort () = default;
 
 	void ui_update_data () override {
-		static auto _is_equal = [] (std::vector<std::string>& v1, std::vector<std::string>& v2) {
+		static auto _is_equal = [] (std::vector<faw::string_t>& v1, std::vector<faw::string_t>& v2) {
 			if (v1.size () != v2.size ())
 				return false;
 			for (size_t i = 0; i < v1.size (); ++i) {
@@ -62,15 +62,15 @@ public:
 			}
 			return true;
 		};
-		static auto _index_arr = [] (std::vector<std::string>& v, std::string str) {
+		static auto _index_arr = [] (std::vector<faw::string_t>& v, faw::string_t str) {
 			for (size_t i = 0; i < v.size (); ++i) {
 				if (str == _serial_name (v[i]))
 					return i;
 			}
-			return std::string::npos;
+			return faw::string_t::npos;
 		};
 
-		static std::vector<std::string> s_vSp;
+		static std::vector<faw::string_t> s_vSp;
 		auto _vSp = tool_SerialPort::get_list ();
 		if (_is_equal (s_vSp, _vSp))
 			return;
@@ -80,7 +80,7 @@ public:
 		s_vSp = _vSp;
 		m_serial_name->RemoveAll ();
 		for (auto name : s_vSp) {
-			m_serial_name->Add (new CListLabelElementUI (faw::Encoding::gb18030_to_T (name).c_str (), 20));
+			m_serial_name->Add (new CListLabelElementUI (name, 20));
 		}
 		if (s_vSp.size () > 0)
 			m_serial_name->SelectItem (0);
@@ -88,14 +88,13 @@ public:
 	}
 
 	bool on_send () {
-		if (m_tmp_port_name == "")
+		if (m_tmp_port_name == _T (""))
 			return false;
-		 faw::String data = m_serial_senddata->GetText ();
-		std::string _data = data.stra ();
+		 faw::string_t _data = m_serial_senddata->GetText ();
 		if (!append_data (SerialDataTypeSend, _data, !m_serial_hex->IsSelected ()))
 			return false;
 		if (m_serial_newline->IsSelected ())
-			_data += "\r\n";
+			_data += _T ("\r\n");
 		m_serial.write (_data);
 		return true;
 	}
@@ -106,32 +105,32 @@ public:
 
 	void on_close () {
 		enable_combos (true);
-		append_data (SerialDataTypeInfo, faw::String::format (International::translate ("The serial port has been actively disconnected: <c #7f0000>%s</c>").data (), m_tmp_port_name.c_str ()).stra ());
-		m_tmp_port_name = "";
+		append_data (SerialDataTypeInfo, fmt::format (International::translate (_T ("The serial port has been actively disconnected: <c #7f0000>{}</c>")), m_tmp_port_name));
+		m_tmp_port_name = _T ("");
 	}
 
 	bool OnClick (TNotifyUI& msg) override {
 		try {
-			 faw::String name = msg.pSender->GetName ();
+			 faw::string_t name = msg.pSender->GetName ();
 			if (name == _T ("serial_btnopen")) {
-				if (!m_serial.is_open () && m_tmp_port_name == "") {
-					m_tmp_port_name = m_serial_name->GetText ().stra ();
-					std::string _parity = m_serial_parity->GetText ().stra ();
-					std::string _stopbits = m_serial_stopbits->GetText ().stra ();
-					if (m_tmp_port_name == "") {
+				if (!m_serial.is_open () && m_tmp_port_name == _T ("")) {
+					m_tmp_port_name = m_serial_name->GetText ();
+					faw::string_t _parity = m_serial_parity->GetText ();
+					faw::string_t _stopbits = m_serial_stopbits->GetText ();
+					if (m_tmp_port_name == _T ("")) {
 						m_parent->invoke ([this] () -> LRESULT {
 							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("Failed to open a serial port: no available serial port was selected")));
-							append_data (SerialDataTypeInfo, International::translate ("Failed to open a serial port: no available serial port was selected"));
+							append_data (SerialDataTypeInfo, International::translate (_T ("Failed to open a serial port: no available serial port was selected")));
 							return 0;
 						});
 						return true;
 					}
-					uint32_t _baud_rate = _ttoi (m_serial_boudrate->GetText ().c_str ());
-					uint8_t _byte_size = _ttoi (m_serial_bytesize->GetText ().c_str ());
+					uint32_t _baud_rate = _ttoi (m_serial_boudrate->GetText ().data ());
+					uint8_t _byte_size = _ttoi (m_serial_bytesize->GetText ().data ());
 					m_serial.open (_serial_name (m_tmp_port_name), _baud_rate, _byte_size, _parity, _stopbits);
 					if (m_serial.is_open ()) {
 						enable_combos (false);
-						append_data (SerialDataTypeInfo, faw::String::format (International::translate ("The serial port has been opened: <c #00007f>%s</c>").data (), m_tmp_port_name.c_str ()).stra ());
+						append_data (SerialDataTypeInfo, fmt::format (International::translate (_T ("The serial port has been opened: <c #00007f>{}</c>")), m_tmp_port_name));
 					}
 				}
 				return true;
@@ -139,13 +138,13 @@ public:
 				if (m_serial.is_open ()) {
 					m_serial.close ();
 					enable_combos (true);
-					append_data (SerialDataTypeInfo, faw::String::format (International::translate ("The serial port has been closed: <c #7f0000>%s</c>").data (), m_tmp_port_name.c_str ()).stra ());
-					m_tmp_port_name = "";
+					append_data (SerialDataTypeInfo, fmt::format (International::translate (_T ("The serial port has been closed: <c #7f0000>{}</c>")), m_tmp_port_name));
+					m_tmp_port_name = _T ("");
 				}
 				return true;
 			} else if (name == _T ("serial_btnsend")) {
 				if (on_send () && m_serial_repeat->IsSelected () && !m_repeat_timer) {
-					UINT nElapse = _ttoi (m_serial_repeat_mill->GetText ().c_str ());
+					UINT nElapse = _ttoi (m_serial_repeat_mill->GetText ().data ());
 					m_serial_repeat->SetTimer ((UINT) *m_serial_repeat, (nElapse > 0 ? nElapse : 1));
 					m_repeat_timer = true;
 				}
@@ -155,20 +154,20 @@ public:
 			}
 			return false;
 		} catch (std::exception &e) {
-			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, faw::Encoding::gb18030_to_T (e.what ()).c_str ());
+			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, faw::Encoding::gb18030_to_T (e.what ()));
 			return true;
 		}
 	}
 
 	bool OnSelectChanged (TNotifyUI& msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("serial_hex")) {
 			bool is_source = !m_serial_hex->IsSelected ();
 			for (size_t i = 0; i < m_data.size (); ++i) {
 				auto[type, source, hex] = m_data[i];
 				if (type != SerialDataTypeInfo) {
-					BindTextUI ctrl { faw::String::format (_T ("serial_cnt_%d"), i) };
-					ctrl->SetText ((is_source ? source : hex).c_str ());
+					BindTextUI ctrl { fmt::format (_T ("serial_cnt_{}"), i) };
+					ctrl->SetText ((is_source ? source : hex));
 				}
 			}
 			return true;
@@ -184,7 +183,7 @@ public:
 	}
 
 	bool OnTimer (TNotifyUI& msg) override {
-		 faw::String name = msg.pSender->GetName ();
+		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("serial_repeat")) {
 			on_send ();
 			return true;
@@ -193,6 +192,9 @@ public:
 	}
 
 protected:
+	bool append_data (SerialDataType type, std::wstring data, bool is_source = true) {
+		return append_data (type, faw::Encoding::utf16_to_gb18030 (data), is_source);
+	}
 	bool append_data (SerialDataType type, std::string data, bool is_source = true) {
 		std::string hex_data;
 		static auto _get_hex = [] (unsigned char c) -> char { c &= 0xf; if (c < 10) return c+'0'; if (c < 16) return c-10+'a'; return '?'; };
@@ -219,12 +221,12 @@ protected:
 				data += c;
 			}
 		}
-		faw::String _data = faw::Encoding::gb18030_to_T (data).c_str ();
-		faw::String _hex_data = faw::Encoding::gb18030_to_T (hex_data).c_str ();
+		faw::string_t _data = faw::Encoding::gb18030_to_T (data);
+		faw::string_t _hex_data = faw::Encoding::gb18030_to_T (hex_data);
 		m_data.push_back ({ type, _data, _hex_data });
 		auto ctrl = new CTextUI ();
-		ctrl->SetName (faw::String::format (_T ("serial_cnt_%d"), m_data.size () - 1).c_str ());
-		ctrl->SetText ((m_serial_hex->IsSelected () && type != SerialDataTypeInfo ? _hex_data : _data).c_str ());
+		ctrl->SetName (fmt::format (_T ("serial_cnt_{}"), m_data.size () - 1));
+		ctrl->SetText ((m_serial_hex->IsSelected () && type != SerialDataTypeInfo ? _hex_data : _data));
 		ctrl->SetBkColor (0xFFCCCCCC);
 		ctrl->SetAutoCalcWidth (true);
 		ctrl->SetAutoCalcHeight (true);
@@ -264,8 +266,8 @@ protected:
 		m_serial_stopbits->SetEnabled (enable);
 	}
 
-	static std::string _serial_name (std::string s) {
-		size_t p1 = s.find ('(') + 1, p2 = s.find (')');
+	static faw::string_t _serial_name (faw::string_t s) {
+		size_t p1 = s.find (_T ('(')) + 1, p2 = s.find (_T (')'));
 		return s.substr (p1, p2 - p1);
 	}
 
@@ -281,9 +283,9 @@ protected:
 	BindVerticalLayoutUI	m_serial_cnt { _T ("serial_cnt") };
 	BindRichEditUI			m_serial_senddata { _T ("serial_senddata") };
 	tool_SerialPort			m_serial;
-	std::string				m_tmp_port_name			= "";
+	faw::string_t			m_tmp_port_name			= _T ("");
 	bool					m_repeat_timer			= false;
-	std::vector<std::tuple<SerialDataType, faw::String, faw::String>>	m_data;
+	std::vector<std::tuple<SerialDataType, faw::string_t, faw::string_t>>	m_data;
 };
 
 #endif //__PAGE_SERIAL_PORT_HPP__

@@ -1,16 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-//
-// Class Name:  tool_Zoomer
-// Description: 屏幕缩放工具类
-// Class URI:   https://github.com/fawdlstty/NetToolbox
-// Author:      Fawdlstty
-// Author URI:  https://www.fawdlstty.com/
-// License:     此文件单独授权 以MIT方式开源共享
-// Last Update: Jan 05, 2019
-//
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef __TOOL_ZOOMER_HPP__
+﻿#ifndef __TOOL_ZOOMER_HPP__
 #define __TOOL_ZOOMER_HPP__
 
 #include <cmath>
