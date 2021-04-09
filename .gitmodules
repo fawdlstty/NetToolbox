@@ -1,6 +1,3 @@
-[submodule "DuiLib_Faw"]
-	path = DuiLib_Faw
-	url = https://github.com/fawdlstty/DuiLib_Faw
 [submodule "FawLib"]
 	path = FawLib
 	url = https://github.com/fawdlstty/FawLib
