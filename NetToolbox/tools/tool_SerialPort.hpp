@@ -68,7 +68,7 @@ public:
 		m_serial.open ();
 		return (m_is_open = m_serial.isOpen ());
 	}
-	bool open (std::wstring name, uint32_t baud_rate = 9600, uint8_t byte_size = 8, std::wstring parity = _T ("none"), std::wstring stopbits = _T ("1")) {
+	bool open (std::wstring name, uint32_t baud_rate = 9600, uint8_t byte_size = 8, std::wstring parity = L"none", std::wstring stopbits = L"1") {
 		std::string _name = faw::Encoding::utf16_to_utf8 (name);
 		std::string _parity = faw::Encoding::utf16_to_utf8 (parity);
 		std::string _stopbits = faw::Encoding::utf16_to_utf8 (stopbits);

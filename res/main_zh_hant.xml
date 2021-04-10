@@ -199,7 +199,7 @@
 									<ListHeaderItem style="x_list_hdr" width="100" text="延遲2" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="延遲3" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="IP地址" />
-									<ListHeaderItem style="x_list_hdr" width="200" text="描述" />
+									<ListHeaderItem style="x_list_hdr" width="270" text="描述" />
 									<!--<ListHeaderItem style="x_list_hdr" width="100" text="IP地址" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="丟包率" />
 									<ListHeaderItem style="x_list_hdr" width="100" text="已發送" />

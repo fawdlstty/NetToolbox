@@ -95,7 +95,7 @@ public:
 			return { d, _T ("") };
 		}
 		TCHAR tBuf[2048] = { 0 };
-		if (!::K32GetModuleFileNameExW/*GetModuleFileNameEx*/ (hProcess, hModule, tBuf, sizeof (tBuf) / sizeof (TCHAR))) {
+		if (!::GetModuleFileNameEx/*K32GetModuleFileNameExW*/ (hProcess, hModule, tBuf, sizeof (tBuf) / sizeof (TCHAR))) {
 			DWORD d = ::GetLastError ();
 			::CloseHandle (hProcess);
 			return { d, _T ("") };

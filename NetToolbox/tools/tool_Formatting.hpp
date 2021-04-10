@@ -9,7 +9,7 @@ namespace faw {
 #ifdef UNICODE
 	typedef std::wregex regex_t;
 #else
-	typedef faw::regex_t regex_t;
+	typedef std::regex regex_t;
 #endif
 }
 

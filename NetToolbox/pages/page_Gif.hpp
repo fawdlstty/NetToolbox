@@ -206,7 +206,8 @@ public:
 				if (IDOK != ::MessageBox (NULL, info.data (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
 					return true;
 			}
-			if (tool_Gdip::gdip_save_animation (m_vgif, file.data (), m_delay))
+			std::wstring _wfile = faw::Encoding::T_to_utf16 (file);
+			if (tool_Gdip::gdip_save_animation (m_vgif, _wfile.data (), m_delay))
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, International::translate (_T ("GIF Image exported successfully!")));
 			else
 				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("GIF Image exported failure!")));

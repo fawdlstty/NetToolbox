@@ -99,7 +99,7 @@ protected:
 				if (col == 4) {
 					if (data != "" && data != "0.0.0.0") {
 						auto [_a, _b, _c] = m_qqwry.find_info (data);
-						std::string _ab = fmt::format ("{} {}", _a, _b);
+						std::string _ab = fmt::format ("{} {} {}", _a, _b, _c);
 						dynamic_cast<CTextUI*> (item->GetItemAt ((int) col + 2))->SetText (faw::Encoding::gb18030_to_T (_ab));
 					}
 				}

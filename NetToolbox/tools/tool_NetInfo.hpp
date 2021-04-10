@@ -91,7 +91,7 @@ public:
 		};
 		auto ipv6_to_str = [] (UCHAR *addr, DWORD scope_id) -> faw::string_t {
 			TCHAR tBuf[64] = { 0 };
-			::InetNtopW (AF_INET6, &addr, tBuf, sizeof (tBuf) / sizeof (tBuf[0]));
+			::InetNtop (AF_INET6, &addr, tBuf, sizeof (tBuf) / sizeof (tBuf[0]));
 			return (scope_id ? fmt::format (_T ("{}%{}"), tBuf, scope_id) : faw::string_t (tBuf));
 		};
 

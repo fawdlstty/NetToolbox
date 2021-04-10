@@ -41,19 +41,19 @@ public:
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (faw::Encoding::gb18030_to_utf16 (desc).data ());
+				ctrl->SetText (faw::Encoding::gb18030_to_T (desc));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("10,4,0,4"));
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (faw::Encoding::gb18030_to_utf16 (local).data ());
+				ctrl->SetText (faw::Encoding::gb18030_to_T (local));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (faw::Encoding::gb18030_to_utf16 (gateway).data ());
+				ctrl->SetText (faw::Encoding::gb18030_to_T (gateway));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);

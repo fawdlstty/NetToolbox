@@ -13,7 +13,7 @@ class page_SysInfo: public page_base {
 public:
 	page_SysInfo (NetToolboxWnd *parent): page_base (parent) {
 		m_sysinfo_trademark->SetText (faw::Encoding::utf16_to_T (tool_SysInfo::get_trademark_name ()));
-		m_sysinfo_version->SetText (faw::Encoding::utf16_to_T (tool_SysInfo::get_system_info ()));
+		m_sysinfo_version->SetText (tool_SysInfo::get_system_info ());
 		auto[cpu1, cpu2] = tool_SysInfo::get_cpu_info ();
 		m_sysinfo_cpu1->SetText (faw::Encoding::utf16_to_T (cpu1));
 		m_sysinfo_cpu2->SetText (faw::Encoding::utf16_to_T (cpu2));
