@@ -26,9 +26,9 @@ public:
 				(m_rsa_selrsa_pubkey->IsSelected () ? m_rsa_rsa_pubkey->GetText () : _T ("")),
 				m_rsa_rsa_prvkey->GetText ());
 			if (succ)
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, International::translate (_T ("RSA Public/private key exported successfully!")));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _IT (_T ("RSA Public/private key exported successfully!")));
 			else
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("RSA Public/private key exported failed!")));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _IT (_T ("RSA Public/private key exported failed!")));
 			return true;
 		}
 		return false;

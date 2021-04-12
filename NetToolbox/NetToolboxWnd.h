@@ -31,7 +31,7 @@ public:
 
 	// duilib所需要的重载函数
 	LPCTSTR GetWindowClassName () const override { return _T ("NetToolbox"); }
-	faw::string_t GetSkinFile () override { return International::translate (_T ("main.xml")); }
+	faw::string_t GetSkinFile () override { return _IT (_T ("main.xml")); }
 	void InitWindow () override;
 	void OnClick (TNotifyUI& msg) override;
 	void OnHeaderClick (TNotifyUI& msg) override;

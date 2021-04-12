@@ -29,7 +29,7 @@ public:
 				fail_count += m_fail_counts[i];
 			}
 			size_t inc_succ_count = succ_count - m_last_succ_count, inc_fail_count = fail_count - m_last_fail_count;
-			m_desp += fmt::format (International::translate (_T ("Sended {:-6}，Succeed {:-6}，Failed {}\n")).data (), inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count);
+			m_desp += fmt::format (_IT (_T ("Sended {:-6}，Succeed {:-6}，Failed {}\n")).data (), inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count);
 			m_qps_content->SetText (m_desp.data ());
 			m_last_succ_count += inc_succ_count;
 			m_last_fail_count += inc_fail_count;
@@ -45,10 +45,10 @@ public:
 				// start
 				size_t threnad_num = _ttoi (m_qps_thread_num->GetText ().data ());
 				if (threnad_num < 1) {
-					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("The number of threads must be >= 1.")));
+					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _IT (_T ("The number of threads must be >= 1.")));
 					return true;
 				} else if (threnad_num > 100) {
-					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("The number of threads must be <= 100.")));
+					m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _IT (_T ("The number of threads must be <= 100.")));
 					return true;
 				}
 				m_desp = _T ("");
@@ -101,8 +101,8 @@ public:
 		} else if (name == _T ("qps_postdata_ctrl_new")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
 			m_qps_postdata_list->Remove (container);
-			_add_item (_T (""), _T (""), International::translate (_T ("Delete")));
-			_add_item (_T (""), _T (""), International::translate (_T ("Create")));
+			_add_item (_T (""), _T (""), _IT (_T ("Delete")));
+			_add_item (_T (""), _T (""), _IT (_T ("Create")));
 			return true;
 		} else if (name == _T ("qps_postdata_ctrl_del")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
@@ -169,7 +169,7 @@ protected:
 		CListContainerElementUI *item = new CListContainerElementUI ();
 		item->SetFixedHeight (20);
 		faw::string_t color = (m_qps_postdata_list->GetCount () % 2) ? _T ("#FFEEEEEE") : _T ("#FFFFFFFF");
-		bool is_new = (btntext == International::translate (_T ("Create")));
+		bool is_new = (btntext == _IT (_T ("Create")));
 		if (is_new)
 			color = _T ("#FFDDDDDD");
 		item->SetAttribute (_T ("name"), fmt::format (_T ("qps_postdata_item_{}"), ++n_sign));
@@ -280,9 +280,9 @@ protected:
 					vkey_val.push_back (_T (""));
 				vkey_val[0] = faw::Encoding::percent_str_decode (vkey_val[0]);
 				vkey_val[1] = faw::Encoding::percent_str_decode (vkey_val[1]);
-				_add_item (vkey_val[0], vkey_val[1], International::translate (_T ("Delete")));
+				_add_item (vkey_val[0], vkey_val[1], _IT (_T ("Delete")));
 			}
-			_add_item (_T (""), _T (""), International::translate (_T ("Create")));
+			_add_item (_T (""), _T (""), _IT (_T ("Create")));
 		}
 	}
 

@@ -27,9 +27,9 @@ public:
 	// 根据GetLastError的值获取错误信息
 	static faw::string_t get_error_info (DWORD err_no) {
 		TCHAR tBuf[MAX_PATH] = { 0 };
-		int n = _stprintf_s (tBuf, MAX_PATH, International::translate (_T ("Error %d: ")).data (), err_no);
+		int n = _stprintf_s (tBuf, MAX_PATH, _IT (_T ("Error %d: ")).data (), err_no);
 		if (::FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, err_no, MAKELANGID (LANG_NEUTRAL, SUBLANG_DEFAULT), &tBuf[n], MAX_PATH - n, nullptr) == 0)
-			lstrcat (tBuf, International::translate (_T ("Unknown Error.")).data ());
+			lstrcat (tBuf, _IT (_T ("Unknown Error.")).data ());
 		for (; tBuf[n] != _T ('\0') && n < MAX_PATH - 1; ++n) {
 			if (tBuf[n] == _T ('\r') || tBuf[n] == _T ('\n')) {
 				lstrcpy (&tBuf[n], &tBuf[n + 1]);

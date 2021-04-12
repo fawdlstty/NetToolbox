@@ -23,7 +23,7 @@ public:
 	}
 
 	LPCTSTR GetWindowClassName () const override { return _T ("NetToolbox"); }
-	faw::string_t GetSkinFile () override { return International::translate (_T ("scr2gif.xml")); }
+	faw::string_t GetSkinFile () override { return _IT (_T ("scr2gif.xml")); }
 	void InitWindow () override {
 		m_init = true;
 		RECT rc { 0 };
@@ -185,7 +185,7 @@ public:
 			m_run = false;
 			m_parent->ShowWindow (false);
 			page_GifWnd wnd_child { &m_vgif, &m_delay };
-			wnd_child.Create (m_parent->GetHWND (), International::translate (_T ("GIF Record")), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+			wnd_child.Create (m_parent->GetHWND (), _IT (_T ("GIF Record")), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
 			wnd_child.CenterWindow ();
 			wnd_child.ShowModal ();
 			m_parent->ShowWindow (true);
@@ -202,15 +202,15 @@ public:
 		} else if (name == _T ("gif_save")) {
 			faw::string_t file = m_gif_path->GetText ();
 			if (faw::Directory::exist (file)) {
-				faw::string_t info = fmt::format (International::translate (_T ("The following file already exists. Do you want to overwrite it?\n{}")).data (), file);
-				if (IDOK != ::MessageBox (NULL, info.data (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
+				faw::string_t info = fmt::format (_IT (_T ("The following file already exists. Do you want to overwrite it?\n{}")).data (), file);
+				if (IDOK != ::MessageBox (NULL, info.data (), _IT (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
 					return true;
 			}
 			std::wstring _wfile = faw::Encoding::T_to_utf16 (file);
 			if (tool_Gdip::gdip_save_animation (m_vgif, _wfile.data (), m_delay))
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, International::translate (_T ("GIF Image exported successfully!")));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _IT (_T ("GIF Image exported successfully!")));
 			else
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("GIF Image exported failure!")));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _IT (_T ("GIF Image exported failure!")));
 			return true;
 		}
 		return false;

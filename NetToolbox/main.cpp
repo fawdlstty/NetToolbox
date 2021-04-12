@@ -95,12 +95,12 @@ public:
 	ProgramGuard () {
 		WSAData wd;
 		if (::WSAStartup (MAKEWORD (2, 2), &wd)) {
-			::MessageBox (NULL, _T ("WSAStartup失败，程序将退出！"), International::translate (_T ("Info")).data (), MB_ICONHAND);
+			::MessageBox (NULL, _T ("WSAStartup失败，程序将退出！"), _IT (_T ("Info")).data (), MB_ICONHAND);
 		} else if (FAILED (::CoInitializeEx (NULL, COINIT_APARTMENTTHREADED))) {
-			::MessageBox (NULL, _T ("COM+初始化失败，程序将退出！"), International::translate (_T ("Info")).data (), MB_ICONHAND);
+			::MessageBox (NULL, _T ("COM+初始化失败，程序将退出！"), _IT (_T ("Info")).data (), MB_ICONHAND);
 			::WSACleanup ();
 		} else if (FAILED (::CoInitializeSecurity (NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL))) {
-			::MessageBox (NULL, _T ("COM+安全信息设置失败，程序将退出！"), International::translate (_T ("Info")).data (), MB_ICONHAND);
+			::MessageBox (NULL, _T ("COM+安全信息设置失败，程序将退出！"), _IT (_T ("Info")).data (), MB_ICONHAND);
 			::CoUninitialize ();
 			::WSACleanup ();
 		} else {

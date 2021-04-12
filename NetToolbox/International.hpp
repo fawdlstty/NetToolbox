@@ -8,6 +8,10 @@
 
 #include "../FawLib/include/FawLib/FawLib.hpp"
 
+#define _IT International::translate
+
+
+
 class International {
 public:
 	static faw::string_t translate (faw::string_t _src) {
@@ -17,8 +21,10 @@ public:
 			{ _T ("cur_findcolor.xml"),								{ _T ("cur_findcolor_zh_hans.xml"), _T ("cur_findcolor_zh_hant.xml") } },
 			{ _T ("scr2gif.xml"),									{ _T ("scr2gif_zh_hans.xml"), _T ("scr2gif_zh_hant.xml") } },
 			{ _T ("menu_localnet.xml"),								{ _T ("menu_localnet_zh_hans.xml"), _T ("menu_localnet_zh_hant.xml") } },
+			{ _T ("Run"),											{ _T ("运行"), _T ("運行") } },
 			{ _T ("Info"),											{ _T ("提示"), _T ("提示") } },
 			{ _T ("Date"),											{ _T ("日期"), _T ("日期") } },
+			{ _T ("Stop"),											{ _T ("停止"), _T ("停止") } },
 			{ _T ("Time"),											{ _T ("时间"), _T ("時間") } },
 			{ _T ("Error"),											{ _T ("错误"), _T ("錯誤") } },
 			{ _T ("Phone"),											{ _T ("手机"), _T ("手機") } },
@@ -40,6 +46,7 @@ public:
 			{ _T ("Remote Port"),									{ _T ("远程端口"), _T ("遠程端口") } },
 			{ _T ("Analyzing..."),									{ _T ("正在分析。。。"), _T ("正在分析。。。") } },
 			{ _T ("Format Group"),									{ _T ("格式类"), _T ("格式類") } },
+			{ _T ("Invalid Port"),									{ _T ("端口无效"), _T ("端口無效") } },
 			{ _T ("Process Name"),									{ _T ("进程名称"), _T ("進程名稱") } },
 			{ _T ("TCP Connected"),									{ _T ("TCP已连接"), _T ("TCP已連接") } },
 			{ _T ("TCP Listening"),									{ _T ("TCP正在监听"), _T ("TCP正在監聽") } },
@@ -78,6 +85,7 @@ public:
 			{ _T ("This function does not support very large range IP scan!"), { _T ("此功能不支持超大范围IP扫描！"), _T ("此功能不支持超大範圍IP掃描！") } },
 			{ _T ("Are you sure you want to terminate the process {} (pid:{})?"), { _T ("确定要结束进程 {} (pid:{}) 吗？"), _T ("確定要結束進程 {} (pid:{}) 嗎？") } },
 			{ _T ("The following file already exists. Do you want to overwrite it?"), { _T ("以下文件已存在，是否覆盖？"), _T ("以下檔案已存在，是否覆蓋？") } },
+			{ _T ("Port listening failed. Please check whether the port is occupied."),	{ _T ("端口监听失败，请检查端口是否被占用。"), _T ("端口監聽失敗，請檢查端口是否被佔用。") } },
 			{ _T ("The serial port has been actively disconnected: <c #7f0000>{}</c>"),	{ _T ("串口已主动断开：<c #7f0000>{}</c>"), _T ("串口已主動斷開：<c #7f0000>{}</c>") } },
 			{ _T ("Content is too long, the generation of two-dimensional code failed"), { _T ("内容过长，生成二维码失败"), _T ("內容過長，生成二維碼失敗") } },
 			{ _T ("Failed to open a serial port: no available serial port was selected"), { _T ("打开串口失败：未选择可用的串口"), _T ("打開串口失敗：未選擇可用的串口") } },

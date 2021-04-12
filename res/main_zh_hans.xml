@@ -7,6 +7,7 @@
 	<Default name="VScrollBar" shared="true" value="button1normalimage=&quot;file='scrollbar.png' source='16,32,32,48' mask='#FFFF00FF'&quot; button1hotimage=&quot;file='scrollbar.png' source='32,32,48,48' mask='#FFFF00FF'&quot; button1pushedimage=&quot;file='scrollbar.png' source='48,32,64,48' mask='#FFFF00FF'&quot; button1disabledimage=&quot;file='scrollbar.png' source='0,32,16,48' mask='#FFFF00FF'&quot; button2normalimage=&quot;file='scrollbar.png' source='16,48,32,64' mask='#FFFF00FF'&quot; button2hotimage=&quot;file='scrollbar.png' source='32,48,48,64' mask='#FFFF00FF'&quot; button2pushedimage=&quot;file='scrollbar.png' source='48,48,64,64' mask='#FFFF00FF'&quot; button2disabledimage=&quot;file='scrollbar.png' source='0,48,16,64' mask='#FFFF00FF'&quot; thumbnormalimage=&quot;file='scrollbar.png' source='16,64,32,80' corner='4,4,4,4' mask='#FFFF00FF'&quot; thumbhotimage=&quot;file='scrollbar.png' source='32,64,48,80' corner='4,4,4,4' mask='#FFFF00FF'&quot; thumbpushedimage=&quot;file='scrollbar.png' source='48,64,64,80' corner='4,4,4,4' mask='#FFFF00FF'&quot; thumbdisabledimage=&quot;file='scrollbar.png' source='0,64,16,80' corner='4,4,4,4' mask='#FFFF00FF'&quot;" />
 	<Default name="HScrollBar" shared="true" value="button1normalimage=&quot;file='scrollbar.png' source='16,0,32,16' mask='#FFFF00FF'&quot; button1hotimage=&quot;file='scrollbar.png' source='32,0,48,16' mask='#FFFF00FF'&quot; button1pushedimage=&quot;file='scrollbar.png' source='48,0,64,16' mask='#FFFF00FF'&quot; button1disabledimage=&quot;file='scrollbar.png' source='0,0,16,16' mask='#FFFF00FF'&quot; button2normalimage=&quot;file='scrollbar.png' source='16,16,32,32' mask='#FFFF00FF'&quot; button2hotimage=&quot;file='scrollbar.png' source='32,16,48,32' mask='#FFFF00FF'&quot; button2pushedimage=&quot;file='scrollbar.png' source='48,16,64,32' mask='#FFFF00FF'&quot; button2disabledimage=&quot;file='scrollbar.png' source='0,16,16,32' mask='#FFFF00FF'&quot; thumbnormalimage=&quot;file='scrollbar.png' source='16,64,32,80' corner='4,4,4,4' mask='#FFFF00FF'&quot; thumbhotimage=&quot;file='scrollbar.png' source='32,64,48,80' corner='4,4,4,4' mask='#FFFF00FF'&quot; thumbpushedimage=&quot;file='scrollbar.png' source='48,64,64,80' corner='4,4,4,4' mask='#FFFF00FF'&quot; thumbdisabledimage=&quot;file='scrollbar.png' source='0,64,16,80' corner='4,4,4,4' mask='#FFFF00FF'&quot;" />
 	<Style name="x_edit" value="bkcolor=&quot;#FFFFFFFF&quot; textcolor=&quot;#FF000000&quot; textpadding=&quot;4,4,4,4&quot; height=&quot;24&quot;" />
+	<Style name="x_readonlyedit" value="bkcolor=&quot;#FFFFFFFF&quot; textcolor=&quot;#FFA7A6AA&quot; textpadding=&quot;4,4,4,4&quot; height=&quot;24&quot; readonly=&quot;true&quot; nativetextcolor=&quot;#FFA7A6AA&quot;" />
 	<Style name="x_richedit" value="bkcolor=&quot;#FFFFFFFF&quot; textcolor=&quot;#FF000000&quot; textpadding=&quot;4,4,4,4&quot; vscrollbar=&quot;true&quot;" />
 	<Style name="x_list" value="vscrollbar=&quot;true&quot; hscrollbar=&quot;true&quot; bordersize=&quot;1&quot; bordercolor=&quot;#FF808080&quot; padding=&quot;15,15,15,15&quot; inset=&quot;1,1,1,1&quot; itembkcolor=&quot;#22000000&quot; itemaltbk=&quot;true&quot; headerbkimage=&quot;file='list_bg.jpg' source='0,0,60,24'&quot; itemhotimage=&quot;file='list_bg.jpg' source='0,25,60,41'&quot; itemselectedimage=&quot;file='list_bg.jpg' source='0,42,60,58'&quot;"/>
 	<Style name="x_list_hdr" value="height=&quot;24&quot; sepimage=&quot;list_sep.png&quot; sepwidth=&quot;2&quot;"/>
@@ -37,10 +38,11 @@
 					<Option style="x_item2" name="tab0_2" text="网络连接" />
 				</VerticalLayout>
 				<Option name="group3" text="网络工具" style="x_item1" bkimage="file='qb3.png' dest='10,4,26,20'" />
-				<VerticalLayout name="group_item3" height="120" visible="false">
+				<VerticalLayout name="group_item3" height="160" visible="false">
 					<Option style="x_item2" name="tab3_0" text="路由跟踪" />
 					<Option style="x_item2" name="tab3_1" text="HTTP请求" />
 					<Option style="x_item2" name="tab3_2" text="QPS测试" />
+					<Option style="x_item2" name="tab3_3" text="HTTP服务" />
 					<!--<Option style="x_item2" name="tab3_3" text="IP段扫描" />-->
 				</VerticalLayout>
 				<Option name="group4" text="格式工具" style="x_item1" bkimage="file='qb4.png' dest='10,4,26,20'" />
@@ -276,6 +278,30 @@
 						</VerticalLayout>
 						<RichEdit name="qps_content" readonly="true" padding="15,15,15,15" style="x_richedit" />
 					</VerticalLayout>
+					<!-- HTTP服务 -->
+					<VerticalLayout>
+						<HorizontalLayout height="35">
+							<Text padding="15,18,0,0" text="端口：" autocalcwidth="true" />
+							<Edit name="httpserver_port" width="60" padding="0,13,0,0" style="x_edit" numberonly="true" text="80" />
+							<Text padding="10,18,10,0" text="　地址：" autocalcwidth="true" />
+							<Edit name="httpserver_addr" width="150" padding="0,13,0,0" style="x_readonlyedit" text="http://127.0.0.1/" />
+							<Text padding="15,18,0,0" text="　首页文件：" autocalcwidth="true" />
+							<Edit name="httpserver_index" width="200" padding="0,13,0,0" style="x_edit" text="index.htm|index.html" />
+							<Button name="httpserver_begin" text="运行" style="x_button" padding="10,13,0,0" />
+						</HorizontalLayout>
+						<HorizontalLayout height="35">
+							<Text padding="15,18,0,0" text="本地文件夹映射列表：" autocalcwidth="true" />
+						</HorizontalLayout>
+						<List name="m_httpserver_maplist" style="x_list" padding="15,0,15,0" fixedscrollbar="true">
+							<ListHeader name="m_httpserver_maplist_1">
+								<ListHeaderItem style="x_list_hdr" width="30" />
+								<ListHeaderItem style="x_list_hdr" width="50" text="优先序" />
+								<ListHeaderItem style="x_list_hdr" width="400" text="本地文件夹路径" />
+								<ListHeaderItem style="x_list_hdr" width="200" text="Web映射路径" />
+								<ListHeaderItem style="x_list_hdr" width="72" text="操作" />
+							</ListHeader>
+						</List>
+					</VerticalLayout>
 					<!-- IP段扫描 -->
 					<VerticalLayout>
 						<HorizontalLayout height="35">
@@ -304,10 +330,6 @@
 						<Text text="暂未实现，敬请期待" align="center" valign="vcenter" />
 					</VerticalLayout>
 					<!-- HTTP抓包 -->
-					<VerticalLayout>
-						<Text text="暂未实现，敬请期待" align="center" valign="vcenter" />
-					</VerticalLayout>
-					<!-- HTTP服务 -->
 					<VerticalLayout>
 						<Text text="暂未实现，敬请期待" align="center" valign="vcenter" />
 					</VerticalLayout>

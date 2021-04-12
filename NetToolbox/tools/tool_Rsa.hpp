@@ -12,7 +12,7 @@ public:
 	// 生成公钥私钥对
 	static bool generate (int bits, faw::string_t file_pubkey, faw::string_t file_rsapubkey, faw::string_t file_rsaprvkey) {
 		bool bExist = false;
-		faw::string_t info = International::translate (_T ("The following file already exists. Do you want to overwrite it?"));
+		faw::string_t info = _IT (_T ("The following file already exists. Do you want to overwrite it?"));
 		if (faw::Directory::exist (file_pubkey)) {
 			bExist = true;
 			info += _T ("\n");
@@ -29,7 +29,7 @@ public:
 			info += file_rsaprvkey;
 		}
 		if (bExist) {
-			if (IDOK != ::MessageBox (NULL, info.data (), International::translate (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
+			if (IDOK != ::MessageBox (NULL, info.data (), _IT (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
 				return false;
 		}
 

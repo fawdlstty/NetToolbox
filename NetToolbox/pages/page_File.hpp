@@ -27,10 +27,10 @@ public:
 			 faw::string_t file = m_file_path->GetText ();
 			HANDLE hFile = ::CreateFile (file.data (), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 			if (hFile == INVALID_HANDLE_VALUE) {
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("File not found, cannot be analyzed.")));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _IT (_T ("File not found, cannot be analyzed.")));
 				return true;
 			}
-			m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, International::translate (_T ("Analyzing...")));
+			m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, _IT (_T ("Analyzing...")));
 			DWORD dwsz_high = 0;
 			DWORD dwsz = ::GetFileSize (hFile, &dwsz_high);
 			::SetFilePointer (hFile, 0, nullptr, FILE_BEGIN);
@@ -39,7 +39,7 @@ public:
 			int8_t *buf = new int8_t[sz_1M];
 			size_t i, j, block_count = (size_t) (file_length / sz_1M);
 			size_t last_size = (size_t) (file_length - (sz_1M * (int64_t) block_count));
-			faw::string_t content = fmt::format (International::translate (_T ("File path: {}\nFile size: {} byte ({}) \nFile Hash: \n")), file, file_length, tool_Utils::format_unit (file_length));
+			faw::string_t content = fmt::format (_IT (_T ("File path: {}\nFile size: {} byte ({}) \nFile Hash: \n")), file, file_length, tool_Utils::format_unit (file_length));
 			//
 			// 文件Hash
 			//
@@ -122,7 +122,7 @@ public:
 			std::vector<std::string> vexport;
 			std::vector<std::tuple<std::string, std::vector<std::tuple<int16_t, std::string>>>> vimport;
 			if (tool_PE::read_import_export (file.data (), vexport, vimport)) {
-				content += International::translate (_T ("\n\n\nPE Info：\nExport Function：\n"));
+				content += _IT (_T ("\n\n\nPE Info：\nExport Function：\n"));
 				for (size_t i = 0; i < vexport.size (); ++i) {
 					content += faw::Encoding::gb18030_to_T (vexport[i]);
 					content += _T ('\n');
@@ -138,11 +138,11 @@ public:
 					}
 				}
 			} else {
-				content += International::translate (_T ("\n\n\nFile non-pe file, no PE data.\n"));
+				content += _IT (_T ("\n\n\nFile non-pe file, no PE data.\n"));
 			}
 			//
 			m_file_result->SetText (content.data ());
-			m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, International::translate (_T ("File analysis completed.")));
+			m_parent->show_status (NetToolboxWnd::StatusIcon::Ok, _IT (_T ("File analysis completed.")));
 			return true;
 		}
 		return false;
@@ -159,12 +159,12 @@ public:
 		if (bExist) {
 			::FindClose (hFind);
 			if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("Folder types are not accepted")));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _IT (_T ("Folder types are not accepted")));
 				return true;
 			}
 			m_file_path->SetText (path);
 		} else {
-			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("File not found")));
+			m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _IT (_T ("File not found")));
 		}
 		return true;
 	}

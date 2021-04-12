@@ -48,11 +48,11 @@ public:
 		 faw::string_t name = msg.pSender->GetName ();
 		if (name == _T ("regex_combo_net")) {
 			m_regex_statement->SetText (_query_regex (m_regex_combo_net->GetText ()));
-			m_regex_combo_net->SetText (International::translate (_T ("Network Group")));
+			m_regex_combo_net->SetText (_IT (_T ("Network Group")));
 			return true;
 		} else if (name == _T ("regex_combo_format")) {
 			m_regex_statement->SetText (_query_regex (m_regex_combo_format->GetText ()));
-			m_regex_combo_format->SetText (International::translate (_T ("Format Group")));
+			m_regex_combo_format->SetText (_IT (_T ("Format Group")));
 		}
 		return false;
 	}

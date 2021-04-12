@@ -105,7 +105,7 @@ public:
 
 	void on_close () {
 		enable_combos (true);
-		append_data (SerialDataTypeInfo, fmt::format (International::translate (_T ("The serial port has been actively disconnected: <c #7f0000>{}</c>")), m_tmp_port_name));
+		append_data (SerialDataTypeInfo, fmt::format (_IT (_T ("The serial port has been actively disconnected: <c #7f0000>{}</c>")), m_tmp_port_name));
 		m_tmp_port_name = _T ("");
 	}
 
@@ -119,8 +119,8 @@ public:
 					faw::string_t _stopbits = m_serial_stopbits->GetText ();
 					if (m_tmp_port_name == _T ("")) {
 						m_parent->invoke ([this] () -> LRESULT {
-							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("Failed to open a serial port: no available serial port was selected")));
-							append_data (SerialDataTypeInfo, International::translate (_T ("Failed to open a serial port: no available serial port was selected")));
+							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _IT (_T ("Failed to open a serial port: no available serial port was selected")));
+							append_data (SerialDataTypeInfo, _IT (_T ("Failed to open a serial port: no available serial port was selected")));
 							return 0;
 						});
 						return true;
@@ -130,7 +130,7 @@ public:
 					m_serial.open (_serial_name (m_tmp_port_name), _baud_rate, _byte_size, _parity, _stopbits);
 					if (m_serial.is_open ()) {
 						enable_combos (false);
-						append_data (SerialDataTypeInfo, fmt::format (International::translate (_T ("The serial port has been opened: <c #00007f>{}</c>")), m_tmp_port_name));
+						append_data (SerialDataTypeInfo, fmt::format (_IT (_T ("The serial port has been opened: <c #00007f>{}</c>")), m_tmp_port_name));
 					}
 				}
 				return true;
@@ -138,7 +138,7 @@ public:
 				if (m_serial.is_open ()) {
 					m_serial.close ();
 					enable_combos (true);
-					append_data (SerialDataTypeInfo, fmt::format (International::translate (_T ("The serial port has been closed: <c #7f0000>{}</c>")), m_tmp_port_name));
+					append_data (SerialDataTypeInfo, fmt::format (_IT (_T ("The serial port has been closed: <c #7f0000>{}</c>")), m_tmp_port_name));
 					m_tmp_port_name = _T ("");
 				}
 				return true;

@@ -59,7 +59,7 @@ public:
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (is_dhcp ? International::translate (_T ("Enabled")) : International::translate (_T ("Disabled")));
+				ctrl->SetText (is_dhcp ? _IT (_T ("Enabled")) : _IT (_T ("Disabled")));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);

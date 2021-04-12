@@ -209,7 +209,7 @@ public:
 		MEMORYSTATUSEX ms = { sizeof (MEMORYSTATUSEX) };
 		if (!::GlobalMemoryStatusEx (&ms))
 			return _T ("");
-		return fmt::format (International::translate (_T ("Total {} / Available {}")), tool_Utils::format_unit (ms.ullTotalPhys).data (), tool_Utils::format_unit (ms.ullAvailPhys).data ());
+		return fmt::format (_IT (_T ("Total {} / Available {}")), tool_Utils::format_unit (ms.ullTotalPhys).data (), tool_Utils::format_unit (ms.ullAvailPhys).data ());
 		//return {
 		//	faw::string_t::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalPhys).data (), tool_Utils::format_unit (ms.ullAvailPhys).data ()),
 		//	faw::string_t::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalVirtual).data (), tool_Utils::format_unit (ms.ullAvailVirtual).data ())

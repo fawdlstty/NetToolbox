@@ -264,7 +264,7 @@ public:
 		} catch (std::exception &e) {
 			err = e.what ();
 		} catch (...) {
-			err = faw::Encoding::T_to_gb18030 (International::translate (_T ("Unknown Error.")));
+			err = faw::Encoding::T_to_gb18030 (_IT (_T ("Unknown Error.")));
 		}
 		return { err, v };
 	}

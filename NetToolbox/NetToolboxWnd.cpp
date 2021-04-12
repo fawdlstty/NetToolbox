@@ -24,6 +24,7 @@
 #include "pages/page_Tracert.hpp"
 #include "pages/page_Http.hpp"
 #include "pages/page_Qps.hpp"
+#include "pages/page_HttpServer.hpp"
 #include "pages/page_IPScan.hpp"
 //
 #include "pages/page_Regex.hpp"
@@ -51,7 +52,7 @@ void NetToolboxWnd::InitWindow () {
 		{ new page_SysInfo (this), new page_LocalNet (this), new page_LocalConn (this) },
 		{ nullptr },
 		{ nullptr },
-		{ new page_Tracert (this), new page_Http (this), new page_Qps (this), new page_IPScan (this) },
+		{ new page_Tracert (this), new page_Http (this), new page_Qps (this), new page_HttpServer (this), new page_IPScan (this) },
 		{ new page_Regex (this), new page_Rsa (this), new page_EncDec (this) },
 		{ new page_Gif (this), new page_SerialPort (this), new page_Window (this), new page_File (this), new page_QRcode (this), new page_Record (this) },
 		{ nullptr }
@@ -67,7 +68,7 @@ void NetToolboxWnd::InitWindow () {
 #ifdef _DEBUG
 	if (_args.size () < 2) {
 		_args.push_back (_T ("-jump"));
-		_args.push_back (_T ("3,0"));
+		_args.push_back (_T ("3,3"));
 	}
 #endif
 	for (size_t i = 1; i < _args.size (); ++i) {

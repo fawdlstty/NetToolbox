@@ -4,3 +4,9 @@
 [submodule "DuiLib_Faw"]
 	path = DuiLib_Faw
 	url = https://github.com/fawdlstty/DuiLib_Faw
+[submodule "IpQuery_QQWry"]
+	path = IpQuery_QQWry
+	url = https://github.com/fawdlstty/IpQuery_QQWry
+[submodule "xfinal"]
+	path = xfinal
+	url = https://github.com/xmh0511/xfinal

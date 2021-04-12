@@ -21,7 +21,7 @@ public:
 		}
 	}
 	LPCTSTR GetWindowClassName () const override { return _T ("NetToolbox"); }
-	faw::string_t GetSkinFile () override { return International::translate (_T ("cur_findcolor.xml")); }
+	faw::string_t GetSkinFile () override { return _IT (_T ("cur_findcolor.xml")); }
 
 	void parent_notify_onmove (POINT &pt, faw::string_t text) {
 		try {
@@ -103,7 +103,7 @@ public:
 		m_bkimg_findcolor = m_window_findcolor->GetBkImage ();
 		m_cur_findcolor = ::LoadCursor (m_parent->get_instance (), MAKEINTRESOURCE (IDC_CURSOR_FINDCOLOR));
 		m_find_wnd = new page_FindWnd ();
-		m_find_wnd->Create (m_parent->GetHWND (), International::translate (_T ("Color extraction")), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+		m_find_wnd->Create (m_parent->GetHWND (), _IT (_T ("Color extraction")), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
 		m_find_wnd->ShowWindow (false);
 
 		m_bkimg_detector = m_window_detector->GetBkImage ();

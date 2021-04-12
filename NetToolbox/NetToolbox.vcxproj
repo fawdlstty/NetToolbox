@@ -320,6 +320,7 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="HanAnim.hpp" />
     <ClInclude Include="International.hpp" />
     <ClInclude Include="NetToolboxWnd.h" />
+    <ClInclude Include="pages\page_HttpServer.hpp" />
     <ClInclude Include="pages\page_QRcode.hpp" />
     <ClInclude Include="pages\page_Record.hpp" />
     <ClInclude Include="pages\page_base.hpp" />
@@ -352,7 +353,6 @@ del $(SolutionDir)$(IntDir)NetToolbox.7z /q
     <ClInclude Include="tools\tool_PE.hpp" />
     <ClInclude Include="tools\tool_Priv.hpp" />
     <ClInclude Include="tools\tool_Process.hpp" />
-    <ClInclude Include="tools\tool_QQWry.hpp" />
     <ClInclude Include="tools\tool_Register.hpp" />
     <ClInclude Include="tools\tool_Resource.hpp" />
     <ClInclude Include="tools\tool_Rsa.hpp" />

@@ -64,8 +64,8 @@ public:
 			CloseHandle (pi.hThread);
 			CloseHandle (pi.hProcess);
 		} else {
-			faw::string_t err_info = fmt::format (International::translate (_T ("Create Process Failed, {}")).data (), tool_Utils::get_error_info (::GetLastError ()).data ());
-			::MessageBox (NULL, err_info.data (), International::translate (_T ("Info")).data (), MB_ICONHAND);
+			faw::string_t err_info = fmt::format (_IT (_T ("Create Process Failed, {}")).data (), tool_Utils::get_error_info (::GetLastError ()).data ());
+			::MessageBox (NULL, err_info.data (), _IT (_T ("Info")).data (), MB_ICONHAND);
 		}
 		return bRet;
 	}

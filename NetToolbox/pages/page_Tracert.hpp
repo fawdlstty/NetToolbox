@@ -10,19 +10,17 @@
 #include "../tools/tool_Formatting.hpp"
 #include "../tools/tool_String.hpp"
 #include "../tools/tool_Resource.hpp"
-#include "../tools/tool_QQWry.hpp"
+#include "../../IpQuery_QQWry/IpQuery_QQWry.hpp"
 
 #define INDEX_BLOCK_LENGTH 12
 
 
 
 class page_Tracert: public page_base {
-	//uint8_t *m_ipdata = nullptr;
-
 public:
 	page_Tracert (NetToolboxWnd *parent)
 		: page_base (parent)
-		, m_qqwry (tool_QQWry (tool_Resource::load_binary ((HMODULE) CPaintManagerUI::GetInstance (), _T ("IPDB"), MAKEINTRESOURCE (IDR_IPDB1)))) {}
+		, m_qqwry (IpQuery_QQWry (tool_Resource::load_binary ((HMODULE) CPaintManagerUI::GetInstance (), _T ("IPDB"), MAKEINTRESOURCE (IDR_IPDB1)))) {}
 
 	bool OnClick (TNotifyUI& msg) override {
 		faw::string_t name = msg.pSender->GetName ();
@@ -43,11 +41,11 @@ public:
 			}
 			bool is_ipv4 = tool_Formatting::is_ipv4 (addr), is_ipv6 = tool_Formatting::is_ipv6 (addr);
 			if (!is_ipv4 && !is_ipv6) {
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, International::translate (_T ("Unknown IP or domain name")));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Error, _IT (_T ("Unknown IP or domain name")));
 				m_tracert_begin->SetEnabled (true);
 			} else {
 				m_tracert_list->RemoveAll ();
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, fmt::format (International::translate (_T ("Routing trace to {}")), addr));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, fmt::format (_IT (_T ("Routing trace to {}")), addr));
 				std::thread ([this, addr, is_ipv4] () {
 					bool _state;
 					faw::string_t _info;
@@ -114,7 +112,7 @@ protected:
 	BindEditUI		m_tracert_addr { _T ("tracert_addr") };
 	BindListUI		m_tracert_list { _T ("tracert_list") };
 
-	tool_QQWry		m_qqwry;
+	IpQuery_QQWry	m_qqwry;
 };
 
 #endif //__PAGE_TRACERT_HPP__

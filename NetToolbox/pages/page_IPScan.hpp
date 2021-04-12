@@ -28,9 +28,9 @@ public:
 			faw::string_t sip1 = m_ipscan_ip1->GetText (), sip2 = m_ipscan_ip2->GetText ();
 			uint32_t ip1 = tool_Utils::from_ipv4_my (sip1), ip2 = tool_Utils::from_ipv4_my (sip2);
 			if (ip1 > ip2) {
-				::MessageBox (m_parent->GetHWND (), International::translate (_T ("Start IP cannot be greater than stop IP!")).data (), International::translate (_T ("Error")).data (), MB_ICONHAND);
+				::MessageBox (m_parent->GetHWND (), _IT (_T ("Start IP cannot be greater than stop IP!")).data (), _IT (_T ("Error")).data (), MB_ICONHAND);
 			} else if (ip2 - ip1 > 65536) {
-				::MessageBox (m_parent->GetHWND (), International::translate (_T ("This function does not support very large range IP scan!")).data (), International::translate (_T ("Error")).data (), MB_ICONHAND);
+				::MessageBox (m_parent->GetHWND (), _IT (_T ("This function does not support very large range IP scan!")).data (), _IT (_T ("Error")).data (), MB_ICONHAND);
 			} else {
 				m_ipscan_start->SetEnabled (false);
 				m_ipscan_list->RemoveAll ();

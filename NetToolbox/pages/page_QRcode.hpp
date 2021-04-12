@@ -42,7 +42,7 @@ public:
 			//		break;
 			//}
 			//if (_ver > 40) {
-			//	::MessageBox (m_parent->GetHWND (), International::translate (_T ("Content is too long, the generation of two-dimensional code failed")).data (), International::translate (_T ("Info")).data (), MB_ICONHAND);
+			//	::MessageBox (m_parent->GetHWND (), _IT (_T ("Content is too long, the generation of two-dimensional code failed")).data (), _IT (_T ("Info")).data (), MB_ICONHAND);
 			//	delete[] _data;
 			//	return true;
 			//}
