@@ -290,15 +290,13 @@
 							<Button name="httpserver_begin" text="运行" style="x_button" padding="10,13,0,0" />
 						</HorizontalLayout>
 						<HorizontalLayout height="35">
-							<Text padding="15,18,0,0" text="本地文件夹映射列表：" autocalcwidth="true" />
+							<Text padding="15,18,0,0" text="本地文件夹映射列表（优先级从上到下）：" autocalcwidth="true" />
 						</HorizontalLayout>
-						<List name="m_httpserver_maplist" style="x_list" padding="15,0,15,0" fixedscrollbar="true">
-							<ListHeader name="m_httpserver_maplist_1">
-								<ListHeaderItem style="x_list_hdr" width="30" />
-								<ListHeaderItem style="x_list_hdr" width="50" text="优先序" />
-								<ListHeaderItem style="x_list_hdr" width="400" text="本地文件夹路径" />
-								<ListHeaderItem style="x_list_hdr" width="200" text="Web映射路径" />
-								<ListHeaderItem style="x_list_hdr" width="72" text="操作" />
+						<List name="httpserver_maplist" style="x_list" padding="15,0,15,0" fixedscrollbar="true" itemrselected="false">
+							<ListHeader name="httpserver_maplist_1">
+								<ListHeaderItem style="x_list_hdr" width="470" text="本地文件夹路径" />
+								<ListHeaderItem style="x_list_hdr" width="202" text="Web映射路径" />
+								<ListHeaderItem style="x_list_hdr" width="80" text="操作" />
 							</ListHeader>
 						</List>
 					</VerticalLayout>
