@@ -186,7 +186,6 @@ public:
 	}
 
 	void _callback (xfinal::request &req, xfinal::response &res) {
-		// TODO: 拷贝UI xml里的实现
 		std::string _url = std::string (req.url ());
 		_url = faw::Encoding::utf8_to_gb18030 (_url);
 		for (size_t i = 0; i < m_maplist.size (); ++i) {
