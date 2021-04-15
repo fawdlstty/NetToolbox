@@ -207,10 +207,7 @@
 7z u -tzip "$(SolutionDir)$(ProjectName)\res\res.zip" "$(SolutionDir)res\*"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>upx -9 $(SolutionDir)$(IntDir)$(TargetFileName)
-$(SolutionDir)NetToolbox_publish32.exe
-del $(SolutionDir)$(IntDir)NetToolbox.7z /q
-7z u -t7z $(SolutionDir)$(IntDir)NetToolbox.7z $(SolutionDir)$(IntDir)license.txt* $(SolutionDir)$(IntDir)*.exe</Command>
+      <Command>upx -9 $(SolutionDir)$(IntDir)$(TargetFileName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='LTL|Win32'">

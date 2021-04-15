@@ -42,7 +42,8 @@ public:
 class page_HttpServer: public page_base {
 public:
 	page_HttpServer (NetToolboxWnd *parent): page_base (parent) {
-		_add_item (_T (""), _T (""), true);
+		_add_item (false);
+		_add_item (true);
 	}
 
 	bool OnClick (TNotifyUI &msg) override {
@@ -136,8 +137,8 @@ public:
 		} else if (name == _T ("httpserver_maplist_ctrl_new")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
 			m_httpserver_maplist->Remove (container);
-			_add_item (_T (""), _T (""), false);
-			_add_item (_T (""), _T (""), true);
+			_add_item (false);
+			_add_item (true);
 			return true;
 		} else if (name == _T ("httpserver_maplist_ctrl_del")) {
 			CControlUI *container = msg.pSender->GetParent ()->GetParent ();
@@ -191,11 +192,11 @@ public:
 		for (size_t i = 0; i < m_maplist.size (); ++i) {
 			auto &[_disk_path, _url_path] = m_maplist [i];
 			if (_url.compare (0, _url_path.size (), _url_path) == 0) {
-				std::string _file_path = _disk_path + _url.substr (_url_path.size ());
+				std::string _file_path = fmt::format (_T ("{}{}{}"), _disk_path, *_disk_path.crbegin () == '\\' ? "" : "\\", _url.substr (_url_path.size ()));
 				tool_StringA::replace (_file_path, '/', '\\');
 				tool_StringA::replace (_file_path, "\\\\", "\\");
 				if (faw::File::exist (_file_path)) {
-					res.write_file (_file_path, true);
+					res.write_file_view (_file_path, true);
 					return;
 				}
 				if (_file_path [_file_path.size () - 1] != '\\')
@@ -203,7 +204,7 @@ public:
 				for (size_t j = 0; j < m_indexes.size (); ++j) {
 					std::string _file_path1 = _file_path + m_indexes [j];
 					if (faw::File::exist (_file_path1)) {
-						res.write_file (_file_path1, true);
+						res.write_file_view (_file_path1, true);
 						return;
 					}
 				}
@@ -215,7 +216,7 @@ public:
 
 protected:
 	// add new line
-	void _add_item (faw::string_t key, faw::string_t value, bool _is_new) {
+	void _add_item (bool _is_new) {
 		static size_t n_sign = 0;
 		CListContainerElementUI *item = new CListContainerElementUI ();
 		item->SetFixedHeight (20);
@@ -230,7 +231,6 @@ protected:
 		ctnr = new CContainerUI ();
 		ctrl = new CEditUI ();
 		ctrl->SetManager (m_parent->get_pm (), item);
-		ctrl->SetText (key);
 		ctrl->SetAttribute (_T ("name"), fmt::format (_T ("httpserver_maplist_item_{}_key"), n_sign));
 		ctrl->SetAttribute (_T ("bkcolor"), color);
 		ctrl->SetAttribute (_T ("nativebkcolor"), color);
@@ -247,7 +247,6 @@ protected:
 		ctnr = new CContainerUI ();
 		ctrl = new CEditUI ();
 		ctrl->SetManager (m_parent->get_pm (), item);
-		ctrl->SetText (value);
 		ctrl->SetAttribute (_T ("name"), fmt::format (_T ("httpserver_maplist_item_{}_value"), n_sign));
 		ctrl->SetAttribute (_T ("bkcolor"), color);
 		ctrl->SetAttribute (_T ("nativebkcolor"), color);
