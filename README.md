@@ -51,4 +51,4 @@ GPL-2.0
 
 ## Other
 
-technical exchange: [Click the link to join the group【网络工具箱交流群 943497747】](https://jq.qq.com/?_wv=1027&k=5vG1SGq)
+技术交流：[点击链接加入群【1018390466】](https://jq.qq.com/?_wv=1027&k=7ZQLihbT)
