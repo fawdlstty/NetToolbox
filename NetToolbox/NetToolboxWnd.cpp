@@ -65,12 +65,12 @@ void NetToolboxWnd::InitWindow () {
 	for (int i = 0; i < _argc; ++i)
 		_args.push_back (faw::Encoding::utf16_to_T (_argv [i]));
 	std::transform (_args [0].begin (), _args [0].end (), _args [0].begin (), [] (TCHAR ch) { return ch == _T ('/') ? _T ('\\') : ch; });
-#ifdef _DEBUG
-	if (_args.size () < 2) {
-		_args.push_back (_T ("-jump"));
-		_args.push_back (_T ("5,1"));
-	}
-#endif
+//#ifdef _DEBUG
+//	if (_args.size () < 2) {
+//		_args.push_back (_T ("-jump"));
+//		_args.push_back (_T ("0,0"));
+//	}
+//#endif
 	for (size_t i = 1; i < _args.size (); ++i) {
 		if (_args[i] == _T ("-jump") && i < _args.size () - 1) {
 			size_t p = _args[i + 1].find (_T (','));
@@ -138,7 +138,7 @@ void NetToolboxWnd::OnSelectChanged (TNotifyUI& msg) {
 			BindOptionUI option { name1 };
 			faw::string_t name2 = fmt::format (_T ("group_item{}"), i);
 			BindVerticalLayoutUI vertical { name2 };
-			if (*vertical) {
+			if (vertical) {
 				option->SetTextColor (i == sel1 ? 0xFFFFFFB0 : 0xFFFFFFFF);
 				vertical->SetVisible (i == sel1);
 			}
