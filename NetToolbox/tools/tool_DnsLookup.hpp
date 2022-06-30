@@ -16,10 +16,9 @@
 #include <iostream>
 #include <string>
 #include <cstdint>
-#include <boost/asio.hpp>
-#include <boost/array.hpp>
+#include <asio.hpp>
 
-using boost::asio::ip::udp;
+using asio::ip::udp;
 
 //gethostbyname、getaddrinfo
 
@@ -68,14 +67,14 @@ public:
 		((uint16_t*) &send_packet[packet_size])[-1] = htons (0x0001);
 
 		//发送DNS查询报文
-		boost::asio::io_service io_service;
-		boost::asio::ip::address addr = boost::asio::ip::address::from_string (dns_server);
+		asio::io_service io_service;
+		asio::ip::address addr = asio::ip::address::from_string (dns_server);
 		udp::endpoint receiver_endpoint (addr, 53);
 		udp::socket socket (io_service, udp::endpoint (udp::v4 (), 5264));
-		socket.send_to (boost::asio::buffer(send_packet, packet_size), receiver_endpoint);
-		boost::array<char, 1024> recv_buf;
-		boost::system::error_code err_code;
-		socket.receive_from (boost::asio::buffer (recv_buf), receiver_endpoint, 0, err_code);
+		socket.send_to (asio::buffer(send_packet, packet_size), receiver_endpoint);
+		std::array<char, 1024> recv_buf;
+		asio::error_code err_code;
+		socket.receive_from (asio::buffer (recv_buf), receiver_endpoint, 0, err_code);
 
 		const char *recv_packet = recv_buf.data ();
 		size_t recv_offset = 12;

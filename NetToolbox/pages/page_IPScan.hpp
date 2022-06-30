@@ -4,7 +4,7 @@
 #include <chrono>
 #include <thread>
 #include <functional>
-#include <boost/asio.hpp>
+#include <asio.hpp>
 
 #include "../tools/tool_NetInfo.hpp"
 #include "../tools/tool_Utils.hpp"
@@ -51,14 +51,14 @@ private:
 			0x41, 0x41, 0x41, 0x41, 0x41, 0x00, 0x00, 0x21, 0x00, 0x01
 		};
 		static uint8_t recv_data[512];
-		boost::asio::const_buffer send_buf { send_data, sizeof (send_data) };
-		boost::asio::io_service service;
-		boost::asio::ip::udp::socket sock (service);
-		sock.open (boost::asio::ip::udp::endpoint (boost::asio::ip::udp::v4 (), 25252).protocol ());
-		static boost::asio::ip::udp::endpoint sender_ep;
+		asio::const_buffer send_buf { send_data, sizeof (send_data) };
+		asio::io_service service;
+		asio::ip::udp::socket sock (service);
+		sock.open (asio::ip::udp::endpoint (asio::ip::udp::v4 (), 25252).protocol ());
+		static asio::ip::udp::endpoint sender_ep;
 		//
-		std::function<void (boost::system::error_code, std::size_t)> on_receive;
-		on_receive = [this, &sock, &on_receive] (boost::system::error_code ec, std::size_t length) {
+		std::function<void (asio::error_code, std::size_t)> on_receive;
+		on_receive = [this, &sock, &on_receive] (asio::error_code ec, std::size_t length) {
 			if (!ec && length > 0) {
 				m_parent->async_invoke ([this] () -> LRESULT {
 					CListContainerElementUI *item = new CListContainerElementUI ();
@@ -74,13 +74,13 @@ private:
 					return 0;
 				});
 			}
-			sock.async_receive_from (boost::asio::buffer (recv_data, sizeof (recv_data)), sender_ep, [on_receive] (boost::system::error_code ec, std::size_t length) { on_receive (ec, length); });
+			sock.async_receive_from (asio::buffer (recv_data, sizeof (recv_data)), sender_ep, [on_receive] (asio::error_code ec, std::size_t length) { on_receive (ec, length); });
 		};
-		//on_receive (boost::system::error_code (), 0);
+		//on_receive (system::error_code (), 0);
 		//
 		while (ip1 <= ip2) {
 			std::string sip = faw::Encoding::T_to_gb18030 (tool_Utils::format_ipv4_my (ip1));
-			boost::asio::ip::udp::endpoint ep { boost::asio::ip::address::from_string (sip), 137 };
+			asio::ip::udp::endpoint ep { asio::ip::address::from_string (sip), 137 };
 			sock.send_to (send_buf, ep);
 			++ip1;
 			service.run_one ();
