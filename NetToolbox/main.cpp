@@ -96,19 +96,24 @@ public:
 		WSAData wd;
 		if (::WSAStartup (MAKEWORD (2, 2), &wd)) {
 			::MessageBox (NULL, _T ("WSAStartup失败，程序将退出！"), _IT (_T ("Info")).data (), MB_ICONHAND);
-		} else if (FAILED (::CoInitializeEx (NULL, COINIT_APARTMENTTHREADED))) {
+			return;
+		}
+		if (FAILED (::CoInitializeEx (NULL, COINIT_APARTMENTTHREADED))) {
 			::MessageBox (NULL, _T ("COM+初始化失败，程序将退出！"), _IT (_T ("Info")).data (), MB_ICONHAND);
 			::WSACleanup ();
-		} else if (FAILED (::CoInitializeSecurity (NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL))) {
+			return;
+		}
+		if (FAILED (::CoInitializeSecurity (NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL))) {
 			::MessageBox (NULL, _T ("COM+安全信息设置失败，程序将退出！"), _IT (_T ("Info")).data (), MB_ICONHAND);
 			::CoUninitialize ();
 			::WSACleanup ();
-		} else {
-			//::curl_global_init (NULL);
-			tool_Priv::adjust_debug ();
-
-			is_succeed = true;
+			return;
 		}
+
+		//::curl_global_init (NULL);
+		tool_Priv::adjust_debug ();
+
+		is_succeed = true;
 	}
 	~ProgramGuard () {
 		if (is_succeed) {
@@ -122,7 +127,7 @@ public:
 
 int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	// 初始化软件环境
-	ProgramGuard pg;
+	ProgramGuard pg {};
 	if (!pg.is_succeed)
 		return 0;
 	faw::string_t path = faw::Directory::get_current_path ().str ();

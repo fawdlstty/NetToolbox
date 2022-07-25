@@ -55,6 +55,11 @@ protected:
 	static std::wstring _query_info (LPCWSTR sql, LPCWSTR prop) {
 		std::wstring val = L"";
 		IWbemLocator *pLoc = nullptr;
+		static bool _init = true;
+		if (_init) {
+			_init = false;
+			::CoInitializeEx (NULL, COINIT_APARTMENTTHREADED);
+		}
 		if (SUCCEEDED (::CoCreateInstance (CLSID_WbemLocator, nullptr, CLSCTX_INPROC_SERVER, IID_IWbemLocator, (LPVOID*) &pLoc))) {
 			IWbemServices *pSvc = nullptr;
 			if (SUCCEEDED (pLoc->ConnectServer (BSTR (L"ROOT\\CIMV2"), nullptr, nullptr, nullptr, 0, nullptr, nullptr, &pSvc))) {
