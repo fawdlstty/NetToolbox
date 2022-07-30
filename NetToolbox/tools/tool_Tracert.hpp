@@ -24,7 +24,7 @@ public:
 		IPAddr ul_dest_ip = ::inet_addr (&dest_ip[0]);
 		HANDLE hIcmp = ::IcmpCreateFile ();
 		if (hIcmp == INVALID_HANDLE_VALUE)
-			return { false, fmt::format (_T ("IcmpCreateFile {}"), tool_Utils::get_error_info (::GetLastError ())) };
+			return { false, std::format (_T ("IcmpCreateFile {}"), tool_Utils::get_error_info (::GetLastError ())) };
 		constexpr DWORD reply_size = sizeof (ICMP_ECHO_REPLY) + sizeof (m_send);
 		BYTE b_reply[reply_size];
 		PICMP_ECHO_REPLY reply = (PICMP_ECHO_REPLY) b_reply;
@@ -68,7 +68,7 @@ public:
 		::inet_pton (AF_INET6, dest_ip.data (), &ul_dest_ip);
 		HANDLE hIcmp = ::Icmp6CreateFile ();
 		if (hIcmp == INVALID_HANDLE_VALUE)
-			return { false, fmt::format (_T ("Icmp6CreateFile %s"), tool_Utils::get_error_info (::GetLastError ())) };
+			return { false, std::format (_T ("Icmp6CreateFile %s"), tool_Utils::get_error_info (::GetLastError ())) };
 		constexpr DWORD reply_size = sizeof (ICMPV6_ECHO_REPLY) + sizeof (m_send);
 		BYTE b_reply[reply_size];
 		PICMPV6_ECHO_REPLY reply = (PICMPV6_ECHO_REPLY) b_reply;

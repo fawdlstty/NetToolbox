@@ -21,7 +21,7 @@ class page_Record: public page_base {
 public:
 	page_Record (NetToolboxWnd *parent): page_base (parent) {
 		faw::string_t path = faw::Directory::get_current_path ().str ();
-		m_record_path->SetText (fmt::format (_T ("%c:\\record.gif"), path[0]));
+		m_record_path->SetText (std::format (_T ("{}:\\record.gif"), path[0]));
 	}
 	virtual ~page_Record () = default;
 

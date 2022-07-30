@@ -18,7 +18,7 @@ public:
 		LPCTSTR units[] = { _T ("Byte"), _T ("KB"), _T ("MB"), _T ("GB"), _T ("TB"), _T ("PB"), _T ("EB"), _T ("ZB"), _T ("YB"), _T ("NB"), _T ("DB"), _T ("CB") };
 		for (size_t i = 0; i < sizeof (units) / sizeof (units[0]); ++i, byte_num /= 1024) {
 			if (byte_num < 1024) {
-				return fmt::format (_T ("{:.2}{}"), byte_num, units[i]);
+				return std::format (_T ("{:.2}{}"), byte_num, units[i]);
 			}
 		}
 		return _T ("");
@@ -41,12 +41,12 @@ public:
 
 	// 格式化IPv4
 	static faw::string_t format_ipv4 (IPAddr ip) {
-		return fmt::format (_T ("{}.{}.{}.{}"), ip & 0xFF, (ip >> 8) & 0xFF, (ip >> 16) & 0xFF, (ip >> 24) & 0xFF);
+		return std::format (_T ("{}.{}.{}.{}"), ip & 0xFF, (ip >> 8) & 0xFF, (ip >> 16) & 0xFF, (ip >> 24) & 0xFF);
 	}
 
 	// 格式化IPv4（主机序）
 	static faw::string_t format_ipv4_my (uint32_t ip) {
-		return fmt::format (_T ("{}.{}.{}.{}"), (ip >> 24) & 0xFF, (ip >> 16) & 0xFF, (ip >> 8) & 0xFF, ip & 0xFF);
+		return std::format (_T ("{}.{}.{}.{}"), (ip >> 24) & 0xFF, (ip >> 16) & 0xFF, (ip >> 8) & 0xFF, ip & 0xFF);
 	}
 
 	// 反格式化IPv4（主机序）

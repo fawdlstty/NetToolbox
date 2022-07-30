@@ -34,8 +34,8 @@ public:
 	std::optional<LRESULT> OnSize (UINT uMsg, WPARAM wParam, LPARAM lParam) override {
 		if (m_init) {
 			POINT pt = { GET_X_LPARAM (lParam), GET_Y_LPARAM (lParam) };
-			m_gifw_width->SetText (fmt::format (_T ("{}"), pt.x - 24));
-			m_gifw_height->SetText (fmt::format (_T ("{}"), pt.y - 64));
+			m_gifw_width->SetText (std::format (_T ("{}"), pt.x - 24));
+			m_gifw_height->SetText (std::format (_T ("{}"), pt.y - 64));
 		}
 		return WindowImplBase::OnSize (uMsg, wParam, lParam);
 	}
@@ -175,7 +175,7 @@ class page_Gif: public page_base {
 public:
 	page_Gif (NetToolboxWnd *parent): page_base (parent) {
 		faw::string_t path = faw::Directory::get_current_path ().str ();
-		m_gif_path->SetText (fmt::format (_T ("{}:\\record.gif"), path [0]));
+		m_gif_path->SetText (std::format (_T ("{}:\\record.gif"), path [0]));
 	}
 	virtual ~page_Gif () = default;
 
@@ -202,7 +202,7 @@ public:
 		} else if (name == _T ("gif_save")) {
 			faw::string_t file = m_gif_path->GetText ();
 			if (faw::Directory::exist (file)) {
-				faw::string_t info = fmt::format (_IT (_T ("The following file already exists. Do you want to overwrite it?\n{}")).data (), file);
+				faw::string_t info = std::vformat (_IT (_T ("The following file already exists. Do you want to overwrite it?\n{}")), std::make_format_args (file));
 				if (IDOK != ::MessageBox (NULL, info.data (), _IT (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL))
 					return true;
 			}

@@ -78,7 +78,7 @@ public:
 
 	bool OnMenuClick (MenuCmd *mc) override {
 		if (mc->szName == _T ("menu_localnet_kill")) {
-			faw::string_t tip_info = fmt::format (_IT (_T ("Are you sure you want to terminate the process {} (pid:{})?")), m_sel_pname, m_sel_pid);
+			faw::string_t tip_info = std::vformat (_IT (_T ("Are you sure you want to terminate the process {} (pid:{})?")), std::make_format_args (m_sel_pname, m_sel_pid));
 			if (IDOK == ::MessageBox (m_parent->GetHWND (), tip_info.data (), _IT (_T ("Info")).data (), MB_ICONQUESTION | MB_OKCANCEL)) {
 				if (tool_Process::kill ((DWORD) m_sel_pid)) {
 					ui_update_data ();
@@ -204,7 +204,7 @@ protected:
 				//是否是ipv4（不显示），本地地址，本地端口，远程地址，远程端口，当前连接状态，进程PID，进程名称，进程路径（不显示）
 				auto[is_ipv4/**/, local_addr, local_port, remote_addr, remote_port, conn_state/**/, pid, pname] = type_vconns[i];
 				CListContainerElementUI *item = new CListContainerElementUI ();
-				item->AddCustomAttribute (_T ("pid"), fmt::format (_T ("{}"), pid));
+				item->AddCustomAttribute (_T ("pid"), std::format (_T ("{}"), pid));
 				item->AddCustomAttribute (_T ("pname"), pname);
 				item->SetFixedHeight (20);
 				//
@@ -222,7 +222,7 @@ protected:
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (fmt::format (_T ("{}"), local_port));
+				ctrl->SetText (std::format (_T ("{}"), local_port));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);
@@ -234,7 +234,7 @@ protected:
 				item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (remote_addr == _T ("*") ? _T ("*") : fmt::format (_T ("{}"), remote_port));
+				ctrl->SetText (remote_addr == _T ("*") ? _T ("*") : std::format (_T ("{}"), remote_port));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);
@@ -246,7 +246,7 @@ protected:
 				//item->Add (ctrl);
 				//
 				ctrl = new CTextUI ();
-				ctrl->SetText (fmt::format (_T ("{}"), pid));
+				ctrl->SetText (std::format (_T ("{}"), pid));
 				ctrl->SetAttribute (_T ("align"), _T ("center"));
 				ctrl->SetAttribute (_T ("padding"), _T ("0,4,0,4"));
 				item->Add (ctrl);

@@ -12,9 +12,9 @@ class page_Rsa: public page_base {
 public:
 	page_Rsa (NetToolboxWnd *parent): page_base (parent) {
 		faw::string_t path = faw::Directory::get_current_path ().str ();
-		m_rsa_evp_pubkey->SetText (fmt::format (_T ("{}:\\evp_pubkey.key"), path [0]));
-		m_rsa_rsa_pubkey->SetText (fmt::format (_T ("{}:\\rsa_pubkey.key"), path [0]));
-		m_rsa_rsa_prvkey->SetText (fmt::format (_T ("{}:\\rsa_prvkey.key"), path [0]));
+		m_rsa_evp_pubkey->SetText (std::format (_T ("{}:\\evp_pubkey.key"), path [0]));
+		m_rsa_rsa_pubkey->SetText (std::format (_T ("{}:\\rsa_pubkey.key"), path [0]));
+		m_rsa_rsa_prvkey->SetText (std::format (_T ("{}:\\rsa_prvkey.key"), path [0]));
 	}
 	virtual ~page_Rsa () = default;
 

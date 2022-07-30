@@ -64,7 +64,7 @@ public:
 			CloseHandle (pi.hThread);
 			CloseHandle (pi.hProcess);
 		} else {
-			faw::string_t err_info = fmt::format (_IT (_T ("Create Process Failed, {}")).data (), tool_Utils::get_error_info (::GetLastError ()).data ());
+			faw::string_t err_info = std::vformat (_IT (_T ("Create Process Failed, {}")), std::make_format_args (tool_Utils::get_error_info (::GetLastError ())));
 			::MessageBox (NULL, err_info.data (), _IT (_T ("Info")).data (), MB_ICONHAND);
 		}
 		return bRet;

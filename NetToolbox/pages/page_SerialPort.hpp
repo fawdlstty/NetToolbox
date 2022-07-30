@@ -105,7 +105,7 @@ public:
 
 	void on_close () {
 		enable_combos (true);
-		append_data (SerialDataTypeInfo, fmt::format (_IT (_T ("The serial port has been actively disconnected: <c #7f0000>{}</c>")), m_tmp_port_name));
+		append_data (SerialDataTypeInfo, std::vformat (_IT (_T ("The serial port has been actively disconnected: <c #7f0000>{}</c>")), std::make_format_args (m_tmp_port_name)));
 		m_tmp_port_name = _T ("");
 	}
 
@@ -130,7 +130,7 @@ public:
 					m_serial.open (_serial_name (m_tmp_port_name), _baud_rate, _byte_size, _parity, _stopbits);
 					if (m_serial.is_open ()) {
 						enable_combos (false);
-						append_data (SerialDataTypeInfo, fmt::format (_IT (_T ("The serial port has been opened: <c #00007f>{}</c>")), m_tmp_port_name));
+						append_data (SerialDataTypeInfo, std::vformat (_IT (_T ("The serial port has been opened: <c #00007f>{}</c>")), std::make_format_args (m_tmp_port_name)));
 					}
 				}
 				return true;
@@ -138,7 +138,7 @@ public:
 				if (m_serial.is_open ()) {
 					m_serial.close ();
 					enable_combos (true);
-					append_data (SerialDataTypeInfo, fmt::format (_IT (_T ("The serial port has been closed: <c #7f0000>{}</c>")), m_tmp_port_name));
+					append_data (SerialDataTypeInfo, std::vformat (_IT (_T ("The serial port has been closed: <c #7f0000>{}</c>")), std::make_format_args (m_tmp_port_name)));
 					m_tmp_port_name = _T ("");
 				}
 				return true;
@@ -166,7 +166,7 @@ public:
 			for (size_t i = 0; i < m_data.size (); ++i) {
 				auto[type, source, hex] = m_data[i];
 				if (type != SerialDataTypeInfo) {
-					BindTextUI ctrl { fmt::format (_T ("serial_cnt_{}"), i) };
+					BindTextUI ctrl { std::format (_T ("serial_cnt_{}"), i) };
 					ctrl->SetText ((is_source ? source : hex));
 				}
 			}
@@ -225,7 +225,7 @@ protected:
 		faw::string_t _hex_data = faw::Encoding::gb18030_to_T (hex_data);
 		m_data.push_back ({ type, _data, _hex_data });
 		auto ctrl = new CTextUI ();
-		ctrl->SetName (fmt::format (_T ("serial_cnt_{}"), m_data.size () - 1));
+		ctrl->SetName (std::format (_T ("serial_cnt_{}"), m_data.size () - 1));
 		ctrl->SetText ((m_serial_hex->IsSelected () && type != SerialDataTypeInfo ? _hex_data : _data));
 		ctrl->SetBkColor (0xFFCCCCCC);
 		ctrl->SetAutoCalcWidth (true);

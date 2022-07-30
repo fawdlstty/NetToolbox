@@ -29,7 +29,7 @@ public:
 				fail_count += m_fail_counts[i];
 			}
 			size_t inc_succ_count = succ_count - m_last_succ_count, inc_fail_count = fail_count - m_last_fail_count;
-			m_desp += fmt::format (_IT (_T ("Sended {:-6}，Succeed {:-6}，Failed {}\n")).data (), inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count);
+			m_desp += std::vformat (_IT (_T ("Sended {:-6}，Succeed {:-6}，Failed {}\n")), std::make_format_args (inc_succ_count + inc_fail_count, inc_succ_count, inc_fail_count));
 			m_qps_content->SetText (m_desp.data ());
 			m_last_succ_count += inc_succ_count;
 			m_last_fail_count += inc_fail_count;
@@ -172,13 +172,13 @@ protected:
 		bool is_new = (btntext == _IT (_T ("Create")));
 		if (is_new)
 			color = _T ("#FFDDDDDD");
-		item->SetAttribute (_T ("name"), fmt::format (_T ("qps_postdata_item_{}"), ++n_sign));
+		item->SetAttribute (_T ("name"), std::format (_T ("qps_postdata_item_{}"), ++n_sign));
 		//
 		CContainerUI *ctnr = new CContainerUI ();
 		CControlUI *ctrl = new CEditUI ();
 		ctrl->SetManager (m_parent->get_pm (), item);
 		ctrl->SetText (key);
-		ctrl->SetAttribute (_T ("name"), fmt::format (_T ("qps_postdata_item_{}_key"), n_sign));
+		ctrl->SetAttribute (_T ("name"), std::format (_T ("qps_postdata_item_{}_key"), n_sign));
 		ctrl->SetAttribute (_T ("bkcolor"), color);
 		ctrl->SetAttribute (_T ("nativebkcolor"), color);
 		ctrl->SetAttribute (_T ("align"), _T ("center"));
@@ -192,7 +192,7 @@ protected:
 		ctrl = new CEditUI ();
 		ctrl->SetManager (m_parent->get_pm (), item);
 		ctrl->SetText (value);
-		ctrl->SetAttribute (_T ("name"), fmt::format (_T ("qps_postdata_item_{}_value"), n_sign));
+		ctrl->SetAttribute (_T ("name"), std::format (_T ("qps_postdata_item_{}_value"), n_sign));
 		ctrl->SetAttribute (_T ("bkcolor"), color);
 		ctrl->SetAttribute (_T ("nativebkcolor"), color);
 		ctrl->SetAttribute (_T ("align"), _T ("center"));

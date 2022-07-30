@@ -45,7 +45,7 @@ public:
 				m_tracert_begin->SetEnabled (true);
 			} else {
 				m_tracert_list->RemoveAll ();
-				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, fmt::format (_IT (_T ("Routing trace to {}")), addr));
+				m_parent->show_status (NetToolboxWnd::StatusIcon::Loading, std::vformat (_IT (_T ("Routing trace to {}")), std::make_format_args (addr)));
 				std::thread ([this, addr, is_ipv4] () {
 					bool _state;
 					faw::string_t _info;
@@ -97,7 +97,7 @@ protected:
 				if (col == 4) {
 					if (data != "" && data != "0.0.0.0") {
 						auto [_a, _b, _c] = m_qqwry.find_info (data);
-						std::string _ab = fmt::format ("{} {} {}", _a, _b, _c);
+						std::string _ab = std::format ("{} {} {}", _a, _b, _c);
 						dynamic_cast<CTextUI*> (item->GetItemAt ((int) col + 2))->SetText (faw::Encoding::gb18030_to_T (_ab));
 					}
 				}

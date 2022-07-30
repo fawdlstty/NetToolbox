@@ -87,12 +87,12 @@ public:
 		};
 		auto ipv4_to_str = [] (DWORD &addr) -> faw::string_t {
 			unsigned char *pch = (unsigned char*) &addr;
-			return fmt::format (_T ("{}.{}.{}.{}"), pch[0], pch[1], pch[2], pch[3]);
+			return std::format (_T ("{}.{}.{}.{}"), pch[0], pch[1], pch[2], pch[3]);
 		};
 		auto ipv6_to_str = [] (UCHAR *addr, DWORD scope_id) -> faw::string_t {
 			TCHAR tBuf[64] = { 0 };
 			::InetNtop (AF_INET6, &addr, tBuf, sizeof (tBuf) / sizeof (tBuf[0]));
-			return (scope_id ? fmt::format (_T ("{}%{}"), tBuf, scope_id) : faw::string_t (tBuf));
+			return (scope_id ? std::format (_T ("{}%{}"), tBuf, scope_id) : faw::string_t (tBuf));
 		};
 
 		std::vector<std::tuple<bool, faw::string_t, uint16_t, faw::string_t, uint16_t, faw::string_t, DWORD, faw::string_t>> vconn;

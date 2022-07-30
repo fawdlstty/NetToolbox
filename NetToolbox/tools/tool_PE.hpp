@@ -104,7 +104,7 @@ public:
 	static faw::string_t extract_all_resource (LPCTSTR file) {
 		HMODULE hModule = ::LoadLibrary (file);
 		if (hModule) {
-			faw::string_t folder = fmt::format (_T ("{}_files"), file);
+			faw::string_t folder = std::format (_T ("{}_files"), file);
 			::CreateDirectory (folder.data (), NULL);
 			::EnumResourceTypes (hModule, enum_res_type_proc, (LONG_PTR) folder.data ()/*, RESOURCE_ENUM_MUI | RESOURCE_ENUM_LN, NULL*/);
 			::FreeLibrary (hModule);
@@ -140,14 +140,14 @@ protected:
 				type = mtype[lpType];
 				ext = mext[lpType];
 			} else if ((DWORD) lpType < 100) {
-				type = fmt::format (_T ("{}"), (DWORD) lpType);
+				type = std::format (_T ("{}"), (DWORD) lpType);
 			} else {
 				type = lpType;
 				ext = _T ("");
 				for (TCHAR c : type)
 					ext += (TCHAR) (c >= _T ('A') && c <= _T ('Z') ? c - _T ('A') + _T ('a') : c);
 			}
-			return fmt::format (_T ("{}_{}.{}"), type, res_id, ext);
+			return std::format (_T ("{}_{}.{}"), type, res_id, ext);
 		};
 
 		//std::cout << "    " << (size_t) lpName << '\n';
@@ -159,7 +159,7 @@ protected:
 				LPVOID ptr = ::LockResource (hGlobal);
 				if (ptr) {
 					LPCTSTR path = (LPCTSTR) lParam;
-					faw::string_t file = fmt::format (_T ("{}\\{}"), path, get_file_name (lpType, lpName).data ());
+					faw::string_t file = std::format (_T ("{}\\{}"), path, get_file_name (lpType, lpName).data ());
 					HANDLE hFile = ::CreateFile (file.data (), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 					if (hFile != INVALID_HANDLE_VALUE) {
 						::WriteFile (hFile, ptr, dwsz, &written, NULL);

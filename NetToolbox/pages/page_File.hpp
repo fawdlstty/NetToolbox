@@ -39,7 +39,7 @@ public:
 			int8_t *buf = new int8_t[sz_1M];
 			size_t i, j, block_count = (size_t) (file_length / sz_1M);
 			size_t last_size = (size_t) (file_length - (sz_1M * (int64_t) block_count));
-			faw::string_t content = fmt::format (_IT (_T ("File path: {}\nFile size: {} byte ({}) \nFile Hash: \n")), file, file_length, tool_Utils::format_unit (file_length));
+			faw::string_t content = std::vformat (_IT (_T ("File path: {}\nFile size: {} byte ({}) \nFile Hash: \n")), std::make_format_args (file, file_length, tool_Utils::format_unit (file_length)));
 			//
 			// 文件Hash
 			//
@@ -91,7 +91,7 @@ public:
 			::SHA384_Final (buf_sha384, &_sha384);
 			::SHA512_Final (buf_sha512, &_sha512);
 			//
-			faw::string_t str_crc32 = fmt::format (_T ("{:08X}"), crc32.checksum ());
+			faw::string_t str_crc32 = std::format (_T ("{:08X}"), crc32.checksum ());
 			faw::string_t str_md4 = _T (""), str_md5 = _T (""), str_sha = _T (""), str_sha1 = _T (""), str_sha224 = _T (""), str_sha256 = _T (""), str_sha384 = _T (""), str_sha512 = _T ("");
 			for (i = 0; i < 64; ++i) {
 				if (i < sizeof (buf_md4)) str_md4 += tool_StringT::byte_to_str (buf_md4[i]);
@@ -107,15 +107,15 @@ public:
 			delete[] buf;
 			::CloseHandle (hFile);
 			//
-			content += fmt::format (_T ("CRC32:     {}\n"), str_crc32);
-			content += fmt::format (_T ("MD4:       {}\n"), str_md4);
-			content += fmt::format (_T ("MD5:       {}\n"), str_md5);
-			content += fmt::format (_T ("SHA:       {}\n"), str_sha);
-			content += fmt::format (_T ("SHA1:      {}\n"), str_sha1);
-			content += fmt::format (_T ("SHA224:    {}\n"), str_sha224);
-			content += fmt::format (_T ("SHA256:    {}\n"), str_sha256);
-			content += fmt::format (_T ("SHA384:    {}\n"), str_sha384);
-			content += fmt::format (_T ("SHA512:    {}\n"), str_sha512);
+			content += std::format (_T ("CRC32:     {}\n"), str_crc32);
+			content += std::format (_T ("MD4:       {}\n"), str_md4);
+			content += std::format (_T ("MD5:       {}\n"), str_md5);
+			content += std::format (_T ("SHA:       {}\n"), str_sha);
+			content += std::format (_T ("SHA1:      {}\n"), str_sha1);
+			content += std::format (_T ("SHA224:    {}\n"), str_sha224);
+			content += std::format (_T ("SHA256:    {}\n"), str_sha256);
+			content += std::format (_T ("SHA384:    {}\n"), str_sha384);
+			content += std::format (_T ("SHA512:    {}\n"), str_sha512);
 			//
 			// PE分析
 			//
@@ -134,7 +134,7 @@ public:
 					content += _T ('\n');
 					for (j = 0; j < dll_funcs.size (); ++j) {
 						auto[func_id, func_name] = dll_funcs[j];
-						content += fmt::format (_T ("\t{}\t{}\n"), func_id, faw::Encoding::gb18030_to_T (func_name));
+						content += std::format (_T ("\t{}\t{}\n"), func_id, faw::Encoding::gb18030_to_T (func_name));
 					}
 				}
 			} else {

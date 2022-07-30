@@ -53,12 +53,12 @@ namespace DuiLib {
 			faw::string_t _buf = _T ("");
 			for (int i = 0; i < framecount; ++i) {
 				if (_hori) {
-					_buf = fmt::format (_T ("file='{}' source='{},{},{},{}'"), pStrImage, _width * i, 0, _width * (i + 1), _height);
+					_buf = std::format (_T ("file='{}' source='{},{},{},{}'"), pStrImage, _width * i, 0, _width * (i + 1), _height);
 				} else {
-					_buf = fmt::format (_T ("file='{}' source='{},{},{},{}'"), pStrImage, 0, _height * i, _width, _height * (i + 1));
+					_buf = std::format (_T ("file='{}' source='{},{},{},{}'"), pStrImage, 0, _height * i, _width, _height * (i + 1));
 				}
 				if (this->GetWidth () != _width || this->GetHeight () != _height) {
-					_buf += fmt::format (_T (" dest='{},{},{},{}'"), this->GetWidth () > _width ? this->GetWidth () - _width : 0, 0, this->GetWidth (), _height);
+					_buf += std::format (_T (" dest='{},{},{},{}'"), this->GetWidth () > _width ? this->GetWidth () - _width : 0, 0, this->GetWidth (), _height);
 				}
 				m_imglist.push_back (_buf);
 			}

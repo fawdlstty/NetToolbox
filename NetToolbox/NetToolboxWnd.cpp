@@ -134,9 +134,9 @@ void NetToolboxWnd::OnSelectChanged (TNotifyUI& msg) {
 	} else if (name.substr (0, 5) == _T ("group")) {
 		size_t sel1 = _ttoi (&name[5]);
 		for (size_t i = 0; i < m_tab.size (); ++i) {
-			faw::string_t name1 = fmt::format (_T ("group{}"), i);
+			faw::string_t name1 = std::format (_T ("group{}"), i);
 			BindOptionUI option { name1 };
-			faw::string_t name2 = fmt::format (_T ("group_item{}"), i);
+			faw::string_t name2 = std::format (_T ("group_item{}"), i);
 			BindVerticalLayoutUI vertical { name2 };
 			if (vertical) {
 				option->SetTextColor (i == sel1 ? 0xFFFFFFB0 : 0xFFFFFFFF);
@@ -296,8 +296,8 @@ void NetToolboxWnd::show_error_code (DWORD err_no) {
 }
 
 void NetToolboxWnd::direct_page (size_t sel1, size_t sel2) {
-	BindOptionUI { fmt::format (_T ("group{}"), sel1) }->Activate ();
-	BindOptionUI { fmt::format (_T ("tab{}_{}"), sel1, sel2) }->Activate ();
+	BindOptionUI { std::format (_T ("group{}"), sel1) }->Activate ();
+	BindOptionUI { std::format (_T ("tab{}_{}"), sel1, sel2) }->Activate ();
 }
 
 bool NetToolboxWnd::enum_pages (std::function<bool (page_base*)> f) {

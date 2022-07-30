@@ -228,16 +228,16 @@ public:
 			Gdiplus::Color _color;
 			m_bmp_screen->GetPixel (pt.x, pt.y, &_color);
 			m_window_color->SetBkColor (_color.GetValue () | 0xFF000000);
-			faw::string_t str = fmt::format (_T ("#{:06} ({}, {}, {})"), _color.GetValue (), _color.GetR (), _color.GetG (), _color.GetB ());
+			faw::string_t str = std::format (_T ("#{:06} ({}, {}, {})"), _color.GetValue (), _color.GetR (), _color.GetG (), _color.GetB ());
 			m_window_txt_color->SetText (str.data ());
 			// 获取窗口句柄
 			HWND hDestWnd = ::WindowFromPoint (pt);
-			str = fmt::format (_T ("{:X}"), (void*) hDestWnd);
+			str = std::format (_T ("{:X}"), (void*) hDestWnd);
 			m_window_txt_handle->SetText (str.data ());
 			// 获取窗口位置
 			RECT rcDest { 0 };
 			::GetWindowRect (hDestWnd, &rcDest);
-			str = fmt::format (_T ("pos ({}, {}), size ({}, {})"), rcDest.left, rcDest.top, rcDest.right - rcDest.left, rcDest.bottom - rcDest.top);
+			str = std::format (_T ("pos ({}, {}), size ({}, {})"), rcDest.left, rcDest.top, rcDest.right - rcDest.left, rcDest.bottom - rcDest.top);
 			m_window_txt_pos->SetText (str.data ());
 			// 获取窗口标题
 			TCHAR wnd_text[MAX_PATH] = { 0 };
@@ -248,14 +248,14 @@ public:
 			//HWND hNextWnd = ::GetNextWindow (hDestWnd, GW_HWNDNEXT);
 			//HWND hChildWnd = ::GetNextWindow (hDestWnd, GW_CHILD);
 			HWND hParentWnd = ::GetNextWindow (hDestWnd, GW_OWNER);
-			str = fmt::format (_T ("{:X}"), (void *) hParentWnd);
+			str = std::format (_T ("{:X}"), (void *) hParentWnd);
 			m_window_txt_parent->SetText (str.data ());
 			// 窗口样式
 			LONG style = ::GetWindowLong (hDestWnd, GWL_STYLE);
-			str = fmt::format (_T ("0x{:08X}"), style);
+			str = std::format (_T ("0x{:08X}"), style);
 			m_window_txt_style->SetText (str.data ());
 			LONG exstyle = ::GetWindowLong (hDestWnd, GWL_EXSTYLE);
-			str = fmt::format (_T ("0x{:08X}"), exstyle);
+			str = std::format (_T ("0x{:08X}"), exstyle);
 			m_window_txt_exstyle->SetText (str.data ());
 			// 获取窗口类
 			TCHAR class_text[MAX_PATH] = { 0 };
@@ -294,10 +294,10 @@ public:
 			Gdiplus::Color _color;
 			m_bmp_screen->GetPixel (pt.x, pt.y, &_color);
 			m_window_color->SetBkColor (_color.GetValue () | 0xFF000000);
-			faw::string_t str = fmt::format (_T ("#{:06X} ({}, {}, {})"), _color.GetValue () & 0xFFFFFF, _color.GetR (), _color.GetG (), _color.GetB ());
+			faw::string_t str = std::format (_T ("#{:06X} ({}, {}, {})"), _color.GetValue () & 0xFFFFFF, _color.GetR (), _color.GetG (), _color.GetB ());
 			m_window_txt_color->SetText (str.data ());
 			//
-			str = fmt::format (_T ("RGB ({}, {}, {})"), _color.GetR (), _color.GetG (), _color.GetB ());
+			str = std::format (_T ("RGB ({}, {}, {})"), _color.GetR (), _color.GetG (), _color.GetB ());
 			m_find_wnd->parent_notify_onmove (pt, str);
 			return true;
 		}

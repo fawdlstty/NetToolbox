@@ -89,7 +89,7 @@ public:
 			// Test for specific product on Windows NT 4.0 SP6 and later.
 			if (sizeof (OSVERSIONINFOEX) == osvi.dwOSVersionInfoSize) {
 				if (osvi.wServicePackMajor > 0)
-					sysname += fmt::format (_T ("Service Pack {} "), osvi.wServicePackMajor);
+					sysname += std::format (_T ("Service Pack {} "), osvi.wServicePackMajor);
 
 				// Test for the workstation type.
 				if (osvi.wProductType == VER_NT_WORKSTATION && si.wProcessorArchitecture != PROCESSOR_ARCHITECTURE_AMD64) {
@@ -148,27 +148,27 @@ public:
 					sysname += _T ("Server ");
 				if (lstrcmpiW (L"SERVERNT", &_tmp[0]) == 0)
 					sysname += _T ("Advanced Server ");
-				sysname += fmt::format (_T ("{}.{} "), osvi.dwMajorVersion, osvi.dwMinorVersion);
+				sysname += std::format (_T ("{}.{} "), osvi.dwMajorVersion, osvi.dwMinorVersion);
 			}
 
 			// Display service pack (if any) and build number.
 			if (osvi.dwMajorVersion == 4 && lstrcmpi (osvi.szCSDVersion, TEXT ("Service Pack 6")) == 0) {
 				// Test for SP6 versus SP6a.
 				if (tool_Register::path_exist (L"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Hotfix\\Q246009")) {
-					sysname += fmt::format (_T ("Service Pack 6a (Build {})"), osvi.dwBuildNumber & 0xFFFF);
+					sysname += std::format (_T ("Service Pack 6a (Build {})"), osvi.dwBuildNumber & 0xFFFF);
 				} else {// Windows NT 4.0 prior to SP6a
 					if (osvi.szCSDVersion[0] != _T ('\0')) {
 						sysname += osvi.szCSDVersion;
 						sysname += _T (' ');
 					}
-					sysname += fmt::format (_T ("(Build {})"), osvi.dwBuildNumber & 0xFFFF);
+					sysname += std::format (_T ("(Build {})"), osvi.dwBuildNumber & 0xFFFF);
 				}
 			} else {// not Windows NT 4.0
 				if (osvi.szCSDVersion[0] != _T ('\0')) {
 					sysname += osvi.szCSDVersion;
 					sysname += _T (' ');
 				}
-				sysname += fmt::format (_T ("(Build {})"), osvi.dwBuildNumber & 0xFFFF);
+				sysname += std::format (_T ("(Build {})"), osvi.dwBuildNumber & 0xFFFF);
 			}
 			break;
 
@@ -209,7 +209,7 @@ public:
 		MEMORYSTATUSEX ms = { sizeof (MEMORYSTATUSEX) };
 		if (!::GlobalMemoryStatusEx (&ms))
 			return _T ("");
-		return fmt::format (_IT (_T ("Total {} / Available {}")), tool_Utils::format_unit (ms.ullTotalPhys).data (), tool_Utils::format_unit (ms.ullAvailPhys).data ());
+		return std::vformat (_IT (_T ("Total {} / Available {}")), std::make_format_args (tool_Utils::format_unit (ms.ullTotalPhys), tool_Utils::format_unit (ms.ullAvailPhys)));
 		//return {
 		//	faw::string_t::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalPhys).data (), tool_Utils::format_unit (ms.ullAvailPhys).data ()),
 		//	faw::string_t::format (_T ("总共 %s / 可用 %s"), tool_Utils::format_unit (ms.ullTotalVirtual).data (), tool_Utils::format_unit (ms.ullAvailVirtual).data ())

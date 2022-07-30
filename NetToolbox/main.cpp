@@ -272,7 +272,7 @@ int WINAPI _tWinMain (HINSTANCE hInstance, HINSTANCE, LPTSTR, int nCmdShow) {
 	std::vector<LPCTSTR> publish { _T ("Alpha"), _T ("Beta"), _T ("Gamma"), _T ("RC"), _T ("GA") };
 	faw::string_t str_publish = _T ("Community");
 	//_T ("Community"), _T ("Personal"), _T ("Professional"), _T ("Enterprise"), _T ("Ultimate")
-	faw::string_t _caption2 = fmt::format (_T ("{:04}.{:02}.{:02}　{}"), v1, v2, v3, str_publish);
+	faw::string_t _caption2 = std::format (_T ("{:04}.{:02}.{:02}　{}"), v1, v2, v3, str_publish);
 
 	// 创建窗口
 	NetToolboxWnd wnd (_caption2);

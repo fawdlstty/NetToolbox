@@ -72,21 +72,21 @@ struct Tracert2ViewItem {
 		in_addr _addr { 0 };
 		_addr.s_addr = _item.m_ip;
 		m_ip = faw::Encoding::gb18030_to_T (::inet_ntoa (_addr));
-		m_loss = fmt::format (_T ("{0:.2f}%"), (_item.m_total_send - _item.m_elapses.size ()) / (double) _item.m_total_send * 100);
-		m_sent_n = fmt::format (_T ("{}"), _item.m_total_send);
-		m_recv_n = fmt::format (_T ("{}"), _item.m_elapses.size ());
+		m_loss = std::format (_T ("{0:.2f}%"), (_item.m_total_send - _item.m_elapses.size ()) / (double) _item.m_total_send * 100);
+		m_sent_n = std::format (_T ("{}"), _item.m_total_send);
+		m_recv_n = std::format (_T ("{}"), _item.m_elapses.size ());
 		if (_item.m_elapses.size () > 0) {
 			auto _n = std::min_element (_item.m_elapses.cbegin (), _item.m_elapses.cend ());
 			if (*_n < 1) {
 				m_best = _T ("<1 ms");
 			} else {
-				m_best = fmt::format (_T ("{} ms"), *_n);
+				m_best = std::format (_T ("{} ms"), *_n);
 			}
 			_n = std::max_element (_item.m_elapses.cbegin (), _item.m_elapses.cend ());
 			if (*_n < 1) {
 				m_worst = _T ("<1 ms");
 			} else {
-				m_worst = fmt::format (_T ("{} ms"), *_n);
+				m_worst = std::format (_T ("{} ms"), *_n);
 			}
 		} else {
 			m_best = _T ("N/A");
@@ -166,7 +166,7 @@ struct Tracert2Ipv4SentItem {
 				m_elapses.push_back (_elapses);
 			});
 			if (!m_sents [i].is_valid ())
-				return { false, fmt::format (_T ("IcmpCreateFile {}"), tool_Utils::get_error_info (::GetLastError ())) };
+				return { false, std::format (_T ("IcmpCreateFile {}"), tool_Utils::get_error_info (::GetLastError ())) };
 			_handles.push_back (m_sents [i].get_handle ());
 		}
 		return { true, _T ("") };
@@ -252,7 +252,7 @@ public:
 					} else if (_dw == WAIT_IO_COMPLETION) {
 					} else if (_dw == WAIT_TIMEOUT) {
 					} else if (_dw == WAIT_FAILED) {
-						m_abort (fmt::format (_T ("WaitForMultipleObjectsEx {}"), tool_Utils::get_error_info (::GetLastError ())));
+						m_abort (std::format (_T ("WaitForMultipleObjectsEx {}"), tool_Utils::get_error_info (::GetLastError ())));
 						m_want_run.store (false);
 						return;
 					}

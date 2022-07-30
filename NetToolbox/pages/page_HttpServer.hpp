@@ -2,11 +2,11 @@
 #define __PAGE_HTTPSERVER_HPP__
 
 #include <cstdint>
+#include <format>
 #include <memory>
 #include <string>
 #include <thread>
 
-#include <fmt/core.h>
 #include "../../xfinal/xfinal/xfinal.hpp"
 
 #include "../tools/tool_String.hpp"
@@ -66,18 +66,18 @@ public:
 						tool_StringT::replace (_key2, _T ('/'), _T ('\\'));
 						DWORD _key_len = ::GetShortPathName (_key2.data (), _buf, sizeof (_buf));
 						if (_key_len == 0) {
-							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, fmt::format (_IT (_T ("Invalid Path: {}")), _key));
+							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, std::vformat (_IT (_T ("Invalid Path: {}")), std::make_format_args (_key)));
 							return true;
 						}
 						if (_value.empty () || _value [0] != _T ('/')) {
-							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, fmt::format (_IT (_T ("Invalid Url Path: {}")), _value));
+							m_parent->show_status (NetToolboxWnd::StatusIcon::Error, std::vformat (_IT (_T ("Invalid Url Path: {}")), std::make_format_args (_value)));
 							return true;
 						}
 						for (size_t i = 0; i < _value.size (); ++i) {
 							static faw::string_t s_allow_signs = _T ("/-_+");
 							char _ch = _value [i];
 							if (!((_ch >= '0' && _ch <= '9') || (_ch >= 'a' && _ch <= 'z') || (_ch >= 'A' && _ch <= 'Z') || s_allow_signs.find (_ch) != faw::string_t::npos)) {
-								m_parent->show_status (NetToolboxWnd::StatusIcon::Error, fmt::format (_IT (_T ("Invalid Url Path: {}")), _value));
+								m_parent->show_status (NetToolboxWnd::StatusIcon::Error, std::vformat (_IT (_T ("Invalid Url Path: {}")), std::make_format_args (_value)));
 								return true;
 							}
 						}
@@ -176,7 +176,7 @@ public:
 				_url = _T ("http://127.0.0.1/");
 				m_httpserver_begin->SetEnabled (true);
 			} else {
-				_url = fmt::format (_T ("http://127.0.0.1:{}/"), _port);
+				_url = std::format (_T ("http://127.0.0.1:{}/"), _port);
 				m_httpserver_begin->SetEnabled (true);
 			}
 			m_httpserver_addr->SetText (_url);
@@ -191,7 +191,7 @@ public:
 		for (size_t i = 0; i < m_maplist.size (); ++i) {
 			auto &[_disk_path, _url_path] = m_maplist [i];
 			if (_url.compare (0, _url_path.size (), _url_path) == 0) {
-				std::string _file_path = fmt::format (_T ("{}{}{}"), _disk_path, *_disk_path.crbegin () == '\\' ? "" : "\\", _url.substr (_url_path.size ()));
+				std::string _file_path = std::format (_T ("{}{}{}"), _disk_path, *_disk_path.crbegin () == '\\' ? "" : "\\", _url.substr (_url_path.size ()));
 				tool_StringA::replace (_file_path, '/', '\\');
 				tool_StringA::replace (_file_path, "\\\\", "\\");
 				if (faw::File::exist (_file_path)) {
@@ -222,7 +222,7 @@ protected:
 		faw::string_t color = (m_httpserver_maplist->GetCount () % 2) ? _T ("#FFEEEEEE") : _T ("#FFFFFFFF");
 		if (_is_new)
 			color = _T ("#FFDDDDDD");
-		item->SetAttribute (_T ("name"), fmt::format (_T ("httpserver_maplist_item_{}"), ++n_sign));
+		item->SetAttribute (_T ("name"), std::format (_T ("httpserver_maplist_item_{}"), ++n_sign));
 		//
 		CContainerUI *ctnr = nullptr;
 		CControlUI *ctrl = nullptr;
@@ -230,7 +230,7 @@ protected:
 		ctnr = new CContainerUI ();
 		ctrl = new CEditUI ();
 		ctrl->SetManager (m_parent->get_pm (), item);
-		ctrl->SetAttribute (_T ("name"), fmt::format (_T ("httpserver_maplist_item_{}_key"), n_sign));
+		ctrl->SetAttribute (_T ("name"), std::format (_T ("httpserver_maplist_item_{}_key"), n_sign));
 		ctrl->SetAttribute (_T ("bkcolor"), color);
 		ctrl->SetAttribute (_T ("nativebkcolor"), color);
 		ctrl->SetAttribute (_T ("align"), _T ("center"));
@@ -246,7 +246,7 @@ protected:
 		ctnr = new CContainerUI ();
 		ctrl = new CEditUI ();
 		ctrl->SetManager (m_parent->get_pm (), item);
-		ctrl->SetAttribute (_T ("name"), fmt::format (_T ("httpserver_maplist_item_{}_value"), n_sign));
+		ctrl->SetAttribute (_T ("name"), std::format (_T ("httpserver_maplist_item_{}_value"), n_sign));
 		ctrl->SetAttribute (_T ("bkcolor"), color);
 		ctrl->SetAttribute (_T ("nativebkcolor"), color);
 		ctrl->SetAttribute (_T ("align"), _T ("center"));
